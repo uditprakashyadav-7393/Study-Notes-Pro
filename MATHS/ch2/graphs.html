@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on Inverse Trigonometric Functions for Class 12 Maths. Learn about the definitions, properties, and applications of inverse trigonometric functions with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 2, Inverse Trigonometric Functions, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Inverse Trigonometric Functions — Class 12 Maths Ch. 2</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #151e2e;
+    --border: #1e2d45;
+    --accent: #e96c6c;
+    --accent1: #38bdf8;
+    --accent2: #f472b6;
+    --accent3: #34d399;
+    --accent4: #fbbf24;
+    --accent5: #a78bfa;
+    --accent6: #fb923c;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --heading: #f8fafc;
+    --grid: rgba(56,189,248,0.07);
+    --gold: #f6c90e;
+    --gold-dim: #93780c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield bg */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(56,189,248,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(167,139,250,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 20px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent1);
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    color: var(--heading);
+    line-height: 1.15;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: var(--accent1);
+  }
+
+  header p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.6s;
+  }
+
+  /* Tab navigation */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 32px 20px 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .tab-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .tab-btn:hover { border-color: var(--accent1); color: var(--accent1); }
+  .tab-btn.active { background: var(--accent1); color: #0a0e1a; border-color: var(--accent1); font-weight: 600; }
+
+  /* Main content */
+  .content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .graph-panel {
+    display: none;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .graph-panel.active { display: block; }
+
+  .panel-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .fn-badge {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    font-style: italic;
+    line-height: 1;
+    min-width: 140px;
+  }
+
+  .fn-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--heading);
+    margin-bottom: 8px;
+  }
+
+  .fn-info p { font-size: 1.05rem; color: var(--text); line-height: 1.7; max-width: 600px; }
+
+  /* Info cards */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .info-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .info-card .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  /* Canvas wrapper */
+  .canvas-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .canvas-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .canvas-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* Properties section */
+  .properties {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 20px;
+  }
+
+  .properties h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--heading);
+    margin-bottom: 14px;
+  }
+
+  .prop-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .prop-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  .prop-list li::before {
+    content: '›';
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .highlight { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; padding: 2px 6px; border-radius: 4px; }
+
+  /* Animate btn */
+  .btn-animate {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+
+  .btn-animate:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+
+  /* Summary table */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  .summary-table th, .summary-table td {
+    padding: 12px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-table th {
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .summary-table tr:hover td { background: rgba(56,189,248,0.04); }
+  .summary-table td:first-child { text-align: left; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 600px) {
+    .fn-badge { font-size: 2.4rem; min-width: 100px; }
+    .fn-info h2 { font-size: 1.3rem; }
+    .panel-header { gap: 16px; }
+  }
+  
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(251,146,60,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; font-family: 'Playfair Display', serif; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="chapter-label">Class XII Mathematics · Chapter 2</div>
+  <h1>Inverse Trigonometric<br><em>Functions</em></h1>
+  <p>Graphs, domains, ranges and key properties of all six inverse trigonometric functions — with animated curve drawing.</p>
+</header>
+
+<div class="tabs" id="tabs">
+  <button class="tab-btn active" data-fn="arcsin">arcsin</button>
+  <button class="tab-btn" data-fn="arccos">arccos</button>
+  <button class="tab-btn" data-fn="arctan">arctan</button>
+  <button class="tab-btn" data-fn="arccot">arccot</button>
+  <button class="tab-btn" data-fn="arcsec">arcsec</button>
+  <button class="tab-btn" data-fn="arccsc">arccsc</button>
+  <button class="tab-btn" data-fn="summary">Summary</button>
+</div>
+
+<div class="content">
+
+  <!-- ===== arcsin ===== -->
+  <div class="graph-panel active" id="panel-arcsin">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#38bdf8">sin⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Sine — sin⁻¹(x)</h2>
+        <p>The inverse of sin restricted to [−π/2, π/2]. It "undoes" sine, returning the angle whose sine is x. The graph is an S-shaped curve through the origin, bounded above and below by the horizontal asymptotes y = ±π/2.</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">Domain</div>
+        <div class="value" style="color:#38bdf8">[ −1 , 1 ]</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Range (Principal Value)</div>
+        <div class="value" style="color:#38bdf8">[ −π/2 , π/2 ]</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Passes Through</div>
+        <div class="value" style="color:#38bdf8">(0,0), (1,π/2), (−1,−π/2)</div>
+      </div>
+      <div class="info-card">
+        <div class="label">Symmetry</div>
+        <div class="value" style="color:#38bdf8">Odd — about origin</div>
+      </div>
+    </div>
+    <div class="canvas-wrapper" style="--top-color:#38bdf8">
+      <div class="canvas-label">Graph of y = sin⁻¹(x)</div>
+      <canvas id="c-arcsin" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arcsin" style="background:#38bdf8;color:#0a0e1a" onclick="animateGraph('arcsin')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li style="--c:#38bdf8"><span class="highlight" style="background:rgba(56,189,248,0.12);color:#38bdf8">sin⁻¹(sin x) = x</span> for x ∈ [−π/2, π/2]</li>
+        <li><span class="highlight" style="background:rgba(56,189,248,0.12);color:#38bdf8">sin(sin⁻¹ x) = x</span> for x ∈ [−1, 1]</li>
+        <li>sin⁻¹(−x) = −sin⁻¹(x) &nbsp;→&nbsp; Odd function</li>
+        <li>Monotonically <strong>increasing</strong> on [−1, 1]</li>
+        <li>Derivative: d/dx[sin⁻¹x] = 1/√(1−x²)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== arccos ===== -->
+  <div class="graph-panel" id="panel-arccos">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#f472b6">cos⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Cosine — cos⁻¹(x)</h2>
+        <p>Inverse of cosine restricted to [0, π]. A decreasing curve from (−1, π) to (1, 0), passing through (0, π/2). Note that sin⁻¹x + cos⁻¹x = π/2 for all x in [−1,1].</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">Domain</div><div class="value" style="color:#f472b6">[ −1 , 1 ]</div></div>
+      <div class="info-card"><div class="label">Range</div><div class="value" style="color:#f472b6">[ 0 , π ]</div></div>
+      <div class="info-card"><div class="label">Passes Through</div><div class="value" style="color:#f472b6">(0,π/2), (1,0), (−1,π)</div></div>
+      <div class="info-card"><div class="label">Symmetry</div><div class="value" style="color:#f472b6">Neither odd nor even</div></div>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">Graph of y = cos⁻¹(x)</div>
+      <canvas id="c-arccos" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arccos" style="background:#f472b6;color:#0a0e1a" onclick="animateGraph('arccos')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li><span class="highlight" style="background:rgba(244,114,182,0.12);color:#f472b6">sin⁻¹x + cos⁻¹x = π/2</span> for x ∈ [−1, 1]</li>
+        <li><span class="highlight" style="background:rgba(244,114,182,0.12);color:#f472b6">cos⁻¹(−x) = π − cos⁻¹(x)</span></li>
+        <li>Monotonically <strong>decreasing</strong> on [−1, 1]</li>
+        <li>Derivative: d/dx[cos⁻¹x] = −1/√(1−x²)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== arctan ===== -->
+  <div class="graph-panel" id="panel-arctan">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#34d399">tan⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Tangent — tan⁻¹(x)</h2>
+        <p>Defined for all real x. The graph has two horizontal asymptotes at y = ±π/2, passes through the origin, and is S-shaped. It is one of the most important inverse trig functions in calculus and engineering.</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">Domain</div><div class="value" style="color:#34d399">( −∞ , +∞ )</div></div>
+      <div class="info-card"><div class="label">Range</div><div class="value" style="color:#34d399">( −π/2 , π/2 )</div></div>
+      <div class="info-card"><div class="label">Passes Through</div><div class="value" style="color:#34d399">(0,0), (1,π/4)</div></div>
+      <div class="info-card"><div class="label">Asymptotes</div><div class="value" style="color:#34d399">y = ±π/2</div></div>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">Graph of y = tan⁻¹(x)</div>
+      <canvas id="c-arctan" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arctan" style="background:#34d399;color:#0a0e1a" onclick="animateGraph('arctan')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li><span class="highlight" style="background:rgba(52,211,153,0.12);color:#34d399">tan⁻¹(−x) = −tan⁻¹(x)</span> → Odd function</li>
+        <li><span class="highlight" style="background:rgba(52,211,153,0.12);color:#34d399">tan⁻¹x + cot⁻¹x = π/2</span></li>
+        <li>Monotonically <strong>increasing</strong> on ℝ</li>
+        <li>Derivative: d/dx[tan⁻¹x] = 1/(1+x²)</li>
+        <li>As x→±∞, y→±π/2 (horizontal asymptotes)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== arccot ===== -->
+  <div class="graph-panel" id="panel-arccot">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#fbbf24">cot⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Cotangent — cot⁻¹(x)</h2>
+        <p>Inverse of cotangent restricted to (0, π). Defined for all real x, it is a decreasing function. Closely related to arctan: cot⁻¹x = π/2 − tan⁻¹x for all x.</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">Domain</div><div class="value" style="color:#fbbf24">( −∞ , +∞ )</div></div>
+      <div class="info-card"><div class="label">Range</div><div class="value" style="color:#fbbf24">( 0 , π )</div></div>
+      <div class="info-card"><div class="label">Passes Through</div><div class="value" style="color:#fbbf24">(0,π/2), (1,π/4)</div></div>
+      <div class="info-card"><div class="label">Asymptotes</div><div class="value" style="color:#fbbf24">y = 0 and y = π</div></div>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">Graph of y = cot⁻¹(x)</div>
+      <canvas id="c-arccot" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arccot" style="background:#fbbf24;color:#0a0e1a" onclick="animateGraph('arccot')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li><span class="highlight" style="background:rgba(251,191,36,0.12);color:#fbbf24">tan⁻¹x + cot⁻¹x = π/2</span></li>
+        <li><span class="highlight" style="background:rgba(251,191,36,0.12);color:#fbbf24">cot⁻¹(−x) = π − cot⁻¹(x)</span></li>
+        <li>Monotonically <strong>decreasing</strong> on ℝ</li>
+        <li>Derivative: d/dx[cot⁻¹x] = −1/(1+x²)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== arcsec ===== -->
+  <div class="graph-panel" id="panel-arcsec">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#a78bfa">sec⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Secant — sec⁻¹(x)</h2>
+        <p>Inverse of secant. Defined only for |x| ≥ 1. The graph has two separate branches — one for x ≥ 1 (approaching π/2 from below) and one for x ≤ −1 (approaching π/2 from above). Note the gap in the domain at (−1, 1).</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">Domain</div><div class="value" style="color:#a78bfa">(−∞,−1]∪[1,∞)</div></div>
+      <div class="info-card"><div class="label">Range</div><div class="value" style="color:#a78bfa">[0,π] − {π/2}</div></div>
+      <div class="info-card"><div class="label">Passes Through</div><div class="value" style="color:#a78bfa">(1,0), (−1,π)</div></div>
+      <div class="info-card"><div class="label">Asymptote</div><div class="value" style="color:#a78bfa">y = π/2</div></div>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">Graph of y = sec⁻¹(x)</div>
+      <canvas id="c-arcsec" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arcsec" style="background:#a78bfa;color:#0a0e1a" onclick="animateGraph('arcsec')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li><span class="highlight" style="background:rgba(167,139,250,0.12);color:#a78bfa">sec⁻¹x + cosec⁻¹x = π/2</span> for |x| ≥ 1</li>
+        <li><span class="highlight" style="background:rgba(167,139,250,0.12);color:#a78bfa">sec⁻¹(−x) = π − sec⁻¹(x)</span></li>
+        <li>Defined only where |x| ≥ 1 — no value at x=0</li>
+        <li>Derivative: d/dx[sec⁻¹x] = 1/(|x|√(x²−1))</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== arccsc ===== -->
+  <div class="graph-panel" id="panel-arccsc">
+    <div class="panel-header">
+      <div class="fn-badge" style="color:#fb923c">cosec⁻¹</div>
+      <div class="fn-info">
+        <h2>Arc Cosecant — cosec⁻¹(x)</h2>
+        <p>Inverse of cosecant. Like arcsec, it is defined only for |x| ≥ 1. The graph has two branches symmetric about the origin, and is an odd function. The range excludes 0.</p>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="label">Domain</div><div class="value" style="color:#fb923c">(−∞,−1]∪[1,∞)</div></div>
+      <div class="info-card"><div class="label">Range</div><div class="value" style="color:#fb923c">[−π/2,π/2] − {0}</div></div>
+      <div class="info-card"><div class="label">Passes Through</div><div class="value" style="color:#fb923c">(1,π/2), (−1,−π/2)</div></div>
+      <div class="info-card"><div class="label">Symmetry</div><div class="value" style="color:#fb923c">Odd — about origin</div></div>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">Graph of y = cosec⁻¹(x)</div>
+      <canvas id="c-arccsc" width="900" height="480"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-arccsc" style="background:#fb923c;color:#0a0e1a" onclick="animateGraph('arccsc')">▶ Animate Curve</button>
+    <div class="properties" style="margin-top:22px">
+      <h3>Key Properties</h3>
+      <ul class="prop-list">
+        <li><span class="highlight" style="background:rgba(251,146,60,0.12);color:#fb923c">sec⁻¹x + cosec⁻¹x = π/2</span></li>
+        <li><span class="highlight" style="background:rgba(251,146,60,0.12);color:#fb923c">cosec⁻¹(−x) = −cosec⁻¹(x)</span> → Odd</li>
+        <li>Derivative: d/dx[cosec⁻¹x] = −1/(|x|√(x²−1))</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== summary ===== -->
+  <div class="graph-panel" id="panel-summary">
+    <div style="margin-bottom:28px">
+      <div class="chapter-label" style="opacity:1;margin-bottom:10px">Quick Reference</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--heading)">All Six Functions at a Glance</h2>
+    </div>
+    <div class="canvas-wrapper">
+      <div class="canvas-label">All six inverse trig functions on one graph</div>
+      <canvas id="c-all" width="900" height="540"></canvas>
+    </div>
+    <button class="btn-animate" id="btn-all" style="background:var(--accent1);color:#0a0e1a" onclick="animateAll()">▶ Animate All Curves</button>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:24px">
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Domain</th>
+            <th>Range (Principal)</th>
+            <th>Monotone</th>
+            <th>Odd/Even</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="color:#38bdf8;font-weight:600">sin⁻¹x</td><td>[−1, 1]</td><td>[−π/2, π/2]</td><td>Increasing ↑</td><td>Odd</td></tr>
+          <tr><td style="color:#f472b6;font-weight:600">cos⁻¹x</td><td>[−1, 1]</td><td>[0, π]</td><td>Decreasing ↓</td><td>Neither</td></tr>
+          <tr><td style="color:#34d399;font-weight:600">tan⁻¹x</td><td>(−∞, ∞)</td><td>(−π/2, π/2)</td><td>Increasing ↑</td><td>Odd</td></tr>
+          <tr><td style="color:#fbbf24;font-weight:600">cot⁻¹x</td><td>(−∞, ∞)</td><td>(0, π)</td><td>Decreasing ↓</td><td>Neither</td></tr>
+          <tr><td style="color:#a78bfa;font-weight:600">sec⁻¹x</td><td>|x| ≥ 1</td><td>[0,π]−{π/2}</td><td>Increasing ↑</td><td>Neither</td></tr>
+          <tr><td style="color:#fb923c;font-weight:600">cosec⁻¹x</td><td>|x| ≥ 1</td><td>[−π/2,π/2]−{0}</td><td>Decreasing ↓</td><td>Odd</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-top:20px">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--heading);margin-bottom:14px">Important Identities</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;">
+        <div class="info-card"><div class="value" style="color:#38bdf8;font-size:0.85rem">sin⁻¹x + cos⁻¹x = π/2</div></div>
+        <div class="info-card"><div class="value" style="color:#34d399;font-size:0.85rem">tan⁻¹x + cot⁻¹x = π/2</div></div>
+        <div class="info-card"><div class="value" style="color:#a78bfa;font-size:0.85rem">sec⁻¹x + cosec⁻¹x = π/2</div></div>
+        <div class="info-card"><div class="value" style="color:#f472b6;font-size:0.85rem">sin⁻¹(−x) = −sin⁻¹x</div></div>
+        <div class="info-card"><div class="value" style="color:#fbbf24;font-size:0.85rem">cos⁻¹(−x) = π − cos⁻¹x</div></div>
+        <div class="info-card"><div class="value" style="color:#fb923c;font-size:0.85rem">tan⁻¹(−x) = −tan⁻¹x</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- .content -->
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+       <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DRAWING ENGINE
+// ═══════════════════════════════════════════════════════════
+
+const PI = Math.PI;
+const colors = {
+  arcsin: '#38bdf8', arccos: '#f472b6', arctan: '#34d399',
+  arccot: '#fbbf24', arcsec: '#a78bfa', arccsc: '#fb923c'
+};
+
+const fnData = {
+  arcsin: { fn: x => Math.asin(x), xMin: -1, xMax: 1, yMin: -PI/2, yMax: PI/2 },
+  arccos: { fn: x => Math.acos(x), xMin: -1, xMax: 1, yMin: 0, yMax: PI },
+  arctan: { fn: x => Math.atan(x), xMin: -8, xMax: 8, yMin: -PI/2*1.2, yMax: PI/2*1.2 },
+  arccot: { fn: x => PI/2 - Math.atan(x), xMin: -8, xMax: 8, yMin: 0, yMax: PI },
+  arcsec: { fn: x => Math.acos(1/x), xMin: -6, xMax: 6, yMin: 0, yMax: PI, skip: x => Math.abs(x) < 1 },
+  arccsc: { fn: x => Math.asin(1/x), xMin: -6, xMax: 6, yMin: -PI/2, yMax: PI/2, skip: x => Math.abs(x) < 1 },
+};
+
+function drawGraph(canvasId, fnName, progress = 1) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const data = fnData[fnName];
+  const color = colors[fnName];
+  const padL = 60, padR = 30, padT = 30, padB = 50;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  const toX = x => padL + (x - data.xMin) / (data.xMax - data.xMin) * plotW;
+  const toY = y => padT + (1 - (y - data.yMin) / (data.yMax - data.yMin)) * plotH;
+
+  // Background grid
+  ctx.strokeStyle = 'rgba(56,189,248,0.07)';
+  ctx.lineWidth = 1;
+  const yTicks = [-PI, -PI/2, 0, PI/4, PI/2, PI];
+  const yLabels = ['-π', '-π/2', '0', 'π/4', 'π/2', 'π'];
+  yTicks.forEach((yv, i) => {
+    if (yv < data.yMin - 0.01 || yv > data.yMax + 0.01) return;
+    const cy = toY(yv);
+    ctx.beginPath();
+    ctx.moveTo(padL, cy); ctx.lineTo(W - padR, cy);
+    ctx.stroke();
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '11px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(yLabels[i], padL - 8, cy + 4);
+  });
+
+  const xTicks = [-8,-6,-4,-2,-1,0,1,2,4,6,8].filter(x => x >= data.xMin && x <= data.xMax);
+  xTicks.forEach(xv => {
+    const cx = toX(xv);
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(56,189,248,0.07)';
+    ctx.moveTo(cx, padT); ctx.lineTo(cx, H - padB);
+    ctx.stroke();
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '11px JetBrains Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(xv, cx, H - padB + 18);
+  });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+  ctx.lineWidth = 1.5;
+  const y0 = toY(0), x0 = toX(0);
+  if (y0 > padT && y0 < H - padB) {
+    ctx.beginPath(); ctx.moveTo(padL, y0); ctx.lineTo(W - padR, y0); ctx.stroke();
+  }
+  if (x0 > padL && x0 < W - padR) {
+    ctx.beginPath(); ctx.moveTo(x0, padT); ctx.lineTo(x0, H - padB); ctx.stroke();
+  }
+
+  // Asymptotes
+  if (fnName === 'arctan' || fnName === 'arccsc') {
+    const ay1 = toY(PI/2), ay2 = toY(-PI/2);
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = color + '44';
+    ctx.lineWidth = 1.2;
+    [ay1, ay2].forEach(ay => { ctx.beginPath(); ctx.moveTo(padL, ay); ctx.lineTo(W-padR, ay); ctx.stroke(); });
+    ctx.setLineDash([]);
+  }
+  if (fnName === 'arccot') {
+    const ay1 = toY(0), ay2 = toY(PI);
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = color + '44';
+    ctx.lineWidth = 1.2;
+    [ay1, ay2].forEach(ay => { ctx.beginPath(); ctx.moveTo(padL, ay); ctx.lineTo(W-padR, ay); ctx.stroke(); });
+    ctx.setLineDash([]);
+  }
+  if (fnName === 'arcsec') {
+    const ay = toY(PI/2);
+    ctx.setLineDash([6, 4]);
+    ctx.strokeStyle = color + '44';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(padL, ay); ctx.lineTo(W-padR, ay); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Build points
+  const STEPS = 1200;
+  let segments = [[]];
+
+  for (let i = 0; i <= STEPS; i++) {
+    const t = i / STEPS;
+    const x = data.xMin + t * (data.xMax - data.xMin);
+    if (data.skip && data.skip(x)) { segments.push([]); continue; }
+    let y;
+    try { y = data.fn(x); } catch(e) { segments.push([]); continue; }
+    if (!isFinite(y)) { segments.push([]); continue; }
+    segments[segments.length - 1].push([x, y]);
+  }
+
+  // Clip points to progress
+  let allPoints = segments.flat();
+  const total = allPoints.length;
+  const visibleCount = Math.floor(total * progress);
+
+  let drawn = 0;
+  for (const seg of segments) {
+    if (drawn >= visibleCount) break;
+    const take = Math.min(seg.length, visibleCount - drawn);
+    const sub = seg.slice(0, take);
+    drawn += take;
+    if (sub.length < 2) continue;
+
+    // Glow
+    ctx.save();
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    sub.forEach(([x,y], idx) => {
+      const cx = toX(x), cy = toY(y);
+      idx === 0 ? ctx.moveTo(cx, cy) : ctx.lineTo(cx, cy);
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.restore();
+
+    // Animated dot at leading edge
+    if (progress < 1 && drawn >= visibleCount) {
+      const [lx, ly] = sub[sub.length - 1];
+      ctx.save();
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      ctx.arc(toX(lx), toY(ly), 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // Axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  ctx.font = '13px Crimson Pro, serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('y', padL - 10, padT + 6);
+  ctx.textAlign = 'left';
+  ctx.fillText('x', W - padR + 4, y0 > padT && y0 < H-padB ? y0 + 4 : H-padB+4);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ANIMATION
+// ═══════════════════════════════════════════════════════════
+
+const animStates = {};
+
+function animateGraph(fnName) {
+  if (animStates[fnName]) { cancelAnimationFrame(animStates[fnName]); }
+  const canvasId = 'c-' + fnName;
+  let progress = 0;
+  const dur = 1800; // ms
+  const start = performance.now();
+
+  function step(now) {
+    progress = Math.min((now - start) / dur, 1);
+    const eased = progress < 0.5
+      ? 2 * progress * progress
+      : -1 + (4 - 2 * progress) * progress;
+    drawGraph(canvasId, fnName, eased);
+    if (progress < 1) {
+      animStates[fnName] = requestAnimationFrame(step);
+    }
+  }
+  animStates[fnName] = requestAnimationFrame(step);
+}
+
+function animateAll() {
+  const fns = ['arcsin','arccos','arctan','arccot','arcsec','arccsc'];
+  fns.forEach((fn, i) => {
+    setTimeout(() => drawAllAnimStep(fn, i), i * 160);
+  });
+}
+
+function drawAllAnimStep(fnName, offset) {
+  const canvas = document.getElementById('c-all');
+  if (!canvas) return;
+  let progress = 0;
+  const dur = 1600;
+  const start = performance.now();
+  function step(now) {
+    progress = Math.min((now - start) / dur, 1);
+    drawAllGraph(progress, fnName);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// All-in-one graph with separate progress per curve
+let allProgress = { arcsin: 0, arccos: 0, arctan: 0, arccot: 0, arcsec: 0, arccsc: 0 };
+let allRAF = null;
+
+function drawAllGraph(prog, justFn) {
+  if (justFn) allProgress[justFn] = prog;
+  const canvas = document.getElementById('c-all');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const padL = 60, padR = 30, padT = 30, padB = 50;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const xMin = -8, xMax = 8, yMin = -PI - 0.2, yMax = PI + 0.2;
+
+  const toX = x => padL + (x - xMin) / (xMax - xMin) * plotW;
+  const toY = y => padT + (1 - (y - yMin) / (yMax - yMin)) * plotH;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(56,189,248,0.06)';
+  ctx.lineWidth = 1;
+  [-PI, -PI/2, 0, PI/2, PI].forEach(yv => {
+    const cy = toY(yv);
+    ctx.beginPath(); ctx.moveTo(padL, cy); ctx.lineTo(W-padR, cy); ctx.stroke();
+  });
+  [-6,-4,-2,0,2,4,6].forEach(xv => {
+    const cx = toX(xv);
+    ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, H-padB); ctx.stroke();
+    ctx.fillStyle = '#4b5563'; ctx.font = '10px JetBrains Mono,monospace';
+    ctx.textAlign = 'center'; ctx.fillText(xv, cx, H-padB+16);
+  });
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(padL, toY(0)); ctx.lineTo(W-padR, toY(0)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(toX(0), padT); ctx.lineTo(toX(0), H-padB); ctx.stroke();
+
+  // Y axis labels
+  [[-PI,'-π'],[-PI/2,'-π/2'],[0,'0'],[PI/2,'π/2'],[PI,'π']].forEach(([yv,lb]) => {
+    ctx.fillStyle='#4b5563'; ctx.font='10px JetBrains Mono,monospace'; ctx.textAlign='right';
+    ctx.fillText(lb, padL-6, toY(yv)+4);
+  });
+
+  // Legend
+  const fns = ['arcsin','arccos','arctan','arccot','arcsec','arccsc'];
+  const labels = ['sin⁻¹','cos⁻¹','tan⁻¹','cot⁻¹','sec⁻¹','cosec⁻¹'];
+  fns.forEach((fn, i) => {
+    const lx = padL + 10 + i * 120;
+    ctx.fillStyle = colors[fn];
+    ctx.fillRect(lx, padT + 4, 22, 3);
+    ctx.font = '11px Crimson Pro, serif';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = colors[fn];
+    ctx.fillText(labels[i], lx + 26, padT + 10);
+  });
+
+  // Draw each function
+  fns.forEach(fn => {
+    const p = allProgress[fn];
+    const d = fnData[fn];
+    const STEPS = 800;
+    let segs = [[]];
+    for (let i = 0; i <= STEPS; i++) {
+      const t = i / STEPS;
+      const x = d.xMin + t * (d.xMax - d.xMin);
+      if (x < xMin || x > xMax) { segs.push([]); continue; }
+      if (d.skip && d.skip(x)) { segs.push([]); continue; }
+      let y;
+      try { y = d.fn(x); } catch(e) { segs.push([]); continue; }
+      if (!isFinite(y) || y < yMin || y > yMax) { segs.push([]); continue; }
+      segs[segs.length-1].push([x,y]);
+    }
+    const total = segs.flat().length;
+    const vis = Math.floor(total * p);
+    let drawn = 0;
+    for (const seg of segs) {
+      if (drawn >= vis) break;
+      const take = Math.min(seg.length, vis - drawn);
+      const sub = seg.slice(0, take);
+      drawn += take;
+      if (sub.length < 2) continue;
+      ctx.save();
+      ctx.shadowColor = colors[fn]; ctx.shadowBlur = 10;
+      ctx.beginPath();
+      sub.forEach(([x,y], idx) => {
+        const cx = toX(x), cy = toY(y);
+        idx===0 ? ctx.moveTo(cx,cy) : ctx.lineTo(cx,cy);
+      });
+      ctx.strokeStyle = colors[fn]; ctx.lineWidth = 2.2; ctx.stroke();
+      ctx.restore();
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════════
+
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.graph-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const fn = btn.dataset.fn;
+  document.getElementById('panel-' + fn).classList.add('active');
+
+  // Draw immediately on tab switch
+  if (fn === 'summary') {
+    allProgress = { arcsin:1, arccos:1, arctan:1, arccot:1, arcsec:1, arccsc:1 };
+    drawAllGraph();
+  } else {
+    drawGraph('c-' + fn, fn, 1);
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// INITIAL DRAW
+// ═══════════════════════════════════════════════════════════
+
+window.addEventListener('load', () => {
+  Object.keys(fnData).forEach(fn => {
+    if (fn === 'arcsin') animateGraph(fn);
+    else drawGraph('c-' + fn, fn, 1);
+  });
+  allProgress = { arcsin:1, arccos:1, arctan:1, arccot:1, arcsec:1, arccsc:1 };
+  drawAllGraph();
+});
+
+window.addEventListener('resize', () => {
+  const active = document.querySelector('.graph-panel.active');
+  if (!active) return;
+  const fn = active.id.replace('panel-','');
+  if (fn === 'summary') drawAllGraph();
+  else drawGraph('c-'+fn, fn, 1);
+});
+</script>
+</body>
+</html>

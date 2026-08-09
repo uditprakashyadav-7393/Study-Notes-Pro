@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Properties in Area Problems – Application of Integrals | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --bg:#0c0e16;--surface:#13161f;--surface2:#1b1f2d;
+    --border:#252a3a;--border2:#2f3550;
+    --accent:#f472b6;--accent2:#ec4899;--gold:#f5c518;--gold-dim:rgba(245,197,24,.25);
+    --red:#f87171;--green:#4ade80;--blue:#38bdf8;--teal:#5eead4;--purple:#c084fc;
+    --text:#e2e8f4;--text-muted:#7a82a0;--text-dim:#4a5270;
+    --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(12,14,22,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;}
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:8px;height:52px;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;white-space:nowrap;margin-right:12px;font-size:.95rem;}
+  .nav-brand span{color:var(--gold);}
+  .nav-sep{width:1px;height:18px;background:var(--border2);flex-shrink:0;}
+  .nav-link{white-space:nowrap;padding:5px 12px;border-radius:6px;font-size:.78rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
+  .nav-link:hover{color:var(--text);background:var(--surface2);}
+  .nav-link.active{color:var(--accent);background:rgba(244,114,182,.1);font-weight:600;}
+
+  .hero{padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(244,114,182,.07),transparent);}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.2);border-radius:20px;padding:4px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:20px;letter-spacing:.05em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:14px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:580px;margin:0 auto 28px;}
+  .chapter-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
+
+  .container{max-width:900px;margin:0 auto;padding:0 24px 64px;}
+
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+  .section.gold-top::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .section.teal-top::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+  .section.blue-top::before{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+  .section.purple-top::before{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+  .section.green-top::before{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:16px;color:#fff;}
+  .sec-body{color:var(--text-muted);font-size:.97rem;line-height:1.8;}
+  .sec-body p{margin-bottom:12px;}
+
+  .formula-box{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center;}
+  .formula-box .formula-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+  .formula-box .formula-body{font-size:1.08rem;color:var(--text);line-height:2;}
+  .formula-box.gold{border-left-color:var(--gold);}.formula-box.gold .formula-label{color:var(--gold);}
+  .formula-box.teal{border-left-color:var(--teal);}.formula-box.teal .formula-label{color:var(--teal);}
+  .formula-box.blue{border-left-color:var(--blue);}.formula-box.blue .formula-label{color:var(--blue);}
+  .formula-box.green{border-left-color:var(--green);}.formula-box.green .formula-label{color:var(--green);}
+  .formula-box.purple{border-left-color:var(--purple);}.formula-box.purple .formula-label{color:var(--purple);}
+
+  .prop-card{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:24px;margin:18px 0;}
+  .prop-card .prop-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+  .prop-card .prop-name{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:12px;}
+  .prop-card .prop-body{font-size:.88rem;color:var(--text-muted);line-height:1.75;}
+  .prop-card .prop-body p{margin-bottom:8px;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0;}
+  @media(max-width:540px){.two-col{grid-template-columns:1fr;}}
+
+  .mini-card{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:18px;}
+  .mini-card h4{font-size:.9rem;font-weight:700;margin-bottom:8px;}
+  .mini-card p{font-size:.84rem;color:var(--text-muted);line-height:1.65;}
+  .mini-card.pink h4{color:var(--accent);}
+  .mini-card.teal h4{color:var(--teal);}
+  .mini-card.blue h4{color:var(--blue);}
+  .mini-card.green h4{color:var(--green);}
+  .mini-card.purple h4{color:var(--purple);}
+  .mini-card.gold h4{color:var(--gold);}
+
+  .example-box{background:rgba(244,114,182,.04);border:1px solid rgba(244,114,182,.15);border-radius:10px;padding:22px;margin:20px 0;}
+  .example-box .ex-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .example-box .ex-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:10px;}
+  .example-box .ex-body{font-size:.88rem;color:var(--text-muted);line-height:1.75;}
+  .example-box .ex-body p{margin-bottom:8px;}
+
+  .callout{border-radius:10px;padding:18px 22px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;}
+  .callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+  .callout-body h4{font-size:.88rem;font-weight:700;margin-bottom:5px;}
+  .callout-body p,.callout-body li{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+  .callout-body ul{padding-left:16px;}
+  .board{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);}
+  .board .callout-body h4{color:var(--green);}
+  .jee{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);}
+  .jee .callout-body h4{color:var(--red);}
+  .warn{background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.2);}
+  .warn .callout-body h4{color:var(--accent);}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  th{background:var(--surface2);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.73rem;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border2);}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  /* Complete cheatsheet at end */
+  .cheatsheet{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius);padding:32px;margin-bottom:28px;}
+  .cheatsheet h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:4px;}
+  .cheatsheet .sub{font-size:.82rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:24px;}
+  .cs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+  .cs-item{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:14px;}
+  .cs-item .cs-tag{font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;}
+  .cs-item .cs-formula{font-size:.9rem;color:var(--text);}
+
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+
+  @media(max-width:600px){.hero{padding:44px 16px 32px;}.section{padding:22px 18px;}.container{padding:0 14px 48px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">StudyNotes<span>Pro</span></span>
+    <div class="nav-sep"></div>
+    <a class="nav-link" href="AOI1.html">01 · Introduction</a>
+    <a class="nav-link" href="AOI2.html">02 · Area Under Curve</a>
+    <a class="nav-link" href="AOI3.html">03 · Area Between Curves</a>
+    <a class="nav-link" href="AOI4.html">04 · Integration &amp; Graph</a>
+    <a class="nav-link active" href="AOI5.html">05 · Properties</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Chapter 8 · Page 5 of 5</div>
+  <h1>Properties Used<br/><em>in Area Problems</em></h1>
+  <p class="hero-sub">Positive / negative area concept, symmetry properties, and key results that save time in exams.</p>
+  <span class="chapter-tag">Class 12 · Mathematics · CBSE &amp; JEE</span>
+</header>
+
+<div class="container">
+
+  <!-- POSITIVE / NEGATIVE AREA -->
+  <div class="section">
+    <div class="sec-num">01 · Signed Area</div>
+    <div class="sec-title">Positive and Negative Area Concept</div>
+    <div class="sec-body">
+      <p>A definite integral gives a <em>signed</em> value. When the curve is above the x-axis, the integral is positive. When below, the integral is negative. But <strong>area is always positive</strong>.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="mini-card pink">
+        <h4>Positive Area</h4>
+        <p>If \(f(x) \geq 0\) on \([a,b]\), the curve lies above the x-axis.<br/>
+        \(\displaystyle\int_a^b f(x)\,dx > 0\)<br/>Area = this value directly.</p>
+      </div>
+      <div class="mini-card teal">
+        <h4>Negative Area (Integral)</h4>
+        <p>If \(f(x) \leq 0\) on \([a,b]\), the curve lies below the x-axis.<br/>
+        \(\displaystyle\int_a^b f(x)\,dx < 0\)<br/>Area = \(\left|\displaystyle\int_a^b f(x)\,dx\right|\)</p>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-label">General Rule — Area Always Positive</div>
+      <div class="formula-body">
+        \[ \text{Area} = \left|\int_a^b f(x)\,dx\right| \quad \text{when } f(x) \leq 0 \]
+      </div>
+    </div>
+
+    <div class="formula-box teal">
+      <div class="formula-label">When Curve Crosses x-axis at c ∈ (a,b)</div>
+      <div class="formula-body">
+        \[ \text{Area} = \int_a^c f(x)\,dx + \left|\int_c^b f(x)\,dx\right| \]
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Classic Example — Crossing the Axis</div>
+      <div class="ex-title">Find total area between \(y = x^3 - x\) and the x-axis from \(x = -1\) to \(x = 1\).</div>
+      <div class="ex-body">
+        <p><strong>Zeros:</strong> \(x^3-x=0 \Rightarrow x(x^2-1)=0 \Rightarrow x = -1,0,1\). Crosses at \(x=0\).</p>
+        <p><strong>On \([-1,0]\):</strong> \(x^3-x = x(x^2-1) = x(x-1)(x+1)\). At \(x=-0.5\): \((-0.5)(0.75)\approx 0.375 > 0\). Positive.</p>
+        <p><strong>On \([0,1]\):</strong> At \(x=0.5\): \(0.125-0.5 < 0\). Negative.</p>
+        <p>\(A_1 = \displaystyle\int_{-1}^0(x^3-x)\,dx = \left[\dfrac{x^4}{4}-\dfrac{x^2}{2}\right]_{-1}^0 = 0-\left(\dfrac{1}{4}-\dfrac{1}{2}\right) = \dfrac{1}{4}\)</p>
+        <p>\(A_2 = \left|\displaystyle\int_0^1(x^3-x)\,dx\right| = \left|\left[\dfrac{x^4}{4}-\dfrac{x^2}{2}\right]_0^1\right| = \left|\dfrac{1}{4}-\dfrac{1}{2}\right| = \dfrac{1}{4}\)</p>
+        <p>Total Area = \(\dfrac{1}{4}+\dfrac{1}{4} = \mathbf{\dfrac{1}{2}}\) sq. units</p>
+        <p><em>Note: if you blindly computed \(\int_{-1}^1(x^3-x)dx\) you'd get 0 — completely wrong!</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SYMMETRY PROPERTIES -->
+  <div class="section gold-top">
+    <div class="sec-num">02 · Symmetry</div>
+    <div class="sec-title">Symmetric Properties — Time Savers!</div>
+    <div class="sec-body">
+      <p>Symmetry is the most powerful tool to reduce computation. Recognise it and halve (or quarter) your work.</p>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-num">Property 1</div>
+      <div class="prop-name">Even Function Symmetry (About y-axis)</div>
+      <div class="formula-box blue">
+        <div class="formula-label">If f(-x) = f(x) — Even Function</div>
+        <div class="formula-body">\[\int_{-a}^a f(x)\,dx = 2\int_0^a f(x)\,dx\]</div>
+      </div>
+      <div class="prop-body">
+        <p><strong>Geometric meaning:</strong> The region is symmetric about the y-axis. Left half mirrors right half.</p>
+        <p><strong>Examples:</strong> \(y = x^2\), \(y = \cos x\), \(y = |x|\), \(x^2+y^2=r^2\) (circle).</p>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-num">Property 2</div>
+      <div class="prop-name">Odd Function Symmetry (About Origin)</div>
+      <div class="formula-box purple">
+        <div class="formula-label">If f(-x) = -f(x) — Odd Function</div>
+        <div class="formula-body">\[\int_{-a}^a f(x)\,dx = 0\]</div>
+      </div>
+      <div class="prop-body">
+        <p><strong>Geometric meaning:</strong> The positive area and negative area cancel out exactly.</p>
+        <p><strong>For actual area:</strong> \(A = 2\displaystyle\int_0^a |f(x)|\,dx = 2\displaystyle\int_0^a f(x)\,dx\) (if \(f \geq 0\) on \([0,a]\)).</p>
+        <p><strong>Examples:</strong> \(y = x^3\), \(y = \sin x\), \(y = x\).</p>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-num">Property 3</div>
+      <div class="prop-name">4-fold Symmetry (Circle and Ellipse)</div>
+      <div class="formula-box green">
+        <div class="formula-label">Circle / Ellipse — Use Quarter Area</div>
+        <div class="formula-body">
+          \[\text{Area of Circle} = 4\int_0^r\sqrt{r^2-x^2}\,dx = \pi r^2\]
+          \[\text{Area of Ellipse} = 4\int_0^a\frac{b}{a}\sqrt{a^2-x^2}\,dx = \pi ab\]
+        </div>
+      </div>
+      <div class="prop-body">
+        <p>Always compute one quarter and multiply by 4. This is the standard method in board exams.</p>
+      </div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-num">Property 4</div>
+      <div class="prop-name">Symmetry about x-axis</div>
+      <div class="formula-box">
+        <div class="formula-label">Curve symmetric about x-axis (e.g. y² = 4ax)</div>
+        <div class="formula-body">\[\text{Total Area} = 2\int_a^b y\,dx \quad (y \geq 0 \text{ part})\]</div>
+      </div>
+      <div class="prop-body">
+        <p>For \(y^2 = 4ax\): use \(y = 2\sqrt{ax}\) (upper half) and multiply by 2.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPERTIES OF DEFINITE INTEGRALS USED IN AREA -->
+  <div class="section blue-top">
+    <div class="sec-num">03 · Integral Properties</div>
+    <div class="sec-title">Key Properties of Definite Integrals Used in Area</div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Property</th><th>Formula</th><th>Use in Area</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P1</td>
+            <td>Reversal of limits</td>
+            <td>\(\int_a^b f\,dx = -\int_b^a f\,dx\)</td>
+            <td>Fixing negative results from wrong limit order</td>
+          </tr>
+          <tr>
+            <td>P2</td>
+            <td>Additivity</td>
+            <td>\(\int_a^b = \int_a^c + \int_c^b\)</td>
+            <td>Splitting at zero-crossing points</td>
+          </tr>
+          <tr>
+            <td>P3</td>
+            <td>Even function</td>
+            <td>\(\int_{-a}^a f = 2\int_0^a f\) (if even)</td>
+            <td>Halving computation for symmetric regions</td>
+          </tr>
+          <tr>
+            <td>P4</td>
+            <td>Odd function</td>
+            <td>\(\int_{-a}^a f = 0\) (if odd)</td>
+            <td>Quickly evaluating areas — but get actual area by doubling one side</td>
+          </tr>
+          <tr>
+            <td>P5</td>
+            <td>Periodic function</td>
+            <td>\(\int_0^{nT} f = n\int_0^T f\)</td>
+            <td>Area under \(n\) cycles of \(\sin x\), \(\cos x\)</td>
+          </tr>
+          <tr>
+            <td>P6</td>
+            <td>Modulus</td>
+            <td>\(\int_a^b|f|\,dx \geq |\int_a^b f\,dx|\)</td>
+            <td>Area ≥ absolute value of integral</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COMMON MISTAKES -->
+  <div class="section">
+    <div class="sec-num">04 · Common Mistakes</div>
+    <div class="sec-title">Mistakes to Avoid — Board &amp; JEE</div>
+    <div class="two-col">
+      <div class="mini-card pink">
+        <h4>❌ Mistake 1</h4>
+        <p>Computing \(\int_{-a}^a \sin x\,dx = 0\) and stating area = 0. Area is 2, not 0! (odd function integral = 0, but area ≠ 0).</p>
+      </div>
+      <div class="mini-card teal">
+        <h4>❌ Mistake 2</h4>
+        <p>Not splitting the integral when the curve crosses the x-axis. Always find zeros first.</p>
+      </div>
+      <div class="mini-card blue">
+        <h4>❌ Mistake 3</h4>
+        <p>For area between curves, subtracting in the wrong order. Always: upper − lower or right − left.</p>
+      </div>
+      <div class="mini-card green">
+        <h4>❌ Mistake 4</h4>
+        <p>Using area = \(\int_a^b f\,dx\) directly when \(f(x)\) can be negative. Take absolute value when needed.</p>
+      </div>
+      <div class="mini-card purple">
+        <h4>❌ Mistake 5</h4>
+        <p>For circle area: computing \(\int_{-r}^r\sqrt{r^2-x^2}\,dx\) instead of \(4\int_0^r...\,dx\). Both are correct but the latter is faster.</p>
+      </div>
+      <div class="mini-card gold">
+        <h4>❌ Mistake 6</h4>
+        <p>Forgetting to double the area when using symmetry. If you integrate one half, always multiply by 2 (or 4 for circular symmetry).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETE CHEAT SHEET -->
+  <div class="cheatsheet">
+    <h2>Chapter 8 — Master Cheat Sheet</h2>
+    <div class="sub">All formulas and results at a glance · Class 12 · Board &amp; JEE</div>
+    <div class="cs-grid">
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--teal)">Area — Curve + x-axis</div>
+        <div class="cs-formula">\(A = \int_a^b f(x)\,dx\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--blue)">Area — Curve + y-axis</div>
+        <div class="cs-formula">\(A = \int_c^d g(y)\,dy\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--accent)">Area Between Curves</div>
+        <div class="cs-formula">\(A = \int_a^b [f(x)-g(x)]\,dx\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--purple)">Circle</div>
+        <div class="cs-formula">\(A = \pi r^2\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--gold)">Ellipse</div>
+        <div class="cs-formula">\(A = \pi ab\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--green)">Parabola latus rectum</div>
+        <div class="cs-formula">\(A = \tfrac{8a^2}{3}\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--teal)">Even symmetry</div>
+        <div class="cs-formula">\(\int_{-a}^a f = 2\int_0^a f\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--red)">Odd function integral</div>
+        <div class="cs-formula">\(\int_{-a}^a f = 0\) (but area \(\neq 0\)!)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--accent)">Negative region area</div>
+        <div class="cs-formula">\(A = \left|\int_a^b f\,dx\right|\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--blue)">y²=4ax and x²=4ay</div>
+        <div class="cs-formula">Enclosed area = \(\tfrac{16a^2}{3}\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--purple)">y=x² and y=x</div>
+        <div class="cs-formula">Enclosed area = \(\tfrac{1}{6}\)</div>
+      </div>
+      <div class="cs-item">
+        <div class="cs-tag" style="color:var(--gold)">Periodic: n cycles</div>
+        <div class="cs-formula">\(\int_0^{nT} |f| = n\int_0^T |f|\)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout board">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body">
+      <h4>Board Exam — Properties Strategy</h4>
+      <ul>
+        <li>When you see \(\int_{-a}^a\), immediately check: is the function even or odd? Use property P3 or P4.</li>
+        <li>For circle / ellipse area, always use the quarter + multiply by 4 approach.</li>
+        <li>In 5-mark questions, writing and using symmetry explicitly earns marks.</li>
+        <li>Always verify: can you check your area against an approximate geometrical estimate?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout jee">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <h4>JEE Advanced — Property-Based Tricks</h4>
+      <ul>
+        <li>Area under \(y = f(x)\) from \(a\) to \(b\) can be rewritten using substitution \(x \to a+b-x\) (King's property) to simplify difficult integrals.</li>
+        <li>If \(f(a+x) = f(a-x)\), the graph is symmetric about \(x=a\).</li>
+        <li>For \(|f(x)|\) problems: split at zeros, integrate each piece with appropriate sign, add absolute values.</li>
+        <li>Minimum area problems: area as a function of parameter \(t\), then differentiate \(A(t)\) and set \(A'(t)=0\).</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 8 &middot; Application of Integrals</div>
+  </div>
+</footer>
+</body>
+</html>

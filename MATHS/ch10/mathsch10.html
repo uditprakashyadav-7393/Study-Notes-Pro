@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Chapter 10 class 12 mathematics study notes on Vector Algebra">
+<meta name="keywords" content="Class 12 Maths Chapter 10, Vector Algebra, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Chapter 10 – Vector Algebra</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f1a;
+    --surface: #141625;
+    --card: #1a1d2e;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e96c6c;
+    --accent2: #f5c842;
+    --accent3: #7c6af7;
+    --text: #eef0ff;
+    --muted: #8890b0;
+    --radius: 16px;
+    --gold: goldenrod;
+    --gold-dim: #a08020;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(233,108,108,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233,108,108,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-glow {
+    position: fixed;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(233,108,108,0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── BACK LINK ─────────────────────────── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 28px;
+    padding: 6px 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* ── HERO ─────────────────────────────── */
+  header {
+    text-align: center;
+    padding: 56px 0 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(233,108,108,0.13);
+    border: 1px solid rgba(233,108,108,0.35);
+    color: #f09090;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  h1 .ch { color: var(--muted); font-size: 0.55em; display: block; margin-bottom: 6px; letter-spacing: 0.04em; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  h1 .hi { color: var(--accent); }
+  h1 .lo { color: var(--accent2); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  /* ── SECTION LABEL ─────────────────────── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 44px 0 22px;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .label-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .label-num {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  /* ── TOPIC GRID ────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(233,108,108,0.07) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(233,108,108,0.45);
+    background: #1f1a1a;
+    transform: translateY(-2px);
+  }
+
+  .card:hover::after { opacity: 1; }
+
+  /* icon box */
+  .ch-icon {
+    min-width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .icon-red    { background: rgba(233,108,108,0.12); border: 1px solid rgba(233,108,108,0.28); }
+  .icon-gold   { background: rgba(245,200,66,0.10);  border: 1px solid rgba(245,200,66,0.28); }
+  .icon-purple { background: rgba(124,106,247,0.12); border: 1px solid rgba(124,106,247,0.28); }
+  .icon-green  { background: rgba(45,200,130,0.10);  border: 1px solid rgba(45,200,130,0.28); }
+  .icon-blue   { background: rgba(60,180,240,0.10);  border: 1px solid rgba(60,180,240,0.28); }
+
+  .ch-body { flex: 1; min-width: 0; }
+
+  .ch-title {
+    font-size: 0.93rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .ch-tag {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .ch-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 4px;
+    transition: color 0.2s, transform 0.18s;
+    flex-shrink: 0;
+  }
+
+  .card:hover .ch-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  /* ── KEY FORMULAS TABLE ────────────────── */
+  .formula-section {
+    margin-top: 56px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .formula-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .formula-card .f-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .formula-card .f-expr {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #f09090;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .formula-card .f-note {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+  span.upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:2px;
+  }
+  span.upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.7;
+    font-size: 12px;
+  } 
+  span.cap {
+    position: relative;
+    display: inline-block;
+    padding-top:2px;
+  }
+  span.cap::before {
+    content: '^';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    font-size: 12px;
+  }
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ── ANIMATIONS ────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card { animation: fadeUp 0.5s ease both; }
+  .card:nth-child(1)  { animation-delay: 0.20s }
+  .card:nth-child(2)  { animation-delay: 0.24s }
+  .card:nth-child(3)  { animation-delay: 0.28s }
+  .card:nth-child(4)  { animation-delay: 0.32s }
+  .card:nth-child(5)  { animation-delay: 0.36s }
+  .card:nth-child(6)  { animation-delay: 0.40s }
+  .card:nth-child(7)  { animation-delay: 0.44s }
+  .card:nth-child(8)  { animation-delay: 0.48s }
+</style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+
+<div class="container">
+  <a class="back-link" href="/MATHS/mathsnotes.html">← Back to All Chapters</a>
+
+  <header>
+    <div class="badge">🏹  Chapter 10 · Class 12 Maths</div>
+    <h1>
+      <span class="ch">Vector</span>
+      <span class="hi">Algebra</span>
+    </h1>
+    <p class="subtitle">Vector Algebra introduces the concept of vectors and their operations, which are essential in various fields of science and engineering. This chapter covers vector addition, subtraction, and scalar multiplication.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Topics</div></div>
+      <div class="stat"><div class="stat-num">~6</div><div class="stat-label">Board Marks</div></div>
+    </div>
+  </header>
+
+  
+
+  <!-- Topics -->
+  <div class="section-label">
+    <h2>Topics Covered</h2>
+    <div class="label-line"></div>
+    <span class="label-num">6 Topics</span>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="./vector1.html" rel="noopener">
+      <div class="ch-icon icon-red">📖</div>
+      <div class="ch-body">
+        <div class="ch-title"> Introduction to Vectors</div>
+        <div class="ch-tag">• Scalar Vector • Representation of vectors  </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+     <a class="card" href="./vector2.html" rel="noopener">
+      <div class="ch-icon icon-red">📝</div>
+      <div class="ch-body">
+        <div class="ch-title">Some Basic Concepts </div>
+        <div class="ch-tag">• Directed line Segment • Magnitude of  vector • Position Vector • Direction Cosines • Direction ratios • Equal Magnitude </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./vector3.html" rel="noopener">
+      <div class="ch-icon icon-gold">📊</div>
+      <div class="ch-body">
+        <div class="ch-title">Types of Vectors</div>
+        <div class="ch-tag">Zero Vector · Unit Vector · Equal Vector · Parallel Vector · Perpendicular Vector</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./vector4.html" rel="noopener">
+      <div class="ch-icon icon-purple">🔢</div>
+      <div class="ch-body">
+        <div class="ch-title"> Vector Addition</div>
+        <div class="ch-tag"> •  Triangle Law • Parallelogram Law •  Properties of Vector Addition • Vector Subtraction </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="card" href="./vector5.html" rel="noopener">
+      <div class="ch-icon icon-blue">➕</div>
+      <div class="ch-body">
+        <div class="ch-title"> Multiplication of Vector by a scalar </div>
+        <div class="ch-tag">Scalar Multiplication  • Component of vector •Vector joining two points  • Properties of Vector Multiplication • Section Formula  </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./vector6.html" target="_blank" rel="noopener">
+      <div class="ch-icon icon-red">📝</div>
+      <div class="ch-body">
+        <div class="ch-title"> Product of two Vector </div>
+        <div class="ch-tag">• Dot product  • Angle Between vectors • Projection of  • Cross product </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- Key Formulas -->
+  <div class="formula-section">
+    <div class="section-label">
+      <h2>Key Formulas</h2>
+      <div class="label-line"></div>
+      <span class="label-num">Quick Reference</span>
+    </div>
+
+    <div class="formula-grid">
+
+      <div class="formula-card">
+        <div class="f-label"> Magnitude of Vector  </div>
+        <div class="f-expr"> For Vector: <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">a</span> = x<span class="cap">i </span> + y<span class="cap">j</span> +  z<span class="cap">k</span> <br> Magnitude: <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">|a|</span> = √(x² + y² + z²) </div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Unit Vector</div>
+        <div class="f-expr">Unit Vector along <span class="upper-arrow">a</span>: <br> &nbsp; &nbsp; &nbsp; <span class="cap">a</span> = <span class="upper-arrow">a</span> / |<span class="upper-arrow">a</span>| </div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Position vector</div>
+        <div class="f-expr">Position vector of a point P(x, y, z) w.r.t. origin O(0, 0, 0): <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">OP</span> = x<span class="cap">i </span> + y<span class="cap">j</span> +  z<span class="cap">k</span> </div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Vector Joining Two Points  </div>
+        <div class="f-expr">Vector joining points P(x₁, y₁, z₁) and Q(x₂, y₂, z₂): <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">PQ</span> = (x₂ - x₁)<span class="cap">i </span> + (y₂ - y₁)<span class="cap">j</span> + (z₂ - z₁)<span class="cap">k</span> </div>
+      </div>
+
+      
+      <div class="formula-card">
+        <div class="f-label"> Addition And Subtraction of Vectors</div>
+        <div class="f-expr"> Vector Addition: <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">A</span> + <span class="upper-arrow">B</span> = (a₁ + b₁)<span class="cap">i </span> + (a₂ + b₂)<span class="cap">j</span> + (a₃ + b₃)<span class="cap">k</span> <br>  Vector Subtraction: <br> &nbsp; &nbsp; &nbsp; <span class="upper-arrow">A</span> - <span class="upper-arrow">B</span> = (a₁ - b₁)<span class="cap">i</span> + (a₂ - b₂)<span class="cap">j</span> + (a₃ - b₃)<span class="cap">k</span> </div>
+      </div>
+
+
+      
+
+    </div>
+  </div>
+
+  <!-- Download full chapter -->
+     <div class="section-label">
+    <h2>Download Full Chapter</h2>
+    <div class="label-line"></div>
+    <span class="label-num">NCERT</span>
+  </div>
+  <div style="text-align:center; margin-top: 52px;">
+    <a href="https://ncert.nic.in/textbook/pdf/lemh204.pdf" target="_blank" rel="noopener"
+       style="display:inline-flex; align-items:center; gap:10px; background: rgba(233,108,108,0.12); border: 1px solid rgba(233,108,108,0.35); color: #f09090; font-weight:600; font-size:14px; padding: 13px 28px; border-radius:999px; text-decoration:none; transition: background 0.2s;"
+       onmouseover="this.style.background='rgba(233,108,108,0.22)'" onmouseout="this.style.background='rgba(233,108,108,0.12)'">
+      📄 Download Full Chapter PDF (NCERT)
+    </a>
+  </div>
+
+</div>
+<footer class="site-footer">
+   <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+           <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vector Algebra</div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>01 · Introduction — Chapter 10 Vectors</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080c18;--surface:#0f1524;--surface2:#161d30;--border:#1e2a45;
+  --accent:#4f8eff;--accent2:#a78bfa;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;
+  --text:#e2e8f0;--muted:#7a8ba8;--dim:#4a5a78;
+  --h:'Syne',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;
+  --sw:264px;--r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--b);font-size:15.5px;line-height:1.8;min-height:100vh}
+
+/* ─── PROGRESS BAR ─── */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:999;width:0;transition:width .1s}
+
+/* ─── TOP BAR (mobile) ─── */
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;align-items:center;justify-content:space-between;padding:0 16px}
+.topbar-title{font-family:var(--h);font-size:14px;font-weight:700;color:var(--text)}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─── OVERLAY ─── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}
+.overlay.show{display:block}
+
+/* ─── SIDEBAR ─── */
+.sidebar{width:var(--sw);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;overflow-y:auto;z-index:160;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sb-label{font-family:var(--m);font-size:10px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sb-brand h2{font-family:var(--h);font-size:16px;font-weight:700;line-height:1.3}
+.sb-nav{padding:16px 12px;flex:1}
+.sb-sec{font-family:var(--m);font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin-bottom:8px}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;transition:all .2s;margin-bottom:3px}
+.ni:hover{background:var(--surface2);color:var(--text)}
+.ni.on{background:rgba(79,142,255,.12);color:var(--accent);border:1px solid rgba(79,142,255,.25)}
+.ni .n{font-family:var(--m);font-size:10px;color:var(--dim);min-width:18px}
+.ni.on .n{color:var(--accent)}
+
+/* ─── MAIN ─── */
+.main{margin-left:var(--sw);padding:52px 56px 80px;max-width:calc(var(--sw) + 820px)}
+
+/* ─── PAGE HEADER ─── */
+.ph{margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(79,142,255,.07),transparent 70%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(79,142,255,.1);border:1px solid rgba(79,142,255,.25);color:var(--accent);font-family:var(--m);font-size:11px;padding:4px 13px;border-radius:20px;margin-bottom:16px}
+.ph h1{font-family:var(--h);font-size:40px;font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0,#8aa5c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.ph p{color:var(--muted);font-size:15px;max-width:540px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 11px;border-radius:20px;font-family:var(--m)}
+.b-board{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.b-jee{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}
+
+/* ─── SECTIONS ─── */
+.sec{margin-bottom:44px}
+.sec-title{font-family:var(--h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--accent);border-radius:2px;flex-shrink:0}
+p{color:var(--muted);margin-bottom:12px}
+
+/* ─── CARDS ─── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px}
+.card-t{font-family:var(--h);font-size:14px;font-weight:700;margin-bottom:8px}
+.card p{margin-bottom:0;font-size:14px}
+.card .sub{font-size:12.5px;color:var(--dim);margin-top:6px}
+
+/* ─── FORMULA BOX ─── */
+.fbox{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r);padding:20px 24px;margin:16px 0;font-family:var(--m);font-size:14px;color:var(--gold);line-height:2.2;overflow-x:auto}
+.fbox .fl{font-family:var(--b);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+
+/* ─── NOTE / TIP / EXAMPLE ─── */
+.note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.note-l{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.note p{color:var(--muted);margin:0}
+
+.tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.tip-l{font-family:var(--m);font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.tip p{color:var(--muted);margin:0}
+
+.eg{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.eg-l{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block}
+.eg p{color:var(--muted);margin:3px 0}
+
+/* ─── TABLE ─── */
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--surface2);color:var(--accent);font-family:var(--h);font-size:13px;font-weight:600;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 18px;border-bottom:1px solid var(--border);color:var(--muted);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.02)}
+
+/* ─── LIST ─── */
+.sl{list-style:none;margin:12px 0 16px;padding:0}
+.sl li{padding:8px 0 8px 26px;position:relative;color:var(--muted);border-bottom:1px solid rgba(30,42,69,.5);font-size:14.5px}
+.sl li:last-child{border-bottom:none}
+.sl li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:13px}
+
+/* ─── VISUAL SVG ─── */
+.visual{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;margin:20px 0;overflow:hidden}
+.visual svg{max-width:100%;height:auto}
+
+/* ─── HELPERS ─── */
+.hl{color:var(--text);font-weight:600}
+.hb{color:var(--accent);font-weight:600}
+.hg{color:var(--gold);font-weight:600}
+.hv{color:var(--green);font-weight:600}
+.hp{color:var(--pink);font-weight:600}
+
+/* ─── FOOTER ─── */
+.footer{margin-left:var(--sw);border-top:1px solid var(--border);min-height:80px;padding:0 56px}
+
+/* ─── SCROLL TOP ─── */
+.stop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--accent);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(79,142,255,.4);transition:transform .2s;z-index:100}
+.stop:hover{transform:scale(1.1)}
+
+/* ════════ RESPONSIVE ════════ */
+@media(max-width:900px){
+  .grid3{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .topbar{display:flex}
+  .sidebar{transform:translateX(-100%);top:0}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 18px 80px;max-width:100%}
+  .footer{margin-left:0;padding:0 18px}
+  .ph h1{font-size:28px}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .sec-title{font-size:18px}
+  .fbox{font-size:13px;padding:16px 16px}
+  .tbl th,.tbl td{padding:9px 12px;font-size:13px}
+}
+@media(max-width:480px){
+  .ph h1{font-size:24px}
+  .main{padding:72px 14px 60px}
+  .fbox{font-size:12.5px}
+}
+/* vector arrow & cap */
+ .upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:3px;
+  }
+  .upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.9 ;
+    font-size: 15px;
+  } 
+  .cap {
+    position: relative;
+    display: inline-block;
+    padding-top:2px;
+  }
+  .cap::before {
+    content: '^';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    font-size: 12px;
+  } 
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- TOP BAR (mobile) -->
+<div class="topbar">
+  <div class="topbar-title">Ch.10 · Introduction</div>
+  <button class="burger" id="burger" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-label">Class XII · Mathematics</div>
+    <h2>Chapter 10<br/>Vectors</h2>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Topics</div>
+    <a href="vector1.html" class="ni on"><span class="n">01</span> Introduction</a>
+    <a href="vector2.html" class="ni"><span class="n">02</span> Basic Concepts</a>
+    <a href="vector3.html" class="ni"><span class="n">03</span> Types of Vectors</a>
+    <a href="vector4.html" class="ni"><span class="n">04</span> Vector Addition</a>
+    <a href="vector5.html" class="ni"><span class="n">05</span> Scalar Multiplication</a>
+    <a href="vector6.html" class="ni"><span class="n">06</span> Product of Vectors</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <header class="ph">
+    <div class="tag">01 / Introduction</div>
+    <h1>Introduction to<br/>Vectors</h1>
+    <p>Understand quantities with both magnitude and direction — the language of physics and modern mathematics.</p>
+    <div class="badges">
+      <span class="badge b-board">CBSE Board</span>
+      <span class="badge b-jee">JEE Mains & Adv.</span>
+    </div>
+  </header>
+
+  <!-- WHAT IS VECTOR -->
+  <section class="sec">
+    <div class="sec-title">What is a Vector?</div>
+    <p>In the physical world, some quantities are fully described by a single number (their size), while others need both a size <em>and</em> a direction to make complete sense.</p>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-t" style="color:var(--accent)">⚡ Scalar Quantity</div>
+        <p>Described by <span class="hl">magnitude only</span>. No direction needed.</p>
+        <p class="sub">Mass · Temperature · Speed · Time · Distance · Energy · Work</p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--pink)">🎯 Vector Quantity</div>
+        <p>Described by <span class="hl">magnitude + direction</span>. Both are essential.</p>
+        <p class="sub">Displacement · Velocity · Force · Acceleration · Momentum</p>
+      </div>
+    </div>
+    <div class="note">
+      <span class="note-l">📌 Key Insight</span>
+      <p><strong>Speed</strong> (scalar) tells how fast. <strong>Velocity</strong> (vector) tells how fast AND in which direction. This tiny difference creates entirely different mathematics!</p>
+    </div>
+  </section>
+
+  <!-- REPRESENTATION -->
+  <section class="sec">
+    <div class="sec-title">Geometric Representation</div>
+    <p>A vector is drawn as a <span class="hb">directed line segment</span> — an arrow. The length gives the magnitude; the arrowhead gives the direction.</p>
+
+    <div class="visual">
+      <svg viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+            <path d="M0,0 L0,7 L9,3.5 z" fill="#4f8eff"/>
+          </marker>
+        </defs>
+        <line x1="60" y1="105" x2="390" y2="60" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#a1)"/>
+        <circle cx="60" cy="105" r="5" fill="#a78bfa"/>
+        <circle cx="390" cy="60" r="5" fill="#4f8eff"/>
+        <text x="34" y="126" font-family="IBM Plex Sans" font-size="13" fill="#a78bfa">A (Tail / Initial)</text>
+        <text x="396" y="56" font-family="IBM Plex Sans" font-size="13" fill="#4f8eff">B (Head / Terminal)</text>
+        <text x="210" y="68" font-family="IBM Plex Mono" font-size="14" fill="#fbbf24" text-anchor="middle" ">AB</text>
+        <text x="210" y="140" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78" text-anchor="middle">Length = magnitude  |  Arrow = direction</text>
+      </svg>
+    </div>
+
+    <div class="fbox">
+      <span class="fl">Notation</span>
+      Vector from A to B: <strong><span class="upper-arrow">AB</span></strong>  or  <strong><span class="upper-arrow">a</span></strong>  (bold in textbooks)<br/>
+      Magnitude:  <strong><span class="upper-arrow">|AB|</span></strong>  or  <strong><span class="upper-arrow">|a|</span></strong>  or just  <strong>a</strong>  (italic)
+    </div>
+
+    <ul class="sl">
+      <li>The <span class="hl">starting point</span> A is called the <span class="hg">Initial Point (Tail)</span></li>
+      <li>The <span class="hl">ending point</span> B is called the <span class="hg">Terminal Point (Head)</span></li>
+      <li>Length of arrow = <span class="hb">magnitude</span> of vector</li>
+      <li>Arrowhead direction = <span class="hb">direction</span> of vector</li>
+    </ul>
+  </section>
+
+  <!-- SCALAR VS VECTOR TABLE -->
+  <section class="sec">
+    <div class="sec-title">Scalars vs Vectors — Full Comparison</div>
+    <table class="tbl">
+      <thead><tr><th>Property</th><th style="color:var(--accent)">Scalar</th><th style="color:var(--pink)">Vector</th></tr></thead>
+      <tbody>
+        <tr><td>Defined by</td><td>Magnitude only</td><td>Magnitude + Direction</td></tr>
+        <tr><td>Written as</td><td>Plain number (5 kg)</td><td>Bold / arrow (a⃗, <strong>F</strong>)</td></tr>
+        <tr><td>Addition</td><td>Simple algebra</td><td>Triangle / Parallelogram law</td></tr>
+        <tr><td>Negative value</td><td>Less than zero</td><td>Opposite direction</td></tr>
+        <tr><td>Examples</td><td>5 m, 10 kg, 25°C</td><td>5 m East, 10 N upward</td></tr>
+        <tr><td>Multiplication</td><td>Algebraic product</td><td>Scalar product or cross product</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- POSITION VECTOR -->
+  <section class="sec">
+    <div class="sec-title">Position Vector</div>
+    <p>The <span class="hb">position vector</span> of point P is the vector <span class="upper-arrow">OP</span>, drawn from the <span class="hl">origin O</span> to P. It completely describes P's location in space.</p>
+
+    <div class="fbox">
+      <span class="fl">Position Vector — 3D</span>
+      If P = (x, y, z) then: <strong><span class="upper-arrow">OP</span> = x î + y ĵ + z k̂</strong><br/>
+      Magnitude: <strong><span class="upper-arrow">|OP|</span> = √(x² + y² + z²)</strong><br/><br/>
+      In 2D: If P = (x, y) then: <strong><span class="upper-arrow">OP</span> = x î + y ĵ</strong>,  <strong><span class="upper-arrow">|OP|</span> = √(x² + y²)</strong>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>P = (3, 4, 0):  <strong><span class="upper-arrow">OP</span> = 3î + 4ĵ</strong></p>
+      <p><span class="upper-arrow">|OP|</span> = √(9 + 16) = √25 = <strong>5 units</strong></p>
+    </div>
+
+    <div class="grid3">
+      <div class="card"><div class="card-t" style="color:var(--accent)">î (i-hat)</div><p>Unit vector along <strong>+x axis</strong>. |î| = 1</p></div>
+      <div class="card"><div class="card-t" style="color:var(--green)">ĵ (j-hat)</div><p>Unit vector along <strong>+y axis</strong>. |ĵ| = 1</p></div>
+      <div class="card"><div class="card-t" style="color:var(--pink)">k̂ (k-hat)</div><p>Unit vector along <strong>+z axis</strong>. |k̂| = 1</p></div>
+    </div>
+  </section>
+
+  <!-- WHY VECTORS -->
+  <section class="sec">
+    <div class="sec-title">Why Vectors Matter</div>
+    <ul class="sl">
+      <li><span class="hl">Newton's 2nd Law:</span> <span class="upper-arrow">F</span> = m<span class="upper-arrow">a</span> — force and acceleration are both vectors</li>
+      <li><span class="hl">Work:</span> W = <span class="upper-arrow">F</span> · <span class="upper-arrow">d</span> (dot product — scalar result)</li>
+      <li><span class="hl">Torque:</span> <span class="upper-arrow">τ</span> = <span class="upper-arrow">r</span> × <span class="upper-arrow">F</span> (cross product — vector result)</li>
+      <li><span class="hl">Electric Field:</span> <span class="upper-arrow">E</span> is a vector field — direction matters everywhere</li>
+      <li><span class="hl">3D Geometry:</span> Lines and planes are elegantly described using vectors</li>
+    </ul>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Strategy</span>
+      <p>Vectors appear in <strong>3D Geometry, Mechanics, Electromagnetism,</strong> and <strong>Optics</strong> in JEE. Mastering Chapter 10 directly unlocks 3D Geometry. The dot product and cross product come up every single year — treat them as high-priority topics.</p>
+    </div>
+  </section>
+
+  <!-- QUICK GLOSSARY -->
+  <section class="sec">
+    <div class="sec-title">Quick Glossary</div>
+    <table class="tbl">
+      <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--accent);font-weight:600">Scalar</td><td>Magnitude only (no direction)</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Vector</td><td>Magnitude + Direction</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Magnitude</td><td>Length/size of vector, always ≥ 0</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Unit Vector (â)</td><td>Vector with magnitude exactly = 1</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Zero Vector (0⃗)</td><td>Magnitude = 0, direction undefined</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Position Vector</td><td>Vector from origin O to point P</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Free Vector</td><td>Vector not tied to any specific position</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <span class="note-l">📌 Board Exam Focus</span>
+      <p>CBSE asks 1–2 mark questions on definitions and component writing. Practice writing vectors like <strong>3î − 2ĵ + 5k̂</strong> and computing their magnitudes quickly.</p>
+    </div>
+  </section>
+
+  <!-- NAV FOOTER -->
+  <div style="display:flex;justify-content:flex-end;padding:12px 0 0;border-top:1px solid var(--border)">
+    <a href="vector2.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 22px;border-radius:8px;font-family:var(--h);font-size:14px;font-weight:600">Next: Basic Concepts →</a>
+  </div>
+  <div style="height:40px"></div>
+</main>
+
+<footer class="site-footer footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vectors</div>
+    </div>
+</footer>
+<button class="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const burger=document.getElementById('burger'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+  function toggleSidebar(){const o=sidebar.classList.toggle('open');burger.classList.toggle('open',o);overlay.classList.toggle('show',o)}
+  burger.addEventListener('click',toggleSidebar);
+  overlay.addEventListener('click',toggleSidebar);
+  
+  window.addEventListener('scroll',()=>{
+    const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    document.getElementById('prog').style.width=(s/h*100)+'%';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Notes on Types of Functions for Class 12 Maths. Learn about one-one, many-one, onto, and into functions with detailed explanations and diagrams.">
+<meta name="keywords" content="Class 12 Maths Chapter 1, Types of Functions, study notes, key properties, examples, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Types of Functions</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif; --gold: #f59e0b;--gold-dim: #ab7313ad; --accent:  #e96c6c;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b);color:#f1f5f9;padding:20px}
+.container{max-width:1100px;margin:auto}
+header{text-align:center;margin-bottom:40px}
+header h1{font-size:2.5rem;color:#38bdf8}
+header p{color:#94a3b8;margin-top:8px}
+
+.card{background:#1e293b;padding:25px;border-radius:16px;margin-bottom:25px;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+.card h2{color:#22c55e;margin-bottom:10px}
+.card p,.card li{color:#cbd5f5;line-height:1.8}
+ul{padding-left:20px}
+
+.diagram{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.set{background:#020617;padding:15px 20px;border-radius:10px;border:1px solid #334155;min-width:120px;text-align:center}
+.set h4{color:#38bdf8;margin-bottom:10px}
+.elem{margin:8px 0}
+svg{flex:1;margin:0 10px}
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author  a  { color: var(--gold); font-weight: 600; font-family: 'Playfair Display', serif; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); } 
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+<h1>Types of Functions</h1>
+<p>Detailed Explanation with Diagrams</p>
+</header>
+
+<!-- One-One -->
+<div class="card">
+<h2>1. One-One Function (Injective)</h2>
+<p>
+A function is called one-one if different elements of domain map to different elements of codomain.
+No two inputs share the same output.
+</p>
+
+<ul>
+<li>f(a) = f(b) ⇒ a = b</li>
+<li>Each output is used only once</li>
+</ul>
+
+<div class="diagram">
+<div class="set">
+<h4>Domain</h4>
+<div class="elem">1</div>
+<div class="elem">2</div>
+<div class="elem">3</div>
+</div>
+
+<svg height="150">
+<defs>
+<marker id="a1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#22c55e"/>
+</marker>
+</defs>
+<line x1="10" y1="30" x2="180" y2="30" stroke="#22c55e" stroke-width="2" marker-end="url(#a1)"/>
+<line x1="10" y1="75" x2="180" y2="75" stroke="#22c55e" stroke-width="2" marker-end="url(#a1)"/>
+<line x1="10" y1="120" x2="180" y2="120" stroke="#22c55e" stroke-width="2" marker-end="url(#a1)"/>
+</svg>
+
+<div class="set">
+<h4>Codomain</h4>
+<div class="elem">a</div>
+<div class="elem">b</div>
+<div class="elem">c</div>
+</div>
+</div>
+
+<p><b>Example:</b> f(x) = x + 1</p>
+</div>
+
+<!-- Many-One -->
+<div class="card">
+<h2>2. Many-One Function</h2>
+<p>
+A function where two or more inputs map to the same output.
+This is allowed in functions.
+</p>
+
+<ul>
+<li>Different inputs → same output</li>
+</ul>
+
+<div class="diagram">
+<div class="set">
+<h4>Domain</h4>
+<div class="elem">1</div>
+<div class="elem">2</div>
+</div>
+
+<svg height="120">
+<defs>
+<marker id="a2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+</marker>
+</defs>
+<line x1="10" y1="30" x2="180" y2="60" stroke="#38bdf8" stroke-width="2" marker-end="url(#a2)"/>
+<line x1="10" y1="80" x2="180" y2="60" stroke="#38bdf8" stroke-width="2" marker-end="url(#a2)"/>
+</svg>
+
+<div class="set">
+<h4>Codomain</h4>
+<div class="elem">a</div>
+</div>
+</div>
+
+<p><b>Example:</b> f(x) = x²</p>
+</div>
+
+<!-- Onto -->
+<div class="card">
+<h2>3. Onto Function (Surjective)</h2>
+<p>
+A function is onto if every element of codomain has at least one pre-image in domain.
+</p>
+
+<ul>
+<li>Range = Codomain</li>
+<li>No element in codomain is left unused</li>
+</ul>
+
+<div class="diagram">
+<div class="set">
+<h4>Domain</h4>
+<div class="elem">1</div>
+<div class="elem">2</div>
+</div>
+
+<svg height="120">
+<defs>
+<marker id="a3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#22c55e"/>
+</marker>
+</defs>
+<line x1="10" y1="30" x2="180" y2="30" stroke="#22c55e" stroke-width="2" marker-end="url(#a3)"/>
+<line x1="10" y1="80" x2="180" y2="80" stroke="#22c55e" stroke-width="2" marker-end="url(#a3)"/>
+</svg>
+
+<div class="set">
+<h4>Codomain</h4>
+<div class="elem">a</div>
+<div class="elem">b</div>
+</div>
+</div>
+
+<p><b>Example:</b> f(x) = x³ (R → R)</p>
+</div>
+
+<!-- Into -->
+<div class="card">
+<h2>4. Into Function</h2>
+<p>
+A function is into if at least one element of codomain has no pre-image.
+</p>
+
+<ul>
+<li>Range ≠ Codomain</li>
+<li>Some outputs are not used</li>
+</ul>
+
+<div class="diagram">
+<div class="set">
+<h4>Domain</h4>
+<div class="elem">1</div>
+<div class="elem">2</div>
+</div>
+
+<svg height="120">
+<defs>
+<marker id="a4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L0,6 L9,3 z" fill="#f43f5e"/>
+</marker>
+</defs>
+<line x1="10" y1="30" x2="180" y2="30" stroke="#f43f5e" stroke-width="2" marker-end="url(#a4)"/>
+<line x1="10" y1="80" x2="180" y2="30" stroke="#f43f5e" stroke-width="2" marker-end="url(#a4)"/>
+</svg>
+
+<div class="set">
+<h4>Codomain</h4>
+<div class="elem">a</div>
+<div class="elem">b</div>
+</div>
+</div>
+
+<p><b>Example:</b> f(x) = x² (R → R)</p>
+</div>
+
+<!-- Summary -->
+<div class="card">
+<h2>Quick Comparison</h2>
+<ul>
+<li>One-One → unique outputs</li>
+<li>Many-One → same output allowed</li>
+<li>Onto → all outputs used</li>
+<li>Into → some outputs unused</li>
+</ul>
+</div>
+</div>
+<footer class="site-footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+         <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+         <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+        </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 1 &middot; Relations and Functions</div>
+   </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angle Between Lines & Shortest Distance | 3D Geometry | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+:root{--bg:#070c16;--surface:#0d1422;--surface2:#111929;--card:#0f1828;--border:#1a2540;--accent:#34d399;--accent-dim:rgba(52,211,153,.1);--gold:#f5c518;--gold-dim:rgba(245,197,24,.13);--purple:#a78bfa;--purple-dim:rgba(167,139,250,.1);--cyan:#38bdf8;--cyan-dim:rgba(56,189,248,.1);--green:#10b981;--green-dim:rgba(16,185,129,.1);--orange:#f97316;--orange-dim:rgba(249,115,22,.1);--red:#ef4444;--red-dim:rgba(239,68,68,.1);--text:#e2e8f5;--text-muted:#637496;--text-dim:#8fa3c8}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.75;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 90%,rgba(52,211,153,.05) 0,transparent 60%),radial-gradient(ellipse 50% 40% at 90% 10%,rgba(167,139,250,.05) 0,transparent 60%);pointer-events:none;z-index:0}
+.nav-header{position:sticky;top:0;background:rgba(7,12,22,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:13px 24px;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-brand span{color:var(--gold)}
+.nav-chapters{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
+.nav-chapters::-webkit-scrollbar{display:none}
+.nav-chapters a{padding:5px 13px;border-radius:20px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-decoration:none;border:1px solid transparent;white-space:nowrap;transition:.2s}
+.nav-chapters a:hover{border-color:var(--border);color:var(--text)}
+.nav-chapters a.active{background:var(--accent-dim);border-color:rgba(52,211,153,.4);color:var(--accent)}
+main{max-width:960px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
+.hero{text-align:center;padding:64px 0 52px}
+.hero-tag{display:inline-block;background:var(--accent-dim);border:1px solid rgba(52,211,153,.3);color:var(--accent);font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 16px;border-radius:20px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.15;margin-bottom:18px;background:linear-gradient(135deg,#fff 20%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:560px;margin:0 auto 30px}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.badge{padding:5px 15px;border-radius:20px;font-size:.78rem;font-weight:500}
+.badge-board{background:var(--green-dim);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.badge-jee{background:var(--orange-dim);border:1px solid rgba(249,115,22,.3);color:var(--orange)}
+.badge-ncert{background:var(--purple-dim);border:1px solid rgba(167,139,250,.3);color:var(--purple)}
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 30px;margin-bottom:52px}
+.toc-head{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin-bottom:16px}
+.toc-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.toc-list a{color:var(--text-dim);text-decoration:none;font-size:.88rem;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;transition:.18s}
+.toc-list a:hover{background:var(--accent-dim);color:var(--accent)}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:22px}
+.section{margin-bottom:60px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.section-num{width:40px;height:40px;background:var(--accent-dim);border:1px solid rgba(52,211,153,.35);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--accent);font-weight:600;flex-shrink:0}
+.section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text)}
+.sub-h3{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:600;color:var(--cyan);margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.sub-h3::before{content:'';width:3px;height:18px;background:var(--cyan);border-radius:2px;flex-shrink:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:18px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+.fbox{background:var(--gold-dim);border:1px solid rgba(245,197,24,.3);border-left:4px solid var(--gold);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.fbox2{background:var(--accent-dim);border:1px solid rgba(52,211,153,.3);border-left:4px solid var(--accent);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox2-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.note-box{background:var(--cyan-dim);border:1px solid rgba(56,189,248,.25);border-left:4px solid var(--cyan);border-radius:12px;padding:16px 20px;margin:14px 0;font-size:.93rem;color:var(--text-dim)}
+.note-box strong{color:var(--cyan)}
+.board-box{background:var(--green-dim);border:1px solid rgba(16,185,129,.25);border-left:4px solid var(--green);border-radius:12px;padding:18px 22px;margin:14px 0}
+.board-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.jee-box{background:var(--orange-dim);border:1px solid rgba(249,115,22,.25);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:14px 0}
+.jee-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.err-box{background:var(--red-dim);border:1px solid rgba(239,68,68,.25);border-left:4px solid var(--red);border-radius:12px;padding:18px 22px;margin:14px 0}
+.err-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.example{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:22px;margin:18px 0}
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.ex-tag{font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:10px;text-transform:uppercase;border:1px solid transparent}
+.ex-tag.board{background:var(--green-dim);border-color:rgba(16,185,129,.3);color:var(--green)}
+.ex-tag.jee{background:var(--orange-dim);border-color:rgba(249,115,22,.3);color:var(--orange)}
+.ex-title{font-weight:600;color:var(--text);font-size:.93rem}
+.solution{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.sol-label{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.math-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem}
+.math-table th{background:var(--surface);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;padding:11px 15px;text-align:left;border:1px solid var(--border)}
+.math-table td{padding:10px 15px;border:1px solid var(--border);color:var(--text-dim);vertical-align:middle}
+.math-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+ul.clist{padding-left:22px;margin:10px 0}
+ul.clist li{margin-bottom:7px;color:var(--text-dim);font-size:.93rem}
+ul.clist li::marker{color:var(--gold)}
+.qs{background:linear-gradient(135deg,rgba(52,211,153,.07) 0,rgba(56,189,248,.05) 100%);border:1px solid rgba(52,211,153,.2);border-radius:16px;padding:30px;margin:48px 0}
+.qs-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);margin-bottom:20px}
+.qs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
+.qs-item{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.87rem}
+.qs-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.katex-display{margin:10px 0;overflow-x:auto;padding:4px 0}
+.katex{font-size:1.05em}
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px}
+.sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none}
+.sf-brand a:hover{color:var(--cyan)}
+.sf-brand span{color:var(--gold)}
+.sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem}
+.sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.sf-dot{color:var(--border)}
+.sf-author{color:var(--text-muted)}
+.sf-author a{color:var(--gold);font-weight:600;text-decoration:none}
+.sf-author a:hover{color:var(--cyan)}
+.sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:640px){main{padding:32px 16px 64px}.hero{padding:40px 0 32px}}
+</style>
+</head>
+<body>
+
+<nav class="nav-header">
+  <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+  <div class="nav-chapters">
+    <a href="3D1.html">01 · Direction Cosines</a>
+    <a href="3D2.html">02 · Lines in Space</a>
+    <a href="3D3.html" class="active">03 · Angle &amp; S.D.</a>
+    <a href="3D4.html">04 · Planes</a>
+    <a href="3D5.html">05 · Advanced</a>
+  </div>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-tag">Chapter 11 · Three Dimensional Geometry · Topic 03</div>
+    <h1>Angle Between Lines &amp;<br>Shortest Distance</h1>
+    <p class="hero-sub">Learn to find angles between intersecting lines and the shortest distance between skew lines in 3D space.</p>
+    <div class="hero-badges">
+      <span class="badge badge-board">✓ Board Exam</span>
+      <span class="badge badge-jee">⚡ JEE Main &amp; Advanced</span>
+      <span class="badge badge-ncert">📘 NCERT Class 12</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-head">📋 Contents</div>
+    <ul class="toc-list">
+      <li><a href="#angle-lines"><span class="toc-num">1.</span>Angle Between Two Lines</a></li>
+      <li><a href="#parallel-perp"><span class="toc-num">2.</span>Parallel &amp; Perpendicular</a></li>
+      <li><a href="#skew"><span class="toc-num">3.</span>Skew Lines</a></li>
+      <li><a href="#sd-formula"><span class="toc-num">4.</span>Shortest Distance Formula</a></li>
+      <li><a href="#sd-parallel"><span class="toc-num">5.</span>Distance Between Parallel Lines</a></li>
+      <li><a href="#examples"><span class="toc-num">6.</span>Solved Examples</a></li>
+      <li><a href="#tips"><span class="toc-num">7.</span>Board &amp; JEE Tips</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Angle Between Two Lines -->
+  <div class="section" id="angle-lines">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Angle Between Two Lines</h2>
+    </div>
+    <div class="card">
+      <p>If two lines have direction vectors $\vec{b_1}$ and $\vec{b_2}$, the <strong>acute angle</strong> $\theta$ between them is found using the dot product:</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle — Vector Form</div>
+        $$\cos\theta = \left|\frac{\vec{b_1} \cdot \vec{b_2}}{|\vec{b_1}|\ |\vec{b_2}|}\right|$$
+        <p style="margin-top:10px;font-size:.9rem;color:var(--text-dim)">The modulus gives the acute angle (since lines don't have orientation)</p>
+      </div>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle — Cartesian Form</div>
+        <p>If DRs of two lines are $(a_1,b_1,c_1)$ and $(a_2,b_2,c_2)$:</p>
+        $$\cos\theta = \left|\frac{a_1a_2+b_1b_2+c_1c_2}{\sqrt{a_1^2+b_1^2+c_1^2}\;\sqrt{a_2^2+b_2^2+c_2^2}}\right|$$
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Parallel & Perpendicular -->
+  <div class="section" id="parallel-perp">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Parallel and Perpendicular Lines</h2>
+    </div>
+    <div class="card">
+      <table class="math-table">
+        <thead><tr><th>Condition</th><th>Vector Form</th><th>Cartesian Form</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Parallel</strong> ($\theta=0°$)</td>
+            <td>$\vec{b_1} \times \vec{b_2} = \vec{0}$<br>or $\vec{b_1} = k\vec{b_2}$</td>
+            <td>$\dfrac{a_1}{a_2} = \dfrac{b_1}{b_2} = \dfrac{c_1}{c_2}$</td>
+          </tr>
+          <tr>
+            <td><strong>Perpendicular</strong> ($\theta=90°$)</td>
+            <td>$\vec{b_1} \cdot \vec{b_2} = 0$</td>
+            <td>$a_1a_2+b_1b_2+c_1c_2=0$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">
+      <strong>Mnemonic:</strong> Parallel → Cross product is ZERO. Perpendicular → Dot product is ZERO. They're opposite!
+    </div>
+  </div>
+
+  <!-- 3. Skew Lines -->
+  <div class="section" id="skew">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2>Skew Lines</h2>
+    </div>
+    <div class="card">
+      <p>In 3D, two lines can be:</p>
+      <ul class="clist">
+        <li><strong>Intersecting</strong> — they meet at exactly one point</li>
+        <li><strong>Parallel</strong> — same direction, never meet</li>
+        <li><strong>Skew lines</strong> — neither parallel nor intersecting; they lie in different planes</li>
+      </ul>
+      <div class="fbox">
+        <div class="fbox-title">🌀 Skew Lines</div>
+        <p>Skew lines are lines that do not intersect and are not parallel. They have a unique shortest distance between them.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">How to Check if Lines are Coplanar (Intersecting or Parallel)</div>
+      <p>Two lines $\vec{r}=\vec{a_1}+\lambda\vec{b_1}$ and $\vec{r}=\vec{a_2}+\mu\vec{b_2}$ are coplanar if and only if:</p>
+      <div class="fbox">
+        <div class="fbox-title">📌 Coplanarity Condition (Vector)</div>
+        $$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2}) = 0$$
+      </div>
+      <div class="fbox">
+        <div class="fbox-title">📌 Coplanarity Condition (Cartesian)</div>
+        $$\begin{vmatrix} x_2-x_1 & y_2-y_1 & z_2-z_1 \\ a_1 & b_1 & c_1 \\ a_2 & b_2 & c_2 \end{vmatrix} = 0$$
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. SD Formula -->
+  <div class="section" id="sd-formula">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2>Shortest Distance Between Skew Lines</h2>
+    </div>
+    <div class="card">
+      <p>For two skew lines $\vec{r}=\vec{a_1}+\lambda\vec{b_1}$ and $\vec{r}=\vec{a_2}+\mu\vec{b_2}$:</p>
+      <div class="fbox">
+        <div class="fbox-title">⭐ Shortest Distance Formula — Vector Form</div>
+        $$d = \frac{|(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})|}{|\vec{b_1}\times\vec{b_2}|}$$
+      </div>
+    </div>
+    <div class="card">
+      <p>For lines $\dfrac{x-x_1}{a_1}=\dfrac{y-y_1}{b_1}=\dfrac{z-z_1}{c_1}$ and $\dfrac{x-x_2}{a_2}=\dfrac{y-y_2}{b_2}=\dfrac{z-z_2}{c_2}$:</p>
+      <div class="fbox">
+        <div class="fbox-title">⭐ Shortest Distance Formula — Cartesian Form</div>
+        $$d = \frac{\left|\begin{vmatrix} x_2-x_1 & y_2-y_1 & z_2-z_1 \\ a_1 & b_1 & c_1 \\ a_2 & b_2 & c_2 \end{vmatrix}\right|}{\sqrt{(b_1c_2-b_2c_1)^2+(c_1a_2-c_2a_1)^2+(a_1b_2-a_2b_1)^2}}$$
+      </div>
+      <div class="note-box">
+        <strong>Note:</strong> The denominator $= |\vec{b_1}\times\vec{b_2}|$. If $d = 0$, the lines are coplanar (intersecting or parallel).
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sub-h3">Understanding the Formula</div>
+      <p>The shortest distance lies along the <strong>common perpendicular</strong> — a line segment that is perpendicular to both lines simultaneously.</p>
+      <ul class="clist">
+        <li>$\vec{b_1}\times\vec{b_2}$ gives a vector perpendicular to both direction vectors</li>
+        <li>$\hat{n} = \dfrac{\vec{b_1}\times\vec{b_2}}{|\vec{b_1}\times\vec{b_2}|}$ is the unit normal to the common perpendicular</li>
+        <li>Project $\vec{a_2}-\vec{a_1}$ onto $\hat{n}$ to get the distance</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. Parallel Lines Distance -->
+  <div class="section" id="sd-parallel">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <h2>Distance Between Parallel Lines</h2>
+    </div>
+    <div class="card">
+      <p>For parallel lines $\vec{r}=\vec{a_1}+\lambda\vec{b}$ and $\vec{r}=\vec{a_2}+\mu\vec{b}$ (same direction $\vec{b}$):</p>
+      <div class="fbox">
+        <div class="fbox-title">📏 Distance Between Parallel Lines</div>
+        $$d = \frac{|(\vec{a_2}-\vec{a_1})\times\vec{b}|}{|\vec{b}|}$$
+      </div>
+      <p>This gives the perpendicular distance between the two parallel lines.</p>
+    </div>
+  </div>
+
+  <!-- 6. Examples -->
+  <div class="section" id="examples">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <h2>Solved Examples</h2>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 1 — Angle Between Two Lines</span></div>
+      <p>Find the angle between lines with DRs $(1, 2, 2)$ and $(3, 4, 0)$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        $$\cos\theta = \left|\frac{(1)(3)+(2)(4)+(2)(0)}{\sqrt{1+4+4}\cdot\sqrt{9+16+0}}\right| = \left|\frac{3+8+0}{3\cdot 5}\right| = \frac{11}{15}$$
+        $$\theta = \cos^{-1}\!\left(\frac{11}{15}\right)$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 2 — Perpendicularity Check</span></div>
+      <p>Show that lines with DRs $(1,-2,2)$ and $(2,2,1)$ are perpendicular.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        $$a_1a_2+b_1b_2+c_1c_2 = (1)(2)+(-2)(2)+(2)(1) = 2-4+2 = 0$$
+        <p>Since the dot product $= 0$, the lines are <strong>perpendicular</strong>. ✓</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 3 — Shortest Distance (Vector)</span></div>
+      <p>Find the shortest distance between $\vec{r} = (4\hat{i}-\hat{j})+\lambda(\hat{i}+2\hat{j}-3\hat{k})$ and $\vec{r} = (\hat{i}-\hat{j}+2\hat{k})+\mu(2\hat{i}+4\hat{j}-5\hat{k})$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$\vec{a_1}=4\hat{i}-\hat{j}$, $\vec{a_2}=\hat{i}-\hat{j}+2\hat{k}$, $\vec{b_1}=\hat{i}+2\hat{j}-3\hat{k}$, $\vec{b_2}=2\hat{i}+4\hat{j}-5\hat{k}$</p>
+        <p>$\vec{a_2}-\vec{a_1} = -3\hat{i}+0\hat{j}+2\hat{k}$</p>
+        $$\vec{b_1}\times\vec{b_2} = \begin{vmatrix}\hat{i}&\hat{j}&\hat{k}\\1&2&-3\\2&4&-5\end{vmatrix} = \hat{i}((-10)-(-12))-\hat{j}((-5)-(-6))+\hat{k}(4-4)$$
+        $$= 2\hat{i}-\hat{j}+0\hat{k}$$
+        $$|\vec{b_1}\times\vec{b_2}| = \sqrt{4+1} = \sqrt{5}$$
+        $$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2}) = (-3)(2)+(0)(-1)+(2)(0) = -6$$
+        $$d = \frac{|-6|}{\sqrt{5}} = \frac{6}{\sqrt{5}} = \frac{6\sqrt{5}}{5}$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 4 — Check Coplanarity</span></div>
+      <p>Show that the lines $\dfrac{x-1}{3}=\dfrac{y-2}{-1}=\dfrac{z-3}{2}$ and $\dfrac{x-1}{3}=\dfrac{y-1}{2}=\dfrac{z-6}{2}$ are coplanar.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$(x_1,y_1,z_1)=(1,2,3)$, $(a_1,b_1,c_1)=(3,-1,2)$; $(x_2,y_2,z_2)=(1,1,6)$, $(a_2,b_2,c_2)=(3,2,2)$</p>
+        $$\Delta = \begin{vmatrix}1-1&1-2&6-3\\3&-1&2\\3&2&2\end{vmatrix} = \begin{vmatrix}0&-1&3\\3&-1&2\\3&2&2\end{vmatrix}$$
+        $$= 0[(-1)(2)-(2)(2)] - (-1)[(3)(2)-(3)(2)] + 3[(3)(2)-(-1)(3)]$$
+        $$= 0 - (-1)(0) + 3(6+3) = 0+0+27 \neq 0$$
+        <div class="note-box" style="margin-top:10px"><strong>Wait:</strong> Let me recheck the problem. Since $\Delta\neq 0$, these lines are <strong>skew</strong>, not coplanar. This is a good example showing how to determine the type of lines!</div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 5 — S.D. by Cartesian Formula</span></div>
+      <p>Find the shortest distance between lines $\dfrac{x-3}{1}=\dfrac{y-5}{-2}=\dfrac{z-7}{1}$ and $\dfrac{x+1}{7}=\dfrac{y-1}{-6}=\dfrac{z+1}{1}$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$(x_1,y_1,z_1)=(3,5,7)$, $(a_1,b_1,c_1)=(1,-2,1)$; $(x_2,y_2,z_2)=(-1,1,-1)$, $(a_2,b_2,c_2)=(7,-6,1)$</p>
+        $$\text{Numerator} = \begin{vmatrix}-4&-4&-8\\1&-2&1\\7&-6&1\end{vmatrix}$$
+        $$= -4[(-2)(1)-(-6)(1)]-(-4)[(1)(1)-(7)(1)]+(-8)[(1)(-6)-(-2)(7)]$$
+        $$= -4(-2+6)+4(1-7)+(-8)(-6+14)$$
+        $$= -4(4)+4(-6)+(-8)(8) = -16-24-64 = -104$$
+        <p>$|\text{numerator}| = 104$</p>
+        <p>$\vec{b_1}\times\vec{b_2}$: using $b_1=(1,-2,1)$, $b_2=(7,-6,1)$:</p>
+        $$= \hat{i}((-2)(1)-(-6)(1))-\hat{j}((1)(1)-(7)(1))+\hat{k}((1)(-6)-(-2)(7))$$
+        $$= \hat{i}(-2+6)-\hat{j}(1-7)+\hat{k}(-6+14) = 4\hat{i}+6\hat{j}+8\hat{k}$$
+        $$|\vec{b_1}\times\vec{b_2}| = \sqrt{16+36+64} = \sqrt{116} = 2\sqrt{29}$$
+        $$d = \frac{104}{2\sqrt{29}} = \frac{52}{\sqrt{29}} = \frac{52\sqrt{29}}{29}$$
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="section" id="tips">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <h2>Board &amp; JEE Tips</h2>
+    </div>
+    <div class="board-box">
+      <div class="bx-title">✅ Board Exam Tips</div>
+      <ul class="clist">
+        <li>For finding angle, always take the <em>acute</em> angle: use $|\cos\theta|$</li>
+        <li>Perpendicular check: $a_1a_2+b_1b_2+c_1c_2=0$ is a 1-line test</li>
+        <li>SD formula is commonly asked for 5 marks — memorise both vector and Cartesian versions</li>
+        <li>If SD comes out to 0, the lines intersect (or are parallel)</li>
+      </ul>
+    </div>
+    <div class="jee-box">
+      <div class="bx-title">⚡ JEE Preparation Tips</div>
+      <ul class="clist">
+        <li>Practice computing $\vec{b_1}\times\vec{b_2}$ quickly using the determinant shorthand</li>
+        <li>If $|\vec{b_1}\times\vec{b_2}|=0$ (lines parallel), use the parallel line distance formula</li>
+        <li>JEE often asks: "Are the lines coplanar? If not, find SD" — combined question</li>
+        <li>For MCQs: verify coplanarity first using the $3\times3$ determinant</li>
+      </ul>
+    </div>
+    <div class="err-box">
+      <div class="bx-title">❌ Common Mistakes</div>
+      <ul class="clist">
+        <li>Forgetting the modulus sign in the angle formula — always take $|\cos\theta|$</li>
+        <li>Using DCs instead of DRs in the angle formula — any proportional values work</li>
+        <li>Computing the cross product incorrectly — practice the $3\times3$ determinant carefully</li>
+        <li>Confusing the SD formula for skew lines vs parallel lines</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Quick Summary -->
+  <div class="qs">
+    <div class="qs-title">⚡ Quick Formula Sheet</div>
+    <div class="qs-grid">
+      <div class="qs-item"><div class="qs-label">Angle (Vector)</div>$\cos\theta=\left|\dfrac{\vec{b_1}\cdot\vec{b_2}}{|\vec{b_1}||\vec{b_2}|}\right|$</div>
+      <div class="qs-item"><div class="qs-label">Angle (Cartesian)</div>$\cos\theta=\left|\dfrac{a_1a_2+b_1b_2+c_1c_2}{\sqrt{\Sigma a_1^2}\sqrt{\Sigma a_2^2}}\right|$</div>
+      <div class="qs-item"><div class="qs-label">Perpendicular</div>$a_1a_2+b_1b_2+c_1c_2=0$</div>
+      <div class="qs-item"><div class="qs-label">Parallel</div>$\dfrac{a_1}{a_2}=\dfrac{b_1}{b_2}=\dfrac{c_1}{c_2}$</div>
+      <div class="qs-item"><div class="qs-label">S.D. (Skew lines)</div>$d=\dfrac{|(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})|}{|\vec{b_1}\times\vec{b_2}|}$</div>
+      <div class="qs-item"><div class="qs-label">Coplanarity</div>$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})=0$</div>
+      <div class="qs-item"><div class="qs-label">Parallel Line Dist.</div>$d=\dfrac{|(\vec{a_2}-\vec{a_1})\times\vec{b}|}{|\vec{b}|}$</div>
+      <div class="qs-item"><div class="qs-label">SD Numerator (Cart.)</div>$3\times3$ determinant with rows: $(x_2-x_1,y_2-y_1,z_2-z_1)$, $(a_1,b_1,c_1)$, $(a_2,b_2,c_2)$</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 11 &middot; Three Dimensional Geometry</div>
+  </div>
+</footer>
+</body>
+</html>

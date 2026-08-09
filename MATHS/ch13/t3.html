@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 3: Independent Events & Multiplication Rule | Class 12 Probability</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <style>
+    :root {
+      --surface: #1a1a1a;
+      --surface-alt: #252525;
+      --border: #3a3a3a;
+      --text: #e5e5e5;
+      --text-muted: #9a9a9a;
+      --accent: #00d4ff;
+      --gold: #d4af37;
+      --gold-dim: #6b5b2e;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+
+    .header {
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .breadcrumb {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--border); }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .def-box {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(0,212,255,0.05) 100%);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .def-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+    }
+
+    .def-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .def-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p { margin-bottom: 16px; line-height: 1.8; }
+
+    .example-box {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .example-title {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notes-box {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid var(--success);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .notes-title {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .notes-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .notes-content li {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .board-tip {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .tip-title {
+      color: var(--warning);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .jee-tip {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .jee-tip .tip-title {
+      color: var(--danger);
+    }
+
+    .formula-section {
+      margin: 50px 0;
+    }
+
+    .formula-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .formula-title::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+
+    .formula-title.collapsed::after {
+      transform: rotate(-90deg);
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .formula-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .formula-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.1);
+    }
+
+    .formula-name {
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .formula-formula {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-top: 60px;
+    }
+
+    .sf-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .sf-brand a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+
+    .sf-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .sf-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.82rem;
+    }
+
+    .sf-copy {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter {
+      font-size: 0.72rem;
+      color: var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section { animation: fadeInUp 0.6s ease-out; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="breadcrumb">
+      <a href="/index.html">Home</a>
+      <span>/</span>
+      <a href="#">Chapter 13</a>
+      <span>/</span>
+      <span>Topic 3: Independent Events & Multiplication Rule</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Independent Events & Multiplication Rule</h1>
+    <p class="subtitle">When events don't influence each other's outcomes</p>
+
+    <div class="def-box">
+      <div class="def-title">Independent Events</div>
+      <div class="def-content">
+        Two events are independent if the occurrence of one event does not affect the probability of the other event occurring. In other words, P(A|B) = P(A) and P(B|A) = P(B). This is a fundamental concept in probability theory that simplifies many calculations.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Understanding Independence</h2>
+
+      <h3>Definition</h3>
+      <p>Events A and B are independent if and only if:</p>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Condition for Independence</div>
+        <div class="formula-formula">P(A ∩ B) = P(A) × P(B)</div>
+        <div class="formula-desc">Probability of both occurring equals product of individual probabilities</div>
+      </div>
+
+      <h3>Characteristics</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>Independent Events:</strong> Outcome of one doesn't affect the other (coin tosses, dice rolls with replacement)</li>
+            <li><strong>Dependent Events:</strong> Outcome of one affects the other (drawing cards without replacement)</li>
+            <li><strong>Test for Independence:</strong> If P(A ∩ B) = P(A) × P(B), then A and B are independent</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Examples of Independent Events</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Two Coin Tosses</div>
+        <p><strong>Event A:</strong> First coin shows heads (P(A) = 1/2)</p>
+        <p><strong>Event B:</strong> Second coin shows heads (P(B) = 1/2)</p>
+        <p><strong>These are independent:</strong> P(A ∩ B) = 1/4 = 1/2 × 1/2</p>
+        <p>The result of the first coin doesn't affect the second coin.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Drawing with Replacement</div>
+        <p><strong>Event A:</strong> First card is a king (P(A) = 4/52)</p>
+        <p><strong>Event B:</strong> Second card is a queen (P(B) = 4/52)</p>
+        <p>If we replace the first card, these are independent:</p>
+        <p>P(A ∩ B) = (4/52) × (4/52) = 16/2704</p>
+      </div>
+
+      <h3>Examples of Dependent Events</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 3: Drawing Without Replacement</div>
+        <p><strong>Event A:</strong> First card is a king (P(A) = 4/52)</p>
+        <p><strong>Event B:</strong> Second card is a queen (P(B) = 4/51, not 4/52)</p>
+        <p>Without replacement, these are dependent:</p>
+        <p>P(A ∩ B) = (4/52) × (4/51) ≠ (4/52) × (4/52)</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Multiplication Rule</h2>
+
+      <h3>For Independent Events</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Multiplication Rule (Independent)</div>
+        <div class="formula-formula">P(A ∩ B) = P(A) × P(B)</div>
+        <div class="formula-desc">For independent events A and B</div>
+      </div>
+
+      <h3>For Dependent Events</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Multiplication Rule (General)</div>
+        <div class="formula-formula">P(A ∩ B) = P(A) × P(B|A) = P(B) × P(A|B)</div>
+        <div class="formula-desc">For any two events A and B</div>
+      </div>
+
+      <h3>For Multiple Independent Events</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Multiplication Rule (Multiple)</div>
+        <div class="formula-formula">P(A ∩ B ∩ C ∩ ...) = P(A) × P(B) × P(C) × ...</div>
+        <div class="formula-desc">For multiple independent events</div>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Three Fair Dice</div>
+        <p><strong>Problem:</strong> Three fair dice are rolled. Find the probability of getting 1 on all three dice.</p>
+        <p><strong>Solution:</strong></p>
+        <p>These are independent events.</p>
+        <p>P(1 on first) = 1/6</p>
+        <p>P(1 on second) = 1/6</p>
+        <p>P(1 on third) = 1/6</p>
+        <p>P(all 1s) = 1/6 × 1/6 × 1/6 = 1/216</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Cards Without Replacement</div>
+        <p><strong>Problem:</strong> Two cards are drawn without replacement. Find the probability that both are aces.</p>
+        <p><strong>Solution:</strong></p>
+        <p>P(first is ace) = 4/52 = 1/13</p>
+        <p>P(second is ace | first was ace) = 3/51 = 1/17</p>
+        <p>P(both aces) = (4/52) × (3/51) = 12/2652 = 1/221</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 3: Mixed Independence</div>
+        <p><strong>Problem:</strong> A die is rolled and a coin is tossed. Find the probability of getting an even number and heads.</p>
+        <p><strong>Solution:</strong></p>
+        <p>These are independent events.</p>
+        <p>P(even on die) = 3/6 = 1/2</p>
+        <p>P(heads on coin) = 1/2</p>
+        <p>P(even AND heads) = 1/2 × 1/2 = 1/4</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Key Concepts</h2>
+
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>Independence is NOT the same as mutual exclusivity:</strong> Mutually exclusive events CANNOT both happen; independent events CAN but don't affect each other</li>
+            <li><strong>If two events are mutually exclusive and both have non-zero probability, they cannot be independent</strong></li>
+            <li><strong>Always check if events are independent before using the multiplication rule</strong></li>
+            <li><strong>Replacement matters:</strong> With replacement → independent; without replacement → dependent</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="board-tip">
+        <div class="tip-title">📋 Board Exam Tips</div>
+        <p><strong>Q:</strong> Define independent and dependent events with examples</p>
+        <p><strong>Q:</strong> Apply multiplication rule to find joint probability</p>
+        <p><strong>Q:</strong> Distinguish between with/without replacement</p>
+        <p><strong>Common Mistake:</strong> Forgetting to check independence before using P(A∩B) = P(A)×P(B)</p>
+        <p><strong>Helpful Tip:</strong> Use tree diagrams for sequential events</p>
+      </div>
+
+      <div class="jee-tip">
+        <div class="tip-title">🎯 JEE Advanced Tips</div>
+        <p><strong>Pattern Recognition:</strong> Most JEE problems involve checking independence using the multiplication rule</p>
+        <p><strong>Common Setup:</strong> Problems with "at least one" often use complement of independent events</p>
+        <p><strong>Speed Technique:</strong> For repeated independent trials, use P(success)ⁿ directly</p>
+        <p><strong>Integration Point:</strong> Independent events are crucial for understanding binomial distribution (Topic 4)</p>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="formula-title" onclick="toggleFormulas(this)">📐 Complete Formula Sheet</div>
+      <div class="formula-grid" id="formulas">
+        <div class="formula-card">
+          <div class="formula-name">Multiplication Rule (Independent)</div>
+          <div class="formula-formula">P(A ∩ B) = P(A) × P(B)</div>
+          <div class="formula-desc">For independent events</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Multiplication Rule (Dependent)</div>
+          <div class="formula-formula">P(A ∩ B) = P(A) × P(B|A)</div>
+          <div class="formula-desc">Using conditional probability</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Multiple Independent Events</div>
+          <div class="formula-formula">P(A ∩ B ∩ C) = P(A)×P(B)×P(C)</div>
+          <div class="formula-desc">For three or more independent events</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Test for Independence</div>
+          <div class="formula-formula">A & B independent ⟺ P(A∩B) = P(A)×P(B)</div>
+          <div class="formula-desc">How to verify independence</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Complement with Independence</div>
+          <div class="formula-formula">P(at least one) = 1 - P(none)</div>
+          <div class="formula-desc">Using independent complements</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Sequential Independent Trials</div>
+          <div class="formula-formula">P(r successes in n trials) = (P)^r × (1-P)^(n-r)</div>
+          <div class="formula-desc">Basis for binomial distribution</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+      <div class="sf-divider"></div>
+      <div class="sf-info">
+        <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+        <span class="sf-dot">&middot;</span>
+        <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+      </div>
+      <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 13 &middot; Probability</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFormulas(element) {
+      const formulas = document.getElementById('formulas');
+      element.classList.toggle('collapsed');
+      formulas.style.display = formulas.style.display === 'none' ? 'grid' : 'none';
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Derivatives of Implicit Functions</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#2dd4bf;--accent-dim:#0f766e;
+    --green:#3fb950;--red:#f85149;--blue:#58a6ff;--purple:#bc8cff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+
+  /* NAV */
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#051a18 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(45,212,191,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(45,212,191,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(45,212,191,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+
+  /* CONTENT */
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}
+  .section:nth-child(3){animation-delay:.14s}
+  .section:nth-child(4){animation-delay:.21s}
+  .section:nth-child(5){animation-delay:.28s}
+  .section:nth-child(6){animation-delay:.35s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#000;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+
+  /* BOXES */
+  .def-box{background:linear-gradient(135deg,rgba(45,212,191,.07),rgba(45,212,191,.02));border:1px solid rgba(45,212,191,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent);line-height:2.2;}
+
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.91rem;}
+
+  .warn-box{background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .warn-box p{margin:0;color:#f9a8a4;font-size:.91rem;}
+
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+
+  /* HIGHLIGHTS */
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  .hlr{color:var(--red);}
+  .hlp{color:var(--purple);}
+
+  /* COMPARE: Explicit vs Implicit */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0;}
+  .cg-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;}
+  .cg-card h4{font-size:1rem;margin-bottom:10px;font-family:'Playfair Display',serif;}
+  .cg-card.explicit h4{color:var(--blue);}
+  .cg-card.implicit h4{color:var(--accent);}
+  .cg-card p{font-size:.88rem;color:var(--text-muted);margin:0;}
+  .cg-card .eg{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#fff;margin-top:10px;background:var(--surface2);padding:8px 12px;border-radius:6px;}
+
+  /* STEPS METHOD */
+  .method-steps{margin:22px 0;}
+  .ms-item{display:flex;gap:15px;align-items:flex-start;margin:14px 0;}
+  .ms-num{min-width:34px;height:34px;border-radius:9px;background:var(--accent);color:#000;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .ms-body h4{color:#fff;margin-bottom:3px;font-size:.95rem;}
+  .ms-body p{color:var(--text-muted);font-size:.87rem;margin:0;}
+
+  /* DIFF RULES MINI TABLE */
+  .rules-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:22px 0;}
+  .rules-box .rb-lbl{font-size:.68rem;color:var(--accent);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .rule-row{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+  .rule-row:last-child{border:none;}
+  .rr-fn{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:.9rem;min-width:120px;}
+  .rr-arrow{color:var(--text-muted);}
+  .rr-deriv{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.9rem;}
+
+  /* SUMMARY CARD */
+  .summary-box{background:linear-gradient(135deg,rgba(45,212,191,.06),rgba(45,212,191,.02));border:2px solid rgba(45,212,191,.25);border-radius:14px;padding:28px 32px;margin:28px 0;}
+  .summary-box .sb-lbl{font-size:.7rem;color:var(--accent);font-family:'JetBrains Mono',monospace;letter-spacing:.13em;text-transform:uppercase;margin-bottom:16px;}
+  .summary-box .formula{text-align:left;font-size:.92rem;}
+
+  /* TABLE */
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  th{background:var(--surface2);color:var(--accent);padding:10px 15px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:9px 15px;border-bottom:1px solid var(--border);color:#cdd5df;font-family:'JetBrains Mono',monospace;font-size:.88rem;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  /* FOOTER NAV */
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-home{background:var(--gold);color:#000;}.btn-home:hover{background:#ffd060;transform:scale(1.02);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+
+  /* PROGRESS */
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:100%;position:fixed;top:0;left:0;z-index:200;}
+
+  /* SITE FOOTER */
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+
+  @media(max-width:560px){.compare-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html">1. Continuity</a>
+    <a href="C&D2.html">2. Differentiability</a>
+    <a href="C&D3.html">3. Exp & Log</a>
+    <a href="C&D4.html">4. Log Diff.</a>
+    <a href="C&D5.html">5. Inv. Trig</a>
+    <a href="C&D6.html" class="active">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">06</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Derivatives of<br><span>Implicit Functions</span></h1>
+  <p>Differentiating equations where y cannot be (or isn't) isolated — using dy/dx directly.</p>
+</div>
+
+<div class="content">
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>Explicit vs Implicit Functions</h2></div>
+    <p>Before learning implicit differentiation, it's important to understand the difference between explicit and implicit forms.</p>
+    <div class="compare-grid">
+      <div class="cg-card explicit">
+        <h4>📗 Explicit Function</h4>
+        <p>y is directly written in terms of x. You can clearly see what y equals.</p>
+        <div class="eg">y = x² + 3x − 5<br>y = sin(x) + eˣ</div>
+      </div>
+      <div class="cg-card implicit">
+        <h4>📘 Implicit Function</h4>
+        <p>x and y are mixed together. y is NOT isolated on one side.</p>
+        <div class="eg">x² + y² = 25<br>x³ + y³ = 3xy</div>
+      </div>
+    </div>
+    <div class="def-box">
+      <div class="lbl">📘 Definition</div>
+      <p>A function defined by an equation of the form <strong>F(x, y) = 0</strong>, where y is not explicitly expressed as a function of x alone, is called an <strong>implicit function</strong>.</p>
+    </div>
+    <p>When y cannot be separated easily, we differentiate <span class="hl">both sides with respect to x</span> — treating y as a function of x — and then solve for <span class="hl">dy/dx</span>.</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>The Key Rule — Differentiating y Terms</h2></div>
+    <p>The core idea: whenever you differentiate a <strong>term containing y</strong> with respect to x, you must multiply by <span class="hl">dy/dx</span> (chain rule, since y is a function of x).</p>
+
+    <div class="rules-box">
+      <div class="rb-lbl">Differentiation of y-terms w.r.t. x</div>
+      <div class="rule-row"><div class="rr-fn">d/dx [y]</div><div class="rr-arrow">→</div><div class="rr-deriv">dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [y²]</div><div class="rr-arrow">→</div><div class="rr-deriv">2y · dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [y³]</div><div class="rr-arrow">→</div><div class="rr-deriv">3y² · dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [sin y]</div><div class="rr-arrow">→</div><div class="rr-deriv">cos y · dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [eʸ]</div><div class="rr-arrow">→</div><div class="rr-deriv">eʸ · dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [ln y]</div><div class="rr-arrow">→</div><div class="rr-deriv">(1/y) · dy/dx</div></div>
+      <div class="rule-row"><div class="rr-fn">d/dx [yⁿ]</div><div class="rr-arrow">→</div><div class="rr-deriv">n·yⁿ⁻¹ · dy/dx</div></div>
+    </div>
+
+    <div class="note-box">
+      <p>💡 <strong>Think of it this way:</strong> d/dx[f(y)] = f'(y) · dy/dx — it's just the chain rule where the inner function is y(x).</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Step-by-Step Method</h2></div>
+    <div class="method-steps">
+      <div class="ms-item">
+        <div class="ms-num">1</div>
+        <div class="ms-body"><h4>Differentiate both sides w.r.t. x</h4><p>Apply d/dx to every term on both left and right sides of the equation.</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-num">2</div>
+        <div class="ms-body"><h4>Use chain rule on y-terms</h4><p>Every y-term gets multiplied by dy/dx. Use product/quotient rules as needed.</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-num">3</div>
+        <div class="ms-body"><h4>Collect all dy/dx terms on one side</h4><p>Move all terms containing dy/dx to the left, everything else to the right.</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-num">4</div>
+        <div class="ms-body"><h4>Factor out dy/dx</h4><p>Write: dy/dx × (combined factor) = (rest of the expression).</p></div>
+      </div>
+      <div class="ms-item">
+        <div class="ms-num">5</div>
+        <div class="ms-body"><h4>Solve for dy/dx</h4><p>Divide both sides by the factor to get dy/dx = ...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Solved Examples</h2></div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 1 — Circle Equation</div>
+      <div class="etitle">Find dy/dx for x² + y² = 25</div>
+      <div class="step"><div class="sd">1</div><p>Differentiate both sides w.r.t. x:</p></div>
+      <div class="step"><div class="sd">2</div><p>d/dx[x²] + d/dx[y²] = d/dx[25]</p></div>
+      <div class="step"><div class="sd">3</div><p>2x + 2y·(dy/dx) = 0</p></div>
+      <div class="step"><div class="sd">4</div><p>2y·(dy/dx) = −2x</p></div>
+      <div class="step"><div class="sd">✓</div><p>dy/dx = <span class="hlg">−x/y</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 2 — Folium of Descartes</div>
+      <div class="etitle">Find dy/dx for x³ + y³ = 3xy</div>
+      <div class="step"><div class="sd">1</div><p>Differentiate both sides:</p></div>
+      <div class="step"><div class="sd">2</div><p>3x² + 3y²·(dy/dx) = 3[y + x·(dy/dx)]</p></div>
+      <div class="step"><div class="sd">3</div><p>3x² + 3y²·(dy/dx) = 3y + 3x·(dy/dx)</p></div>
+      <div class="step"><div class="sd">4</div><p>3y²·(dy/dx) − 3x·(dy/dx) = 3y − 3x²</p></div>
+      <div class="step"><div class="sd">5</div><p>dy/dx (3y² − 3x) = 3y − 3x²</p></div>
+      <div class="step"><div class="sd">✓</div><p>dy/dx = <span class="hlg">(y − x²) / (y² − x)</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 3 — Trig Implicit</div>
+      <div class="etitle">Find dy/dx for sin(x + y) = y² cos x</div>
+      <div class="step"><div class="sd">1</div><p>Differentiate LHS: cos(x+y) · (1 + dy/dx)</p></div>
+      <div class="step"><div class="sd">2</div><p>Differentiate RHS using Product Rule: 2y·cos x·(dy/dx) + y²·(−sin x)</p></div>
+      <div class="step"><div class="sd">3</div><p>cos(x+y) + cos(x+y)·dy/dx = 2y·cos x·dy/dx − y²·sin x</p></div>
+      <div class="step"><div class="sd">4</div><p>Collect dy/dx terms: cos(x+y)·dy/dx − 2y·cos x·dy/dx = −y²·sin x − cos(x+y)</p></div>
+      <div class="step"><div class="sd">5</div><p>dy/dx [cos(x+y) − 2y·cos x] = −y²·sin x − cos(x+y)</p></div>
+      <div class="step"><div class="sd">✓</div><p>dy/dx = <span class="hlg">[−y² sin x − cos(x+y)] / [cos(x+y) − 2y cos x]</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 4 — Implicit with Exponential</div>
+      <div class="etitle">Find dy/dx for eˣ + eʸ = e^(x+y)</div>
+      <div class="step"><div class="sd">1</div><p>Differentiate both sides:</p></div>
+      <div class="step"><div class="sd">2</div><p>eˣ + eʸ·(dy/dx) = e^(x+y)·(1 + dy/dx)</p></div>
+      <div class="step"><div class="sd">3</div><p>eˣ + eʸ·(dy/dx) = e^(x+y) + e^(x+y)·(dy/dx)</p></div>
+      <div class="step"><div class="sd">4</div><p>dy/dx·[eʸ − e^(x+y)] = e^(x+y) − eˣ</p></div>
+      <div class="step"><div class="sd">✓</div><p>dy/dx = <span class="hlg">[e^(x+y) − eˣ] / [eʸ − e^(x+y)]</span> = <span class="hlg">−eˣ/eʸ</span> (simplified)</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">5</div><h2>Second Order Implicit Derivative</h2></div>
+    <p>Sometimes we need <span class="hl">d²y/dx²</span> from an implicit equation. The method is to differentiate dy/dx once more with respect to x, again using the chain rule wherever y appears.</p>
+    <div class="example-box">
+      <div class="lbl">✏️ Example — Finding d²y/dx²</div>
+      <div class="etitle">For x² + y² = r², find d²y/dx²</div>
+      <div class="step"><div class="sd">1</div><p>We already know: dy/dx = −x/y</p></div>
+      <div class="step"><div class="sd">2</div><p>d²y/dx² = d/dx[−x/y] using Quotient Rule:</p></div>
+      <div class="step"><div class="sd">3</div><p>= [−y − (−x)·(dy/dx)] / y²</p></div>
+      <div class="step"><div class="sd">4</div><p>= [−y + x·(−x/y)] / y²</p></div>
+      <div class="step"><div class="sd">5</div><p>= [−y² − x²] / y³ = −(x² + y²)/y³</p></div>
+      <div class="step"><div class="sd">✓</div><p>Since x²+y² = r²: d²y/dx² = <span class="hlg">−r²/y³</span></p></div>
+    </div>
+    <div class="warn-box">
+      <p>⚠️ When finding d²y/dx², always substitute the expression for dy/dx back into the result. Don't leave d²y/dx² in terms of dy/dx.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">6</div><h2>Chapter 5 — Complete Formula Sheet</h2></div>
+    <div class="summary-box">
+      <div class="sb-lbl">📋 Master Revision — All Topics</div>
+      <div class="formula" style="color:var(--text-muted);line-height:2.4;">
+        <span style="color:var(--blue)">CONTINUITY</span><br>
+        f continuous at a ⟺ lim f(x) = f(a) = LHL = RHL<br><br>
+
+        <span style="color:var(--green)">DIFFERENTIABILITY</span><br>
+        f'(a) = lim [f(a+h)−f(a)]/h &nbsp; (h→0) &nbsp;|&nbsp; LHD = RHD<br>
+        Diff ⟹ Continuous &nbsp;|&nbsp; Continuous ⟹ Diff (NOT always)<br><br>
+
+        <span style="color:var(--gold)">EXP &amp; LOG</span><br>
+        d/dx(eˣ) = eˣ &nbsp;|&nbsp; d/dx(aˣ) = aˣ ln a<br>
+        d/dx(ln x) = 1/x &nbsp;|&nbsp; d/dx(logₐx) = 1/(x ln a)<br><br>
+
+        <span style="color:var(--purple)">LOG DIFFERENTIATION</span><br>
+        y = f(x)^g(x) → ln y = g(x)·ln f(x) → (1/y)dy/dx = ...<br><br>
+
+        <span style="color:var(--red)">INVERSE TRIG</span><br>
+        d/dx(sin⁻¹x) = 1/√(1−x²) &nbsp;|&nbsp; d/dx(cos⁻¹x) = −1/√(1−x²)<br>
+        d/dx(tan⁻¹x) = 1/(1+x²) &nbsp;|&nbsp; d/dx(cot⁻¹x) = −1/(1+x²)<br>
+        d/dx(sec⁻¹x) = 1/|x|√(x²−1) &nbsp;|&nbsp; d/dx(cosec⁻¹x) = −1/|x|√(x²−1)<br><br>
+
+        <span style="color:var(--accent)">IMPLICIT DIFFERENTIATION</span><br>
+        d/dx[F(x,y)=0] → differentiate every term → solve for dy/dx<br>
+        d/dx[yⁿ] = n·yⁿ⁻¹·(dy/dx) &nbsp; ← always remember this!
+      </div>
+    </div>
+
+    <div class="note-box">
+      <p>🎯 <strong>Exam Tips:</strong>
+      (1) Check LHL = RHL = f(a) for continuity.
+      (2) Check LHD = RHD for differentiability.
+      (3) For implicit: differentiate every term, collect dy/dx, factorise.
+      (4) For log diff: take ln → simplify → differentiate → multiply back by y.
+      (5) Inverse trig: memorise the 3 positive forms, negatives are their negatives.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D5.html" class="btn btn-prev">← Inv. Trig Derivatives</a>
+  <a href="C&D1.html" class="btn btn-home">🏠 Start Over</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+  });
+  function animRing(){
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a,button,.feat-card,.step,.subject-pill,.nb-quiz-opt').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ ring.style.width='44px'; ring.style.height='44px'; ring.style.borderColor='rgba(240,201,107,.7)'; });
+    el.addEventListener('mouseleave',()=>{ ring.style.width='30px'; ring.style.height='30px'; ring.style.borderColor='rgba(240,201,107,.4)'; });
+  });
+ 
+  // Scroll reveal
+  const revEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, {threshold:.12});
+  revEls.forEach(el=>obs.observe(el));
+ 
+  // Step click
+  function setStep(el){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+  }
+ 
+  // Subject pill toggle
+  document.querySelectorAll('.subject-pill').forEach(p=>{
+    p.addEventListener('click',()=>{
+      document.querySelectorAll('.subject-pill').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+ 
+  // Quiz wrong answer feedback
+  function answerWrong(el){
+    el.style.borderColor='rgba(252,165,165,.5)';
+    el.style.color='var(--red)';
+    setTimeout(()=>{ el.style.borderColor=''; el.style.color=''; }, 800);
+  }
+</script>
+</body>
+</html>

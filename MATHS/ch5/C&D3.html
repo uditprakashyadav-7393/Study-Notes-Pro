@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Exponential & Logarithmic Functions</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#fb923c;--accent-dim:#9a3412;
+    --green:#3fb950;--red:#f85149;--blue:#58a6ff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#1f0d00 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(251,146,60,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(251,146,60,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(251,146,60,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}.section:nth-child(3){animation-delay:.14s}.section:nth-child(4){animation-delay:.21s}.section:nth-child(5){animation-delay:.28s}.section:nth-child(6){animation-delay:.35s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#fff;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(251,146,60,.07),rgba(251,146,60,.02));border:1px solid rgba(251,146,60,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent);line-height:2.1;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.91rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  .hlr{color:var(--red);}
+  /* Two-column formula cards */
+  .fc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0;}
+  .fc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:.22s;}
+  .fc:hover{border-color:rgba(251,146,60,.35);transform:translateY(-2px);}
+  .fc .fc-lbl{font-size:.66rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+  .fc .fc-f{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.95rem;margin-bottom:5px;}
+  .fc .fc-note{font-size:.8rem;color:var(--text-muted);}
+  /* Log Properties */
+  .log-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0;}
+  .log-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .log-card .lc-name{font-size:.7rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px;text-transform:uppercase;}
+  .log-card .lc-formula{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:.95rem;}
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  th{background:var(--surface2);color:var(--accent);padding:10px 15px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:9px 15px;border-bottom:1px solid var(--border);color:#cdd5df;font-family:'JetBrains Mono',monospace;font-size:.88rem;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:#000;}.btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:49.8%;position:fixed;top:0;left:0;z-index:200;}
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+  @media(max-width:560px){.fc-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html">1. Continuity</a>
+    <a href="C&D2.html">2. Differentiability</a>
+    <a href="C&D3.html" class="active">3. Exp & Log</a>
+    <a href="C&D4.html">4. Log Diff.</a>
+    <a href="C&D5.html">5. Inv. Trig</a>
+    <a href="C&D6.html">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">03</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Exponential &<br><span>Logarithmic Functions</span></h1>
+  <p>Derivatives of eˣ, aˣ, ln x, and logₐx — and the powerful properties behind them.</p>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>Exponential Function — eˣ</h2></div>
+    <p>The <span class="hl">natural exponential function eˣ</span> is the most important function in calculus. Its unique property is that it is its own derivative.</p>
+    <div class="formula-box">
+      <div class="lbl">⭐ Most Important Derivative</div>
+      <div class="formula">d/dx (eˣ) = eˣ</div>
+    </div>
+    <p>More generally, using the chain rule:</p>
+    <div class="fc-grid">
+      <div class="fc">
+        <div class="fc-lbl">General Exponential</div>
+        <div class="fc-f">d/dx [e^f(x)] = e^f(x) · f'(x)</div>
+        <div class="fc-note">Chain rule applied to eˣ</div>
+      </div>
+      <div class="fc">
+        <div class="fc-lbl">Base-a Exponential</div>
+        <div class="fc-f">d/dx [aˣ] = aˣ · ln a</div>
+        <div class="fc-note">a > 0, a ≠ 1</div>
+      </div>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Examples</div>
+      <div class="etitle">Find derivatives of the following</div>
+      <div class="step"><div class="sd">a</div><p>d/dx[e^(3x)] = e^(3x) · 3 = <span class="hlg">3e^(3x)</span></p></div>
+      <div class="step"><div class="sd">b</div><p>d/dx[e^(x²)] = e^(x²) · 2x = <span class="hlg">2x·e^(x²)</span></p></div>
+      <div class="step"><div class="sd">c</div><p>d/dx[e^(sin x)] = e^(sin x) · cos x = <span class="hlg">cos x · e^(sin x)</span></p></div>
+      <div class="step"><div class="sd">d</div><p>d/dx[2ˣ] = 2ˣ · ln 2 = <span class="hlg">2ˣ ln 2</span></p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>Logarithmic Function — ln x</h2></div>
+    <p>The <span class="hl">natural logarithm ln x</span> (log base e) has a beautifully simple derivative:</p>
+    <div class="formula-box">
+      <div class="lbl">Natural Log Derivative</div>
+      <div class="formula">
+        d/dx (ln x) = 1/x  &nbsp;&nbsp; (x > 0)<br><br>
+        d/dx [ln f(x)] = f'(x) / f(x)  &nbsp;&nbsp; (chain rule)
+      </div>
+    </div>
+    <div class="fc-grid">
+      <div class="fc">
+        <div class="fc-lbl">Log base a</div>
+        <div class="fc-f">d/dx [logₐx] = 1 / (x · ln a)</div>
+        <div class="fc-note">Convert using logₐx = ln x / ln a</div>
+      </div>
+      <div class="fc">
+        <div class="fc-lbl">Log of composite</div>
+        <div class="fc-f">d/dx [log(f(x))] = f'(x) / (f(x)·ln a)</div>
+        <div class="fc-note">Chain rule applied</div>
+      </div>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Examples</div>
+      <div class="etitle">Find derivatives</div>
+      <div class="step"><div class="sd">a</div><p>d/dx[ln(x²+1)] = 2x/(x²+1) = <span class="hlg">2x/(x²+1)</span></p></div>
+      <div class="step"><div class="sd">b</div><p>d/dx[ln(sin x)] = cos x / sin x = <span class="hlg">cot x</span></p></div>
+      <div class="step"><div class="sd">c</div><p>d/dx[log₁₀(x)] = 1/(x · ln 10) = <span class="hlg">1/(x ln 10)</span></p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Properties of Logarithms (For Differentiation)</h2></div>
+    <p>These log properties simplify complex expressions before differentiation:</p>
+    <div class="log-grid">
+      <div class="log-card"><div class="lc-name">Product Rule</div><div class="lc-formula">ln(ab) = ln a + ln b</div></div>
+      <div class="log-card"><div class="lc-name">Quotient Rule</div><div class="lc-formula">ln(a/b) = ln a − ln b</div></div>
+      <div class="log-card"><div class="lc-name">Power Rule</div><div class="lc-formula">ln(aⁿ) = n · ln a</div></div>
+      <div class="log-card"><div class="lc-name">Base Change</div><div class="lc-formula">logₐb = ln b / ln a</div></div>
+      <div class="log-card"><div class="lc-name">Identity</div><div class="lc-formula">e^(ln x) = x</div></div>
+      <div class="log-card"><div class="lc-name">Inverse</div><div class="lc-formula">ln(eˣ) = x</div></div>
+    </div>
+    <div class="note-box">
+      <p>💡 <strong>Tip:</strong> Before differentiating complex products/quotients/powers — take the natural log first to simplify (logarithmic differentiation, see topic 4).</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Summary — All Exp & Log Derivatives</h2></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Derivative</th><th>Condition</th></tr></thead>
+        <tbody>
+          <tr><td>eˣ</td><td class="hl">eˣ</td><td>all x</td></tr>
+          <tr><td>e^(f(x))</td><td class="hl">f'(x) · e^f(x)</td><td>chain rule</td></tr>
+          <tr><td>aˣ</td><td class="hl">aˣ ln a</td><td>a > 0, a ≠ 1</td></tr>
+          <tr><td>a^(f(x))</td><td class="hl">a^f(x) · ln a · f'(x)</td><td>chain rule</td></tr>
+          <tr><td>ln x</td><td class="hl">1/x</td><td>x > 0</td></tr>
+          <tr><td>ln(f(x))</td><td class="hl">f'(x) / f(x)</td><td>f(x) > 0</td></tr>
+          <tr><td>logₐx</td><td class="hl">1 / (x ln a)</td><td>x > 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Combined Example</div>
+      <div class="etitle">Differentiate y = e^(x²) · ln(3x)</div>
+      <div class="step"><div class="sd">1</div><p>Use Product Rule: u = e^(x²), v = ln(3x)</p></div>
+      <div class="step"><div class="sd">2</div><p>u' = 2x·e^(x²) &nbsp;|&nbsp; v' = 3/(3x) = 1/x</p></div>
+      <div class="step"><div class="sd">3</div><p>dy/dx = u'v + uv' = 2x·e^(x²)·ln(3x) + e^(x²)·(1/x)</p></div>
+      <div class="step"><div class="sd">✓</div><p>= <span class="hlg">e^(x²) [2x·ln(3x) + 1/x]</span></p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D2.html" class="btn btn-prev">← Differentiability</a>
+  <a href="C&D4.html" class="btn btn-next">Logarithmic Differentiation →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="index.html"><img src="Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+</body>
+</html>

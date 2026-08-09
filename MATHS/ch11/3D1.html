@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction Cosines & Ratios | 3D Geometry | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+:root{--bg:#070c16;--surface:#0d1422;--surface2:#111929;--card:#0f1828;--border:#1a2540;--accent:#38bdf8;--accent-dim:rgba(56,189,248,.1);--gold:#f5c518;--gold-dim:rgba(245,197,24,.13);--purple:#a78bfa;--purple-dim:rgba(167,139,250,.1);--green:#10b981;--green-dim:rgba(16,185,129,.1);--orange:#f97316;--orange-dim:rgba(249,115,22,.1);--red:#ef4444;--red-dim:rgba(239,68,68,.1);--text:#e2e8f5;--text-muted:#637496;--text-dim:#8fa3c8}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.75;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 15%,rgba(56,189,248,.05) 0,transparent 60%),radial-gradient(ellipse 50% 40% at 85% 85%,rgba(167,139,250,.05) 0,transparent 60%);pointer-events:none;z-index:0}
+
+/* NAV */
+.nav-header{position:sticky;top:0;background:rgba(7,12,22,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:13px 24px;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-brand span{color:var(--gold)}
+.nav-chapters{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
+.nav-chapters::-webkit-scrollbar{display:none}
+.nav-chapters a{padding:5px 13px;border-radius:20px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-decoration:none;border:1px solid transparent;white-space:nowrap;transition:.2s}
+.nav-chapters a:hover{border-color:var(--border);color:var(--text)}
+.nav-chapters a.active{background:var(--gold-dim);border-color:rgba(245,197,24,.4);color:var(--gold)}
+
+/* MAIN */
+main{max-width:960px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
+
+/* HERO */
+.hero{text-align:center;padding:64px 0 52px}
+.hero-tag{display:inline-block;background:var(--gold-dim);border:1px solid rgba(245,197,24,.3);color:var(--gold);font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 16px;border-radius:20px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;line-height:1.15;margin-bottom:18px;background:linear-gradient(135deg,#fff 20%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:540px;margin:0 auto 30px}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.badge{padding:5px 15px;border-radius:20px;font-size:.78rem;font-weight:500}
+.badge-board{background:var(--green-dim);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.badge-jee{background:var(--orange-dim);border:1px solid rgba(249,115,22,.3);color:var(--orange)}
+.badge-ncert{background:var(--purple-dim);border:1px solid rgba(167,139,250,.3);color:var(--purple)}
+
+/* TOC */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 30px;margin-bottom:52px}
+.toc-head{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.toc-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.toc-list a{color:var(--text-dim);text-decoration:none;font-size:.88rem;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;transition:.18s}
+.toc-list a:hover{background:var(--accent-dim);color:var(--accent)}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:22px}
+
+/* SECTION */
+.section{margin-bottom:60px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.section-num{width:40px;height:40px;background:var(--gold-dim);border:1px solid rgba(245,197,24,.35);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--gold);font-weight:600;flex-shrink:0}
+.section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text)}
+
+/* SUBSECTION */
+.sub-h3{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:600;color:var(--accent);margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.sub-h3::before{content:'';width:3px;height:18px;background:var(--accent);border-radius:2px;flex-shrink:0}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:18px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+
+/* FORMULA BOX */
+.fbox{background:var(--gold-dim);border:1px solid rgba(245,197,24,.3);border-left:4px solid var(--gold);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+
+/* CALLOUT BOXES */
+.note-box{background:var(--accent-dim);border:1px solid rgba(56,189,248,.25);border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;margin:14px 0;font-size:.93rem;color:var(--text-dim)}
+.note-box strong{color:var(--accent)}
+.board-box{background:var(--green-dim);border:1px solid rgba(16,185,129,.25);border-left:4px solid var(--green);border-radius:12px;padding:18px 22px;margin:14px 0}
+.board-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.jee-box{background:var(--orange-dim);border:1px solid rgba(249,115,22,.25);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:14px 0}
+.jee-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.err-box{background:var(--red-dim);border:1px solid rgba(239,68,68,.25);border-left:4px solid var(--red);border-radius:12px;padding:18px 22px;margin:14px 0}
+.err-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+
+/* EXAMPLES */
+.example{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:22px;margin:18px 0}
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+.ex-tag{font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:10px;text-transform:uppercase;border:1px solid transparent}
+.ex-tag.board{background:var(--green-dim);border-color:rgba(16,185,129,.3);color:var(--green)}
+.ex-tag.jee{background:var(--orange-dim);border-color:rgba(249,115,22,.3);color:var(--orange)}
+.ex-title{font-weight:600;color:var(--text);font-size:.93rem}
+.solution{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.sol-label{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+
+/* TABLE */
+.math-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem}
+.math-table th{background:var(--surface);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;padding:11px 15px;text-align:left;border:1px solid var(--border)}
+.math-table td{padding:10px 15px;border:1px solid var(--border);color:var(--text-dim);vertical-align:middle}
+.math-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+
+/* LISTS */
+ul.clist,ol.clist{padding-left:22px;margin:10px 0}
+ul.clist li,ol.clist li{margin-bottom:7px;color:var(--text-dim);font-size:.93rem}
+ul.clist li::marker{color:var(--gold)}
+
+/* QUICK SUMMARY */
+.qs{background:linear-gradient(135deg,rgba(245,197,24,.07) 0,rgba(56,189,248,.05) 100%);border:1px solid rgba(245,197,24,.2);border-radius:16px;padding:30px;margin:48px 0}
+.qs-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.qs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
+.qs-item{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.87rem}
+.qs-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+/* KATEX */
+.katex-display{margin:10px 0;overflow-x:auto;padding:4px 0}
+.katex{font-size:1.05em}
+
+/* FOOTER */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px}
+.sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none}
+.sf-brand a:hover{color:var(--accent)}
+.sf-brand span{color:var(--gold)}
+.sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem}
+.sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.sf-dot{color:var(--border)}
+.sf-author{color:var(--text-muted)}
+.sf-author a{color:var(--gold);font-weight:600;text-decoration:none}
+.sf-author a:hover{color:var(--accent)}
+.sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+
+@media(max-width:640px){main{padding:32px 16px 64px}.hero{padding:40px 0 32px}.toc{padding:18px}.nav-header{padding:11px 16px}}
+</style>
+</head>
+<body>
+
+<nav class="nav-header">
+  <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+  <div class="nav-chapters">
+    <a href="3D1.html" class="active">01 · Direction Cosines</a>
+    <a href="3D2.html">02 · Lines in Space</a>
+    <a href="3D3.html">03 · Angle &amp; S.D.</a>
+    <a href="3D4.html">04 · Planes</a>
+    <a href="3D5.html">05 · Advanced</a>
+  </div>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-tag">Chapter 11 · Three Dimensional Geometry · Topic 01</div>
+    <h1>Direction Cosines &amp;<br>Direction Ratios</h1>
+    <p class="hero-sub">Master the fundamental language of 3D space — how lines orient themselves relative to the three coordinate axes.</p>
+    <div class="hero-badges">
+      <span class="badge badge-board">✓ Board Exam</span>
+      <span class="badge badge-jee">⚡ JEE Main &amp; Advanced</span>
+      <span class="badge badge-ncert">📘 NCERT Class 12</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-head">📋 Contents</div>
+    <ul class="toc-list">
+      <li><a href="#intro"><span class="toc-num">1.</span>Introduction</a></li>
+      <li><a href="#dc"><span class="toc-num">2.</span>Direction Cosines</a></li>
+      <li><a href="#relation"><span class="toc-num">3.</span>Fundamental Relation</a></li>
+      <li><a href="#dr"><span class="toc-num">4.</span>Direction Ratios</a></li>
+      <li><a href="#convert"><span class="toc-num">5.</span>DR → DC Conversion</a></li>
+      <li><a href="#twopts"><span class="toc-num">6.</span>Line Through Two Points</a></li>
+      <li><a href="#examples"><span class="toc-num">7.</span>Solved Examples</a></li>
+      <li><a href="#tips"><span class="toc-num">8.</span>Board &amp; JEE Tips</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Introduction -->
+  <div class="section" id="intro">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Introduction</h2>
+    </div>
+    <div class="card">
+      <p>In 3D coordinate geometry, a point is represented as $(x, y, z)$ with respect to three mutually perpendicular axes $OX$, $OY$, $OZ$. The <strong>direction</strong> of a line in 3D space is characterised by the angles it makes with these axes.</p>
+      <p>Unlike 2D where a single slope describes direction, in 3D we need <em>three angles</em> — giving rise to <strong>direction cosines</strong> and <strong>direction ratios</strong>.</p>
+    </div>
+    <div class="note-box">
+      <strong>Key Idea:</strong> Just as a line in 2D has a slope $m = \tan\theta$, a line in 3D has direction cosines $(l, m, n)$ that describe its orientation in 3D space.
+    </div>
+  </div>
+
+  <!-- 2. Direction Cosines -->
+  <div class="section" id="dc">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Direction Cosines of a Line</h2>
+    </div>
+    <div class="card">
+      <p>If a line makes angles $\alpha$, $\beta$, $\gamma$ with the positive directions of the $x$-axis, $y$-axis, and $z$-axis respectively, then the cosines of these angles are called the <strong>direction cosines (DCs)</strong> of the line.</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Definition of Direction Cosines</div>
+        $$l = \cos\alpha, \quad m = \cos\beta, \quad n = \cos\gamma$$
+        <p style="margin-top:10px;font-size:.9rem;color:var(--text-dim)">where $\alpha, \beta, \gamma$ are direction angles ($0 \le \alpha,\beta,\gamma \le \pi$)</p>
+      </div>
+    </div>
+
+    <div class="sub-h3">Direction Cosines of Coordinate Axes</div>
+    <table class="math-table">
+      <thead><tr><th>Line / Axis</th><th>$\alpha$ (with $x$)</th><th>$\beta$ (with $y$)</th><th>$\gamma$ (with $z$)</th><th>DCs $(l, m, n)$</th></tr></thead>
+      <tbody>
+        <tr><td>$x$-axis</td><td>$0°$</td><td>$90°$</td><td>$90°$</td><td>$(1,\ 0,\ 0)$</td></tr>
+        <tr><td>$y$-axis</td><td>$90°$</td><td>$0°$</td><td>$90°$</td><td>$(0,\ 1,\ 0)$</td></tr>
+        <tr><td>$z$-axis</td><td>$90°$</td><td>$90°$</td><td>$0°$</td><td>$(0,\ 0,\ 1)$</td></tr>
+        <tr><td>Equally inclined to all axes</td><td>$\cos^{-1}\!\tfrac{1}{\sqrt{3}}$</td><td>$\cos^{-1}\!\tfrac{1}{\sqrt{3}}$</td><td>$\cos^{-1}\!\tfrac{1}{\sqrt{3}}$</td><td>$\left(\pm\tfrac{1}{\sqrt{3}},\pm\tfrac{1}{\sqrt{3}},\pm\tfrac{1}{\sqrt{3}}\right)$</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>Note:</strong> If a directed line $OP$ has DCs $(l, m, n)$, then the reverse direction $PO$ has DCs $(-l, -m, -n)$. So an undirected line has <em>two</em> sets of DCs.
+    </div>
+  </div>
+
+  <!-- 3. Fundamental Relation -->
+  <div class="section" id="relation">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2>Fundamental Relation</h2>
+    </div>
+    <div class="card">
+      <div class="fbox">
+        <div class="fbox-title">⭐ Most Important Formula</div>
+        $$l^2 + m^2 + n^2 = 1 \quad \Longleftrightarrow \quad \cos^2\!\alpha + \cos^2\!\beta + \cos^2\!\gamma = 1$$
+      </div>
+      <div class="sub-h3">Proof</div>
+      <p>Let $P(x, y, z)$ be any point on the line and $r = |OP|$. The foot of perpendicular from $P$ to the $x$-axis has distance $x$, so $\cos\alpha = x/r$. Similarly $\cos\beta = y/r$, $\cos\gamma = z/r$. Therefore:</p>
+      $$l^2+m^2+n^2 = \frac{x^2+y^2+z^2}{r^2} = \frac{r^2}{r^2} = 1 \quad\checkmark$$
+    </div>
+    <div class="card">
+      <div class="sub-h3">Derived Results (Crucial for JEE)</div>
+      <ul class="clist">
+        <li>$\sin^2\!\alpha + \sin^2\!\beta + \sin^2\!\gamma = 2$ &nbsp;&nbsp;(since $1-\cos^2\theta$ for each, sum = $3-1=2$)</li>
+        <li>$\cos 2\alpha + \cos 2\beta + \cos 2\gamma = -1$ &nbsp;&nbsp;(using $\cos 2\theta = 2\cos^2\theta -1$)</li>
+        <li>Each DC is in the range $[-1,\ 1]$</li>
+        <li>If $l=m=n$, then $3l^2=1 \Rightarrow l = \pm\dfrac{1}{\sqrt{3}}$</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Direction Ratios -->
+  <div class="section" id="dr">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2>Direction Ratios</h2>
+    </div>
+    <div class="card">
+      <p>Any three numbers $a, b, c$ which are <em>proportional</em> to the direction cosines $l, m, n$ are called <strong>direction ratios (DRs)</strong> of the line.</p>
+      <div class="fbox">
+        <div class="fbox-title">📌 Direction Ratios</div>
+        $$\frac{a}{l} = \frac{b}{m} = \frac{c}{n} = k \quad \Rightarrow \quad (a,b,c) \text{ are DRs of the line}$$
+      </div>
+    </div>
+    <table class="math-table">
+      <thead><tr><th>Property</th><th>Direction Cosines</th><th>Direction Ratios</th></tr></thead>
+      <tbody>
+        <tr><td>Uniqueness</td><td>Unique (up to ± sign)</td><td>Not unique — any proportional set works</td></tr>
+        <tr><td>Constraint</td><td>$l^2+m^2+n^2 = 1$</td><td>No constraint</td></tr>
+        <tr><td>Range</td><td>Each $\in[-1,1]$</td><td>Any real numbers</td></tr>
+        <tr><td>Example</td><td>$\left(\frac{2}{7}, -\frac{3}{7}, \frac{6}{7}\right)$</td><td>$(2,-3,6)$ or $(4,-6,12)$ etc.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. DR to DC -->
+  <div class="section" id="convert">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <h2>Converting Direction Ratios to Direction Cosines</h2>
+    </div>
+    <div class="card">
+      <p>Given direction ratios $(a, b, c)$, find direction cosines by dividing each by $\sqrt{a^2+b^2+c^2}$:</p>
+      <div class="fbox">
+        <div class="fbox-title">🔄 DR → DC Conversion Formula</div>
+        $$l = \frac{\pm a}{\sqrt{a^2+b^2+c^2}}, \quad m = \frac{\pm b}{\sqrt{a^2+b^2+c^2}}, \quad n = \frac{\pm c}{\sqrt{a^2+b^2+c^2}}$$
+      </div>
+      <p>The $\pm$ sign corresponds to the two opposite directions along the line.</p>
+    </div>
+    <div class="note-box">
+      <strong>Memory Trick:</strong> This is exactly the same as finding a <em>unit vector</em> — divide by the magnitude! If DRs are components $(a,b,c)$, then DCs are components of the unit vector $\hat{b} = \dfrac{(a,b,c)}{|(a,b,c)|}$.
+    </div>
+  </div>
+
+  <!-- 6. Two Points -->
+  <div class="section" id="twopts">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <h2>Line Joining Two Points</h2>
+    </div>
+    <div class="card">
+      <p>For a line passing through $P(x_1, y_1, z_1)$ and $Q(x_2, y_2, z_2)$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📍 DRs from Two Points</div>
+        $$\text{DRs} = (x_2 - x_1,\; y_2 - y_1,\; z_2 - z_1)$$
+        $$|PQ| = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}$$
+      </div>
+      <div class="fbox">
+        <div class="fbox-title">📐 DCs from Two Points</div>
+        $$l = \frac{x_2-x_1}{|PQ|}, \qquad m = \frac{y_2-y_1}{|PQ|}, \qquad n = \frac{z_2-z_1}{|PQ|}$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Projection of a Line Segment</div>
+      <p>The projection of $\overrightarrow{PQ}$ on any line with DCs $(l',m',n')$ is:</p>
+      $$\text{Projection} = l'(x_2-x_1) + m'(y_2-y_1) + n'(z_2-z_1)$$
+      <p>Special case — projection on coordinate axes:</p>
+      <ul class="clist">
+        <li>On $x$-axis: $x_2-x_1$</li>
+        <li>On $y$-axis: $y_2-y_1$</li>
+        <li>On $z$-axis: $z_2-z_1$</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Examples -->
+  <div class="section" id="examples">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <h2>Solved Examples</h2>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 1 — DCs from DRs</span></div>
+      <p>Find the direction cosines of a line whose direction ratios are $2, -3, 6$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$a=2,\ b=-3,\ c=6$</p>
+        $$\sqrt{a^2+b^2+c^2} = \sqrt{4+9+36} = \sqrt{49} = 7$$
+        $$\boxed{l = \frac{2}{7},\quad m = \frac{-3}{7},\quad n = \frac{6}{7}}$$
+        <p><em>Check:</em> $\dfrac{4}{49}+\dfrac{9}{49}+\dfrac{36}{49} = \dfrac{49}{49} = 1$ ✓</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 2 — DCs from Two Points</span></div>
+      <p>Find the direction cosines of the line joining $A(2,-1,3)$ and $B(4,3,1)$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>DRs $= (4-2,\ 3+1,\ 1-3) = (2,4,-2)$</p>
+        $$|AB| = \sqrt{4+16+4} = \sqrt{24} = 2\sqrt{6}$$
+        $$l = \frac{2}{2\sqrt{6}} = \frac{1}{\sqrt{6}},\quad m = \frac{4}{2\sqrt{6}} = \frac{2}{\sqrt{6}},\quad n = \frac{-2}{2\sqrt{6}} = \frac{-1}{\sqrt{6}}$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 3 — Derived Identity</span></div>
+      <p>If a line makes angles $\alpha$, $\beta$, $\gamma$ with the coordinate axes, find the value of $\cos 2\alpha + \cos 2\beta + \cos 2\gamma$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Using $\cos 2\theta = 2\cos^2\theta - 1$:</p>
+        $$\cos 2\alpha + \cos 2\beta + \cos 2\gamma = 2(\cos^2\!\alpha + \cos^2\!\beta + \cos^2\!\gamma) - 3 = 2(1) - 3 = \boxed{-1}$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 4 — Equally Inclined Line</span></div>
+      <p>A line is equally inclined to all three coordinate axes. Find its direction cosines and the angle it makes with each axis.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Let the angle with each axis be $\alpha$. Then $l=m=n=\cos\alpha$.</p>
+        $$l^2+m^2+n^2=1 \implies 3\cos^2\!\alpha=1 \implies \cos\alpha = \pm\frac{1}{\sqrt{3}}$$
+        $$\text{DCs}: \left(\frac{1}{\sqrt{3}},\frac{1}{\sqrt{3}},\frac{1}{\sqrt{3}}\right) \quad \text{or} \quad \left(-\frac{1}{\sqrt{3}},-\frac{1}{\sqrt{3}},-\frac{1}{\sqrt{3}}\right)$$
+        $$\alpha = \cos^{-1}\!\left(\frac{1}{\sqrt{3}}\right) \approx 54.74°$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 5 — Angles with Axes</span></div>
+      <p>If a line makes angles $90°$, $60°$, $30°$ with the positive $x$, $y$, $z$-axes, find its direction cosines. Verify $l^2+m^2+n^2=1$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        $$l=\cos 90°=0,\quad m=\cos 60°=\frac{1}{2},\quad n=\cos 30°=\frac{\sqrt{3}}{2}$$
+        $$l^2+m^2+n^2 = 0 + \frac{1}{4} + \frac{3}{4} = 1 \quad\checkmark$$
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Tips -->
+  <div class="section" id="tips">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <h2>Board &amp; JEE Tips</h2>
+    </div>
+    <div class="board-box">
+      <div class="bx-title">✅ Board Exam Tips</div>
+      <ul class="clist">
+        <li>Always verify your DCs by checking $l^2+m^2+n^2=1$ — easy 1-mark check</li>
+        <li>When finding DRs from two points, order matters: use $Q-P$ consistently</li>
+        <li>DRs are <em>not unique</em> — $(2,-3,6)$, $(4,-6,12)$, $(-2,3,-6)$ are all valid DRs for the same line</li>
+        <li>Common 4-mark question: "Find DCs of line joining two given points"</li>
+        <li>Another classic: "If a line makes equal angles with axes, find the DCs"</li>
+      </ul>
+    </div>
+    <div class="jee-box">
+      <div class="bx-title">⚡ JEE Preparation Tips</div>
+      <ul class="clist">
+        <li>Memorise: $\cos 2\alpha + \cos 2\beta + \cos 2\gamma = -1$ — appears in integer-type JEE questions</li>
+        <li>$\sin^2\!\alpha + \sin^2\!\beta + \sin^2\!\gamma = 2$ — quick proof: $3 - (l^2+m^2+n^2+\text{extra})$</li>
+        <li>Unit vector along direction $(l,m,n)$ is $l\hat{i}+m\hat{j}+n\hat{k}$ — connects DCs to vectors</li>
+        <li>JEE often tests: "If $l,m,n$ are DCs, what is the unit vector along the line?"</li>
+      </ul>
+    </div>
+    <div class="err-box">
+      <div class="bx-title">❌ Common Mistakes</div>
+      <ul class="clist">
+        <li>Writing DCs as $(a,b,c)$ instead of $\dfrac{(a,b,c)}{\sqrt{a^2+b^2+c^2}}$ — DRs ≠ DCs!</li>
+        <li>Forgetting the $\pm$ sign when computing DCs from DRs</li>
+        <li>Taking $\cos\alpha > 1$ — this is impossible; check your arithmetic</li>
+        <li>Confusing $\sin^2+\sin^2+\sin^2 = 2$ with $= 1$ (that's for DCs, not $\sin^2$)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Quick Summary -->
+  <div class="qs">
+    <div class="qs-title">⚡ Quick Formula Sheet</div>
+    <div class="qs-grid">
+      <div class="qs-item"><div class="qs-label">Direction Cosines</div>$l=\cos\alpha,\ m=\cos\beta,\ n=\cos\gamma$</div>
+      <div class="qs-item"><div class="qs-label">Fundamental Identity</div>$l^2+m^2+n^2=1$</div>
+      <div class="qs-item"><div class="qs-label">DR → DC</div>$l=\dfrac{\pm a}{\sqrt{a^2+b^2+c^2}}$</div>
+      <div class="qs-item"><div class="qs-label">Two-Point DRs</div>$(x_2-x_1,\ y_2-y_1,\ z_2-z_1)$</div>
+      <div class="qs-item"><div class="qs-label">JEE Identity</div>$\cos2\alpha+\cos2\beta+\cos2\gamma=-1$</div>
+      <div class="qs-item"><div class="qs-label">Equally Inclined</div>$l=m=n=\pm\dfrac{1}{\sqrt{3}}$</div>
+      <div class="qs-item"><div class="qs-label">$\sin^2$ Identity</div>$\sin^2\!\alpha+\sin^2\!\beta+\sin^2\!\gamma=2$</div>
+      <div class="qs-item"><div class="qs-label">x-axis DCs</div>$(1,0,0)$; y-axis: $(0,1,0)$; z-axis: $(0,0,1)$</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 11 &middot; Three Dimensional Geometry</div>
+  </div>
+</footer>
+</body>
+</html>

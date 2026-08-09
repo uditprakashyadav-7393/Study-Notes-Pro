@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 4: Bernoulli Trials & Binomial Distribution | Class 12 Probability</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <style>
+    :root {
+      --surface: #1a1a1a;
+      --surface-alt: #252525;
+      --border: #3a3a3a;
+      --text: #e5e5e5;
+      --text-muted: #9a9a9a;
+      --accent: #00d4ff;
+      --gold: #d4af37;
+      --gold-dim: #6b5b2e;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+
+    .header {
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .breadcrumb {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--border); }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .def-box {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(0,212,255,0.05) 100%);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .def-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+    }
+
+    .def-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .def-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p { margin-bottom: 16px; line-height: 1.8; }
+
+    .example-box {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .example-title {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notes-box {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid var(--success);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .notes-title {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .notes-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .notes-content li {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .board-tip {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .tip-title {
+      color: var(--warning);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .jee-tip {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .jee-tip .tip-title {
+      color: var(--danger);
+    }
+
+    .formula-section {
+      margin: 50px 0;
+    }
+
+    .formula-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .formula-title::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+
+    .formula-title.collapsed::after {
+      transform: rotate(-90deg);
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .formula-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .formula-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.1);
+    }
+
+    .formula-name {
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .formula-formula {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-top: 60px;
+    }
+
+    .sf-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .sf-brand a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+
+    .sf-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .sf-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.82rem;
+    }
+
+    .sf-copy {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter {
+      font-size: 0.72rem;
+      color: var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section { animation: fadeInUp 0.6s ease-out; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="breadcrumb">
+      <a href="/index.html">Home</a>
+      <span>/</span>
+      <a href="#">Chapter 13</a>
+      <span>/</span>
+      <span>Topic 4: Bernoulli Trials & Binomial Distribution</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Bernoulli Trials & Binomial Distribution</h1>
+    <p class="subtitle">Analyzing repeated independent trials with two possible outcomes</p>
+
+    <div class="def-box">
+      <div class="def-title">What is a Bernoulli Trial?</div>
+      <div class="def-content">
+        A Bernoulli trial is a random experiment with exactly two mutually exclusive outcomes, typically called "success" and "failure." The probability of success (p) remains constant for each trial. Examples include coin tosses, pass/fail tests, and yes/no questions. When we repeat Bernoulli trials, we get a binomial distribution.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Bernoulli Trials</h2>
+
+      <h3>Conditions for Bernoulli Trials</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>Two Outcomes:</strong> Each trial has exactly two possible outcomes - success (S) or failure (F)</li>
+            <li><strong>Fixed Probability:</strong> Probability of success p is constant for all trials</li>
+            <li><strong>Independence:</strong> Each trial is independent of all others</li>
+            <li><strong>Fixed Number:</strong> Number of trials (n) is predetermined</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Valid Bernoulli Trials</div>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+          <li>Tossing a fair coin n times (Success = Heads, Failure = Tails)</li>
+          <li>Rolling a die n times (Success = getting 6, Failure = not getting 6)</li>
+          <li>Answering n multiple choice questions randomly (Success = correct, Failure = wrong)</li>
+          <li>Manufacturing items (Success = defect-free, Failure = defective)</li>
+        </ul>
+      </div>
+
+      <h3>Notation</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>p:</strong> Probability of success in a single trial</li>
+            <li><strong>q = 1 - p:</strong> Probability of failure in a single trial</li>
+            <li><strong>n:</strong> Number of trials</li>
+            <li><strong>X:</strong> Number of successes in n trials</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Binomial Distribution</h2>
+
+      <h3>Definition</h3>
+      <p>If X represents the number of successes in n independent Bernoulli trials, then X follows a binomial distribution with parameters n and p, denoted as X ~ B(n, p) or X ~ Binomial(n, p).</p>
+
+      <h3>Binomial Probability Formula</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Probability Mass Function</div>
+        <div class="formula-formula">P(X = r) = ⁿCᵣ × pʳ × qⁿ⁻ʳ</div>
+        <div class="formula-desc">Probability of exactly r successes in n trials</div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>ⁿCᵣ = n! / (r! × (n-r)!):</strong> Combination (number of ways to choose r from n)</li>
+            <li><strong>p:</strong> Probability of success</li>
+            <li><strong>q = 1 - p:</strong> Probability of failure</li>
+            <li><strong>r:</strong> Specific number of successes (0 ≤ r ≤ n)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Fair Coin Tosses</div>
+        <p><strong>Problem:</strong> A fair coin is tossed 5 times. Find the probability of getting exactly 3 heads.</p>
+        <p><strong>Solution:</strong></p>
+        <p>n = 5, r = 3, p = 1/2, q = 1/2</p>
+        <p>P(X = 3) = ⁵C₃ × (1/2)³ × (1/2)²</p>
+        <p>⁵C₃ = 5!/(3!2!) = 10</p>
+        <p>P(X = 3) = 10 × (1/8) × (1/4) = 10/32 = 5/16</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Biased Die</div>
+        <p><strong>Problem:</strong> A die is rolled 4 times. Success = getting an even number (p = 1/2). Find P(X ≤ 2).</p>
+        <p><strong>Solution:</strong></p>
+        <p>P(X ≤ 2) = P(X = 0) + P(X = 1) + P(X = 2)</p>
+        <p>P(X = 0) = ⁴C₀ × (1/2)⁰ × (1/2)⁴ = 1 × 1 × 1/16 = 1/16</p>
+        <p>P(X = 1) = ⁴C₁ × (1/2)¹ × (1/2)³ = 4 × 1/2 × 1/8 = 4/16</p>
+        <p>P(X = 2) = ⁴C₂ × (1/2)² × (1/2)² = 6 × 1/4 × 1/4 = 6/16</p>
+        <p>P(X ≤ 2) = 1/16 + 4/16 + 6/16 = 11/16</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 3: Test with Probability</div>
+        <p><strong>Problem:</strong> A student has 70% probability of answering a question correctly. Find the probability of getting exactly 4 correct in 5 questions.</p>
+        <p><strong>Solution:</strong></p>
+        <p>n = 5, r = 4, p = 0.7, q = 0.3</p>
+        <p>P(X = 4) = ⁵C₄ × (0.7)⁴ × (0.3)¹</p>
+        <p>⁵C₄ = 5</p>
+        <p>P(X = 4) = 5 × 0.2401 × 0.3 = 5 × 0.07203 = 0.36015 ≈ 0.360</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Mean and Variance of Binomial Distribution</h2>
+
+      <h3>Expected Value (Mean)</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Expected Value</div>
+        <div class="formula-formula">E(X) = μ = np</div>
+        <div class="formula-desc">Average number of successes in n trials</div>
+      </div>
+
+      <h3>Variance</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Variance</div>
+        <div class="formula-formula">Var(X) = σ² = npq = np(1-p)</div>
+        <div class="formula-desc">Measure of spread around the mean</div>
+      </div>
+
+      <h3>Standard Deviation</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Standard Deviation</div>
+        <div class="formula-formula">σ = √(npq)</div>
+        <div class="formula-desc">Square root of variance</div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example: Mean and Variance</div>
+        <p><strong>Problem:</strong> If a coin is tossed 10 times, find the mean and variance.</p>
+        <p><strong>Solution:</strong></p>
+        <p>n = 10, p = 1/2, q = 1/2</p>
+        <p>Mean (μ) = np = 10 × 1/2 = 5</p>
+        <p>Variance (σ²) = npq = 10 × 1/2 × 1/2 = 2.5</p>
+        <p>Standard Deviation (σ) = √2.5 ≈ 1.58</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Important Points</h2>
+
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li>Sum of all probabilities: ΣP(X = r) = 1 for r = 0 to n</li>
+            <li>The binomial expansion of (p + q)ⁿ gives all probabilities</li>
+            <li>Binomial distribution is symmetric when p = 0.5</li>
+            <li>As n increases, binomial distribution approaches normal distribution</li>
+            <li>Mode = ⌊(n+1)p⌋ (most likely outcome)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="board-tip">
+        <div class="tip-title">📋 Board Exam Tips</div>
+        <p><strong>Q:</strong> Define Bernoulli trials and conditions</p>
+        <p><strong>Q:</strong> Apply binomial formula for specific values</p>
+        <p><strong>Q:</strong> Calculate mean and variance</p>
+        <p><strong>Common Mistake:</strong> Forgetting to use ⁿCᵣ in calculations</p>
+        <p><strong>Helpful Tip:</strong> Always verify that p + q = 1</p>
+      </div>
+
+      <div class="jee-tip">
+        <div class="tip-title">🎯 JEE Advanced Tips</div>
+        <p><strong>Quick Calculation:</strong> Use binomial coefficient table for speed in exams</p>
+        <p><strong>Common Pattern:</strong> "At least" and "at most" questions require careful summation</p>
+        <p><strong>Speed Technique:</strong> P(X = r) = (n choose r) × p^r × q^(n-r) - memorize this</p>
+        <p><strong>Integration:</strong> Binomial distribution connects to normal distribution for large n</p>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="formula-title" onclick="toggleFormulas(this)">📐 Complete Formula Sheet</div>
+      <div class="formula-grid" id="formulas">
+        <div class="formula-card">
+          <div class="formula-name">Binomial Probability</div>
+          <div class="formula-formula">P(X=r) = ⁿCᵣ × pʳ × qⁿ⁻ʳ</div>
+          <div class="formula-desc">Exactly r successes in n trials</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Combination</div>
+          <div class="formula-formula">ⁿCᵣ = n! / (r!(n-r)!)</div>
+          <div class="formula-desc">Number of ways to choose r from n</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Mean</div>
+          <div class="formula-formula">μ = E(X) = np</div>
+          <div class="formula-desc">Expected number of successes</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Variance</div>
+          <div class="formula-formula">σ² = Var(X) = npq</div>
+          <div class="formula-desc">Spread of distribution</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Standard Deviation</div>
+          <div class="formula-formula">σ = √(npq)</div>
+          <div class="formula-desc">Square root of variance</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Complement</div>
+          <div class="formula-formula">P(X ≥ r) = 1 - P(X ≤ r-1)</div>
+          <div class="formula-desc">Using complement rule</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+      <div class="sf-divider"></div>
+      <div class="sf-info">
+        <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+        <span class="sf-dot">&middot;</span>
+        <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+      </div>
+      <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 13 &middot; Probability</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFormulas(element) {
+      const formulas = document.getElementById('formulas');
+      element.classList.toggle('collapsed');
+      formulas.style.display = formulas.style.display === 'none' ? 'grid' : 'none';
+    }
+  </script>
+
+</body>
+</html>

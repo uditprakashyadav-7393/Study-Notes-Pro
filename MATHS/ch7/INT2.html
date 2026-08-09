@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Methods of Integration · Ch.7 · StudyNotesPro</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0d16;
+      --surface: #10131e;
+      --surface2: #161b29;
+      --surface3: #1c2133;
+      --border: #222840;
+      --border-light: #2c3350;
+      --accent: #5b8dee;
+      --accent-dim: rgba(91,141,238,0.13);
+      --gold: #e8b84b;
+      --gold-dim: rgba(232,184,75,0.13);
+      --green: #4fd19a;
+      --green-dim: rgba(79,209,154,0.12);
+      --pink: #e8678a;
+      --pink-dim: rgba(232,103,138,0.12);
+      --purple: #b08dff;
+      --purple-dim: rgba(176,141,255,0.12);
+      --text: #d8deef;
+      --text-muted: #7880a0;
+      --text-dim: #3e4660;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+    .topnav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(10,12,20,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      height: 46px;
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      height: 100%; padding: 0 14px; gap: 4px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: .03em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 8px; }
+    .nav-brand span { color: var(--gold); }
+    .nav-chapter { font-size: .68rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 4px; }
+    .nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: all .2s; flex-shrink: 0; }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+    .nav-link.active { color: var(--bg); background: var(--gold); font-weight: 600; }
+    .nav-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; opacity: .7; }
+
+    .hero { padding: 64px 24px 48px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: '∫'; position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 280px; color: rgba(232,184,75,0.04); font-family: 'Playfair Display', serif; pointer-events: none; line-height: 1; user-select: none; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; color: var(--gold); text-transform: uppercase; border: 1px solid rgba(232,184,75,0.3); padding: 4px 12px; border-radius: 20px; background: var(--gold-dim); margin-bottom: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.15; background: linear-gradient(135deg, #fff 0%, var(--gold) 60%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px; }
+    .hero-sub { max-width: 560px; margin: 0 auto 28px; color: var(--text-muted); font-size: .95rem; line-height: 1.8; }
+    .hero-pills { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .pill { font-size: .72rem; padding: 4px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
+    .pill-blue { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,141,238,0.25); }
+    .pill-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); }
+    .pill-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(79,209,154,0.25); }
+    .pill-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(176,141,255,0.25); }
+
+    .main { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+    .section { margin-bottom: 56px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--gold); background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.2); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-light), transparent); }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 16px; transition: border-color .2s; }
+    .card:hover { border-color: var(--border-light); }
+    .card-title { font-size: .8rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+    .card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 8px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card-gold { border-color: rgba(232,184,75,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,184,75,0.05) 100%); }
+    .card-accent { border-color: rgba(91,141,238,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(91,141,238,0.05) 100%); }
+    .card-green { border-color: rgba(79,209,154,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(79,209,154,0.05) 100%); }
+    .card-purple { border-color: rgba(176,141,255,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(176,141,255,0.05) 100%); }
+    .card-pink { border-color: rgba(232,103,138,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,103,138,0.05) 100%); }
+
+    .formula-box { background: var(--surface2); border: 1px solid var(--border-light); border-left: 3px solid var(--gold); border-radius: 10px; padding: 18px 22px; margin: 14px 0; overflow-x: auto; }
+    .formula-box.blue { border-left-color: var(--accent); }
+    .formula-box.green { border-left-color: var(--green); }
+    .formula-box.pink { border-left-color: var(--pink); }
+    .formula-box.purple { border-left-color: var(--purple); }
+    .formula-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .05em; }
+
+    .steps { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 600; margin-top: 1px; }
+    .step-num.gold { background: var(--gold-dim); color: var(--gold); }
+    .step-num.blue { background: var(--accent-dim); color: var(--accent); }
+    .step-num.green { background: var(--green-dim); color: var(--green); }
+    .step-num.purple { background: var(--purple-dim); color: var(--purple); }
+    .step-body {  flex: 1; }
+    .step-title { font-weight: 600; color: #fff; font-size: .88rem; margin-bottom: 4px; }
+    .step-body p { color: var(--text-muted); font-size: .87rem; }
+
+    .ilate-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+    .ilate-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; }
+    .ilate-letter { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 4px; }
+    .ilate-name { font-size: .65rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); letter-spacing: .04em; }
+    .ilate-card:nth-child(1) .ilate-letter { color: var(--pink); }
+    .ilate-card:nth-child(2) .ilate-letter { color: var(--accent); }
+    .ilate-card:nth-child(3) .ilate-letter { color: var(--gold); }
+    .ilate-card:nth-child(4) .ilate-letter { color: var(--green); }
+    .ilate-card:nth-child(5) .ilate-letter { color: var(--purple); }
+
+    .pf-table { display: flex; flex-direction: column; gap: 12px; }
+    .pf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pf-cell { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+    .pf-type { font-size: .68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .05em; }
+
+    .note { display: flex; gap: 12px; align-items: flex-start; background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25); border-radius: 10px; padding: 14px 18px; margin-top: 16px; }
+    .note-blue { background: var(--accent-dim); border-color: rgba(91,141,238,0.25); }
+    .note-green { background: var(--green-dim); border-color: rgba(79,209,154,0.25); }
+    .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .note p { color: var(--text-muted); font-size: .87rem; line-height: 1.7; }
+    .note strong { color: var(--gold); }
+    .note-blue strong { color: var(--accent); }
+    .note-green strong { color: var(--green); }
+
+    .hl-blue { color: var(--accent); font-weight: 600; }
+    .hl-gold { color: var(--gold); font-weight: 600; }
+    .hl-green { color: var(--green); font-weight: 600; }
+    .hl-pink { color: var(--pink); font-weight: 600; }
+    .hl-purple { color: var(--purple); font-weight: 600; }
+
+    .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 28px 32px; }
+    .sf-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+    .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+    .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+    .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+    .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 44px 16px 36px; }
+      .main { padding: 0 14px 48px; }
+      .card { padding: 18px 16px; }
+      .ilate-grid { grid-template-columns: repeat(3, 1fr); }
+      .pf-row { grid-template-columns: 1fr; }
+
+      /* Horizontal scroll only — no vertical scrollbar added */
+      .formula-box {
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 14px 16px;
+      }
+      mjx-container {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 2px;
+      }
+      .pf-cell {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+      .ilate-grid {
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+   
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+    <span class="nav-chapter">CH·07 · INTEGRALS</span>
+    <a href="INT1.html" class="nav-link"><span class="nav-num">01</span> Basics</a>
+    <a href="INT2.html" class="nav-link active"><span class="nav-num">02</span> Methods</a>
+    <a href="INT3.html" class="nav-link"><span class="nav-num">03</span> Standard Integrals</a>
+    <a href="INT4.html" class="nav-link"><span class="nav-num">04</span> Definite Integrals</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-tag">Chapter 7 · Topic 02</div>
+  <h1>Methods of Integration</h1>
+  <p class="hero-sub">Master three powerful techniques — Substitution, Integration by Parts, and Partial Fractions — to evaluate complex integrals systematically.</p>
+  <div class="hero-pills">
+    <span class="pill pill-gold">Substitution</span>
+    <span class="pill pill-purple">By Parts · ILATE</span>
+    <span class="pill pill-green">Partial Fractions</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- 1. Substitution -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Integration by Substitution</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-title">Core Idea</div>
+      <p>When the integrand contains a composite function, substitute \(t = g(x)\) to reduce it to a standard form. This technique corresponds to the <span class="hl-gold">chain rule in reverse</span>.</p>
+      <div class="formula-box">
+        <div class="formula-label">SUBSTITUTION FORMULA</div>
+        \[ \int f\bigl(g(x)\bigr)\cdot g'(x)\,dx \;\underset{t=g(x)}{=}\; \int f(t)\,dt \]
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-title">Method — Step by Step</div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num gold">1</span>
+          <div class="step-body">
+            <div class="step-title">Choose the substitution</div>
+            <p>Identify \(t = g(x)\) such that \(g'(x)\,dx\) appears in the integrand.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num gold">2</span>
+          <div class="step-body">
+            <div class="step-title">Compute dt</div>
+            <p>Differentiate: \(dt = g'(x)\,dx\), then express \(dx\) in terms of \(dt\).</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num gold">3</span>
+          <div class="step-body">
+            <div class="step-title">Replace & integrate</div>
+            <p>Substitute everything in terms of \(t\) and evaluate \(\int f(t)\,dt\).</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num gold">4</span>
+          <div class="step-body">
+            <div class="step-title">Back-substitute</div>
+            <p>Replace \(t\) with the original \(g(x)\) and add \(+C\).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example — Substitution</div>
+      <p>Find \(\displaystyle\int \sin(3x+5)\,dx\)</p>
+      <p style="margin-top:8px;color:var(--text-muted);">Let \(t = 3x+5 \Rightarrow dt = 3\,dx \Rightarrow dx = \tfrac{dt}{3}\)</p>
+      <div class="formula-box">
+        \[ \int \sin t\cdot\frac{dt}{3} = -\frac{\cos t}{3}+C = -\frac{\cos(3x+5)}{3}+C \]
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example — Recognising g'(x)</div>
+      <p>Find \(\displaystyle\int \frac{2x}{x^2+1}\,dx\)</p>
+      <p style="margin-top:8px;color:var(--text-muted);">Let \(t = x^2+1 \Rightarrow dt = 2x\,dx\)</p>
+      <div class="formula-box green">
+        \[ \int \frac{dt}{t} = \ln|t|+C = \ln(x^2+1)+C \]
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-icon">💡</div>
+      <p><strong>Useful Pattern:</strong> \(\displaystyle\int \frac{f'(x)}{f(x)}\,dx = \ln|f(x)|+C\). Look for this pattern first!</p>
+    </div>
+  </div>
+
+  <!-- 2. Integration by Parts -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Integration by Parts</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-purple">
+      <div class="card-title">Formula — Product Rule in Reverse</div>
+      <p>Used when the integrand is a <span class="hl-purple">product of two different types</span> of functions. Derived from the product rule of differentiation.</p>
+      <div class="formula-box purple">
+        <div class="formula-label">IBP FORMULA</div>
+        \[ \int u\cdot v\,dx = u\int v\,dx \;-\; \int\!\left[\frac{du}{dx}\int v\,dx\right]dx \]
+      </div>
+      <p style="margin-top:12px">Choosing \(u\) and \(v\): use the <span class="hl-purple">ILATE rule</span> to select \(u\) (the one listed first is \(u\)).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ILATE Priority Rule</div>
+      <div class="ilate-grid">
+        <div class="ilate-card">
+          <div class="ilate-letter">I</div>
+          <div class="ilate-name">Inverse Trig</div>
+        </div>
+        <div class="ilate-card">
+          <div class="ilate-letter">L</div>
+          <div class="ilate-name">Logarithmic</div>
+        </div>
+        <div class="ilate-card">
+          <div class="ilate-letter">A</div>
+          <div class="ilate-name">Algebraic</div>
+        </div>
+        <div class="ilate-card">
+          <div class="ilate-letter">T</div>
+          <div class="ilate-name">Trigonometric</div>
+        </div>
+        <div class="ilate-card">
+          <div class="ilate-letter">E</div>
+          <div class="ilate-name">Exponential</div>
+        </div>
+      </div>
+      <p>The function that appears <span class="hl-purple">earlier in ILATE</span> is chosen as \(u\); the other becomes \(v\).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example 1 — x · eˣ</div>
+      <p>Find \(\displaystyle\int x\,e^x\,dx\)</p>
+      <p style="margin-top:8px;color:var(--text-muted);">By ILATE: \(u = x\) (Algebraic), \(v = e^x\) (Exponential)</p>
+      <div class="formula-box purple">
+        \[ = x\cdot e^x - \int 1\cdot e^x\,dx = x e^x - e^x + C = e^x(x-1)+C \]
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example 2 — ln x</div>
+      <p>Find \(\displaystyle\int \ln x\,dx\)</p>
+      <p style="margin-top:8px;color:var(--text-muted);">Write as \(\int \ln x \cdot 1\,dx\). By ILATE: \(u = \ln x\), \(v = 1\)</p>
+      <div class="formula-box">
+        \[ = x\ln x - \int x\cdot\frac{1}{x}\,dx = x\ln x - \int 1\,dx = x\ln x - x + C \]
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div class="card-title">Special Result — e^x[f(x) + f'(x)]</div>
+      <p>A beautiful and important result: if the integrand is \(e^x[f(x)+f'(x)]\), we can directly write the answer.</p>
+      <div class="formula-box blue">
+        <div class="formula-label">DIRECT FORMULA</div>
+        \[ \int e^x\bigl[f(x)+f'(x)\bigr]\,dx = e^x\cdot f(x)+C \]
+      </div>
+      <p><strong>Example:</strong> \(\displaystyle\int e^x\!\left(\sin x + \cos x\right)dx = e^x\sin x+C\) &nbsp;(since \((\sin x)' = \cos x\))</p>
+    </div>
+  </div>
+
+  <!-- 3. Partial Fractions -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Integration by Partial Fractions</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-green">
+      <div class="card-title">Core Idea</div>
+      <p>Any <span class="hl-green">proper rational function</span> \(\dfrac{P(x)}{Q(x)}\) (degree of \(P <\) degree of \(Q\)) can be decomposed into a sum of simpler fractions (partial fractions) that are easy to integrate.</p>
+      <p style="margin-top:8px">If the fraction is <span class="hl-green">improper</span> (degree of \(P \geq\) degree of \(Q\)), first perform polynomial long division.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Partial Fraction Forms</div>
+      <div class="pf-table">
+        <div class="pf-row">
+          <div class="pf-cell">
+            <div class="pf-type">CASE 1 — LINEAR DISTINCT FACTORS</div>
+            \[\frac{px+q}{(x-a)(x-b)} = \frac{A}{x-a}+\frac{B}{x-b}\]
+          </div>
+          <div class="pf-cell">
+            <div class="pf-type">CASE 2 — REPEATED LINEAR FACTOR</div>
+            \[\frac{px+q}{(x-a)^2} = \frac{A}{x-a}+\frac{B}{(x-a)^2}\]
+          </div>
+        </div>
+        <div class="pf-row">
+          <div class="pf-cell">
+            <div class="pf-type">CASE 3 — IRREDUCIBLE QUADRATIC</div>
+            \[\frac{px^2+qx+r}{(x-a)(x^2+bx+c)} = \frac{A}{x-a}+\frac{Bx+C}{x^2+bx+c}\]
+          </div>
+          <div class="pf-cell">
+            <div class="pf-type">CASE 4 — REPEATED QUADRATIC</div>
+            \[\frac{P(x)}{(ax^2+bx+c)^2} = \frac{Ax+B}{ax^2+bx+c}+\frac{Cx+D}{(ax^2+bx+c)^2}\]
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example — Partial Fractions</div>
+      <p>Find \(\displaystyle\int \frac{2x+1}{(x-1)(x+2)}\,dx\)</p>
+      <p style="margin-top:8px;color:var(--text-muted);">Decompose: \(\dfrac{2x+1}{(x-1)(x+2)} = \dfrac{A}{x-1}+\dfrac{B}{x+2}\)</p>
+      <p style="color:var(--text-muted);">Solving: \(A = 1,\; B = 1\)</p>
+      <div class="formula-box green">
+        \[ \int\!\left(\frac{1}{x-1}+\frac{1}{x+2}\right)\!dx = \ln|x-1|+\ln|x+2|+C = \ln|(x-1)(x+2)|+C \]
+      </div>
+    </div>
+
+    <div class="note note-green">
+      <div class="note-icon">📌</div>
+      <p><strong>Remember:</strong> Always check that the rational function is proper before decomposing. If degree of numerator ≥ degree of denominator, divide first to get: \(\text{quotient} + \text{proper remainder}\).</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 7 &middot; Integrals</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>05 · Scalar Multiplication — Chapter 10</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c18;--surface:#0f1524;--surface2:#161d30;--border:#1e2a45;--accent:#4f8eff;--accent2:#a78bfa;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;--text:#e2e8f0;--muted:#7a8ba8;--dim:#4a5a78;--h:'Syne',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;--sw:264px;--r:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--b);font-size:15.5px;line-height:1.8;min-height:100vh}
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--accent2));z-index:999;width:0;transition:width .1s}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;align-items:center;justify-content:space-between;padding:0 16px}
+.topbar-title{font-family:var(--h);font-size:14px;font-weight:700}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}.overlay.show{display:block}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;overflow-y:auto;z-index:160;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}.sb-label{font-family:var(--m);font-size:10px;color:var(--pink);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sb-brand h2{font-family:var(--h);font-size:16px;font-weight:700;line-height:1.3}
+.sb-nav{padding:16px 12px;flex:1}.sb-sec{font-family:var(--m);font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin-bottom:8px}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;transition:all .2s;margin-bottom:3px}
+.ni:hover{background:var(--surface2);color:var(--text)}.ni.on{background:rgba(244,114,182,.1);color:var(--pink);border:1px solid rgba(244,114,182,.25)}.ni .n{font-family:var(--m);font-size:10px;color:var(--dim);min-width:18px}.ni.on .n{color:var(--pink)}
+.main{margin-left:var(--sw);padding:52px 56px 80px;max-width:calc(var(--sw) + 820px)}
+.ph{margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(244,114,182,.06),transparent 70%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.25);color:var(--pink);font-family:var(--m);font-size:11px;padding:4px 13px;border-radius:20px;margin-bottom:16px}
+.ph h1{font-family:var(--h);font-size:40px;font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0,#8aa5c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.ph p{color:var(--muted);font-size:15px;max-width:540px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.badge{font-size:11px;padding:3px 11px;border-radius:20px;font-family:var(--m)}
+.b-board{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}.b-jee{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}
+.sec{margin-bottom:44px}
+.sec-title{font-family:var(--h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--pink);border-radius:2px;flex-shrink:0}
+p{color:var(--muted);margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px}
+.card-t{font-family:var(--h);font-size:14px;font-weight:700;margin-bottom:8px}
+.card p{margin-bottom:0;font-size:14px}
+.card .sub{font-size:12.5px;color:var(--dim);margin-top:6px}
+.fbox{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r);padding:20px 24px;margin:16px 0;font-family:var(--m);font-size:14px;color:var(--gold);line-height:2.2;overflow-x:auto}
+.fbox .fl{font-family:var(--b);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+.note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.note-l{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.note p{color:var(--muted);margin:0}
+.tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.tip-l{font-family:var(--m);font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.tip p{color:var(--muted);margin:0}
+.eg{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.eg-l{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block}
+.eg p{color:var(--muted);margin:3px 0}
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--surface2);color:var(--pink);font-family:var(--h);font-size:13px;font-weight:600;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 18px;border-bottom:1px solid var(--border);color:var(--muted);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.sl{list-style:none;margin:12px 0 16px;padding:0}
+.sl li{padding:8px 0 8px 26px;position:relative;color:var(--muted);border-bottom:1px solid rgba(30,42,69,.5);font-size:14.5px}
+.sl li:last-child{border-bottom:none}.sl li::before{content:'→';position:absolute;left:0;color:var(--pink);font-size:13px}
+.visual{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center;margin:20px 0;overflow:hidden}
+.visual svg{max-width:100%;height:auto}
+.hl{color:var(--text);font-weight:600}.hb{color:var(--accent);font-weight:600}.hg{color:var(--gold);font-weight:600}.hv{color:var(--green);font-weight:600}.hp{color:var(--pink);font-weight:600}.ha{color:var(--accent2);font-weight:600}
+.footer{margin-left:var(--sw);border-top:1px solid var(--border);min-height:80px;padding:0 56px}
+.stop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--pink);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(244,114,182,.35);transition:transform .2s;z-index:100}
+.stop:hover{transform:scale(1.1)}
+.pnav{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.pnav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:10px 20px;border-radius:8px;font-family:var(--h);font-size:14px;font-weight:600}
+.pnav .prev{background:var(--surface);color:var(--muted);border:1px solid var(--border)}.pnav .next{background:var(--pink);color:#fff}
+@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .topbar{display:flex}.sidebar{transform:translateX(-100%);top:0}.sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 18px 80px;max-width:100%}.footer{margin-left:0;padding:0 18px}
+  .ph h1{font-size:28px}.grid2,.grid3{grid-template-columns:1fr}.sec-title{font-size:18px}
+  .fbox{font-size:13px;padding:16px 16px}.tbl th,.tbl td{padding:9px 12px;font-size:13px}
+}
+@media(max-width:480px){.ph h1{font-size:24px}.main{padding:72px 14px 60px}}
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    /* vector arrow  */
+ .upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:3px;
+  }
+  .upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.9 ;
+    font-size: 15px;
+  } 
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="topbar"><div class="topbar-title">Ch.10 · Scalar Multiplication</div><button class="burger" id="burger"><span></span><span></span><span></span></button></div>
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-label">Class XII · Mathematics</div><h2>Chapter 10<br/>Vectors</h2></div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Topics</div>
+    <a href="vector1.html" class="ni"><span class="n">01</span> Introduction</a>
+    <a href="vector2.html" class="ni"><span class="n">02</span> Basic Concepts</a>
+    <a href="vector3.html" class="ni"><span class="n">03</span> Types of Vectors</a>
+    <a href="vector4.html" class="ni"><span class="n">04</span> Vector Addition</a>
+    <a href="vector5.html" class="ni on"><span class="n">05</span> Scalar Multiplication</a>
+    <a href="vector6.html" class="ni"><span class="n">06</span> Product of Vectors</a>
+  </nav>
+</aside>
+
+<main class="main">
+  <header class="ph">
+    <div class="tag">05 / Scalar Multiplication</div>
+    <h1>Multiplication of Vector<br/>by a Scalar</h1>
+    <p>Scaling vectors, changing direction, unit vector derivation — all applications of multiplying a vector by a scalar.</p>
+    <div class="badges"><span class="badge b-board">CBSE Board</span><span class="badge b-jee">JEE Mains & Adv.</span></div>
+  </header>
+
+  <!-- DEFINITION -->
+  <section class="sec">
+    <div class="sec-title">Definition</div>
+    <p>When a vector <span class="hp upper-arrow">a</span> is multiplied by a real number (scalar) <span class="hg">λ</span>, the result <span class="hg">λ<span class="upper-arrow">a</span></span> is a new vector whose:</p>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-t" style="color:var(--gold)">Magnitude</div>
+        <p>= <strong>|λ| × |<span class="upper-arrow">a</span>|</strong><br/>(absolute value of scalar × original magnitude)</p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--pink)">Direction</div>
+        <p>Same as <span class="upper-arrow">a</span> if λ > 0<br/>Opposite to <span class="upper-arrow">a</span> if λ &lt; 0<br/>Zero vector if λ = 0</p>
+      </div>
+    </div>
+
+    <div class="fbox">
+      <span class="fl">Scalar Multiplication — Component Form</span>
+      If  <strong><span class="upper-arrow">a</span> = a₁î + a₂ĵ + a₃k̂</strong>  and λ is a scalar:<br/>
+      <strong>λ<span class="upper-arrow">a</span> = λa₁î + λa₂ĵ + λa₃k̂</strong><br/><br/>
+      Magnitude:  <strong>|λ<span class="upper-arrow">a</span>| = |λ| · |<span class="upper-arrow">a</span>|</strong>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p><span class="upper-arrow">a</span> = 2î − 3ĵ + k̂,  λ = −4</p>
+      <p><strong>λ<span class="upper-arrow">a</span> = −4(2î − 3ĵ + k̂) = −8î + 12ĵ − 4k̂</strong></p>
+      <p>|<span class="upper-arrow">a</span>| = √(4+9+1) = √14</p>
+      <p>|λ<span class="upper-arrow">a</span>| = |−4|·√14 = <strong>4√14</strong></p>
+    </div>
+  </section>
+
+  <!-- VISUAL: SCALING -->
+  <section class="sec">
+    <div class="sec-title">Visual — Effect of Scalar Multiplication</div>
+    <div class="visual">
+      <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="s1" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#4f8eff"/></marker>
+          <marker id="s2" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#34d399"/></marker>
+          <marker id="s3" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#f472b6"/></marker>
+        </defs>
+        <!-- a vector -->
+        <line x1="40" y1="65" x2="140" y2="65" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#s1)"/>
+        <text x="88" y="52" font-family="IBM Plex Mono" font-size="12" fill="#4f8eff" text-anchor="middle">a⃗</text>
+        <!-- 2a vector -->
+        <line x1="40" y1="105" x2="240" y2="105" stroke="#34d399" stroke-width="2.5" marker-end="url(#s2)"/>
+        <text x="138" y="92" font-family="IBM Plex Mono" font-size="12" fill="#34d399" text-anchor="middle">2a⃗ (×2 magnitude)</text>
+        <!-- -a vector -->
+        <line x1="140" y1="145" x2="40" y2="145" stroke="#f472b6" stroke-width="2.5" marker-end="url(#s3)"/>
+        <text x="88" y="160" font-family="IBM Plex Mono" font-size="12" fill="#f472b6" text-anchor="middle">−a⃗ (reversed)</text>
+        <!-- origins -->
+        <circle cx="40" cy="65" r="3" fill="#a78bfa"/>
+        <circle cx="40" cy="105" r="3" fill="#a78bfa"/>
+        <circle cx="140" cy="145" r="3" fill="#a78bfa"/>
+        <text x="456" y="65" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78">Same length as a⃗</text>
+        <text x="456" y="105" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78">Twice the length</text>
+        <text x="456" y="145" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78">Same length, flipped</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- PROPERTIES -->
+  <section class="sec">
+    <div class="sec-title">Properties of Scalar Multiplication</div>
+    <div class="fbox">
+      <span class="fl">All Properties</span>
+      Let <span class="upper-arrow">a</span>, <span class="upper-arrow">b</span> be vectors and λ, μ be scalars:<br/><br/>
+      <strong>1. λ(<span class="upper-arrow">a</span> + <span class="upper-arrow">b</span>) = λ<span class="upper-arrow">a</span> + λ<span class="upper-arrow">b</span></strong>  (distributive over vector sum)<br/>
+      <strong>2. (λ + μ)<span class="upper-arrow">a</span> = λ<span class="upper-arrow">a</span> + μ<span class="upper-arrow">a</span></strong>  (distributive over scalar sum)<br/>
+      <strong>3. λ(μ<span class="upper-arrow">a</span>) = (λμ)<span class="upper-arrow">a</span></strong>  (associativity with scalar product)<br/>
+      <strong>4. 1 · <span class="upper-arrow">a</span> = <span class="upper-arrow">a</span></strong>  (multiplicative identity)<br/>
+      <strong>5. (−1) · <span class="upper-arrow">a</span> = −<span class="upper-arrow">a</span></strong>  (negative vector)<br/>
+      <strong>6. 0 · <span class="upper-arrow">a</span> = <span class="upper-arrow">0</span></strong>  (zero scalar gives zero vector)
+    </div>
+    <div class="note">
+      <span class="note-l">📌 Board Exam Note</span>
+      <p>Boards ask you to prove the distributive law geometrically. Show that both sides give the same resultant using the triangle or parallelogram law.</p>
+    </div>
+  </section>
+
+  <!-- UNIT VECTOR APPLICATION -->
+  <section class="sec">
+    <div class="sec-title">Unit Vector from Scalar Multiplication</div>
+    <p>The unit vector â is simply <span class="upper-arrow">a</span> multiplied by the scalar <span class="hg">1/|<span class="upper-arrow">a</span>|</span>:</p>
+    <div class="fbox">
+      <span class="fl">Unit Vector via Scalar Multiplication</span>
+      <strong>â = (1/|<span class="upper-arrow">a</span>|) · <span class="upper-arrow">a</span> = <span class="upper-arrow">a</span>/|<span class="upper-arrow">a</span>|</strong><br/><br/>
+      Conversely:  <strong><span class="upper-arrow">a</span> = |<span class="upper-arrow">a</span>| · â</strong><br/>
+      (any vector = its magnitude × its unit vector)
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p><span class="upper-arrow">a</span> = 3î + 4ĵ − 0k̂</p>
+      <p>|<span class="upper-arrow">a</span>| = 5</p>
+      <p>â = (1/5)(3î + 4ĵ) = <strong>(3/5)î + (4/5)ĵ</strong></p>
+      <p>Verify: <span class="upper-arrow">a</span> = 5 · [(3/5)î + (4/5)ĵ] = 3î + 4ĵ ✓</p>
+    </div>
+  </section>
+
+  <!-- LINEAR COMBINATION -->
+  <section class="sec">
+    <div class="sec-title">Linear Combination of Vectors</div>
+    <p>A <span class="hp">linear combination</span> of vectors <span class="upper-arrow">a</span>, <span class="upper-arrow">b</span>, <span class="upper-arrow">c</span> is an expression of the form <span class="hg">λ<span class="upper-arrow">a</span> + μ<span class="upper-arrow">b</span> + ν<span class="upper-arrow">c</span></span> where λ, μ, ν are scalars.</p>
+    <div class="fbox">
+      <span class="fl">Linear Combination</span>
+      <strong><span class="upper-arrow">r</span> = λ<span class="upper-arrow">a</span> + μ<span class="upper-arrow">b</span></strong>  means <span class="upper-arrow">r</span> is in the plane of <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span><br/><br/>
+      <strong><span class="upper-arrow">r</span> = λ<span class="upper-arrow">a</span> + μ<span class="upper-arrow">b</span> + ν<span class="upper-arrow">c</span></strong>  — any vector in 3D space<br/><br/>
+      Standard basis:  <strong><span class="upper-arrow">r</span> = xî + yĵ + zk̂</strong>  (linear combo of î, ĵ, k̂)
+    </div>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Application</span>
+      <p>Linear combinations are used to express unknown vectors in terms of known ones. If three non-coplanar vectors span 3D space, any vector can be uniquely written as their linear combination. This underpins the entire coordinate system.</p>
+    </div>
+  </section>
+
+  <!-- COLLINEAR USING SCALAR MULTIPLE -->
+  <section class="sec">
+    <div class="sec-title">Collinearity Test Using Scalar Multiplication</div>
+    <p>Since scalar multiplication scales a vector along its direction, collinear vectors are precisely scalar multiples:</p>
+    <div class="fbox">
+      <span class="fl">Collinearity Condition</span>
+      <strong><span class="upper-arrow">a</span> = λ<span class="upper-arrow">b</span></strong>  for some λ ∈ ℝ, λ ≠ 0<br/><br/>
+      λ > 0: same direction  |  λ &lt; 0: opposite direction
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Board-Style Problem</span>
+      <p>Find λ if vectors <strong><span class="upper-arrow">a</span> = 2î + λĵ − k̂</strong> and <strong><span class="upper-arrow">b</span> = 4î − 2ĵ + 2k̂</strong> are collinear.</p>
+      <p>For collinearity: a₁/b₁ = a₂/b₂ = a₃/b₃</p>
+      <p>2/4 = λ/(−2) = (−1)/2</p>
+      <p>1/2 = λ/(−2)  →  <strong>λ = −1</strong></p>
+    </div>
+  </section>
+
+  <!-- COPLANARITY -->
+  <section class="sec">
+    <div class="sec-title">Coplanarity of Vectors</div>
+    <p>Three vectors <span class="upper-arrow">a</span>, <span class="upper-arrow">b</span>, <span class="upper-arrow">c</span> are <span class="hp">coplanar</span> if one can be expressed as a linear combination of the other two:</p>
+    <div class="fbox">
+      <span class="fl">Coplanarity Condition</span>
+      <strong><span class="upper-arrow">c</span> = λ<span class="upper-arrow">a</span> + μ<span class="upper-arrow">b</span></strong>  for some scalars λ, μ<br/><br/>
+      Equivalent: scalar triple product = 0<br/>
+      <strong>[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>] = <span class="upper-arrow">a</span> · (<span class="upper-arrow">b</span> × <span class="upper-arrow">c</span>) = 0</strong>
+    </div>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE High Value</span>
+      <p>Coplanarity is tested using the <strong>scalar triple product</strong> (box product). If [<span class="upper-arrow"> a </span> <span class="upper-arrow"> b </span> <span class="upper-arrow"> c </span>] = 0, the vectors are coplanar. This is a major formula in JEE 3D geometry and vector problems.</p>
+    </div>
+  </section>
+
+  <div class="pnav">
+    <a href="vector4.html" class="prev">← Vector Addition</a>
+    <a href="vector6.html" class="next">Product of Vectors →</a>
+  </div>
+  <div style="height:40px"></div>
+</main>
+<footer class="site-footer footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vectors</div>
+    </div>
+</footer>
+<button class="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+  const burger=document.getElementById('burger'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+  function t(){const o=sidebar.classList.toggle('open');burger.classList.toggle('open',o);overlay.classList.toggle('show',o)}
+  burger.addEventListener('click',t);overlay.addEventListener('click',t);
+  window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('prog').style.width=(s/h*100)+'%'});
+</script>
+</body>
+</html>

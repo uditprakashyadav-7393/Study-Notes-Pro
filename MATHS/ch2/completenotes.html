@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on Inverse Trigonometric Functions for Class 12 Maths. Learn about the definitions, properties, and applications of inverse trigonometric functions with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 2, Inverse Trigonometric Functions, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Inverse Trigonometric Functions — Student Notes</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #fdf8f0;
+    --cream: #f5edd8;
+    --gold: #c8922a;
+    --rust: #b84a2c;
+    --teal: #1d6e6e;
+    --teal-light: #e8f4f4;
+    --blue: #2a4c8a;
+    --blue-light: #edf1fa;
+    --rule: #d4c5a0;
+    --shadow: rgba(26, 18, 9, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #e8e0d0;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(200,146,42,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(29,110,110,0.07) 0%, transparent 50%);
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .notebook {
+    max-width: 860px;
+    margin: 0 auto;
+    background: var(--paper);
+    border-radius: 4px;
+    box-shadow:
+      0 2px 0 #c8b896,
+      0 4px 0 #bba882,
+      6px 8px 30px rgba(0,0,0,0.18),
+      inset 0 0 60px rgba(200,146,42,0.03);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Spiral binding dots */
+  .binding {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 52px;
+    background: #d4c8b0;
+    border-right: 3px solid #b8aa8a;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 28px;
+  }
+  .ring {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 3px solid #8a7a60;
+    background: #c8bca0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(255,255,255,0.4);
+    margin: 14px 0;
+    flex-shrink: 0;
+  }
+
+  /* Ruled lines */
+  .content {
+    margin-left: 52px;
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 31px,
+        var(--rule) 32px,
+        var(--rule) 32px
+      );
+    background-position: 0 56px;
+    padding: 0 40px 50px 32px;
+    position: relative;
+  }
+
+  /* Red margin line */
+  .content::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: rgba(184,74,44,0.3);
+  }
+
+  /* Header */
+  .header {
+    padding-top: 32px;
+    padding-bottom: 20px;
+    border-bottom: 3px double var(--rule);
+    margin-bottom: 28px;
+    text-align: center;
+    position: relative;
+  }
+  .subject-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .header h1 span {
+    color: var(--teal);
+    font-style: italic;
+  }
+  .header-sub {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #7a6a50;
+    font-style: italic;
+  }
+  .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #9a8a70;
+  }
+
+  /* Section headings */
+  .section {
+    margin-bottom: 36px;
+    animation: fadeUp 0.5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+
+  .sec-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--teal);
+    border-bottom: 2px solid var(--teal);
+    padding-bottom: 4px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-num {
+    background: var(--teal);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 2px 7px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  p { line-height: 1.9; margin-bottom: 10px; font-size: 1.0rem; }
+
+  /* Concept box */
+  .concept-box {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .concept-box .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .concept-box p { margin-bottom: 0; }
+
+  /* Warning / note box */
+  .note-box {
+    background: #fef9ec;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .note-box .label { color: var(--gold); }
+
+  /* Formula grid */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+  @media(max-width:600px) { .formula-grid { grid-template-columns: 1fr; } }
+
+  .formula-card {
+    background: white;
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    padding: 14px 16px;
+    text-align: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform 0.18s, box-shadow 0.18s;
+    cursor: default;
+  }
+  .formula-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--shadow);
+  }
+  .formula-card .fn-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--rust);
+    margin-bottom: 6px;
+  }
+  .formula-card .fn-expr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--cream);
+    padding: 4px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .formula-card .fn-domain, .formula-card .fn-range {
+    font-size: 0.78rem;
+    color: #6a5a40;
+    line-height: 1.5;
+  }
+  .formula-card .fn-domain span, .formula-card .fn-range span {
+    font-weight: 600;
+    color: var(--teal);
+  }
+
+  /* Table */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px var(--shadow);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .styled-table thead tr {
+    background: var(--teal);
+    color: white;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.95rem;
+  }
+  .styled-table th, .styled-table td {
+    padding: 10px 14px;
+    text-align: center;
+  }
+  .styled-table tbody tr:nth-child(even) { background: var(--teal-light); }
+  .styled-table tbody tr:hover { background: #d4eaea; transition: background 0.15s; }
+  .styled-table td:first-child { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--rust); }
+  .styled-table td:nth-child(2) { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+
+  /* Identity cards */
+  .identity-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  @media(max-width:540px) { .identity-list { grid-template-columns: 1fr; } }
+  .identity-list li {
+    background: var(--blue-light);
+    border: 1.5px solid #c0ccdf;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--blue);
+    line-height: 1.6;
+    position: relative;
+  }
+  .identity-list li::before {
+    content: '≡';
+    position: absolute;
+    right: 10px; top: 8px;
+    color: #a0afc8;
+    font-size: 1.1rem;
+  }
+
+  /* Memory tip */
+  .mem-tip {
+    background: linear-gradient(135deg, #fdf0e8 0%, #fff8f0 100%);
+    border: 1.5px dashed var(--rust);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .mem-tip::before {
+    content: '✎ Memory Tip';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--rust);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .mem-tip p { color: #5a3a2a; margin: 0; }
+
+  /* Example block */
+  .example {
+    background: #fafafa;
+    border: 1.5px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .example .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .example .ex-q { font-weight: 600; margin-bottom: 6px; }
+  .example .ex-steps { padding-left: 20px; }
+  .example .ex-steps li { line-height: 1.9; font-size: 0.95rem; }
+  .math {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--cream);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: var(--rust);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 2px dashed var(--rule);
+    margin-top: 10px;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9a8a70;
+    font-style: italic;
+  }
+
+  /* Quick reference strip */
+  .quick-ref {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 20px 0;
+  }
+  .quick-ref .qr-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+  .qr-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  @media(max-width:540px) { .qr-grid { grid-template-columns: 1fr 1fr; } }
+  .qr-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.76rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    padding: 7px 10px;
+    color: #e8dfc8;
+    line-height: 1.5;
+  }
+  .qr-item strong { color: var(--gold); display: block; font-size: 0.7rem; margin-bottom: 2px; }
+
+  /* Highlight */
+  .hl-teal  { color: var(--teal); font-weight: 600; }
+  .hl-rust  { color: var(--rust); font-weight: 600; }
+  .hl-gold  { color: var(--gold); font-weight: 600; }
+  .hl-blue  { color: var(--blue); font-weight: 600; }
+  footer a{ text-decoration: none;
+   color: var(--rust);}
+   footer a:hover{ text-decoration: underline;}
+</style>
+</head>
+<body>
+
+<div class="notebook">
+  <div class="binding">
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div class="ring"></div><div class="ring"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+      <span class="subject-tag">Mathematics · Trigonometry · Class Notes</span>
+      <h1>Inverse <span>Trigonometric</span><br>Functions</h1>
+      <p class="header-sub">A complete introductory guide for students</p>
+      <div class="meta-row">
+        <span>Topic: ITF Basics</span>
+        <span>Level: Class XI / XII</span>
+        <span>Syllabus: NCERT / CBSE</span>
+      </div>
+    </div>
+
+    <!-- 1. WHAT ARE INVERSE TRIG FUNCTIONS -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§1</span> What are Inverse Trig Functions?</div>
+      <p>
+        You already know that <span class="math">sin(30°) = ½</span>. But what if someone asks:
+        <em>"Which angle has a sine of ½?"</em> — that's exactly what inverse trig functions answer.
+      </p>
+      <div class="concept-box">
+        <div class="label">Core Idea</div>
+        <p>
+          If <span class="math">y = sin(x)</span>, then the inverse is written as
+          <span class="math">x = sin⁻¹(y)</span> or <span class="math">x = arcsin(y)</span>.
+          It gives us the <strong class="hl-teal">angle</strong> whose trig ratio equals the given value.
+        </p>
+      </div>
+      <div class="note-box">
+        <div class="label">⚠ Important Warning</div>
+        <p>
+          <span class="math">sin⁻¹(x)</span> does <strong>NOT</strong> mean
+          <span class="math">1/sin(x)</span>. The superscript <span class="math">⁻¹</span>
+          here denotes the <em>inverse function</em>, not a reciprocal.
+          For reciprocal, we write <span class="math">cosec(x)</span>.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. THE SIX INVERSE FUNCTIONS -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§2</span> The Six Inverse Trig Functions</div>
+      <p>Corresponding to the six trigonometric functions, we have six inverse functions:</p>
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="fn-name">Arcsine</div>
+          <div class="fn-expr">sin⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> [−1, 1]</div>
+          <div class="fn-range"><span>Range:</span> [−π/2, π/2]</div>
+        </div>
+        <div class="formula-card">
+          <div class="fn-name">Arccosine</div>
+          <div class="fn-expr">cos⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> [−1, 1]</div>
+          <div class="fn-range"><span>Range:</span> [0, π]</div>
+        </div>
+        <div class="formula-card">
+          <div class="fn-name">Arctangent</div>
+          <div class="fn-expr">tan⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> ℝ (all reals)</div>
+          <div class="fn-range"><span>Range:</span> (−π/2, π/2)</div>
+        </div>
+        <div class="formula-card">
+          <div class="fn-name">Arccosecant</div>
+          <div class="fn-expr">cosec⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> (−∞,−1] ∪ [1,∞)</div>
+          <div class="fn-range"><span>Range:</span> [−π/2, π/2] \ {0}</div>
+        </div>
+        <div class="formula-card">
+          <div class="fn-name">Arcsecant</div>
+          <div class="fn-expr">sec⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> (−∞,−1] ∪ [1,∞)</div>
+          <div class="fn-range"><span>Range:</span> [0, π] \ {π/2}</div>
+        </div>
+        <div class="formula-card">
+          <div class="fn-name">Arccotangent</div>
+          <div class="fn-expr">cot⁻¹(x)</div>
+          <div class="fn-domain"><span>Domain:</span> ℝ (all reals)</div>
+          <div class="fn-range"><span>Range:</span> (0, π)</div>
+        </div>
+      </div>
+      <div class="mem-tip">
+        <p>
+          Remember: <span class="hl-teal">sin⁻¹ and tan⁻¹</span> have the same range
+          <span class="math">[−π/2, π/2]</span>, while <span class="hl-rust">cos⁻¹</span>
+          lives in <span class="math">[0, π]</span>. Think: sine and tangent are "symmetric about origin."
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. WHY DO WE RESTRICT THE DOMAIN? -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§3</span> Principal Value Branch — Why Restrict?</div>
+      <p>
+        A function must be <strong class="hl-teal">one-to-one</strong> to have an inverse.
+        Since <span class="math">sin(x)</span> repeats its values (e.g., <span class="math">sin(30°) = sin(150°) = ½</span>),
+        we <em>restrict</em> its domain to a chosen interval called the <span class="hl-gold">Principal Value Branch</span>.
+      </p>
+      <div class="concept-box">
+        <div class="label">Principal Value</div>
+        <p>
+          The value of an inverse trig function that lies in its <strong>principal value branch</strong>
+          is called the <em>principal value</em>. This is always the answer you report unless
+          the question asks for general solutions.
+        </p>
+      </div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Principal Value Branch</th>
+            <th>In Degrees</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>sin⁻¹(x)</td><td>[−π/2, π/2]</td><td>[−90°, 90°]</td></tr>
+          <tr><td>cos⁻¹(x)</td><td>[0, π]</td><td>[0°, 180°]</td></tr>
+          <tr><td>tan⁻¹(x)</td><td>(−π/2, π/2)</td><td>(−90°, 90°)</td></tr>
+          <tr><td>cosec⁻¹(x)</td><td>[−π/2, π/2] \ {0}</td><td>[−90°, 90°] \ {0°}</td></tr>
+          <tr><td>sec⁻¹(x)</td><td>[0, π] \ {π/2}</td><td>[0°, 180°] \ {90°}</td></tr>
+          <tr><td>cot⁻¹(x)</td><td>(0, π)</td><td>(0°, 180°)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. STANDARD VALUES -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§4</span> Standard Values to Memorise</div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>sin⁻¹</th>
+            <th>cos⁻¹</th>
+            <th>tan⁻¹</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>0</td><td>π/2</td><td>0</td></tr>
+          <tr><td>1/2</td><td>π/6</td><td>π/3</td><td>—</td></tr>
+          <tr><td>1/√2</td><td>π/4</td><td>π/4</td><td>—</td></tr>
+          <tr><td>√3/2</td><td>π/3</td><td>π/6</td><td>—</td></tr>
+          <tr><td>1</td><td>π/2</td><td>0</td><td>π/4 (approx)</td></tr>
+          <tr><td>√3</td><td>—</td><td>—</td><td>π/3</td></tr>
+          <tr><td>−1/2</td><td>−π/6</td><td>2π/3</td><td>—</td></tr>
+          <tr><td>−1</td><td>−π/2</td><td>π</td><td>−π/4</td></tr>
+        </tbody>
+      </table>
+      <div class="mem-tip">
+        <p>
+          For <span class="math">sin⁻¹</span> and <span class="math">tan⁻¹</span>:
+          <span class="hl-teal">negative values give negative angles</span> (odd functions).
+          For <span class="math">cos⁻¹</span>: a negative input gives an angle
+          <span class="hl-rust">greater than π/2</span> (neither odd nor even).
+        </p>
+      </div>
+    </div>
+
+    <!-- 5. IMPORTANT PROPERTIES & IDENTITIES -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§5</span> Important Properties &amp; Identities</div>
+      <p>These identities are frequently tested. Learn them carefully.</p>
+
+      <p style="margin-top:12px;"><strong class="hl-teal">A. Composition with trig functions:</strong></p>
+      <ul class="identity-list">
+        <li>sin(sin⁻¹ x) = x,  x ∈ [−1, 1]</li>
+        <li>cos(cos⁻¹ x) = x,  x ∈ [−1, 1]</li>
+        <li>sin⁻¹(sin x) = x,  x ∈ [−π/2, π/2]</li>
+        <li>cos⁻¹(cos x) = x,  x ∈ [0, π]</li>
+        <li>tan(tan⁻¹ x) = x,  x ∈ ℝ</li>
+        <li>tan⁻¹(tan x) = x,  x ∈ (−π/2, π/2)</li>
+      </ul>
+
+      <p style="margin-top:14px;"><strong class="hl-teal">B. Complementary angle identities:</strong></p>
+      <ul class="identity-list">
+        <li>sin⁻¹ x + cos⁻¹ x = π/2</li>
+        <li>tan⁻¹ x + cot⁻¹ x = π/2</li>
+        <li>sec⁻¹ x + cosec⁻¹ x = π/2</li>
+      </ul>
+
+      <p style="margin-top:14px;"><strong class="hl-teal">C. Negative argument (odd/even) identities:</strong></p>
+      <ul class="identity-list">
+        <li>sin⁻¹(−x) = −sin⁻¹(x)</li>
+        <li>tan⁻¹(−x) = −tan⁻¹(x)</li>
+        <li>cosec⁻¹(−x) = −cosec⁻¹(x)</li>
+        <li>cos⁻¹(−x) = π − cos⁻¹(x)</li>
+        <li>sec⁻¹(−x) = π − sec⁻¹(x)</li>
+        <li>cot⁻¹(−x) = π − cot⁻¹(x)</li>
+      </ul>
+
+      <p style="margin-top:14px;"><strong class="hl-teal">D. Reciprocal identities:</strong></p>
+      <ul class="identity-list">
+        <li>sin⁻¹(1/x) = cosec⁻¹(x),  |x| ≥ 1</li>
+        <li>cos⁻¹(1/x) = sec⁻¹(x),  |x| ≥ 1</li>
+        <li>tan⁻¹(1/x) = cot⁻¹(x),  x > 0</li>
+        <li>tan⁻¹(1/x) = −π + cot⁻¹(x),  x < 0</li>
+      </ul>
+
+      <p style="margin-top:14px;"><strong class="hl-teal">E. Addition formulas for tan⁻¹:</strong></p>
+      <div class="concept-box" style="margin-top:8px;">
+        <div class="label">Key Formulas</div>
+        <p>
+          <span class="math">tan⁻¹ x + tan⁻¹ y = tan⁻¹[(x+y)/(1−xy)]</span>
+          &nbsp; (if <span class="math">xy &lt; 1</span>)
+        </p>
+        <p style="margin-top:8px;">
+          <span class="math">tan⁻¹ x − tan⁻¹ y = tan⁻¹[(x−y)/(1+xy)]</span>
+        </p>
+        <p style="margin-top:8px;">
+          <span class="math">2 tan⁻¹ x = tan⁻¹[2x/(1−x²)]</span>
+          &nbsp; (if <span class="math">|x| &lt; 1</span>)
+        </p>
+      </div>
+    </div>
+
+    <!-- 6. WORKED EXAMPLES -->
+    <div class="section">
+      <div class="sec-title"><span class="sec-num">§6</span> Worked Examples</div>
+
+      <div class="example">
+        <div class="ex-label">Example 1 — Finding Principal Value</div>
+        <div class="ex-q">Find the principal value of <span class="math">sin⁻¹(−1/2)</span>.</div>
+        <ol class="ex-steps">
+          <li>We need angle θ such that <span class="math">sin θ = −1/2</span> and <span class="math">θ ∈ [−π/2, π/2]</span>.</li>
+          <li>We know <span class="math">sin(π/6) = 1/2</span>, and since <span class="math">sin⁻¹</span> is an odd function:</li>
+          <li><span class="math">sin⁻¹(−1/2) = −sin⁻¹(1/2) = −π/6</span> &nbsp;✓</li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">Example 2 — Using Composition</div>
+        <div class="ex-q">Evaluate <span class="math">sin⁻¹(sin 2π/3)</span>.</div>
+        <ol class="ex-steps">
+          <li>Note that <span class="math">2π/3 ∉ [−π/2, π/2]</span>, so we <strong>cannot</strong> directly say the answer is <span class="math">2π/3</span>.</li>
+          <li>Rewrite: <span class="math">sin(2π/3) = sin(π − π/3) = sin(π/3)</span>.</li>
+          <li>Now <span class="math">π/3 ∈ [−π/2, π/2]</span>, so: <span class="math">sin⁻¹(sin 2π/3) = π/3</span> &nbsp;✓</li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">Example 3 — Complementary Identity</div>
+        <div class="ex-q">If <span class="math">sin⁻¹ x = π/5</span>, find <span class="math">cos⁻¹ x</span>.</div>
+        <ol class="ex-steps">
+          <li>Use the identity: <span class="math">sin⁻¹ x + cos⁻¹ x = π/2</span></li>
+          <li>Therefore: <span class="math">cos⁻¹ x = π/2 − π/5 = 3π/10</span> &nbsp;✓</li>
+        </ol>
+      </div>
+
+      <div class="example">
+        <div class="ex-label">Example 4 — Addition Formula</div>
+        <div class="ex-q">Find the value of <span class="math">tan⁻¹(1/2) + tan⁻¹(1/3)</span>.</div>
+        <ol class="ex-steps">
+          <li>Here <span class="math">x = 1/2</span>, <span class="math">y = 1/3</span>, and <span class="math">xy = 1/6 &lt; 1</span>, so we use the addition formula.</li>
+          <li><span class="math">= tan⁻¹[(1/2 + 1/3) / (1 − 1/6)] = tan⁻¹[(5/6) / (5/6)] = tan⁻¹(1)</span></li>
+          <li><span class="math">= π/4</span> &nbsp;✓</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- QUICK REFERENCE STRIP -->
+    <div class="quick-ref">
+      <div class="qr-title">⚡ Quick Reference Summary</div>
+      <div class="qr-grid">
+        <div class="qr-item"><strong>sin⁻¹ range</strong>[−π/2, π/2]</div>
+        <div class="qr-item"><strong>cos⁻¹ range</strong>[0, π]</div>
+        <div class="qr-item"><strong>tan⁻¹ range</strong>(−π/2, π/2)</div>
+        <div class="qr-item"><strong>Odd functions</strong>sin⁻¹, tan⁻¹, cosec⁻¹</div>
+        <div class="qr-item"><strong>Not odd/even</strong>cos⁻¹, sec⁻¹, cot⁻¹</div>
+        <div class="qr-item"><strong>Key sum = π/2</strong>sin⁻¹x + cos⁻¹x</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>These notes cover the NCERT / CBSE Class XII syllabus on Inverse Trigonometric Functions.</p>
+      <p style="margin-top:6px;">Always verify your answer lies within the <em>principal value branch</em>. Practice daily. 📐</p>
+    </div>
+  <footer class="footer">
+      <p>Class 12 Maths | Chapter 2 - Inverse Trigonometric Functions</p>
+    Class 12 Mathematics (CBSE) ✦ <br>
+    &copy; 2026 &#65372; <a href="/index.html" target="_blank" rel="noopener"><img src="/Img/logo-dark.png" alt="StudyNotes Pro Logo" style="width: 100px; height: auto;"></a> &nbsp;|&nbsp; all rights reserved. <br>
+    🛠️ Created by <a href="mailto:uditprakashyadav@gmail.com" target="_blank" rel="noopener">UDIT PRAKASH YADAV</a>
+  </footer>
+  
+  </div><!-- /content -->
+</div><!-- /notebook -->
+F
+
+</body>
+</html>

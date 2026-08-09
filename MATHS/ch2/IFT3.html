@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on inverse trigonometric functions, covering their definitions, properties, and graphs. Learn how to work with arcsin, arccos, arctan, and more, with clear explanations and examples.">
+<meta name="keywords" content="inverse trigonometric functions, arcsin, arccos, arctan, properties of inverse trig functions, graphs of inverse trig functions, trigonometry, math notes">
+<meta name="author" content="Udit Prakash Yadav">
+<title>ITF — 3. Principal Value Branch</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#181c27;--surface2:#1e2333;--border:rgba(255,255,255,0.07);--accent:#fb923c;--accent2:#f6c90e;--accent3:#86efac;--text:#e2e8f0;--muted:#8892a4;--mono:'JetBrains Mono',monospace;--serif:'Lora',Georgia,serif;--sans:'DM Sans',sans-serif;--gold: #f6c90e;--gold-dim: #93780c;--accent: #e96c6c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:1rem;line-height:1.75;min-height:100vh}
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;overflow-x:auto;gap:0}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--accent);white-space:nowrap;margin-right:1.5rem;text-decoration:none;font-style:italic;flex-shrink:0}
+.nav-links{display:flex;gap:0;flex-shrink:0}
+.nav-links a{font-family:var(--mono);font-size:0.63rem;letter-spacing:0.04em;color:var(--muted);text-decoration:none;padding:0 10px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent);border-bottom-color:var(--accent)}
+.progress-bar{position:fixed;top:56px;left:0;right:0;height:2px;z-index:99;background:var(--border)}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s}
+.hero{padding:4rem 2rem 2.5rem;max-width:900px;margin:0 auto}
+.hero-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;font-weight:700;margin-bottom:0.9rem}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero-desc{color:var(--muted);max-width:560px;font-size:1rem}
+.page-body{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+.sec{margin-bottom:2.8rem;opacity:0;transform:translateY(18px);animation:revealUp 0.5s ease forwards}
+@keyframes revealUp{to{opacity:1;transform:none}}
+.sec:nth-child(1){animation-delay:0.05s}.sec:nth-child(2){animation-delay:0.12s}.sec:nth-child(3){animation-delay:0.19s}.sec:nth-child(4){animation-delay:0.26s}.sec:nth-child(5){animation-delay:0.33s}.sec:nth-child(6){animation-delay:0.40s}
+.sec-head{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:1.1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.7rem}
+.sec-num{font-family:var(--mono);font-size:0.62rem;background:var(--accent);color:var(--bg);padding:2px 8px;border-radius:2px;font-weight:600;flex-shrink:0}
+p{margin-bottom:0.85rem;color:var(--text)}
+.m{font-family:var(--mono);background:rgba(255,255,255,0.06);padding:1px 7px;border-radius:3px;font-size:0.88em;color:var(--accent2);white-space:nowrap}
+.box{border-radius:6px;padding:1.1rem 1.4rem;margin:1.1rem 0}
+.box-orange{background:rgba(251,146,60,0.08);border-left:3px solid var(--accent)}
+.box-gold{background:rgba(246,201,14,0.08);border-left:3px solid var(--accent2)}
+.box-green{background:rgba(134,239,172,0.08);border-left:3px solid var(--accent3)}
+.box-red{background:rgba(248,113,113,0.08);border-left:3px solid #f87171}
+.box-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.4rem;font-weight:600}
+.box-orange .box-label{color:var(--accent)}.box-gold .box-label{color:var(--accent2)}.box-green .box-label{color:var(--accent3)}.box-red .box-label{color:#f87171}
+.box p{margin-bottom:0}
+
+/* PV Table — big visual */
+.pv-table{display:grid;gap:10px;margin:1.2rem 0}
+.pv-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center}
+@media(max-width:540px){.pv-row{grid-template-columns:100px 1fr 1fr;gap:6px}}
+.pv-fn{font-family:var(--mono);font-size:0.82rem;color:var(--accent2);background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:8px 12px;text-align:center}
+.pv-range{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:8px 12px;font-family:var(--mono);font-size:0.78rem;color:var(--text);text-align:center}
+.pv-deg{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:8px 12px;font-family:var(--mono);font-size:0.78rem;color:var(--muted);text-align:center}
+.pv-head{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;text-align:center}
+
+/* Step example */
+.example{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.3rem 1.5rem;margin:1.1rem 0}
+.ex-label{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;margin-bottom:0.5rem}
+.ex-q{font-weight:500;margin-bottom:0.6rem}
+.ex-steps{padding-left:1.2rem}
+.ex-steps li{font-size:0.94rem;line-height:1.9}
+
+.tbl-wrap{overflow-x:auto;margin:1rem 0}
+table.ftbl{width:100%;border-collapse:collapse;font-size:0.9rem}
+table.ftbl thead tr{background:var(--surface2)}
+table.ftbl th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+table.ftbl td{padding:10px 14px;border-bottom:1px solid var(--border)}
+table.ftbl tr:last-child td{border-bottom:none}
+table.ftbl tr:hover td{background:rgba(255,255,255,0.02)}
+table.ftbl td:first-child{font-family:var(--mono);color:var(--accent2);font-size:0.88rem}
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(251,146,60,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em;text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; font-family: 'Playfair Display', serif; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="./mathsch2.html">ITF Notes</a>
+  <div class="nav-links">
+    <a href="./IFT1.html">01 Intro</a>
+    <a href="./IFT2.html">02 Domain & Range</a>
+    <a href="./IFT3.html" class="active">03 Principal Value</a>
+    <a href="./IFT4.html">04 Properties I</a>
+    <a href="./IFT5.html">05 Properties II</a>
+    <a href="./IFT6.html">06 Graphs</a>
+    <a href="./graphs.html">07 Animated Graphs</a>
+  </div>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<div class="hero">
+  <div class="hero-tag">Chapter 2 · Inverse Trigonometric Functions</div>
+  <h1>Principal <em>Value Branch</em></h1>
+  <p class="hero-desc">Why we restrict trig functions to a specific interval, and how to always find the correct principal value.</p>
+</div>
+
+<div class="page-body">
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">3.1</span> The Problem with Periodicity</div>
+    <p>Trigonometric functions are <strong>periodic</strong> — they repeat their values in every cycle. This means that for any given output value, there are <em>infinitely many</em> input angles that produce it.</p>
+    <p>For example: <span class="m">sin(30°) = sin(150°) = sin(390°) = sin(−210°) = ½</span></p>
+    <p>So if we ask <span class="m">sin⁻¹(½) = ?</span>, we would get infinitely many answers. This makes the inverse <em>not a function</em> in the usual sense.</p>
+    <div class="box box-orange">
+      <div class="box-label">The Solution</div>
+      <p>We choose one specific interval on which the trig function is <strong>strictly one-to-one</strong>. This special interval is called the <strong>Principal Value Branch</strong>. The unique output from the inverse function on this branch is called the <strong>principal value</strong>.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">3.2</span> Principal Value Branches — All Six</div>
+    <div class="pv-table">
+      <div class="pv-row">
+        <div class="pv-fn" style="background:transparent;border:none;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">Function</div>
+        <div class="pv-head">Range (Radians)</div>
+        <div class="pv-head">Range (Degrees)</div>
+      </div>
+      <div class="pv-row"><div class="pv-fn">sin⁻¹(x)</div><div class="pv-range" style="border-color:var(--accent);">[−π/2, π/2]</div><div class="pv-deg">[−90°, 90°]</div></div>
+      <div class="pv-row"><div class="pv-fn">cos⁻¹(x)</div><div class="pv-range" style="border-color:#a78bfa;">[0, π]</div><div class="pv-deg">[0°, 180°]</div></div>
+      <div class="pv-row"><div class="pv-fn">tan⁻¹(x)</div><div class="pv-range" style="border-color:#38bdf8;">(−π/2, π/2)</div><div class="pv-deg">(−90°, 90°)</div></div>
+      <div class="pv-row"><div class="pv-fn">cosec⁻¹(x)</div><div class="pv-range" style="border-color:#fb7185;">[−π/2,π/2]\{0}</div><div class="pv-deg">[−90°,90°]\{0°}</div></div>
+      <div class="pv-row"><div class="pv-fn">sec⁻¹(x)</div><div class="pv-range" style="border-color:#a3e635;">[0,π]\{π/2}</div><div class="pv-deg">[0°,180°]\{90°}</div></div>
+      <div class="pv-row"><div class="pv-fn">cot⁻¹(x)</div><div class="pv-range" style="border-color:var(--accent2);">(0, π)</div><div class="pv-deg">(0°, 180°)</div></div>
+    </div>
+    <div class="box box-gold">
+      <div class="box-label">Memory Trick</div>
+      <p><span class="m">sin⁻¹</span>, <span class="m">tan⁻¹</span>, and <span class="m">cosec⁻¹</span> share the same range <strong>[−π/2, π/2]</strong> — symmetric around 0.<br>
+      <span class="m">cos⁻¹</span>, <span class="m">sec⁻¹</span>, and <span class="m">cot⁻¹</span> share the range based on <strong>[0, π]</strong>.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">3.3</span> How to Find the Principal Value</div>
+    <p>The principal value of an inverse trig expression is the unique angle that lies <strong>within</strong> the principal value branch. Follow these steps:</p>
+    <ol style="padding-left:1.4rem;display:grid;gap:6px;margin:0.8rem 0">
+      <li style="line-height:1.9">Identify which inverse trig function is involved and recall its principal value branch.</li>
+      <li style="line-height:1.9">Find the angle whose trig ratio equals the given value.</li>
+      <li style="line-height:1.9">Check if that angle is within the principal branch. If not, find the equivalent angle that is.</li>
+    </ol>
+    <div class="example">
+      <div class="ex-label">Example 3.1 — Direct Principal Value</div>
+      <div class="ex-q">Find: <span class="m">sin⁻¹(√3/2)</span></div>
+      <ol class="ex-steps">
+        <li>Branch of sin⁻¹: <span class="m">[−π/2, π/2]</span></li>
+        <li>We need angle θ with <span class="m">sin θ = √3/2</span> and <span class="m">θ ∈ [−π/2, π/2]</span></li>
+        <li>We know <span class="m">sin(π/3) = √3/2</span> and <span class="m">π/3 ≈ 1.05 ∈ [−π/2, π/2]</span> ✓</li>
+        <li><strong>Answer: π/3</strong></li>
+      </ol>
+    </div>
+    <div class="example">
+      <div class="ex-label">Example 3.2 — Angle outside principal branch</div>
+      <div class="ex-q">Find: <span class="m">sin⁻¹(sin 2π/3)</span></div>
+      <ol class="ex-steps">
+        <li>Note: <span class="m">2π/3 ∉ [−π/2, π/2]</span> — outside the principal branch!</li>
+        <li>Rewrite using identity: <span class="m">sin(2π/3) = sin(π − π/3) = sin(π/3)</span></li>
+        <li>Now <span class="m">π/3 ∈ [−π/2, π/2]</span> ✓</li>
+        <li><strong>Answer: sin⁻¹(sin 2π/3) = π/3</strong></li>
+      </ol>
+    </div>
+    <div class="example">
+      <div class="ex-label">Example 3.3 — cos⁻¹ with negative value</div>
+      <div class="ex-q">Find: <span class="m">cos⁻¹(−1/2)</span></div>
+      <ol class="ex-steps">
+        <li>Branch of cos⁻¹: <span class="m">[0, π]</span></li>
+        <li>We know <span class="m">cos(π/3) = 1/2</span>, so <span class="m">cos(π − π/3) = −1/2</span></li>
+        <li><span class="m">π − π/3 = 2π/3</span>, and <span class="m">2π/3 ∈ [0, π]</span> ✓</li>
+        <li><strong>Answer: 2π/3</strong></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">3.4</span> Useful Reduction Formulas</div>
+    <p>When the angle given is outside the principal branch, use these to reduce it:</p>
+    <div class="tbl-wrap">
+    <table class="ftbl">
+      <thead><tr><th>Expression</th><th>Reduction</th><th>Condition</th></tr></thead>
+      <tbody>
+        <tr><td>sin⁻¹(sin x)</td><td>π − x</td><td>x ∈ [π/2, 3π/2]</td></tr>
+        <tr><td>sin⁻¹(sin x)</td><td>x</td><td>x ∈ [−π/2, π/2]</td></tr>
+        <tr><td>cos⁻¹(cos x)</td><td>2π − x</td><td>x ∈ [π, 2π]</td></tr>
+        <tr><td>cos⁻¹(cos x)</td><td>x</td><td>x ∈ [0, π]</td></tr>
+        <tr><td>tan⁻¹(tan x)</td><td>x − π</td><td>x ∈ (π/2, 3π/2)</td></tr>
+        <tr><td>tan⁻¹(tan x)</td><td>x</td><td>x ∈ (−π/2, π/2)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">3.5</span> Important Caution</div>
+    <div class="box box-red">
+      <div class="box-label">⚠ Never skip the check</div>
+      <p>Always verify that your final angle lies within the principal value branch of the function. It is the most common source of errors in examinations. When in doubt, draw the unit circle and locate your angle.</p>
+    </div>
+    <div class="box box-green">
+      <div class="box-label">✓ Quick Self-Test</div>
+      <p>After computing any inverse trig expression, ask: <em>"Does my answer lie in the principal branch?"</em>
+      For sin⁻¹: is it between −π/2 and π/2? For cos⁻¹: between 0 and π? For tan⁻¹: between −π/2 and π/2?</p>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <a class="pnav-btn" href="./IFT2.html"><span>← Prev</span> Domain &amp; Range</a>
+    <a class="pnav-btn" href="./IFT4.html"><span>Next →</span> Properties Set I</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+       <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+<script>
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('pbar').style.width=p+'%';
+});
+</script>
+</body>
+</html>

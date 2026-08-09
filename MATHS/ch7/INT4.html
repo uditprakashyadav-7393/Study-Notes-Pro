@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Definite Integrals · Ch.7 · StudyNotesPro</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0d16;
+      --surface: #10131e;
+      --surface2: #161b29;
+      --surface3: #1c2133;
+      --border: #222840;
+      --border-light: #2c3350;
+      --accent: #5b8dee;
+      --accent-dim: rgba(91,141,238,0.13);
+      --gold: #e8b84b;
+      --gold-dim: rgba(232,184,75,0.13);
+      --green: #4fd19a;
+      --green-dim: rgba(79,209,154,0.12);
+      --pink: #e8678a;
+      --pink-dim: rgba(232,103,138,0.12);
+      --orange: #f4875a;
+      --orange-dim: rgba(244,135,90,0.12);
+      --purple: #b08dff;
+      --purple-dim: rgba(176,141,255,0.12);
+      --text: #d8deef;
+      --text-muted: #7880a0;
+      --text-dim: #3e4660;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+    /* ── NAVBAR ── */
+    .topnav { position: sticky; top: 0; z-index: 200; background: rgba(10,12,20,0.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 46px; }
+    .nav-inner { display: flex; align-items: center; height: 100%; padding: 0 14px; gap: 4px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: .03em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 8px; }
+    .nav-brand span { color: var(--gold); }
+    .nav-chapter { font-size: .68rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 4px; }
+    .nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: all .2s; flex-shrink: 0; }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+    .nav-link.active { color: #fff; background: var(--orange); font-weight: 600; }
+    .nav-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; opacity: .7; }
+
+    /* ── HERO ── */
+    .hero { padding: 64px 24px 52px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: 'ab';
+      position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      font-size: 240px; color: rgba(244,135,90,0.04);
+      font-family: 'Playfair Display', serif; pointer-events: none; line-height: 1; user-select: none; letter-spacing: -0.1em;
+    }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; color: var(--orange); text-transform: uppercase; border: 1px solid rgba(244,135,90,0.3); padding: 4px 12px; border-radius: 20px; background: var(--orange-dim); margin-bottom: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.15; background: linear-gradient(135deg, #fff 0%, var(--orange) 55%, var(--pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px; }
+    .hero-sub { max-width: 580px; margin: 0 auto 28px; color: var(--text-muted); font-size: .95rem; line-height: 1.8; }
+    .hero-pills { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .pill { font-size: .72rem; padding: 4px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
+    .pill-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(244,135,90,0.25); }
+    .pill-accent { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,141,238,0.25); }
+    .pill-gold   { background: var(--gold-dim);   color: var(--gold);   border: 1px solid rgba(232,184,75,0.25); }
+    .pill-pink   { background: var(--pink-dim);   color: var(--pink);   border: 1px solid rgba(232,103,138,0.25); }
+    .pill-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(176,141,255,0.25); }
+    .pill-green  { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(79,209,154,0.25); }
+
+    /* ── LAYOUT ── */
+    .main { max-width: 880px; margin: 0 auto; padding: 0 20px 64px; }
+    .section { margin-bottom: 56px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--orange); background: var(--orange-dim); border: 1px solid rgba(244,135,90,0.2); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-light), transparent); }
+
+    /* ── CARDS ── */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 16px; transition: border-color .2s; }
+    .card:hover { border-color: var(--border-light); }
+    .card-title { font-size: .8rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 14px; }
+    .card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 8px; }
+    .card p:last-child { margin-bottom: 0; }
+    .card-orange { border-color: rgba(244,135,90,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(244,135,90,0.05) 100%); }
+    .card-accent { border-color: rgba(91,141,238,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(91,141,238,0.05) 100%); }
+    .card-gold   { border-color: rgba(232,184,75,0.3);  background: linear-gradient(135deg, var(--surface) 0%, rgba(232,184,75,0.05) 100%); }
+    .card-pink   { border-color: rgba(232,103,138,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,103,138,0.05) 100%); }
+    .card-green  { border-color: rgba(79,209,154,0.3);  background: linear-gradient(135deg, var(--surface) 0%, rgba(79,209,154,0.05) 100%); }
+    .card-purple { border-color: rgba(176,141,255,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(176,141,255,0.05) 100%); }
+
+    /* ── FORMULA BOX ── */
+    .formula-box { background: var(--surface2); border: 1px solid var(--border-light); border-left: 3px solid var(--orange); border-radius: 10px; padding: 18px 22px; margin: 14px 0; overflow-x: auto; }
+    .formula-box.blue   { border-left-color: var(--accent); }
+    .formula-box.gold   { border-left-color: var(--gold); }
+    .formula-box.green  { border-left-color: var(--green); }
+    .formula-box.pink   { border-left-color: var(--pink); }
+    .formula-box.purple { border-left-color: var(--purple); }
+    .formula-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .05em; }
+
+    /* ── PROPERTIES GRID ── */
+    .props-grid { display: flex; flex-direction: column; gap: 14px; }
+    .prop-card {
+      display: grid; grid-template-columns: 52px 1fr;
+      gap: 0; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; transition: border-color .2s;
+    }
+    .prop-card:hover { border-color: var(--border-light); }
+    .prop-badge {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 14px 6px; gap: 2px;
+      border-right: 1px solid var(--border);
+    }
+    .prop-badge-label { font-family: 'JetBrains Mono', monospace; font-size: .58rem; color: var(--text-dim); letter-spacing: .06em; text-transform: uppercase; }
+    .prop-badge-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; }
+    .prop-body { padding: 16px 20px; }
+    .prop-name { font-size: .82rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .prop-body p { font-size: .85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .prop-body p:last-child { margin-bottom: 0; }
+    .prop-body .formula-box { margin: 8px 0 0; padding: 12px 16px; }
+
+    /* property colour theming */
+    .prop-p1 .prop-badge { background: rgba(91,141,238,0.08); }
+    .prop-p1 .prop-badge-num { color: var(--accent); }
+    .prop-p2 .prop-badge { background: rgba(232,184,75,0.08); }
+    .prop-p2 .prop-badge-num { color: var(--gold); }
+    .prop-p3 .prop-badge { background: rgba(79,209,154,0.08); }
+    .prop-p3 .prop-badge-num { color: var(--green); }
+    .prop-p4 .prop-badge { background: rgba(232,103,138,0.08); }
+    .prop-p4 .prop-badge-num { color: var(--pink); }
+    .prop-p5 .prop-badge { background: rgba(244,135,90,0.08); }
+    .prop-p5 .prop-badge-num { color: var(--orange); }
+    .prop-p6 .prop-badge { background: rgba(176,141,255,0.08); }
+    .prop-p6 .prop-badge-num { color: var(--purple); }
+    .prop-p7 .prop-badge { background: rgba(56,201,212,0.08); }
+    .prop-p7 .prop-badge-num { color: #38c9d4; }
+    .prop-p8 .prop-badge { background: rgba(232,184,75,0.08); }
+    .prop-p8 .prop-badge-num { color: var(--gold); }
+
+    /* ── NOTE ── */
+    .note { display: flex; gap: 12px; align-items: flex-start; background: var(--orange-dim); border: 1px solid rgba(244,135,90,0.25); border-radius: 10px; padding: 14px 18px; margin-top: 16px; }
+    .note-blue   { background: var(--accent-dim); border-color: rgba(91,141,238,0.25); }
+    .note-gold   { background: var(--gold-dim);   border-color: rgba(232,184,75,0.25); }
+    .note-green  { background: var(--green-dim);  border-color: rgba(79,209,154,0.25); }
+    .note-pink   { background: var(--pink-dim);   border-color: rgba(232,103,138,0.25); }
+    .note-purple { background: var(--purple-dim); border-color: rgba(176,141,255,0.25); }
+    .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .note p { color: var(--text-muted); font-size: .87rem; line-height: 1.75; }
+    .note strong { color: var(--orange); }
+    .note-blue   strong { color: var(--accent); }
+    .note-gold   strong { color: var(--gold); }
+    .note-green  strong { color: var(--green); }
+    .note-pink   strong { color: var(--pink); }
+    .note-purple strong { color: var(--purple); }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .step { display: flex; gap: 14px; align-items: flex-start; }
+    .step-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 600; margin-top: 2px; }
+    .step-num.orange { background: var(--orange-dim); color: var(--orange); }
+    .step-num.blue   { background: var(--accent-dim); color: var(--accent); }
+    .step-num.gold   { background: var(--gold-dim);   color: var(--gold); }
+    .step-title { font-weight: 600; color: #fff; font-size: .88rem; margin-bottom: 4px; }
+    .step-body { flex: 1; }
+    .step-body p { color: var(--text-muted); font-size: .87rem; }
+
+    /* ── HIGHLIGHT ── */
+    .hl-orange { color: var(--orange); font-weight: 600; }
+    .hl-accent { color: var(--accent); font-weight: 600; }
+    .hl-gold   { color: var(--gold);   font-weight: 600; }
+    .hl-green  { color: var(--green);  font-weight: 600; }
+    .hl-pink   { color: var(--pink);   font-weight: 600; }
+    .hl-purple { color: var(--purple); font-weight: 600; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th { background: var(--surface3); color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+    td:first-child { color: var(--text); font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: .82rem; }
+
+    /* ── DIVIDER ── */
+    .fancy-divider { display: flex; align-items: center; gap: 14px; margin: 8px 0 24px; }
+    .fancy-divider span { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--text-dim); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+    .fancy-divider::before, .fancy-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── FOOTER ── */
+    .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 28px 32px; }
+    .sf-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+    .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+    .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+    .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+    .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 44px 16px 36px; }
+      .main { padding: 0 14px 48px; }
+      .card { padding: 18px 16px; }
+      .prop-card { grid-template-columns: 44px 1fr; }
+      .prop-body { padding: 12px 14px; }
+
+      /* Horizontal scroll only — no vertical scrollbar added */
+      .formula-box {
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 14px 16px;
+      }
+      mjx-container {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 2px;
+      }
+      .prop-body {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+      .step-body {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+    <span class="nav-chapter">CH·07 · INTEGRALS</span>
+    <a href="INT1.html" class="nav-link"><span class="nav-num">01</span> Basics</a>
+    <a href="INT2.html" class="nav-link"><span class="nav-num">02</span> Methods</a>
+    <a href="INT3.html" class="nav-link"><span class="nav-num">03</span> Standard Integrals</a>
+    <a href="INT4.html" class="nav-link active"><span class="nav-num">04</span> Definite Integrals</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-tag">Chapter 7 · Topic 04</div>
+  <h1>Definite Integrals</h1>
+  <p class="hero-sub">From the limit-of-sum definition to the Fundamental Theorem of Calculus — understand, apply, and master all eight properties of definite integrals for Class 12 boards.</p>
+  <div class="hero-pills">
+    <span class="pill pill-orange">Definition</span>
+    <span class="pill pill-accent">Fundamental Theorem</span>
+    <span class="pill pill-gold">8 Properties</span>
+    <span class="pill pill-pink">Worked Examples</span>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- ══ SECTION 1: DEFINITION ══ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Definition of Definite Integral</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-orange">
+      <div class="card-title">Definite Integral — As a Number</div>
+      <p>Unlike the indefinite integral, a <span class="hl-orange">definite integral</span> has specific lower and upper limits \(a\) and \(b\), and evaluates to a <span class="hl-orange">real number</span> (not a family of functions).</p>
+      <div class="formula-box">
+        <div class="formula-label">NOTATION</div>
+        \[ \int_a^b f(x)\,dx = \Big[F(x)\Big]_a^b = F(b) - F(a) \]
+      </div>
+      <p>where \(F(x)\) is any antiderivative of \(f(x)\), i.e., \(F'(x)=f(x)\).</p>
+    </div>
+
+    <div class="card card-accent">
+      <div class="card-title">Definition as Limit of a Sum (First Principles)</div>
+      <p>The definite integral is formally defined as the limit of a <span class="hl-accent">Riemann sum</span> — the area under the curve approximated by \(n\) rectangles as \(n \to \infty\).</p>
+      <div class="formula-box blue">
+        <div class="formula-label">RIEMANN SUM DEFINITION</div>
+        \[ \int_a^b f(x)\,dx = \lim_{n\to\infty} h\sum_{r=1}^{n} f(a+rh), \quad h = \frac{b-a}{n} \]
+      </div>
+      <p>Here \(h\) is the width of each rectangle, and \(f(a+rh)\) is the height of the \(r\)-th rectangle.</p>
+    </div>
+
+    <div class="note note-gold">
+      <div class="note-icon">💡</div>
+      <p><strong>Useful Summation Formulas</strong> (needed for limit-of-sum method):<br>
+      \(\displaystyle\sum_{r=1}^{n}r = \frac{n(n+1)}{2}\) &emsp;
+      \(\displaystyle\sum_{r=1}^{n}r^2 = \frac{n(n+1)(2n+1)}{6}\) &emsp;
+      \(\displaystyle\sum_{r=1}^{n}r^3 = \left[\frac{n(n+1)}{2}\right]^2\)</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2: FUNDAMENTAL THEOREM ══ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Fundamental Theorem of Calculus</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-purple">
+      <div class="card-title">Part I — Integral as a Function</div>
+      <p>If \(f\) is continuous on \([a,b]\), define \(g(x) = \displaystyle\int_a^x f(t)\,dt\). Then \(g\) is differentiable and:</p>
+      <div class="formula-box purple">
+        <div class="formula-label">FTC — PART 1</div>
+        \[ \frac{d}{dx}\int_a^x f(t)\,dt \;=\; f(x) \]
+      </div>
+      <p>This says: differentiation and integration are <span class="hl-purple">inverse operations</span>.</p>
+    </div>
+
+    <div class="card card-orange">
+      <div class="card-title">Part II — Evaluation Theorem</div>
+      <p>If \(F\) is any antiderivative of \(f\) on \([a,b]\), then:</p>
+      <div class="formula-box">
+        <div class="formula-label">FTC — PART 2 (MOST USED IN CLASS 12)</div>
+        \[ \int_a^b f(x)\,dx = F(b) - F(a) \]
+      </div>
+      <p>This is the key result used for evaluating all definite integrals in the board exam.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Evaluation — Step by Step</div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num orange">1</span>
+          <div class="step-body">
+            <div class="step-title">Find the antiderivative \(F(x)\)</div>
+            <p>Evaluate \(\int f(x)\,dx\) (without \(+C\) — the constant cancels out).</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num orange">2</span>
+          <div class="step-body">
+            <div class="step-title">Apply the limits</div>
+            <p>Compute \(F(b) - F(a)\) where \(b\) is the upper limit and \(a\) is the lower limit.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num orange">3</span>
+          <div class="step-body">
+            <div class="step-title">Simplify</div>
+            <p>Simplify the result. The answer is a real number, not a function.</p>
+          </div>
+        </div>
+      </div>
+      <div class="formula-box" style="margin-top:16px">
+        <div class="formula-label">WORKED EXAMPLE</div>
+        \[ \int_1^3 x^2\,dx = \left[\frac{x^3}{3}\right]_1^3 = \frac{27}{3} - \frac{1}{3} = 9 - \frac{1}{3} = \frac{26}{3} \]
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: PROPERTIES ══ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Properties of Definite Integrals</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <p style="color:var(--text-muted); margin-bottom:22px; font-size:.92rem;">These 8 properties are the <span class="hl-orange">backbone of definite integration</span> — they let you simplify, flip, and evaluate difficult integrals without computing them directly.</p>
+
+    <div class="props-grid">
+
+      <div class="prop-card prop-p1">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₁</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Reversing Limits</div>
+          <p>Swapping the upper and lower limits changes the sign of the integral.</p>
+          <div class="formula-box blue">
+            \[ \int_a^b f(x)\,dx = -\int_b^a f(x)\,dx \]
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p2">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₂</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Zero Width Interval</div>
+          <p>When both limits are equal, the integral is zero.</p>
+          <div class="formula-box gold">
+            \[ \int_a^a f(x)\,dx = 0 \]
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p3">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₃</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Splitting the Interval (Additivity)</div>
+          <p>The integral can be split at any interior point \(c\) between \(a\) and \(b\).</p>
+          <div class="formula-box green">
+            \[ \int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx \]
+          </div>
+          <p style="font-size:.83rem; margin-top:6px;">Useful when \(f(x)\) has different expressions on sub-intervals (e.g., modulus functions).</p>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p4">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₄</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Dummy Variable Property</div>
+          <p>The value of a definite integral is independent of the variable of integration.</p>
+          <div class="formula-box pink">
+            \[ \int_a^b f(x)\,dx = \int_a^b f(t)\,dt = \int_a^b f(u)\,du \]
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p5">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₅</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">King's Property ⭐ (Most Important)</div>
+          <p>Replace \(x\) by \((a+b-x)\) — the value of the integral does not change.</p>
+          <div class="formula-box">
+            \[ \int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx \]
+          </div>
+          <p style="font-size:.83rem; margin-top:6px; color:var(--orange);">★ Most frequently used property in CBSE/JEE exams. Used to prove many results.</p>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p6">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₆</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Half-Interval Property</div>
+          <p>For integrals from \(0\) to \(2a\):</p>
+          <div class="formula-box purple">
+            \[ \int_0^{2a} f(x)\,dx = \int_0^a f(x)\,dx + \int_0^a f(2a-x)\,dx \]
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p7">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₇</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Even/Odd Function Property</div>
+          <p>For a symmetric interval \([-a, a]\):</p>
+          <div class="formula-box" style="border-left-color: #38c9d4;">
+            \[
+              \int_{-a}^{a} f(x)\,dx =
+              \begin{cases}
+                2\displaystyle\int_0^a f(x)\,dx & \text{if } f \text{ is even} \quad [f(-x)=f(x)]\\[8pt]
+                0 & \text{if } f \text{ is odd} \quad [f(-x)=-f(x)]
+              \end{cases}
+            \]
+          </div>
+        </div>
+      </div>
+
+      <div class="prop-card prop-p8">
+        <div class="prop-badge">
+          <div class="prop-badge-label">Prop</div>
+          <div class="prop-badge-num">P₈</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-name">Periodic Function Property</div>
+          <p>If \(f\) is periodic with period \(T\) [i.e., \(f(x+T)=f(x)\)], then:</p>
+          <div class="formula-box gold">
+            \[ \int_0^{nT} f(x)\,dx = n\int_0^T f(x)\,dx, \quad n \in \mathbb{Z}^+ \]
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /props-grid -->
+  </div>
+
+  <!-- ══ SECTION 4: APPLICATIONS & WORKED EXAMPLES ══ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Worked Examples Using Properties</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-orange">
+      <div class="card-title">Example 1 — Using King's Property (P₅)</div>
+      <p>Evaluate \(\displaystyle I = \int_0^{\pi/2} \frac{\sin x}{\sin x + \cos x}\,dx\)</p>
+      <p style="margin-top:10px; color:var(--text-muted);">Apply P₅ with \(a=0,\; b=\pi/2\): replace \(x \to \frac{\pi}{2}-x\)</p>
+      <div class="formula-box">
+        \[ I = \int_0^{\pi/2} \frac{\cos x}{\cos x + \sin x}\,dx \]
+      </div>
+      <p>Adding the two expressions for \(I\):</p>
+      <div class="formula-box" style="border-left-color: var(--green);">
+        \[ 2I = \int_0^{\pi/2} \frac{\sin x + \cos x}{\sin x + \cos x}\,dx = \int_0^{\pi/2} 1\,dx = \frac{\pi}{2} \;\implies\; \boxed{I = \frac{\pi}{4}} \]
+      </div>
+    </div>
+
+    <div class="card card-pink">
+      <div class="card-title">Example 2 — Even/Odd Property (P₇)</div>
+      <p>Evaluate \(\displaystyle\int_{-2}^{2} x^3\,dx\)</p>
+      <p style="margin-top:10px; color:var(--text-muted);">Since \(f(x)=x^3\) is an <span class="hl-pink">odd function</span> (because \(f(-x) = -x^3 = -f(x)\)) and the interval is symmetric:</p>
+      <div class="formula-box pink">
+        \[ \int_{-2}^{2} x^3\,dx = 0 \]
+      </div>
+    </div>
+
+    <div class="card card-green">
+      <div class="card-title">Example 3 — Modulus / Splitting (P₃)</div>
+      <p>Evaluate \(\displaystyle\int_{-1}^{2} |x|\,dx\)</p>
+      <p style="margin-top:10px; color:var(--text-muted);">Since \(|x| = -x\) for \(x < 0\) and \(|x|=x\) for \(x \geq 0\), split at \(0\):</p>
+      <div class="formula-box green">
+        \[
+          = \int_{-1}^{0}(-x)\,dx + \int_{0}^{2} x\,dx
+          = \left[-\frac{x^2}{2}\right]_{-1}^{0} + \left[\frac{x^2}{2}\right]_{0}^{2}
+          = \frac{1}{2} + 2 = \frac{5}{2}
+        \]
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <div class="card-title">Example 4 — Substitution in Definite Integrals</div>
+      <p>Evaluate \(\displaystyle\int_0^1 \frac{2x}{1+x^2}\,dx\)</p>
+      <p style="margin-top:10px; color:var(--text-muted);">Let \(t = 1+x^2 \Rightarrow dt = 2x\,dx\). Change limits: \(x=0 \Rightarrow t=1;\; x=1 \Rightarrow t=2\)</p>
+      <div class="formula-box blue">
+        \[ = \int_1^2 \frac{dt}{t} = \Big[\ln t\Big]_1^2 = \ln 2 - \ln 1 = \ln 2 \]
+      </div>
+      <div class="note note-blue" style="margin-top:0">
+        <div class="note-icon">📌</div>
+        <p><strong>Key Rule:</strong> When you substitute in a definite integral, always change the limits of integration to match the new variable — do <em>not</em> back-substitute.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5: PROPERTIES QUICK REF ══ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Properties — Quick Reference</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Prop</th><th>Name</th><th>Statement</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P₁</td>
+            <td>Reverse Limits</td>
+            <td>\(\displaystyle\int_a^b f(x)\,dx = -\int_b^a f(x)\,dx\)</td>
+          </tr>
+          <tr>
+            <td>P₂</td>
+            <td>Zero Width</td>
+            <td>\(\displaystyle\int_a^a f(x)\,dx = 0\)</td>
+          </tr>
+          <tr>
+            <td>P₃</td>
+            <td>Additivity</td>
+            <td>\(\displaystyle\int_a^b = \int_a^c + \int_c^b\)</td>
+          </tr>
+          <tr>
+            <td>P₄</td>
+            <td>Dummy Variable</td>
+            <td>\(\displaystyle\int_a^b f(x)\,dx = \int_a^b f(t)\,dt\)</td>
+          </tr>
+          <tr>
+            <td>P₅ ⭐</td>
+            <td>King's Property</td>
+            <td>\(\displaystyle\int_a^b f(x)\,dx = \int_a^b f(a+b-x)\,dx\)</td>
+          </tr>
+          <tr>
+            <td>P₆</td>
+            <td>Half-Interval</td>
+            <td>\(\displaystyle\int_0^{2a} f(x)\,dx = \int_0^a [f(x)+f(2a-x)]\,dx\)</td>
+          </tr>
+          <tr>
+            <td>P₇</td>
+            <td>Even / Odd</td>
+            <td>\(\displaystyle\int_{-a}^{a} f\,dx = \begin{cases}2\int_0^a f\,dx & \text{even}\\0 & \text{odd}\end{cases}\)</td>
+          </tr>
+          <tr>
+            <td>P₈</td>
+            <td>Periodic</td>
+            <td>\(\displaystyle\int_0^{nT} f(x)\,dx = n\int_0^T f(x)\,dx\)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note" style="margin-top:20px">
+      <div class="note-icon">⭐</div>
+      <p><strong>Board Exam Strategy:</strong> P₅ (King's Property) is the single most tested property — it appears in at least one 5-mark question every year. Whenever you see \(\sin\)/\(\cos\) or \(\ln\) in the integrand with symmetric limits, try P₅ first. P₇ (Even/Odd) can save you from long calculations on \([-a,a]\) type problems.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 7 &middot; Integrals</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Notes on Matrix Operations for Class 12 Maths. Learn about addition, scalar multiplication, and multiplication of matrices with examples.">
+<meta name="keywords" content="Class 12 Maths Chapter 3, Matrices, operations, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Matrices - Operations</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;--gold:#f59e0b;--gold-dim:#a66e0ed4;--accent:#e96c6c;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b);color:#f1f5f9;padding:20px}
+.container{max-width:1100px;margin:auto}
+header{text-align:center;margin-bottom:40px}
+header h1{font-size:2.5rem;color:#38bdf8}
+header p{color:#94a3b8;margin-top:8px}
+.card{background:#1e293b;padding:25px;border-radius:16px;margin-bottom:25px;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+.card h2{color:#22c55e;margin-bottom:10px}
+.card p,.card li{color:#cbd5f5;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+
+/* Matrix Styling */
+.matrix{background:#020617;padding:14px 22px;border-radius:8px;margin:10px 8px;display:inline-block;position:relative}
+.matrix::before{content:"[";position:absolute;left:6px;top:0;bottom:0;font-size:34px;display:flex;align-items:center}
+.matrix::after{content:"]";position:absolute;right:6px;top:0;bottom:0;font-size:34px;display:flex;align-items:center}
+.matrix-content{
+  padding:0 18px;
+  line-height:2.3;         /* vertical spacing */
+  letter-spacing:8px;      /* horizontal spacing */
+  font-size:18px;
+  text-align:center;
+}
+.num{background:#020617;padding:14px 22px;border-radius:8px;margin:10px 8px;display:inline-block;position:relative}
+
+.operator{font-size:22px;margin:0 6px;color:#e2e8f0}
+
+ /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>Matrix Operations</h1>
+<p>Topic 2 - Operations on Matrices</p>
+</header>
+
+<!-- Matrix Addition -->
+<div class="card">
+<h2>Matrix Addition</h2>
+<p>
+Matrix addition means adding the corresponding elements of two matrices.
+It is only possible when both matrices have the same order (same number of rows and columns).
+</p>
+
+<p><b>Example:</b></p>
+
+<div class="matrix"><div class="matrix-content">1  2 <br> 3  4</div></div>
+<span class="operator">+</span>
+<div class="matrix"><div class="matrix-content">5  6 <br> 7  8</div></div>
+<span class="operator">=</span>
+<div class="matrix"><div class="matrix-content">6  8 <br> 10 12</div></div>
+
+<p>
+Each element is added: (1+5), (2+6), (3+7), (4+8)
+</p>
+</div>
+
+<!-- Scalar Multiplication -->
+<div class="card">
+<h2>Scalar Multiplication</h2>
+<p>
+In scalar multiplication, each element of a matrix is multiplied by a constant number.
+</p>
+
+<p><b>Example:</b></p>
+
+<div class="num">2</div>
+<span class="operator">×</span>
+<div class="matrix"><div class="matrix-content">1  2 <br> 3  4</div></div>
+<span class="operator">=</span>
+<div class="matrix"><div class="matrix-content">2  4 <br> 6  8</div></div>
+
+<p>
+Each element is multiplied by 2.
+</p>
+</div>
+
+<!-- Matrix Multiplication -->
+<div class="card">
+<h2>Matrix Multiplication</h2>
+<p>
+Matrix multiplication is done by multiplying rows of the first matrix with columns of the second matrix.
+</p>
+
+<p><b>Example:</b></p>
+
+<div class="matrix"><div class="matrix-content">1  2 <br> 3  4</div></div>
+<span class="operator">×</span>
+<div class="matrix"><div class="matrix-content">5  6 <br> 7  8</div></div>
+<span class="operator">=</span>
+<div class="matrix"><div class="matrix-content">19 22 <br> 43 50</div></div>
+
+<p>
+Step:
+<br>First element → (1×5 + 2×7) = 19
+<br>Second element → (1×6 + 2×8) = 22
+</p>
+</div>
+
+<!-- Notes -->
+<div class="card">
+<h2>Important Notes</h2>
+<ul>
+<li>Addition possible only if order is same</li>
+<li>Multiplication is not commutative (AB ≠ BA)</li>
+<li>Number of columns of first matrix must equal rows of second</li>
+<li>Always follow row × column rule</li>
+</ul>
+</div>
+
+<footer class="site-footer">
+   <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+         <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 3 &middot; Matrices</div>
+    </div>
+</footer>
+
+</div>
+</body>
+</html>

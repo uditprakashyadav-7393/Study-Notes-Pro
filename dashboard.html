@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 12 Boards — Subject Tracker</title>
+<style>
+  :root {
+    --paper: #EEF0F3;
+    --panel: #FFFFFF;
+    --ink: #1B2436;
+    --muted: #6B7280;
+    --line: #DDE1E8;
+    --navy: #1B2A4A;
+    --gold: #B8860B;
+    --gold-soft: #E7C97A;
+    --danger: #A83A2E;
+    --ok: #2F6B4F;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    padding: 26px 14px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wrap { width: min(820px, 100%); }
+
+  header {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 6px;
+    background: repeating-linear-gradient(180deg, var(--gold) 0 10px, transparent 10px 20px);
+  }
+  .header-left .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 6px;
+  }
+  .header-left h1 {
+    font-family: 'Georgia', serif;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin: 0;
+  }
+  .countdown { text-align: right; }
+  .countdown .num {
+    font-family: 'Georgia', serif;
+    font-size: 2.1rem;
+    line-height: 1;
+    color: var(--gold-soft);
+  }
+  .countdown .label {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .overall {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .overall-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .overall-percent-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .overall-percent {
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .overall-phrase {
+    font-size: 0.92rem;
+    color: var(--muted);
+    transition: opacity 0.25s ease;
+  }
+  .overall-bar {
+    height: 12px;
+    background: var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+  }
+  .overall-fill {
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--navy) 0%, #2F5D8A 45%, var(--gold) 100%);
+    background-size: 200% 100%;
+    animation: shimmerMove 3.5s linear infinite;
+    transition: width 0.7s cubic-bezier(.22,.9,.34,1);
+    position: relative;
+  }
+  .overall-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.5) 40%, transparent 60%);
+    background-size: 200% 100%;
+    animation: sheen 2.6s ease-in-out infinite;
+  }
+  @keyframes shimmerMove {
+    0% { background-position: 0% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes sheen {
+    0% { background-position: 200% 0; }
+    100% { background-position: -60% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .overall-fill { animation: none; }
+    .overall-fill::after { animation: none; content: none; }
+  }
+
+  .save-note {
+    font-size: 0.76rem;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .save-note .dot { color: var(--ok); }
+  .reset-link {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 0.76rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  .subjects { display: flex; flex-direction: column; gap: 14px; }
+  .subject {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .subject-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 12px;
+  }
+  .subject-title-block { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .subject-code {
+    font-family: 'Georgia', serif;
+    font-size: 0.78rem;
+    color: var(--navy);
+    background: var(--gold-soft);
+    padding: 3px 8px;
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+  .subject-title {
+    font-weight: 600;
+    font-size: 1.02rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .subject-frac { font-size: 0.78rem; color: var(--muted); flex-shrink: 0; }
+  .subject-bar-track {
+    height: 6px; background: var(--line); border-radius: 4px;
+    overflow: hidden; margin-top: 10px;
+  }
+  .subject-bar-fill { height: 100%; background: var(--gold); transition: width 0.3s ease; }
+
+  .unit-list {
+    margin-top: 14px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .unit-list.open { display: flex; }
+
+  .unit {
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+  .unit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+  }
+  .unit-title-block { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .unit-title { font-size: 0.92rem; font-weight: 500; }
+  .unit-frac { font-size: 0.74rem; color: var(--muted); flex-shrink: 0; }
+  .unit-bar-track {
+    height: 4px; background: var(--line); border-radius: 3px;
+    overflow: hidden; margin-top: 7px;
+  }
+  .unit-bar-fill { height: 100%; background: var(--ok); transition: width 0.3s ease; }
+
+  .subtopics {
+    margin-top: 9px;
+    padding-left: 4px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .subtopics.open { display: flex; }
+  .subtopic {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.86rem;
+    padding: 3px 0;
+  }
+  .subtopic input {
+    width: 16px; height: 16px;
+    accent-color: var(--navy);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .subtopic label { cursor: pointer; }
+  .subtopic.checked label { color: var(--muted); text-decoration: line-through; }
+
+  .caret {
+    font-size: 0.76rem;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .subject.open > .subject-head .caret { transform: rotate(90deg); }
+  .unit.open .unit-head .caret { transform: rotate(90deg); }
+
+  button:focus-visible, input:focus-visible, [role="button"]:focus-visible {
+    outline: 3px solid var(--navy); outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .overall-fill, .subject-bar-fill, .unit-bar-fill, .caret { transition: none; }
+  }
+
+  @media (max-width: 480px) {
+    header { flex-direction: column; align-items: flex-start; }
+    .countdown { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-left">
+      <div class="eyebrow">CBSE · Class 12 · Science Stream</div>
+      <h1>📋 Board Exam Tracker</h1>
+    </div>
+    <div class="countdown">
+      <div class="num" id="daysLeft">—</div>
+      <div class="label">⏳ days to first paper</div>
+    </div>
+  </header>
+
+  <div class="overall">
+    <div class="overall-top">
+      <span>Overall syllabus covered</span>
+      <span id="overallFrac">0 / 0 topics</span>
+    </div>
+    <div class="overall-percent-row">
+      <span class="overall-percent" id="overallPercent">0%</span>
+      <span class="overall-phrase" id="overallPhrase">Let's begin the journey 🚀</span>
+    </div>
+    <div class="overall-bar"><div class="overall-fill" id="overallFill" style="width:0%"></div></div>
+  </div>
+  <div class="save-note"><span id="saveStatus"><span class="dot">●</span> Progress saves automatically on this device</span> · <button class="reset-link" id="resetBtn">reset all progress</button></div>
+
+  <div class="subjects" id="subjects"></div>
+
+</div>
+
+<script>
+  function getExamDate() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let target = new Date(year, 1, 15);
+    if (target < now) target = new Date(year + 1, 1, 15);
+    return target;
+  }
+  const examDate = getExamDate();
+
+  const subjects = [
+    {
+      code: "301", title: "English Core", emoji: "📖",
+      units: [
+        { name: "Flamingo — Prose", subtopics: ["The Last Lesson", "Lost Spring", "Deep Water", "The Rattrap", "Indigo", "Poets and Pancakes", "The Interview", "Going Places"] },
+        { name: "Flamingo — Poetry", subtopics: ["My Mother at Sixty-Six", "An Elementary School Classroom", "Keeping Quiet", "A Thing of Beauty", "A Roadside Stand", "Aunt Jennifer's Tigers"] },
+        { name: "Vistas (Supplementary)", subtopics: ["The Third Level", "The Tiger King", "Journey to the End of the Earth", "The Enemy", "On the Face of It", "Memories of Childhood"] },
+        { name: "Writing Skills", subtopics: ["Notice writing", "Article writing", "Report writing", "Letter to editor / business letter"] },
+        { name: "Grammar", subtopics: ["Determiners & modals", "Tense & voice", "Reported speech"] }
+      ]
+    },
+    {
+      code: "042", title: "Physics", emoji: "⚛️",
+      units: [
+        { name: "Electrostatics", subtopics: ["Coulomb's law & electric field", "Gauss's law & applications", "Electric potential & capacitance"] },
+        { name: "Current Electricity", subtopics: ["Ohm's law & resistivity", "Kirchhoff's laws", "Wheatstone bridge & potentiometer"] },
+        { name: "Magnetic Effects & Magnetism", subtopics: ["Biot-Savart law & Ampere's law", "Force on moving charge/current", "Magnetic properties of materials"] },
+        { name: "EMI & Alternating Current", subtopics: ["Faraday's & Lenz's law", "Self & mutual inductance", "AC circuits & LCR"] },
+        { name: "Electromagnetic Waves", subtopics: ["Displacement current", "EM spectrum"] },
+        { name: "Ray & Wave Optics", subtopics: ["Reflection & refraction at surfaces", "Lens & mirror formula", "Interference & diffraction"] },
+        { name: "Dual Nature of Radiation & Matter", subtopics: ["Photoelectric effect", "de Broglie wavelength"] },
+        { name: "Atoms & Nuclei", subtopics: ["Bohr model", "Radioactivity & binding energy"] },
+        { name: "Semiconductor Electronics", subtopics: ["p-n junction diode", "Transistors & logic gates"] }
+      ]
+    },
+    {
+      code: "043", title: "Chemistry", emoji: "🧪",
+      units: [
+        { name: "Solid State", subtopics: ["Unit cells & packing", "Defects in solids"] },
+        { name: "Solutions", subtopics: ["Concentration terms", "Colligative properties"] },
+        { name: "Electrochemistry", subtopics: ["Electrochemical cells & EMF", "Kohlrausch's law", "Nernst equation"] },
+        { name: "Chemical Kinetics", subtopics: ["Rate law & order of reaction", "Arrhenius equation"] },
+        { name: "d- and f-Block Elements", subtopics: ["General trends", "Important compounds (KMnO4, K2Cr2O7)"] },
+        { name: "Coordination Compounds", subtopics: ["Nomenclature & isomerism", "Bonding theories (VBT/CFT)"] },
+        { name: "Haloalkanes & Haloarenes", subtopics: ["Nomenclature & preparation", "Reactions & mechanisms"] },
+        { name: "Alcohols, Phenols & Ethers", subtopics: ["Preparation methods", "Chemical properties"] },
+        { name: "Aldehydes, Ketones & Carboxylic Acids", subtopics: ["Preparation & nomenclature", "Nucleophilic addition reactions"] },
+        { name: "Amines", subtopics: ["Preparation & basicity", "Diazonium salts"] },
+        { name: "Biomolecules", subtopics: ["Carbohydrates & proteins", "Vitamins & nucleic acids"] }
+      ]
+    },
+    {
+      code: "041", title: "Mathematics", emoji: "📐",
+      units: [
+        { name: "Relations & Functions", subtopics: ["Types of relations", "Types of functions", "Composition & inverse"] },
+        { name: "Inverse Trigonometric Functions", subtopics: ["Domain, range & properties"] },
+        { name: "Matrices & Determinants", subtopics: ["Matrix operations", "Determinants & properties", "Inverse of a matrix"] },
+        { name: "Continuity & Differentiability", subtopics: ["Continuity conditions", "Chain rule & implicit differentiation", "Logarithmic differentiation"] },
+        { name: "Applications of Derivatives", subtopics: ["Increasing/decreasing functions", "Maxima & minima", "Rate of change"] },
+        { name: "Integrals", subtopics: ["Standard integration methods", "Integration by parts & partial fractions", "Definite integrals"] },
+        { name: "Applications of Integrals", subtopics: ["Area under curves"] },
+        { name: "Differential Equations", subtopics: ["Order & degree", "Variable separable & linear DEs"] },
+        { name: "Vectors", subtopics: ["Vector algebra basics", "Dot & cross product"] },
+        { name: "Three Dimensional Geometry", subtopics: ["Direction cosines & ratios", "Line & plane equations"] },
+        { name: "Linear Programming", subtopics: ["Formulating & solving LPP"] },
+        { name: "Probability", subtopics: ["Conditional probability", "Bayes' theorem", "Random variables & distribution"] }
+      ]
+    },
+    {
+      code: "044", title: "Biology", emoji: "🧬",
+      units: [
+        { name: "Reproduction in Organisms", subtopics: ["Sexual reproduction in flowering plants", "Human reproduction", "Reproductive health"] },
+        { name: "Genetics & Evolution", subtopics: ["Mendelian inheritance", "Molecular basis of inheritance", "Evolution theories"] },
+        { name: "Human Health & Disease", subtopics: ["Common diseases", "Immunity & AIDS"] },
+        { name: "Biotechnology — Principles & Processes", subtopics: ["Recombinant DNA technology", "Tools of biotechnology"] },
+        { name: "Biotechnology — Applications", subtopics: ["In agriculture & medicine", "Genetically modified organisms"] },
+        { name: "Ecology & Environment", subtopics: ["Ecosystems & energy flow", "Biodiversity & conservation", "Environmental issues"] }
+      ]
+    }
+  ];
+
+  const STORAGE_KEY = "class12-board-tracker-v1";
+  let storageAvailable = true;
+  let state = null;
+
+  function buildDefaultState() {
+    return subjects.map(s => s.units.map(u => u.subtopics.map(() => false)));
+  }
+
+  function shapeMatches(saved) {
+    if (!Array.isArray(saved) || saved.length !== subjects.length) return false;
+    for (let si = 0; si < subjects.length; si++) {
+      if (!Array.isArray(saved[si]) || saved[si].length !== subjects[si].units.length) return false;
+      for (let ui = 0; ui < subjects[si].units.length; ui++) {
+        if (!Array.isArray(saved[si][ui]) || saved[si][ui].length !== subjects[si].units[ui].subtopics.length) return false;
+      }
+    }
+    return true;
+  }
+
+  function loadState() {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (shapeMatches(parsed)) return parsed;
+      }
+    } catch (e) {
+      storageAvailable = false;
+    }
+    return buildDefaultState();
+  }
+
+  function saveState() {
+    if (!storageAvailable) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      storageAvailable = false;
+      document.getElementById('saveStatus').innerHTML =
+        '<span style="color:#A83A2E;">●</span> Progress won\'t be saved in this view — open the downloaded file in your browser to save';
+    }
+  }
+
+  state = loadState();
+
+  const subjectsEl = document.getElementById('subjects');
+  const overallFrac = document.getElementById('overallFrac');
+  const overallFill = document.getElementById('overallFill');
+  const daysLeftEl = document.getElementById('daysLeft');
+
+  function totalSubtopics() {
+    return subjects.reduce((sum, s) => sum + s.units.reduce((s2, u) => s2 + u.subtopics.length, 0), 0);
+  }
+  function doneSubtopics() {
+    let done = 0;
+    state.forEach(subj => subj.forEach(unit => unit.forEach(v => { if (v) done++; })));
+    return done;
+  }
+  function unitDone(si, ui) { return state[si][ui].filter(Boolean).length; }
+  function subjectDone(si) { return state[si].reduce((sum, u) => sum + u.filter(Boolean).length, 0); }
+  function subjectTotal(si) { return subjects[si].units.reduce((sum, u) => sum + u.subtopics.length, 0); }
+
+  const overallPercentEl = document.getElementById('overallPercent');
+  const overallPhraseEl = document.getElementById('overallPhrase');
+  let displayedPercent = 0;
+  let percentAnimFrame = null;
+
+  function phraseForPercent(pct) {
+    if (pct === 0) return "Let's begin the journey 🚀";
+    if (pct < 25) return "Getting started — keep going 📘";
+    if (pct < 50) return "Building solid momentum 💪";
+    if (pct < 75) return "Past the halfway mark! 🔥";
+    if (pct < 95) return "Almost exam-ready 🌟";
+    if (pct < 100) return "So close to the finish line 🏁";
+    return "Syllabus complete — you're ready! 🎉";
+  }
+
+  function animatePercent(target) {
+    if (percentAnimFrame) cancelAnimationFrame(percentAnimFrame);
+    const start = displayedPercent;
+    const startTime = performance.now();
+    const duration = 500;
+    function step(now) {
+      const t = Math.min(1, (now - startTime) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const current = Math.round(start + (target - start) * eased);
+      overallPercentEl.textContent = `${current}%`;
+      if (t < 1) {
+        percentAnimFrame = requestAnimationFrame(step);
+      } else {
+        displayedPercent = target;
+      }
+    }
+    percentAnimFrame = requestAnimationFrame(step);
+  }
+
+  function updateOverall() {
+    const total = totalSubtopics();
+    const done = doneSubtopics();
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    overallFrac.textContent = `${done} / ${total} topics`;
+    overallFill.style.width = `${total ? (done / total) * 100 : 0}%`;
+    overallPhraseEl.style.opacity = 0;
+    setTimeout(() => {
+      overallPhraseEl.textContent = phraseForPercent(pct);
+      overallPhraseEl.style.opacity = 1;
+    }, 120);
+    animatePercent(pct);
+  }
+
+  function updateSubjectBar(si) {
+    const bar = document.getElementById(`sbar-${si}`);
+    const frac = document.getElementById(`sfrac-${si}`);
+    const done = subjectDone(si), total = subjectTotal(si);
+    bar.style.width = `${total ? (done / total) * 100 : 0}%`;
+    frac.textContent = `${done}/${total}`;
+  }
+
+  function updateUnitBar(si, ui) {
+    const bar = document.getElementById(`ubar-${si}-${ui}`);
+    const frac = document.getElementById(`ufrac-${si}-${ui}`);
+    const done = unitDone(si, ui), total = subjects[si].units[ui].subtopics.length;
+    bar.style.width = `${total ? (done / total) * 100 : 0}%`;
+    frac.textContent = `${done}/${total}`;
+  }
+
+  function render() {
+    subjectsEl.innerHTML = '';
+    subjects.forEach((s, si) => {
+      const subjectEl = document.createElement('div');
+      subjectEl.className = 'subject';
+      subjectEl.innerHTML = `
+        <div class="subject-head" data-si="${si}" tabindex="0" role="button" aria-expanded="false">
+          <div class="subject-title-block">
+            <span class="subject-code">${s.code}</span>
+            <span class="subject-title">${s.emoji ? s.emoji + ' ' : ''}${s.title}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="subject-frac" id="sfrac-${si}">0/0</span>
+            <span class="caret">▸</span>
+          </div>
+        </div>
+        <div class="subject-bar-track"><div class="subject-bar-fill" id="sbar-${si}" style="width:0%"></div></div>
+        <div class="unit-list" id="units-${si}">
+          ${s.units.map((u, ui) => `
+            <div class="unit" id="unit-${si}-${ui}">
+              <div class="unit-head" data-si="${si}" data-ui="${ui}" tabindex="0" role="button" aria-expanded="false">
+                <div class="unit-title-block">
+                  <span class="unit-title">${u.name}</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="unit-frac" id="ufrac-${si}-${ui}">0/0</span>
+                  <span class="caret">▸</span>
+                </div>
+              </div>
+              <div class="unit-bar-track"><div class="unit-bar-fill" id="ubar-${si}-${ui}" style="width:0%"></div></div>
+              <div class="subtopics" id="subtopics-${si}-${ui}">
+                ${u.subtopics.map((t, ti) => `
+                  <div class="subtopic" id="subtopic-${si}-${ui}-${ti}">
+                    <input type="checkbox" id="chk-${si}-${ui}-${ti}" data-si="${si}" data-ui="${ui}" data-ti="${ti}">
+                    <label for="chk-${si}-${ui}-${ti}">${t}</label>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      subjectsEl.appendChild(subjectEl);
+    });
+
+    subjects.forEach((s, si) => {
+      s.units.forEach((u, ui) => {
+        u.subtopics.forEach((t, ti) => {
+          const chk = document.getElementById(`chk-${si}-${ui}-${ti}`);
+          chk.checked = state[si][ui][ti];
+          document.getElementById(`subtopic-${si}-${ui}-${ti}`).classList.toggle('checked', chk.checked);
+          chk.addEventListener('change', () => {
+            state[si][ui][ti] = chk.checked;
+            document.getElementById(`subtopic-${si}-${ui}-${ti}`).classList.toggle('checked', chk.checked);
+            updateUnitBar(si, ui);
+            updateSubjectBar(si);
+            updateOverall();
+            saveState();
+          });
+        });
+        updateUnitBar(si, ui);
+      });
+      updateSubjectBar(si);
+    });
+
+    document.querySelectorAll('.subject-head').forEach(head => {
+      const toggle = () => {
+        const si = head.dataset.si;
+        const listEl = document.getElementById(`units-${si}`);
+        const subjectEl = head.closest('.subject');
+        const isOpen = listEl.classList.toggle('open');
+        subjectEl.classList.toggle('open');
+        head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', (e) => { if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); toggle(); } });
+    });
+
+    document.querySelectorAll('.unit-head').forEach(head => {
+      const toggle = () => {
+        const si = head.dataset.si, ui = head.dataset.ui;
+        const subEl = document.getElementById(`subtopics-${si}-${ui}`);
+        const unitEl = head.closest('.unit');
+        const isOpen = subEl.classList.toggle('open');
+        unitEl.classList.toggle('open');
+        head.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+      head.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+      head.addEventListener('keydown', (e) => { if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); e.stopPropagation(); toggle(); } });
+    });
+
+    updateOverall();
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    const msLeft = examDate - now;
+    const days = Math.max(0, Math.ceil(msLeft / (1000 * 60 * 60 * 24)));
+    daysLeftEl.textContent = days;
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    state = buildDefaultState();
+    saveState();
+    render();
+  });
+
+  render();
+  updateCountdown();
+
+  if (!storageAvailable) {
+    document.getElementById('saveStatus').innerHTML =
+      '<span style="color:#A83A2E;">●</span> Progress won\'t be saved in this view — open the downloaded file in your browser to save';
+  }
+</script>
+
+</body>
+</html>

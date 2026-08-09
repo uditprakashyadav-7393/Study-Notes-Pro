@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics — Class 12 Board Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --panel:#12181f;
+    --panel-raised:#181f28;
+    --bezel:#0b0f14;
+    --paper:#e9ede8;
+    --scope:#7fe8a3;
+    --scope-dim:rgba(127,232,163,0.25);
+    --copper:#c9784a;
+    --amber:#e0a24a;
+    --line: rgba(233,237,232,0.1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bezel);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em; }
+  ::selection{ background:var(--scope); color:var(--bezel); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 6vw;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:rgba(233,237,232,0.55);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar a.back{ text-decoration:none; color:rgba(233,237,232,0.55); }
+  .topbar a.back:hover{ color:var(--paper); }
+  .topbar .tag{
+    color:var(--scope);
+    border:1px solid rgba(127,232,163,0.4);
+    padding:3px 9px;
+    border-radius:3px;
+    font-size:11px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:60px 6vw 40px; max-width:1180px; margin:0 auto; }
+  .hero-grid{ display:grid; grid-template-columns:1fr; gap:44px; }
+  @media (min-width:980px){ .hero-grid{ grid-template-columns:1.05fr 0.95fr; align-items:center; } }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--copper);
+    margin-bottom:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--copper); }
+
+  .hero h1{
+    font-size:clamp(2.3rem, 4.6vw, 3.4rem);
+    line-height:1.08;
+    margin:0 0 20px;
+  }
+  .hero h1 .accent{ color:var(--scope); }
+  .hero p.lede{
+    font-size:16.5px;
+    line-height:1.65;
+    color:rgba(233,237,232,0.68);
+    max-width:48ch;
+    margin:0 0 30px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:13px 24px;
+    border-radius:3px;
+    text-decoration:none;
+    display:inline-flex; align-items:center; gap:9px;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .btn-primary{ background:var(--scope); color:var(--bezel); font-weight:600; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 22px rgba(127,232,163,0.2); }
+  .btn-ghost{ border:1px solid rgba(233,237,232,0.25); color:var(--paper); }
+  .btn-ghost:hover{ border-color:var(--paper); }
+
+  /* ---------- scope panel ---------- */
+  .scope-panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:20px 20px 16px;
+    position:relative;
+  }
+  .scope-screen{
+    background:#0a1410;
+    border-radius:4px;
+    padding:14px 10px 6px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(127,232,163,0.18);
+  }
+  .scope-screen svg{ display:block; width:100%; height:auto; }
+  .scope-readout{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 4px 2px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:rgba(127,232,163,0.7);
+    letter-spacing:0.05em;
+  }
+  .panel-fields{ margin-top:16px; }
+  .pf-row{
+    display:flex; justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:13px;
+  }
+  .pf-row:last-child{ border-bottom:none; }
+  .pf-row .k{ color:rgba(233,237,232,0.5); font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.04em; }
+  .pf-row .v{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--scope); }
+
+  /* ---------- sections ---------- */
+  section{ padding:80px 6vw; max-width:1180px; margin:0 auto; }
+  .section-head{ max-width:620px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(1.8rem, 3.2vw, 2.3rem); margin:0 0 14px; }
+  .section-head p{ color:rgba(233,237,232,0.6); font-size:15px; line-height:1.6; max-width:56ch; }
+
+  /* ---------- circuit board chapter list ---------- */
+  .board{
+    position:relative;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box;
+    padding:6px;
+  }
+  .board-inner{
+    background:var(--bezel);
+    border-radius:6px;
+    padding:10px;
+  }
+  .component{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:16px;
+    padding:16px 18px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .component:last-child{ border-bottom:none; }
+  .led{
+    width:11px; height:11px;
+    border-radius:50%;
+    background:#33403a;
+    box-shadow:inset 0 0 0 1px rgba(233,237,232,0.15);
+    flex-shrink:0;
+  }
+  .led.on{
+    background:var(--scope);
+    box-shadow:0 0 8px 2px rgba(127,232,163,0.55), inset 0 0 0 1px rgba(0,0,0,0.2);
+  }
+  .comp-body{ min-width:0; }
+  .comp-body .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:rgba(233,237,232,0.4);
+    letter-spacing:0.05em;
+  }
+  .comp-body h3{ font-size:16.5px; margin:2px 0 4px; font-weight:600; }
+  .comp-body p{ margin:0; font-size:13px; color:rgba(233,237,232,0.55); line-height:1.5; max-width:56ch; }
+  .comp-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    padding:4px 9px;
+    border-radius:3px;
+    white-space:nowrap;
+    border:1px solid;
+  }
+  .comp-tag.done{ color:var(--scope); border-color:rgba(127,232,163,0.4); }
+  .comp-tag.pending{ border-color:var(--amber); color:var(--copper); cursor:pointer; }
+  .comp-tag.pending:hover{ border-color: var(--copper); color: var(--amber); scale:1.08; }
+
+  /* ---------- formula datasheet ---------- */
+  .datasheet{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+  }
+  @media (min-width:720px){ .datasheet{ grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1080px){ .datasheet{ grid-template-columns:repeat(3,1fr); } }
+  .ds-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px 18px 16px;
+  }
+  .ds-card .ds-unit{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    color:var(--copper);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:10px;
+  }
+  .ds-card .ds-formula{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:15px;
+    color:var(--paper);
+    background:var(--bezel);
+    padding:10px 12px;
+    border-radius:4px;
+    margin-bottom:10px;
+    border:1px solid var(--line);
+  }
+  .ds-card p{ margin:0; font-size:12.5px; color:rgba(233,237,232,0.55); line-height:1.5; }
+
+  /* ---------- closing ---------- */
+  .closing{ text-align:center; padding:90px 6vw 100px; }
+  .closing h2{ font-size:clamp(1.8rem,3.8vw,2.5rem); margin:0 0 16px; }
+  .closing p{ color:rgba(233,237,232,0.6); max-width:46ch; margin:0 auto 30px; line-height:1.6; }
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:26px 6vw;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:rgba(233,237,232,0.35);
+  }
+  :focus-visible{ outline:2px solid var(--scope); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="#" class="back">← Board Prep · Class XII</a>
+    <span class="tag">PHYSICS</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">CBSE · Physics · Class XII</div>
+        <h1>Every chapter, <span class="accent">wired</span> and traceable.</h1>
+        <p class="lede">Fourteen chapters from Electric Charges to Semiconductor Electronics. No skipped derivations, no "I'll come back to optics later" — just a clean readout of what's actually revised.</p>
+        <div class="cta-row">
+          <a href="#chapters" class="btn btn-primary">View chapter board →</a>
+          <a href="#formulas" class="btn btn-ghost">Quick formula sheet</a>
+        </div>
+      </div>
+
+      <div class="scope-panel">
+        <div class="scope-screen">
+          <svg viewBox="0 0 320 90" preserveAspectRatio="none">
+            <polyline id="scopeWave" fill="none" stroke="#7fe8a3" stroke-width="1.6"
+              points="0,45 20,45 26,15 34,75 42,15 50,75 58,45 320,45"/>
+            <line x1="0" y1="45" x2="320" y2="45" stroke="rgba(127,232,163,0.15)" stroke-width="1"/>
+          </svg>
+          <div class="scope-readout">
+            <span>CH · MECHANICAL WAVES</span>
+            <span id="scopeStatus">SIGNAL: STABLE</span>
+          </div>
+        </div>
+        <div class="panel-fields">
+          <div class="pf-row"><span class="k">Chapters revised</span><span class="v">00/14</span></div>
+          <div class="pf-row"><span class="k">Current focus</span><span class="v">Ray Optics</span></div>
+          <div class="pf-row"><span class="k">Last logged</span><span class="v">Today</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="chapters">
+    <div class="section-head">
+      <div class="eyebrow">Chapter board</div>
+      <h2>Fourteen components. Some lit, some waiting.</h2>
+      <p>Each chapter is a node on the board — mark it once you've done the derivation, the numericals, and the diagram, not just the theory read-through.</p>
+    </div>
+
+    <div class="board"><div class="board-inner" id="board">
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">01</span><h3>Electric Charges and Fields</h3><p>Coulomb's law, field lines, Gauss's law and its symmetric applications.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">02</span><h3>Electrostatic Potential and Capacitance</h3><p>Potential due to point charges and dipoles, capacitor combinations, energy storage.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">03</span><h3>Current Electricity</h3><p>Drift velocity, Kirchhoff's rules, Wheatstone bridge and potentiometer numericals.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">04</span><h3>Moving Charges and Magnetism</h3><p>Biot-Savart law, Ampere's circuital law, force on a current-carrying conductor.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">05</span><h3>Magnetism and Matter</h3><p>Bar magnet as an equivalent solenoid, magnetic properties of materials.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">06</span><h3>Electromagnetic Induction</h3><p>Faraday's and Lenz's laws, self and mutual inductance, motional EMF.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">07</span><h3>Alternating Current</h3><p>Phasor diagrams, LCR circuits, resonance and power in AC circuits.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">08</span><h3>Electromagnetic Waves</h3><p>Displacement current, the EM spectrum, and properties of EM waves.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">09</span><h3>Ray Optics and Optical Instruments</h3><p>Refraction, lens and mirror formulas, microscopes and telescopes.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">10</span><h3>Wave Optics</h3><p>Huygens' principle, interference, Young's double slit, diffraction.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">11</span><h3>Dual Nature of Radiation and Matter</h3><p>Photoelectric effect, Einstein's equation, de Broglie wavelength.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">12</span><h3>Atoms</h3><p>Rutherford's model, Bohr's model, atomic spectra.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">13</span><h3>Nuclei</h3><p>Mass defect, binding energy, radioactivity and nuclear reactions.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+      <div class="component" data-done="0">
+        <span class="led"></span>
+        <div class="comp-body"><span class="num">14</span><h3>Semiconductor Electronics</h3><p>p-n junctions, diodes as rectifiers, transistors and logic gates.</p></div>
+        <span class="comp-tag"></span>
+      </div>
+    </div></div>
+  </section>
+
+  <section id="formulas">
+    <div class="section-head">
+      <div class="eyebrow">Quick reference</div>
+      <h2>The formulas you reach for most often.</h2>
+      <p>Not a substitute for derivations — just the readouts worth having pinned while you solve numericals.</p>
+    </div>
+    <div class="datasheet">
+      <div class="ds-card">
+        <div class="ds-unit">Electrostatics</div>
+        <div class="ds-formula">F = kq₁q₂ / r²</div>
+        <p>Coulomb's law — force between two point charges separated by distance r.</p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-unit">Current Electricity</div>
+        <div class="ds-formula">V = IR</div>
+        <p>Ohm's law — the backbone of every circuit numerical you'll solve.</p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-unit">Magnetism</div>
+        <div class="ds-formula">F = qvB sinθ</div>
+        <p>Force on a moving charge in a magnetic field.</p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-unit">EM Induction</div>
+        <div class="ds-formula">ε = −N(dΦ/dt)</div>
+        <p>Faraday's law — induced EMF from changing magnetic flux.</p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-unit">Ray Optics</div>
+        <div class="ds-formula">1/v − 1/u = 1/f</div>
+        <p>Lens formula — sign convention is where most marks are lost.</p>
+      </div>
+      <div class="ds-card">
+        <div class="ds-unit">Modern Physics</div>
+        <div class="ds-formula">E = hf − φ₀</div>
+        <p>Einstein's photoelectric equation — energy of emitted electrons.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <h2>Log today's chapter before you close the book.</h2>
+    <p>Two minutes now saves a frantic re-read the night before the exam.</p>
+    <a href="#chapters" class="btn btn-primary">Update chapter board →</a>
+  </section>
+
+  <footer>
+    <span>Physics · Board Prep · Class XII 2026–27</span>
+    <span>NCERT-aligned chapter list</span>
+  </footer>
+
+<script>
+  // light the LEDs and tag components
+  document.querySelectorAll('.component').forEach(c => {
+    const done = c.dataset.done === '0';
+    const led = c.querySelector('.led');
+    const tag = c.querySelector('.comp-tag');
+      tag.textContent = 'DONE';
+      tag.classList.add('pending');
+    
+    c.addEventListener('click' , () => {
+        led.classList.add('on');
+        tag.textContent = 'REVISED';
+        tag.classList.remove('pending');
+        tag.classList.add('done');
+        c.dataset.done = '1';
+        const revisedCount = document.querySelectorAll('.comp-tag.done').length;
+        const chR = document.querySelector('.v');
+        chR.textContent = `${revisedCount} / 14`;
+    });
+   
+  });
+  // animate the oscilloscope trace subtly
+  const wave = document.getElementById('scopeWave');
+  let t = 0;
+  function animateWave(){
+    t += 0.05;
+    const amp = 20 + Math.sin(t) * 6;
+    const pts = `0,45 20,45 26,${45-amp*0.5} 34,${45+amp} 42,${45-amp*0.75} 50,${45+amp*0.9} 58,45 320,45`;
+    wave.setAttribute('points', pts);
+    requestAnimationFrame(animateWave);
+  }
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    requestAnimationFrame(animateWave);
+  }
+</script>
+</body>
+</html>

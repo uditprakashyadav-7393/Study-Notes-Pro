@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on inverse trigonometric functions, covering their definitions, properties, and graphs. Learn how to work with arcsin, arccos, arctan, and more, with clear explanations and examples.">
+<meta name="keywords" content="inverse trigonometric functions, arcsin, arccos, arctan, properties of inverse trig functions, graphs of inverse trig functions, trigonometry, math notes">
+<meta name="author" content="Udit Prakash Yadav">
+<title>ITF — 2. Domain & Range</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#181c27;--surface2:#1e2333;--border:rgba(255,255,255,0.07);--accent:#a78bfa;--accent2:#f6c90e;--accent3:#f87171;--text:#e2e8f0;--muted:#8892a4;--mono:'JetBrains Mono',monospace;--serif:'Lora',Georgia,serif;--sans:'DM Sans',sans-serif;--gold: #f6c90e;--gold-dim: #93780c;--accent: #e96c6c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:1rem;line-height:1.75;min-height:100vh}
+/* SITE NAVIGATION */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;overflow-x:auto;gap:0}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--accent);white-space:nowrap;margin-right:1.5rem;text-decoration:none;font-style:italic;flex-shrink:0}
+.nav-links{display:flex;gap:0;flex-shrink:0}
+.nav-links a{font-family:var(--mono);font-size:0.63rem;letter-spacing:0.04em;color:var(--muted);text-decoration:none;padding:0 10px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* PROGRESS BAR */
+.progress-bar{position:fixed;top:56px;left:0;right:0;height:2px;z-index:99;background:var(--border)}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s}
+/* PAGE HERO */
+.hero{padding:4rem 2rem 2.5rem;max-width:900px;margin:0 auto}
+.hero-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;font-weight:700;margin-bottom:0.9rem}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero-desc{color:var(--muted);max-width:560px;font-size:1rem}
+.page-body{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+.sec{margin-bottom:2.8rem;opacity:0;transform:translateY(18px);animation:revealUp 0.5s ease forwards}
+@keyframes revealUp{to{opacity:1;transform:none}}
+.sec:nth-child(1){animation-delay:0.05s}.sec:nth-child(2){animation-delay:0.12s}.sec:nth-child(3){animation-delay:0.19s}.sec:nth-child(4){animation-delay:0.26s}.sec:nth-child(5){animation-delay:0.33s}
+.sec-head{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:1.1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.7rem}
+.sec-num{font-family:var(--mono);font-size:0.62rem;background:var(--accent);color:var(--bg);padding:2px 8px;border-radius:2px;font-weight:600;flex-shrink:0}
+p{margin-bottom:0.85rem;color:var(--text)}
+.m{font-family:var(--mono);background:rgba(255,255,255,0.06);padding:1px 7px;border-radius:3px;font-size:0.88em;color:var(--accent2);white-space:nowrap}
+.box{border-radius:6px;padding:1.1rem 1.4rem;margin:1.1rem 0}
+.box-purple{background:rgba(167,139,250,0.08);border-left:3px solid var(--accent)}
+.box-gold{background:rgba(246,201,14,0.08);border-left:3px solid var(--accent2)}
+.box-red{background:rgba(248,113,113,0.08);border-left:3px solid var(--accent3)}
+.box-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.4rem;font-weight:600}
+.box-purple .box-label{color:var(--accent)}.box-gold .box-label{color:var(--accent2)}.box-red .box-label{color:var(--accent3)}
+.box p{margin-bottom:0}
+
+/* Big function cards */
+.fn-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.2rem 0}
+@media(max-width:620px){.fn-cards{grid-template-columns:1fr}}
+.fn-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s}
+.fn-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.fn-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.fn-card:nth-child(2)::before{background:var(--accent2)}
+.fn-card:nth-child(3)::before{background:var(--accent3)}
+.fn-card:nth-child(4)::before{background:#fb923c}
+.fn-card:nth-child(5)::before{background:#a3e635}
+.fn-card:nth-child(6)::before{background:#38bdf8}
+.fn-name{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.2rem}
+.fn-sym{font-family:var(--mono);font-size:0.78rem;color:var(--accent2);margin-bottom:0.7rem}
+.fn-row{display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.25rem}
+.fn-row .lbl{color:var(--muted);font-size:0.72rem}
+.fn-row .val{font-family:var(--mono);color:var(--text);font-size:0.8rem}
+
+/* Number line visual */
+.numline-wrap{margin:1.2rem 0}
+.nl-item{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.nl-fn{font-family:var(--mono);font-size:0.8rem;color:var(--accent2);width:90px;flex-shrink:0}
+.nl-bar{flex:1;position:relative;height:28px;background:var(--surface);border-radius:3px;overflow:visible}
+.nl-track{position:absolute;top:50%;height:3px;background:var(--border);left:5%;right:5%;transform:translateY(-50%)}
+.nl-fill{position:absolute;top:50%;height:3px;background:var(--accent);transform:translateY(-50%);border-radius:2px}
+.nl-dot{position:absolute;top:50%;width:9px;height:9px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);border:2px solid var(--bg)}
+.nl-open{background:transparent;border:2px solid var(--accent)}
+.nl-label{position:absolute;bottom:-18px;font-family:var(--mono);font-size:0.62rem;color:var(--muted);transform:translateX(-50%)}
+.nl-range-text{font-family:var(--mono);font-size:0.76rem;color:var(--muted);width:160px;flex-shrink:0}
+
+.tbl-wrap{overflow-x:auto;margin:1rem 0}
+table.ftbl{width:100%;border-collapse:collapse;font-size:0.9rem}
+table.ftbl thead tr{background:var(--surface2)}
+table.ftbl th{padding:10px 14px;text-align:left;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+table.ftbl td{padding:10px 14px;border-bottom:1px solid var(--border)}
+table.ftbl tr:last-child td{border-bottom:none}
+table.ftbl tr:hover td{background:rgba(255,255,255,0.02)}
+table.ftbl td:first-child{font-family:var(--mono);color:var(--accent2);font-size:0.88rem}
+table.ftbl td:nth-child(2){font-family:var(--mono);font-size:0.82rem}
+table.ftbl td:nth-child(3){font-family:var(--mono);font-size:0.82rem;color:var(--accent)}
+
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(167,139,250,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em;text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; font-family: 'Playfair Display', serif; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="./mathsch2.html">ITF Notes</a>
+  <div class="nav-links">
+    <a href="./IFT1.html">01 Intro</a>
+    <a href="./IFT2.html" class="active">02 Domain & Range</a>
+    <a href="./IFT3.html">03 Principal Value</a>
+    <a href="./IFT4.html">04 Properties I</a>
+    <a href="./IFT5.html">05 Properties II</a>
+    <a href="./IFT6.html">06 Graphs</a>
+    <a href="./graphs.html">07 Animated Graphs</a>
+  </div>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<div class="hero">
+  <div class="hero-tag">Chapter 2 · Inverse Trigonometric Functions</div>
+  <h1><em>Domain</em> &amp; Range</h1>
+  <p class="hero-desc">What values can inverse trig functions take as input, and what angles do they output? A complete breakdown.</p>
+</div>
+
+<div class="page-body">
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">2.1</span> What Are Domain and Range?</div>
+    <p>For any function, the <strong>domain</strong> is the set of all valid <em>input</em> values, and the <strong>range</strong> is the set of all possible <em>output</em> values.</p>
+    <div class="box box-purple">
+      <div class="box-label">For Inverse Trig Functions</div>
+      <p>The <strong>domain</strong> is the set of real numbers (trig ratio values) you can plug in. The <strong>range</strong> is the set of angles (in radians) that come out — restricted to the principal value branch.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">2.2</span> Domain &amp; Range of All Six Functions</div>
+    <div class="fn-cards">
+      <div class="fn-card">
+        <div class="fn-name">Arcsine</div>
+        <div class="fn-sym">sin⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">[−1, 1]</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">[−π/2, π/2]</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">[−90°, 90°]</span></div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-name">Arccosine</div>
+        <div class="fn-sym">cos⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">[−1, 1]</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">[0, π]</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">[0°, 180°]</span></div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-name">Arctangent</div>
+        <div class="fn-sym">tan⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">ℝ (all reals)</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">(−π/2, π/2)</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">(−90°, 90°)</span></div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-name">Arccosecant</div>
+        <div class="fn-sym">cosec⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">|x| ≥ 1</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">[−π/2,π/2]\{0}</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">[−90°,90°]\{0°}</span></div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-name">Arcsecant</div>
+        <div class="fn-sym">sec⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">|x| ≥ 1</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">[0,π]\{π/2}</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">[0°,180°]\{90°}</span></div>
+      </div>
+      <div class="fn-card">
+        <div class="fn-name">Arccotangent</div>
+        <div class="fn-sym">cot⁻¹(x)</div>
+        <div class="fn-row"><span class="lbl">Domain</span><span class="val">ℝ (all reals)</span></div>
+        <div class="fn-row"><span class="lbl">Range</span><span class="val">(0, π)</span></div>
+        <div class="fn-row"><span class="lbl">Degrees</span><span class="val">(0°, 180°)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">2.3</span> Understanding the Ranges Visually</div>
+    <p>The ranges can be understood as positions on the number line between <span class="m">−π/2</span> and <span class="m">π</span>. Closed brackets [ ] mean the endpoint is included; open brackets ( ) mean excluded.</p>
+    <div class="numline-wrap">
+      <div class="nl-item">
+        <div class="nl-fn">sin⁻¹(x)</div>
+        <div class="nl-range-text">[−π/2, π/2]  closed</div>
+      </div>
+      <div class="nl-item">
+        <div class="nl-fn">cos⁻¹(x)</div>
+        <div class="nl-range-text">[0, π]  closed</div>
+      </div>
+      <div class="nl-item">
+        <div class="nl-fn">tan⁻¹(x)</div>
+        <div class="nl-range-text">(−π/2, π/2)  open</div>
+      </div>
+      <div class="nl-item">
+        <div class="nl-fn">cot⁻¹(x)</div>
+        <div class="nl-range-text">(0, π)  open</div>
+      </div>
+    </div>
+    <div class="box box-gold">
+      <div class="box-label">Why are some ranges open?</div>
+      <p>For <span class="m">tan⁻¹</span>, the endpoints <span class="m">±π/2</span> correspond to vertical asymptotes of tan — tan is undefined there, so those angles cannot be outputs. Similarly for <span class="m">cot⁻¹</span> at 0 and π.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">2.4</span> Complete Reference Table</div>
+    <div class="tbl-wrap">
+    <table class="ftbl">
+      <thead><tr>
+        <th>Function</th>
+        <th>Domain</th>
+        <th>Range (Principal Branch)</th>
+        <th>Range in Degrees</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>sin⁻¹(x)</td><td>[−1, 1]</td><td>[−π/2, π/2]</td><td>[−90°, 90°]</td></tr>
+        <tr><td>cos⁻¹(x)</td><td>[−1, 1]</td><td>[0, π]</td><td>[0°, 180°]</td></tr>
+        <tr><td>tan⁻¹(x)</td><td>(−∞, +∞)</td><td>(−π/2, π/2)</td><td>(−90°, 90°)</td></tr>
+        <tr><td>cosec⁻¹(x)</td><td>(−∞,−1]∪[1,+∞)</td><td>[−π/2, π/2]\{0}</td><td>[−90°,90°]\{0°}</td></tr>
+        <tr><td>sec⁻¹(x)</td><td>(−∞,−1]∪[1,+∞)</td><td>[0, π]\{π/2}</td><td>[0°,180°]\{90°}</td></tr>
+        <tr><td>cot⁻¹(x)</td><td>(−∞, +∞)</td><td>(0, π)</td><td>(0°, 180°)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">2.5</span> Key Observations</div>
+    <ul style="padding-left:1.2rem;display:grid;gap:8px;margin-top:0.5rem">
+      <li style="line-height:1.75"><strong>sin⁻¹ and cos⁻¹</strong> share the same domain <span class="m">[−1, 1]</span> (since sine and cosine both produce values between −1 and 1).</li>
+      <li style="line-height:1.75"><strong>tan⁻¹ and cot⁻¹</strong> accept <em>all real numbers</em> as input (since tan and cot can produce any real value).</li>
+      <li style="line-height:1.75"><strong>cosec⁻¹ and sec⁻¹</strong> exclude the interval (−1, 1) since cosec and sec always have |value| ≥ 1.</li>
+      <li style="line-height:1.75">The range of <span class="m">sin⁻¹</span> and <span class="m">tan⁻¹</span> is symmetric around 0 — both are <strong>odd functions</strong>.</li>
+      <li style="line-height:1.75">The range of <span class="m">cos⁻¹</span> starts at 0, not a negative number — cos⁻¹ is <strong>neither odd nor even</strong>.</li>
+    </ul>
+    <div class="box box-red" style="margin-top:1rem">
+      <div class="box-label">⚠ Exam Trap</div>
+      <p><span class="m">sin⁻¹(2)</span> is <strong>undefined</strong> because 2 is outside the domain [−1, 1]. Always check the domain before evaluating!</p>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <a class="pnav-btn" href="./IFT1.html"><span>← Prev</span> Introduction</a>
+    <a class="pnav-btn" href="./IFT3.html"><span>Next →</span> Principal Value</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+   <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('pbar').style.width=p+'%';
+});
+</script>
+</body>
+</html>

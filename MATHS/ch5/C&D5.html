@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Derivatives of Inverse Trig Functions</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#a78bfa;--accent-dim:#5b21b6;
+    --green:#3fb950;--red:#f85149;--blue:#58a6ff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#120a2e 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(167,139,250,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(167,139,250,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(167,139,250,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}.section:nth-child(3){animation-delay:.14s}.section:nth-child(4){animation-delay:.21s}.section:nth-child(5){animation-delay:.28s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#fff;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(167,139,250,.02));border:1px solid rgba(167,139,250,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--accent);line-height:2.2;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.91rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  /* Derivative Cards Grid */
+  .deriv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:22px 0;}
+  .dc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:.22s;position:relative;overflow:hidden;}
+  .dc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:2px 0 0 2px;}
+  .dc:hover{border-color:rgba(167,139,250,.4);transform:translateY(-2px);}
+  .dc .dc-fn{font-family:'JetBrains Mono',monospace;color:var(--gold);font-size:1rem;margin-bottom:8px;}
+  .dc .dc-deriv{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.9rem;margin-bottom:6px;}
+  .dc .dc-domain{font-size:.75rem;color:var(--text-muted);}
+  /* Pair highlight */
+  .pair-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:22px 0;}
+  .pair-box .pb-lbl{font-size:.68rem;color:var(--accent);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+  .pair-row{display:flex;gap:16px;align-items:center;margin:8px 0;flex-wrap:wrap;}
+  .pr-left{flex:1;min-width:160px;font-family:'JetBrains Mono',monospace;color:var(--blue);font-size:.9rem;}
+  .pr-arrow{color:var(--text-muted);font-size:1rem;}
+  .pr-right{flex:1;min-width:160px;font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.9rem;}
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  th{background:var(--surface2);color:var(--accent);padding:10px 15px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:9px 15px;border-bottom:1px solid var(--border);color:#cdd5df;font-family:'JetBrains Mono',monospace;font-size:.88rem;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:#000;}.btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:83%;position:fixed;top:0;left:0;z-index:200;}
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html">1. Continuity</a>
+    <a href="C&D2.html">2. Differentiability</a>
+    <a href="C&D3.html">3. Exp & Log</a>
+    <a href="C&D4.html">4. Log Diff.</a>
+    <a href="C&D5.html" class="active">5. Inv. Trig</a>
+    <a href="C&D6.html">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">05</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Derivatives of Inverse<br><span>Trigonometric Functions</span></h1>
+  <p>Six essential formulas — sin⁻¹, cos⁻¹, tan⁻¹, cot⁻¹, sec⁻¹, cosec⁻¹ — with domain restrictions.</p>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>Quick Recall — Inverse Trig</h2></div>
+    <p>An inverse trig function <span class="hl">reverses the trig function</span>. For example, sin⁻¹(x) gives the angle whose sine is x.</p>
+    <div class="def-box">
+      <div class="lbl">📘 Important Note</div>
+      <p>Inverse trig functions are only defined on <strong>restricted domains</strong> to ensure they are one-one and onto. The principal value branches are used for differentiation.</p>
+    </div>
+    <div class="pair-box">
+      <div class="pb-lbl">Function → Principal Range</div>
+      <div class="pair-row"><div class="pr-left">sin⁻¹(x) &nbsp; x ∈ [−1,1]</div><div class="pr-arrow">→</div><div class="pr-right">Range: [−π/2, π/2]</div></div>
+      <div class="pair-row"><div class="pr-left">cos⁻¹(x) &nbsp; x ∈ [−1,1]</div><div class="pr-arrow">→</div><div class="pr-right">Range: [0, π]</div></div>
+      <div class="pair-row"><div class="pr-left">tan⁻¹(x) &nbsp; x ∈ ℝ</div><div class="pr-arrow">→</div><div class="pr-right">Range: (−π/2, π/2)</div></div>
+      <div class="pair-row"><div class="pr-left">cot⁻¹(x) &nbsp; x ∈ ℝ</div><div class="pr-arrow">→</div><div class="pr-right">Range: (0, π)</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>The Six Standard Derivatives</h2></div>
+    <div class="deriv-grid">
+      <div class="dc">
+        <div class="dc-fn">d/dx [sin⁻¹(x)]</div>
+        <div class="dc-deriv">= 1 / √(1 − x²)</div>
+        <div class="dc-domain">Domain: |x| &lt; 1</div>
+      </div>
+      <div class="dc">
+        <div class="dc-fn">d/dx [cos⁻¹(x)]</div>
+        <div class="dc-deriv">= −1 / √(1 − x²)</div>
+        <div class="dc-domain">Domain: |x| &lt; 1</div>
+      </div>
+      <div class="dc">
+        <div class="dc-fn">d/dx [tan⁻¹(x)]</div>
+        <div class="dc-deriv">= 1 / (1 + x²)</div>
+        <div class="dc-domain">Domain: x ∈ ℝ</div>
+      </div>
+      <div class="dc">
+        <div class="dc-fn">d/dx [cot⁻¹(x)]</div>
+        <div class="dc-deriv">= −1 / (1 + x²)</div>
+        <div class="dc-domain">Domain: x ∈ ℝ</div>
+      </div>
+      <div class="dc">
+        <div class="dc-fn">d/dx [sec⁻¹(x)]</div>
+        <div class="dc-deriv">= 1 / |x|√(x²−1)</div>
+        <div class="dc-domain">Domain: |x| &gt; 1</div>
+      </div>
+      <div class="dc">
+        <div class="dc-fn">d/dx [cosec⁻¹(x)]</div>
+        <div class="dc-deriv">= −1 / |x|√(x²−1)</div>
+        <div class="dc-domain">Domain: |x| &gt; 1</div>
+      </div>
+    </div>
+    <div class="note-box">
+      <p>💡 <strong>Pattern to notice:</strong> sin⁻¹ &amp; cos⁻¹ are negatives of each other. tan⁻¹ &amp; cot⁻¹ are negatives. sec⁻¹ &amp; cosec⁻¹ are negatives. So you really only need to memorise <strong>3 formulas</strong>!</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Chain Rule with Inverse Trig</h2></div>
+    <p>When the argument is f(x) instead of just x, apply the chain rule:</p>
+    <div class="formula-box">
+      <div class="lbl">General Form with Chain Rule</div>
+      <div class="formula">
+        d/dx [sin⁻¹(f(x))] = f'(x) / √(1 − [f(x)]²)<br><br>
+        d/dx [tan⁻¹(f(x))] = f'(x) / (1 + [f(x)]²)
+      </div>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Examples with Chain Rule</div>
+      <div class="etitle">Find the derivatives</div>
+      <div class="step"><div class="sd">a</div><p>d/dx[sin⁻¹(2x)] = 2 / √(1−4x²) = <span class="hlg">2/√(1−4x²)</span></p></div>
+      <div class="step"><div class="sd">b</div><p>d/dx[tan⁻¹(x²)] = 2x/(1+x⁴) = <span class="hlg">2x/(1+x⁴)</span></p></div>
+      <div class="step"><div class="sd">c</div><p>d/dx[cos⁻¹(√x)] = (1/2√x)·(−1/√(1−x)) = <span class="hlg">−1 / (2√x·√(1−x))</span></p></div>
+      <div class="step"><div class="sd">d</div><p>d/dx[tan⁻¹(sin x)] = cos x/(1+sin²x) = <span class="hlg">cos x / (1 + sin²x)</span></p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Substitution Technique</h2></div>
+    <p>Many inverse trig expressions simplify greatly with a trig substitution before differentiating.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Expression in y =</th><th>Use Substitution</th><th>Simplifies to</th></tr></thead>
+        <tbody>
+          <tr><td>sin⁻¹(2x√(1−x²))</td><td>x = sin θ</td><td class="hl">2 sin⁻¹(x)</td></tr>
+          <tr><td>tan⁻¹(2x/(1−x²))</td><td>x = tan θ</td><td class="hl">2 tan⁻¹(x)</td></tr>
+          <tr><td>cos⁻¹(2x²−1)</td><td>x = cos θ</td><td class="hl">2 cos⁻¹(x)</td></tr>
+          <tr><td>tan⁻¹((1−x)/(1+x))</td><td>x = tan θ</td><td class="hl">π/4 − tan⁻¹(x)</td></tr>
+          <tr><td>sin⁻¹(1/√(1+x²))</td><td>x = cot θ</td><td class="hl">cot⁻¹(x)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Substitution Example</div>
+      <div class="etitle">Differentiate y = sin⁻¹(2x√(1−x²))</div>
+      <div class="step"><div class="sd">1</div><p>Let x = sin θ, so 2x√(1−x²) = 2 sin θ · cos θ = sin 2θ</p></div>
+      <div class="step"><div class="sd">2</div><p>y = sin⁻¹(sin 2θ) = 2θ = 2 sin⁻¹(x)</p></div>
+      <div class="step"><div class="sd">3</div><p>dy/dx = d/dx[2 sin⁻¹(x)] = <span class="hlg">2/√(1−x²)</span></p></div>
+    </div>
+    <div class="note-box">
+      <p>💡 <strong>Exam Tip:</strong> Always check if the given expression matches a known double-angle or compound-angle formula. Substitution can convert a messy expression into something like 2sin⁻¹(x), making the derivative trivial.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D4.html" class="btn btn-prev">← Log Differentiation</a>
+  <a href="C&D6.html" class="btn btn-next">Implicit Differentiation →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+</body>
+</html>

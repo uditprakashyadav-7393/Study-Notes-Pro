@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry — StudyNotesPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0e27;
+    --bg-panel:#0d0f1a;
+    --cyan:#22d3ee;
+    --pink:#f472b6;
+    --amber:#fbbf24;
+    --text-light:#e2e8f0;
+    --text-muted:#94a3b8;
+    --border-glass:rgba(255,255,255,0.08);
+    --glass-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-panel) 100%);
+    color:var(--text-light);
+    font-family:'DM Sans',sans-serif;
+    overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+
+  /* background ambience */
+  .bg-glow{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 600px 400px at 15% 10%, rgba(34,211,238,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 85% 30%, rgba(244,114,182,0.08), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 90%, rgba(251,191,36,0.06), transparent 60%);
+  }
+
+  /* nav */
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 6%;
+    background:rgba(10,14,39,0.75);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-glass);
+  }
+  .logo{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:22px;
+    background:linear-gradient(120deg,var(--cyan),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .logo span{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:12px;-webkit-text-fill-color:var(--text-muted);}
+  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--text-muted);}
+  .nav-links a:hover{color:var(--cyan);}
+  .nav-back{
+    font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);
+    border:1px solid var(--border-glass);padding:8px 16px;border-radius:8px;
+    transition:all .2s;
+  }
+  .nav-back:hover{border-color:var(--cyan);color:var(--cyan);}
+
+  /* hero */
+  .hero{
+    position:relative;z-index:1;
+    padding:90px 6% 60px;
+    text-align:center;
+    opacity:0;animation:fadeUp .7s ease forwards;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--cyan);margin-bottom:18px;
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid rgba(34,211,238,0.3);padding:6px 16px;border-radius:999px;
+    background:rgba(34,211,238,0.06);
+  }
+  .hero h1{
+    font-family:'Playfair Display',serif;font-weight:800;
+    font-size:clamp(38px,6vw,68px);line-height:1.08;
+    margin-bottom:20px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(120deg,var(--cyan) 0%,var(--pink) 50%,var(--amber) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{
+    max-width:620px;margin:0 auto 34px;
+    color:var(--text-muted);font-size:17px;line-height:1.7;
+  }
+  .hero-stats{
+    display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:50px;
+  }
+  .stat{text-align:center;}
+  .stat b{
+    display:block;font-family:'Playfair Display',serif;font-size:32px;
+    background:linear-gradient(120deg,var(--cyan),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .stat span{font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;}
+
+  /* section headers */
+  .section{position:relative;z-index:1;padding:50px 6%;}
+  .section-head{margin-bottom:34px;}
+  .section-tag{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .section-head h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,3.4vw,36px);
+  }
+
+  /* domain badges */
+  .domains{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;}
+  .domain-pill{
+    font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 16px;border-radius:999px;
+    border:1px solid var(--border-glass);color:var(--text-muted);
+  }
+  .domain-pill.physical{border-color:rgba(34,211,238,0.4);color:var(--cyan);}
+  .domain-pill.inorganic{border-color:rgba(244,114,182,0.4);color:var(--pink);}
+  .domain-pill.organic{border-color:rgba(251,191,36,0.4);color:var(--amber);}
+
+  /* chapter cards */
+  .chapters{display:flex;flex-direction:column;gap:16px;}
+  .chapter-card{
+    opacity:0;animation:fadeUp .6s ease forwards;
+    display:flex;align-items:center;gap:24px;
+    background:var(--glass-bg);
+    border:1px solid var(--border-glass);
+    border-radius:16px;
+    padding:24px 28px;
+    backdrop-filter:blur(10px);
+    transition:transform .25s ease, border-color .25s ease, background .25s ease;
+  }
+  .chapter-card:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,0.06);
+  }
+  .chapter-card.physical:hover{border-color:rgba(34,211,238,0.5);}
+  .chapter-card.inorganic:hover{border-color:rgba(244,114,182,0.5);}
+  .chapter-card.organic:hover{border-color:rgba(251,191,36,0.5);}
+
+  .ch-num{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:34px;
+    color:var(--text-muted);min-width:56px;
+  }
+  .chapter-card.physical .ch-num{color:var(--cyan);}
+  .chapter-card.inorganic .ch-num{color:var(--pink);}
+  .chapter-card.organic .ch-num{color:var(--amber);}
+
+  .ch-body{flex:1;min-width:0;}
+  .ch-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--text-muted);margin-bottom:4px;
+  }
+  .ch-title{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:21px;margin-bottom:6px;
+  }
+  .ch-desc{color:var(--text-muted);font-size:14px;line-height:1.6;}
+
+  .ch-icon{
+    font-size:26px;min-width:44px;text-align:center;opacity:.85;
+  }
+
+  .explore-btn{
+    flex-shrink:0;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    padding:10px 20px;border-radius:8px;
+    border:1px solid var(--border-glass);
+    color:var(--text-light);
+    white-space:nowrap;
+    transition:all .2s;
+  }
+  .chapter-card.physical .explore-btn:hover{background:var(--cyan);border-color:var(--cyan);color:var(--bg-deep);}
+  .chapter-card.inorganic .explore-btn:hover{background:var(--pink);border-color:var(--pink);color:var(--bg-deep);}
+  .chapter-card.organic .explore-btn:hover{background:var(--amber);border-color:var(--amber);color:var(--bg-deep);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  /* footer */
+  footer{
+    position:relative;z-index:1;
+    margin-top:60px;padding:36px 6%;
+    border-top:1px solid var(--border-glass);
+    text-align:center;
+  }
+  footer p{font-size:13px;color:var(--text-muted);}
+  footer .credit{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);margin-top:6px;
+  }
+  footer .credit b{
+    background:linear-gradient(120deg,var(--cyan),var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* mobile */
+  @media(max-width:720px){
+    .nav-links{display:none;}
+    .chapter-card{flex-wrap:wrap;padding:20px;}
+    .ch-icon{font-size:22px;min-width:36px;}
+    .explore-btn{width:100%;text-align:center;order:4;}
+    .hero-stats{gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<nav>
+  <a href="/index.html" class="logo"><img src="/Img/logo.png" alt="StudyNotesPro" style="width:250px; height: auto;"></a>
+  <div class="nav-links">
+    <a href="#physical">Physical</a>
+    <a href="#inorganic">Inorganic</a>
+    <a href="#organic">Organic</a>
+  </div>
+  <a href="/index.html" class="nav-back">← All subjects</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Class 12 · Chemistry</div>
+  <h1>Chemistry, made <span class="grad">click into place</span></h1>
+  <p>Ten chapters, three domains, one board and JEE-ready path — Physical, Inorganic, and Organic Chemistry rebuilt as clear, exam-focused notes.</p>
+  <div class="hero-stats">
+    <div class="stat"><b>10</b><span>Chapters</span></div>
+    <div class="stat"><b>03</b><span>Domains</span></div>
+    <div class="stat"><b>CBSE</b><span>+ JEE tips</span></div>
+  </div>
+</section>
+
+<section class="section" id="physical">
+  <div class="section-head">
+    <div class="section-tag">Domain 01</div>
+    <h2>Physical Chemistry</h2>
+  </div>
+  <div class="domains">
+    <span class="domain-pill physical">● Physical Chemistry</span>
+  </div>
+  <div class="chapters">
+
+    <div class="chapter-card physical" style="animation-delay:.05s">
+      <div class="ch-num">01</div>
+      <div class="ch-icon">🧪</div>
+      <div class="ch-body">
+        <div class="ch-tag">Physical Chemistry</div>
+        <div class="ch-title">Solutions</div>
+        <div class="ch-desc">Concentration terms, Raoult's law, colligative properties, and van't Hoff factor.</div>
+      </div>
+      <a href="/chemistry/solutions.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card physical" style="animation-delay:.1s">
+      <div class="ch-num">02</div>
+      <div class="ch-icon">⚡</div>
+      <div class="ch-body">
+        <div class="ch-tag">Physical Chemistry</div>
+        <div class="ch-title">Electrochemistry</div>
+        <div class="ch-desc">Electrochemical cells, Nernst equation, conductance, and Kohlrausch's law.</div>
+      </div>
+      <a href="/chemistry/electrochemistry.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card physical" style="animation-delay:.15s">
+      <div class="ch-num">03</div>
+      <div class="ch-icon">⏱</div>
+      <div class="ch-body">
+        <div class="ch-tag">Physical Chemistry</div>
+        <div class="ch-title">Chemical Kinetics</div>
+        <div class="ch-desc">Rate laws, order of reaction, Arrhenius equation, and collision theory.</div>
+      </div>
+      <a href="/chemistry/chemical-kinetics.html" class="explore-btn">Explore →</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="inorganic">
+  <div class="section-head">
+    <div class="section-tag">Domain 02</div>
+    <h2>Inorganic Chemistry</h2>
+  </div>
+  <div class="domains">
+    <span class="domain-pill inorganic">● Inorganic Chemistry</span>
+  </div>
+  <div class="chapters">
+
+    <div class="chapter-card inorganic" style="animation-delay:.05s">
+      <div class="ch-num">04</div>
+      <div class="ch-icon">🔩</div>
+      <div class="ch-body">
+        <div class="ch-tag">Inorganic Chemistry</div>
+        <div class="ch-title">The d- and f-Block Elements</div>
+        <div class="ch-desc">Transition metal properties, lanthanoids, actinoids, and their compounds.</div>
+      </div>
+      <a href="/chemistry/d-f-block.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card inorganic" style="animation-delay:.1s">
+      <div class="ch-num">05</div>
+      <div class="ch-icon">🔗</div>
+      <div class="ch-body">
+        <div class="ch-tag">Inorganic Chemistry</div>
+        <div class="ch-title">Coordination Compounds</div>
+        <div class="ch-desc">Werner's theory, nomenclature, isomerism, and bonding theories (VBT, CFT).</div>
+      </div>
+      <a href="/chemistry/coordination-compounds.html" class="explore-btn">Explore →</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="organic">
+  <div class="section-head">
+    <div class="section-tag">Domain 03</div>
+    <h2>Organic Chemistry</h2>
+  </div>
+  <div class="domains">
+    <span class="domain-pill organic">● Organic Chemistry</span>
+  </div>
+  <div class="chapters">
+
+    <div class="chapter-card organic" style="animation-delay:.05s">
+      <div class="ch-num">06</div>
+      <div class="ch-icon">🧬</div>
+      <div class="ch-body">
+        <div class="ch-tag">Organic Chemistry</div>
+        <div class="ch-title">Haloalkanes and Haloarenes</div>
+        <div class="ch-desc">Nomenclature, SN1/SN2 mechanisms, and reactions of alkyl and aryl halides.</div>
+      </div>
+      <a href="/chemistry/haloalkanes-haloarenes.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card organic" style="animation-delay:.1s">
+      <div class="ch-num">07</div>
+      <div class="ch-icon">🍷</div>
+      <div class="ch-body">
+        <div class="ch-tag">Organic Chemistry</div>
+        <div class="ch-title">Alcohols, Phenols and Ethers</div>
+        <div class="ch-desc">Preparation, properties, and distinguishing reactions of hydroxyl and ether groups.</div>
+      </div>
+      <a href="/chemistry/alcohols-phenols-ethers.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card organic" style="animation-delay:.15s">
+      <div class="ch-num">08</div>
+      <div class="ch-icon">⚗️</div>
+      <div class="ch-body">
+        <div class="ch-tag">Organic Chemistry</div>
+        <div class="ch-title">Aldehydes, Ketones and Carboxylic Acids</div>
+        <div class="ch-desc">Nucleophilic addition, oxidation-reduction, and named reactions of carbonyl compounds.</div>
+      </div>
+      <a href="/chemistry/aldehydes-ketones-carboxylic-acids.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card organic" style="animation-delay:.2s">
+      <div class="ch-num">09</div>
+      <div class="ch-icon">💊</div>
+      <div class="ch-body">
+        <div class="ch-tag">Organic Chemistry</div>
+        <div class="ch-title">Amines</div>
+        <div class="ch-desc">Classification, basicity, preparation methods, and the diazonium salt reactions.</div>
+      </div>
+      <a href="/chemistry/amines.html" class="explore-btn">Explore →</a>
+    </div>
+
+    <div class="chapter-card organic" style="animation-delay:.25s">
+      <div class="ch-num">10</div>
+      <div class="ch-icon">🧫</div>
+      <div class="ch-body">
+        <div class="ch-tag">Organic Chemistry</div>
+        <div class="ch-title">Biomolecules</div>
+        <div class="ch-desc">Carbohydrates, proteins, enzymes, vitamins, and nucleic acids for board and NEET/JEE.</div>
+      </div>
+      <a href="/chemistry/biomolecules.html" class="explore-btn">Explore →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+<img src="/Img/logo.png" alt="StudyNotesPro" style="width: 150px; height: auto;">
+  <p>Class 12 Chemistry · CBSE 2025-26 syllabus</p>
+  <p class="credit">Built by <a href="mailto:uditprakashyadav@gmail.com"><b>Udit Prakash Yadav</b></a></p>
+</footer>
+
+<script>
+  // stagger chapter card reveals on scroll
+  const cards = document.querySelectorAll('.chapter-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => {
+    c.style.animationPlayState = 'paused';
+    observer.observe(c);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English — StudyNotesPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0e27;--bg-panel:#0d0f1a;
+    --c1:#f59e0b;--c2:#eab308;--c3:#d97706;
+    --text-light:#e2e8f0;--text-muted:#94a3b8;
+    --border-glass:rgba(255,255,255,0.08);--glass-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-panel) 100%);color:var(--text-light);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  a{text-decoration:none;color:inherit;}
+  .bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 600px 400px at 15% 10%, rgba(245,158,11,0.12), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 85% 30%, rgba(234,179,8,0.08), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 90%, rgba(217,119,6,0.07), transparent 60%);}
+  nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px 6%;background:rgba(10,14,39,0.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-glass);}
+  .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .logo span{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:12px;-webkit-text-fill-color:var(--text-muted);}
+  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--text-muted);}
+  .nav-links a:hover{color:var(--c1);}
+  .nav-back{font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);border:1px solid var(--border-glass);padding:8px 16px;border-radius:8px;transition:all .2s;}
+  .nav-back:hover{border-color:var(--c1);color:var(--c1);}
+  .hero{position:relative;z-index:1;padding:90px 6% 60px;text-align:center;opacity:0;animation:fadeUp .7s ease forwards;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--c1);margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(245,158,11,0.3);padding:6px 16px;border-radius:999px;background:rgba(245,158,11,0.06);}
+  .hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,6vw,68px);line-height:1.08;margin-bottom:20px;}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--c1) 0%,var(--c2) 50%,var(--c3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{max-width:620px;margin:0 auto 34px;color:var(--text-muted);font-size:17px;line-height:1.7;}
+  .hero-stats{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:50px;}
+  .stat{text-align:center;}
+  .stat b{display:block;font-family:'Playfair Display',serif;font-size:32px;background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat span{font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;}
+  .section{position:relative;z-index:1;padding:44px 6%;}
+  .section-head{margin-bottom:30px;}
+  .section-tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .section-head h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,3.4vw,36px);}
+  .domain-pill{font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 16px;border-radius:999px;border:1px solid var(--border-glass);color:var(--text-muted);display:inline-block;margin-bottom:36px;}
+  .chapters{display:flex;flex-direction:column;gap:16px;}
+  .chapter-card{opacity:0;animation:fadeUp .6s ease forwards;display:flex;align-items:center;gap:24px;background:var(--glass-bg);border:1px solid var(--border-glass);border-radius:16px;padding:24px 28px;backdrop-filter:blur(10px);transition:transform .25s ease, background .25s ease;}
+  .chapter-card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.06);}
+  .ch-num{font-family:'Playfair Display',serif;font-weight:700;font-size:34px;min-width:56px;}
+  .ch-body{flex:1;min-width:0;}
+  .ch-tag{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:4px;}
+  .ch-title{font-family:'Playfair Display',serif;font-weight:700;font-size:21px;margin-bottom:6px;}
+  .ch-desc{color:var(--text-muted);font-size:14px;line-height:1.6;}
+  .ch-icon{font-size:26px;min-width:44px;text-align:center;opacity:.85;}
+  .explore-btn{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px 20px;border-radius:8px;border:1px solid var(--border-glass);color:var(--text-light);white-space:nowrap;transition:all .2s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  footer{position:relative;z-index:1;margin-top:60px;padding:36px 6%;border-top:1px solid var(--border-glass);text-align:center;}
+  footer p{font-size:13px;color:var(--text-muted);}
+  footer .credit{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);margin-top:6px;}
+  footer .credit b{background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  @media(max-width:720px){.nav-links{display:none;}.chapter-card{flex-wrap:wrap;padding:20px;}.ch-icon{font-size:22px;}.explore-btn{width:100%;text-align:center;order:4;}.hero-stats{gap:24px;}}
+  .d1 .ch-num{color:var(--c1);} .d1 .explore-btn:hover{background:var(--c1);border-color:var(--c1);color:var(--bg-deep);} .d1:hover{border-color:rgba(245,158,11,0.5);}
+  .d2 .ch-num{color:var(--c2);} .d2 .explore-btn:hover{background:var(--c2);border-color:var(--c2);color:var(--bg-deep);} .d2:hover{border-color:rgba(234,179,8,0.5);}
+  .d3 .ch-num{color:var(--c3);} .d3 .explore-btn:hover{background:var(--c3);border-color:var(--c3);color:var(--bg-deep);} .d3:hover{border-color:rgba(217,119,6,0.5);}
+  .p1{border-color:rgba(245,158,11,0.4);color:var(--c1);} .p2{border-color:rgba(234,179,8,0.4);color:var(--c2);}
+  .p3{border-color:rgba(217,119,6,0.4);color:var(--c3);}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav>
+  <a href="/index.html" class="logo"> <img src="/Img/logo.png" alt="StudyNotesPro" style="width: 250px; height: auto;"></a>
+  <div class="nav-links"><a href="#prose">Prose</a><a href="#poetry">Poetry</a><a href="#vistas">Vistas</a></div>
+  <a href="/index.html" class="nav-back">← All subjects</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Class 12 · English Core</div>
+  <h1>Stories, verse, and <span class="grad">the space between lines</span></h1>
+  <p>Flamingo's prose and poetry, plus all six chapters of Vistas — themes, word meanings, and exam-ready answers in one place.</p>
+  <div class="hero-stats">
+    <div class="stat"><b>19</b><span>Chapters</span></div>
+    <div class="stat"><b>02</b><span>Textbooks</span></div>
+    <div class="stat"><b>CBSE</b><span>Core (301)</span></div>
+  </div>
+</section>
+
+<section class="section" id="prose">
+  <div class="section-head"><div class="section-tag">Flamingo</div><h2>Prose</h2></div>
+  <span class="domain-pill p1">● Flamingo — Prose</span>
+  <div class="chapters">
+    <div class="chapter-card d1" style="animation-delay:.03s"><div class="ch-num">01</div><div class="ch-icon">📖</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">The Last Lesson</div><div class="ch-desc">Alphonse Daudet's story of a French village under Prussian rule.</div></div><a href="/english/the-last-lesson.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.06s"><div class="ch-num">02</div><div class="ch-icon">🏙️</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">Lost Spring</div><div class="ch-desc">Anees Jung on childhoods lost to poverty and labour.</div></div><a href="/english/lost-spring.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.09s"><div class="ch-num">03</div><div class="ch-icon">🌊</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">Deep Water</div><div class="ch-desc">William Douglas confronts and overcomes his fear of water.</div></div><a href="/english/deep-water.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.12s"><div class="ch-num">04</div><div class="ch-icon">🪤</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">The Rattrap</div><div class="ch-desc">Selma Lagerlöf's tale of redemption through kindness.</div></div><a href="/english/the-rattrap.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.15s"><div class="ch-num">05</div><div class="ch-icon">🌾</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">Indigo</div><div class="ch-desc">Gandhi's role in the Champaran movement, from Louis Fischer.</div></div><a href="/english/indigo.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.18s"><div class="ch-num">06</div><div class="ch-icon">🥞</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">Poets and Pancakes</div><div class="ch-desc">Asokamitran's satirical look at Gemini Studios.</div></div><a href="/english/poets-and-pancakes.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.21s"><div class="ch-num">07</div><div class="ch-icon">🎙️</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">The Interview</div><div class="ch-desc">Christopher Silvester and Umberto Eco on the art of the interview.</div></div><a href="/english/the-interview.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.24s"><div class="ch-num">08</div><div class="ch-icon">⚽</div><div class="ch-body"><div class="ch-tag">Flamingo · Prose</div><div class="ch-title">Going Places</div><div class="ch-desc">A.R. Barton's story of adolescent dreams and disillusionment.</div></div><a href="/english/going-places.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<section class="section" id="poetry">
+  <div class="section-head"><div class="section-tag">Flamingo</div><h2>Poetry</h2></div>
+  <span class="domain-pill p2">● Flamingo — Poetry</span>
+  <div class="chapters">
+    <div class="chapter-card d2" style="animation-delay:.03s"><div class="ch-num">09</div><div class="ch-icon">🕰️</div><div class="ch-body"><div class="ch-tag">Flamingo · Poetry</div><div class="ch-title">My Mother at Sixty-six</div><div class="ch-desc">Kamala Das reflects on ageing and mortality.</div></div><a href="/english/my-mother-at-sixty-six.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.06s"><div class="ch-num">10</div><div class="ch-icon">🤫</div><div class="ch-body"><div class="ch-tag">Flamingo · Poetry</div><div class="ch-title">Keeping Quiet</div><div class="ch-desc">Pablo Neruda's meditation on stillness and introspection.</div></div><a href="/english/keeping-quiet.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.09s"><div class="ch-num">11</div><div class="ch-icon">🌺</div><div class="ch-body"><div class="ch-tag">Flamingo · Poetry</div><div class="ch-title">A Thing of Beauty</div><div class="ch-desc">John Keats on beauty as a lasting joy amid life's suffering.</div></div><a href="/english/a-thing-of-beauty.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.12s"><div class="ch-num">12</div><div class="ch-icon">🛣️</div><div class="ch-body"><div class="ch-tag">Flamingo · Poetry</div><div class="ch-title">A Roadside Stand</div><div class="ch-desc">Robert Frost on rural poverty against roadside privilege.</div></div><a href="/english/a-roadside-stand.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.15s"><div class="ch-num">13</div><div class="ch-icon">🐯</div><div class="ch-body"><div class="ch-tag">Flamingo · Poetry</div><div class="ch-title">Aunt Jennifer's Tigers</div><div class="ch-desc">Adrienne Rich on creative freedom within a constrained life.</div></div><a href="/english/aunt-jennifers-tigers.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<section class="section" id="vistas">
+  <div class="section-head"><div class="section-tag">Supplementary reader</div><h2>Vistas</h2></div>
+  <span class="domain-pill p3">● Vistas</span>
+  <div class="chapters">
+    <div class="chapter-card d3" style="animation-delay:.03s"><div class="ch-num">14</div><div class="ch-icon">🚉</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">The Third Level</div><div class="ch-desc">Jack Finney's story of escape into a nostalgic past.</div></div><a href="/english/the-third-level.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.06s"><div class="ch-num">15</div><div class="ch-icon">🐅</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">The Tiger King</div><div class="ch-desc">Kalki's satire on power, pride, and prophecy.</div></div><a href="/english/the-tiger-king.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.09s"><div class="ch-num">16</div><div class="ch-icon">🧊</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">Journey to the End of the Earth</div><div class="ch-desc">Tishani Doshi's account of an expedition to Antarctica.</div></div><a href="/english/journey-to-the-end-of-the-earth.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.12s"><div class="ch-num">17</div><div class="ch-icon">🎭</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">The Enemy</div><div class="ch-desc">Pearl S. Buck on humanity tested by war and duty.</div></div><a href="/english/the-enemy.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.15s"><div class="ch-num">18</div><div class="ch-icon">🤔</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">On the Face of It</div><div class="ch-desc">Susan Hill's play on acceptance and human connection.</div></div><a href="/english/on-the-face-of-it.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.18s"><div class="ch-num">19</div><div class="ch-icon">✊</div><div class="ch-body"><div class="ch-tag">Vistas</div><div class="ch-title">Memories of Childhood</div><div class="ch-desc">Zitkala-Sa and Bama on identity, prejudice, and resilience.</div></div><a href="/english/memories-of-childhood.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<footer>
+    <img src="/Img/logo.png" alt="StudyNotesPro" style="width: 150px; height: auto;">
+  <p>Class 12 English Core · CBSE 2025-26 syllabus</p>
+  <p class="credit">Built by <a href="mailto:uditprakashyadav@gmail.com" target="_blank"><b>Udit Prakash Yadav</b></a></p>
+</footer>
+
+<script>
+  const cards = document.querySelectorAll('.chapter-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.animationPlayState = 'running'; observer.unobserve(entry.target); } });
+  }, { threshold: 0.15 });
+  cards.forEach(c => { c.style.animationPlayState = 'paused'; observer.observe(c); });
+</script>
+</body>
+</html>

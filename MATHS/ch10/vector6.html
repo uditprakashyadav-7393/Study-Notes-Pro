@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>06 · Product of Vectors — Chapter 10</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080c18;--surface:#0f1524;--surface2:#161d30;--border:#1e2a45;
+  --accent:#4f8eff;--accent2:#a78bfa;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;--cyan:#22d3ee;
+  --text:#e2e8f0;--muted:#7a8ba8;--dim:#4a5a78;
+  --h:'Syne',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;
+  --sw:264px;--r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--b);font-size:15.5px;line-height:1.8;min-height:100vh}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--accent),var(--accent2),var(--pink));z-index:999;width:0;transition:width .1s}
+
+/* ── TOPBAR ── */
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;align-items:center;justify-content:space-between;padding:0 16px}
+.topbar-title{font-family:var(--h);font-size:14px;font-weight:700;color:var(--text)}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:150;backdrop-filter:blur(3px)}
+.overlay.show{display:block}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sw);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;overflow-y:auto;z-index:160;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sb-label{font-family:var(--m);font-size:10px;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sb-brand h2{font-family:var(--h);font-size:16px;font-weight:700;line-height:1.3}
+.sb-nav{padding:16px 12px;flex:1}
+.sb-sec{font-family:var(--m);font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin-bottom:8px}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;transition:all .2s;margin-bottom:3px}
+.ni:hover{background:var(--surface2);color:var(--text)}
+.ni.on{background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.25)}
+.ni .n{font-family:var(--m);font-size:10px;color:var(--dim);min-width:18px}
+.ni.on .n{color:var(--cyan)}
+.sb-done{display:flex;align-items:center;gap:6px;margin:4px 12px 2px;font-size:12px;color:var(--dim)}
+.sb-done .dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sw);padding:52px 56px 80px;max-width:calc(var(--sw) + 860px)}
+
+/* ── PAGE HEADER ── */
+.ph{margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-80px;right:-80px;width:400px;height:400px;background:radial-gradient(circle,rgba(34,211,238,.06) 0%,transparent 65%);pointer-events:none}
+.ph::after{content:'';position:absolute;bottom:-40px;left:-20px;width:260px;height:260px;background:radial-gradient(circle,rgba(167,139,250,.04) 0%,transparent 65%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);color:var(--cyan);font-family:var(--m);font-size:11px;padding:4px 13px;border-radius:20px;margin-bottom:16px}
+.ph h1{font-family:var(--h);font-size:40px;font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0 0%,#8aa5c8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.ph p{color:var(--muted);font-size:15px;max-width:560px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 11px;border-radius:20px;font-family:var(--m)}
+.b-board{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.b-jee{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}
+.b-adv{background:rgba(244,114,182,.1);color:var(--pink);border:1px solid rgba(244,114,182,.2)}
+
+/* ── TOPIC SWITCHER ── */
+.switcher{display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap}
+.sw-btn{padding:9px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:var(--h);font-size:13px;font-weight:600;cursor:default;transition:all .2s}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin:44px 0}
+
+/* ── SECTIONS ── */
+.sec{margin-bottom:44px}
+.sec-title{font-family:var(--h);font-size:21px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.sec-title .dot-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.part-label{display:inline-block;font-family:var(--m);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:20px}
+p{color:var(--muted);margin-bottom:12px}
+
+/* ── CARDS ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px}
+.card-t{font-family:var(--h);font-size:14px;font-weight:700;margin-bottom:8px}
+.card p{margin-bottom:0;font-size:14px}
+.card .sub{font-size:12.5px;color:var(--dim);margin-top:6px}
+
+/* ── FORMULA BOXES ── */
+.fbox{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin:16px 0;font-family:var(--m);font-size:14px;line-height:2.2;overflow-x:auto}
+.fbox.dot-theme{border-left:3px solid var(--accent);color:var(--accent)}
+.fbox.cross-theme{border-left:3px solid var(--pink);color:var(--pink)}
+.fbox.gold-theme{border-left:3px solid var(--gold);color:var(--gold)}
+.fbox .fl{font-family:var(--b);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block}
+
+/* ── NOTE / TIP / EG ── */
+.note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.note-l{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.note p{color:var(--muted);margin:0}
+
+.tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.tip-l{font-family:var(--m);font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.tip p{color:var(--muted);margin:0}
+
+.eg{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.eg-l{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block}
+.eg p{color:var(--muted);margin:4px 0}
+.eg .step{display:flex;gap:10px;align-items:baseline;margin:4px 0}
+.eg .step-num{font-family:var(--m);font-size:11px;color:var(--green);min-width:20px;flex-shrink:0}
+
+.warn{background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.warn-l{font-family:var(--m);font-size:10px;color:var(--pink);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.warn p{color:var(--muted);margin:0}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--surface2);font-family:var(--h);font-size:13px;font-weight:600;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 18px;border-bottom:1px solid var(--border);color:var(--muted);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.015)}
+
+/* ── DETERMINANT BOX ── */
+.det-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;margin:16px 0;font-family:var(--m);text-align:center}
+.det-inner{display:inline-block;border-left:2.5px solid var(--pink);border-right:2.5px solid var(--pink);padding:12px 28px;text-align:left;line-height:2.4;font-size:15px;color:var(--pink)}
+.det-top{font-family:var(--b);font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.det-eq{font-family:var(--m);font-size:13px;color:var(--muted);margin-top:14px;line-height:1.8}
+
+/* ── LIST ── */
+.sl{list-style:none;margin:12px 0 16px;padding:0}
+.sl li{padding:8px 0 8px 26px;position:relative;color:var(--muted);border-bottom:1px solid rgba(30,42,69,.5);font-size:14.5px}
+.sl li:last-child{border-bottom:none}
+.sl li::before{content:'→';position:absolute;left:0;color:var(--cyan);font-size:13px}
+
+/* ── VISUAL ── */
+.visual{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center;margin:20px 0;overflow:hidden}
+.visual svg{max-width:100%;height:auto}
+
+/* ── COMPARISON CARD ── */
+.cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:16px 0}
+.cmp-col{padding:22px}
+.cmp-col:first-child{border-right:1px solid var(--border)}
+.cmp-head{font-family:var(--h);font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cmp-row{padding:7px 0;border-bottom:1px solid rgba(30,42,69,.4);color:var(--muted);font-size:13.5px}
+.cmp-row:last-child{border-bottom:none}
+.cmp-lbl{font-family:var(--m);font-size:10px;color:var(--dim);display:block;margin-bottom:2px}
+
+/* ── HIGHLIGHT ── */
+.hl{color:var(--text);font-weight:600}
+.hb{color:var(--accent);font-weight:600}
+.hg{color:var(--gold);font-weight:600}
+.hv{color:var(--green);font-weight:600}
+.hp{color:var(--pink);font-weight:600}
+.ha{color:var(--accent2);font-weight:600}
+.hc{color:var(--cyan);font-weight:600}
+
+/* ── NAV ── */
+.pnav{display:flex;justify-content:space-between;align-items:center;padding:20px 0 0;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.pnav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:11px 22px;border-radius:8px;font-family:var(--h);font-size:14px;font-weight:600}
+.pnav .prev{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.pnav .finish{background:linear-gradient(135deg,var(--cyan),var(--accent));color:#fff;box-shadow:0 4px 20px rgba(34,211,238,.25)}
+
+/* ── COMPLETE BANNER ── */
+.complete-banner{background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(79,142,255,.08));border:1px solid rgba(34,211,238,.2);border-radius:var(--r);padding:24px 28px;margin:32px 0;text-align:center}
+.complete-banner h3{font-family:var(--h);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.complete-banner p{color:var(--muted);margin:0;font-size:14px}
+.all-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.all-links a{text-decoration:none;padding:7px 16px;border-radius:7px;font-family:var(--m);font-size:12px;background:var(--surface);border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.all-links a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── FOOTER ── */
+.footer{margin-left:var(--sw);border-top:1px solid var(--border);min-height:80px;padding:0 56px}
+
+/* ── SCROLL TOP ── */
+.stop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:linear-gradient(135deg,var(--cyan),var(--accent));color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(34,211,238,.35);transition:transform .2s;z-index:100}
+.stop:hover{transform:scale(1.1)}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:900px){
+  .grid3{grid-template-columns:1fr 1fr}
+  .cmp-grid{grid-template-columns:1fr}
+  .cmp-col:first-child{border-right:none;border-bottom:1px solid var(--border)}
+}
+@media(max-width:768px){
+  .topbar{display:flex}
+  .sidebar{transform:translateX(-100%);top:0}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 18px 80px;max-width:100%}
+  .footer{margin-left:0;padding:0 18px}
+  .ph h1{font-size:28px}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .sec-title{font-size:18px}
+  .fbox{font-size:12.5px;padding:16px 14px}
+  .tbl th,.tbl td{padding:9px 12px;font-size:13px}
+  .det-inner{font-size:13px;padding:10px 18px}
+  .all-links{gap:6px}
+}
+@media(max-width:480px){
+  .ph h1{font-size:22px}
+  .main{padding:72px 14px 60px}
+  .fbox{font-size:12px}
+  .det-inner{font-size:12px;padding:8px 12px}
+}
+/* vector arrow  */
+ .upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:3px;
+  }
+  .upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.9 ;
+    font-size: 15px;
+  }
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-title">Ch.10 · Product of Vectors</div>
+  <button class="burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand">
+    <div class="sb-label">Class XII · Mathematics</div>
+    <h2>Chapter 10<br/>Vectors</h2>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Topics</div>
+    <a href="vector1.html" class="ni"><span class="n">01</span> Introduction</a>
+    <a href="vector2.html" class="ni"><span class="n">02</span> Basic Concepts</a>
+    <a href="vector3.html" class="ni"><span class="n">03</span> Types of Vectors</a>
+    <a href="vector4.html" class="ni"><span class="n">04</span> Vector Addition</a>
+    <a href="vector5.html" class="ni"><span class="n">05</span> Scalar Multiplication</a>
+    <a href="vector6.html" class="ni on"><span class="n">06</span> Product of Vectors</a>
+  </nav>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+  <header class="ph">
+    <div class="tag">06 / Final Topic</div>
+    <h1>Product of<br/>Two Vectors</h1>
+    <p>The two most powerful vector operations — Scalar (Dot) Product and Vector (Cross) Product — with complete theory, formulas, properties, and solved examples.</p>
+    <div class="badges">
+      <span class="badge b-board">CBSE Board</span>
+      <span class="badge b-jee">JEE Mains</span>
+      <span class="badge b-adv">JEE Advanced</span>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(34,211,238,.12)">🔢</div>
+      Two Types of Vector Products
+    </div>
+    <div class="cmp-grid">
+      <div class="cmp-col" style="background:rgba(79,142,255,.04)">
+        <div class="cmp-head" style="color:var(--accent)">
+          <span style="font-size:18px">·</span> Scalar (Dot) Product
+        </div>
+        <div class="cmp-row"><span class="cmp-lbl">Result type</span><strong style="color:var(--text)">Scalar</strong> (just a number)</div>
+        <div class="cmp-row"><span class="cmp-lbl">Symbol</span><strong><span class="upper-arrow">a</span> · <span class="upper-arrow">b</span></strong></div>
+        <div class="cmp-row"><span class="cmp-lbl">Formula</span>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>| cos θ</div>
+        <div class="cmp-row"><span class="cmp-lbl">Used for</span>Angle, work, projection</div>
+        <div class="cmp-row"><span class="cmp-lbl">Commutative</span>Yes: <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = <span class="upper-arrow">b</span>·<span class="upper-arrow">a</span></div>
+      </div>
+      <div class="cmp-col" style="background:rgba(244,114,182,.04)">
+        <div class="cmp-head" style="color:var(--pink)">
+          <span style="font-size:18px">×</span> Vector (Cross) Product
+        </div>
+        <div class="cmp-row"><span class="cmp-lbl">Result type</span><strong style="color:var(--text)">Vector</strong> (has direction too)</div>
+        <div class="cmp-row"><span class="cmp-lbl">Symbol</span><strong><span class="upper-arrow">a</span> × <span class="upper-arrow">b</span></strong></div>
+        <div class="cmp-row"><span class="cmp-lbl">Formula</span>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>| sin θ n̂</div>
+        <div class="cmp-row"><span class="cmp-lbl">Used for</span>Area, torque, normal vector</div>
+        <div class="cmp-row"><span class="cmp-lbl">Commutative</span>No: <span class="upper-arrow">a</span>×<span class="upper-arrow">b</span> = −<span class="upper-arrow">b</span>×<span class="upper-arrow">a</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ PART A: DOT PRODUCT ═══ -->
+  <div class="part-label" style="background:rgba(79,142,255,.1);color:var(--accent);border:1px solid rgba(79,142,255,.2)">Part A — Scalar (Dot) Product</div>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(79,142,255,.12);color:var(--accent)">·</div>
+      Definition of Dot Product
+    </div>
+    <p>The <span class="hb">scalar product</span> (dot product) of two vectors <span class="hg upper-arrow">a</span> and <span class="hg upper-arrow">b</span> is defined as a <span class="hl">scalar</span> equal to the product of their magnitudes and the cosine of the angle between them.</p>
+
+    <div class="fbox dot-theme">
+      <span class="fl">Dot Product — Definition</span>
+      <strong><span class="upper-arrow">a</span> · <span class="upper-arrow">b</span> = |<span class="upper-arrow">a</span>| |<span class="upper-arrow">b</span>| cos θ</strong><br/>
+      where <strong>θ</strong> is the angle between <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>  (0° ≤ θ ≤ 180°)<br/><br/>
+      Component form:  if <span class="upper-arrow">a</span> = a₁î+a₂ĵ+a₃k̂,  <span class="upper-arrow">b</span> = b₁î+b₂ĵ+b₃k̂:<br/>
+      <strong><span class="upper-arrow">a</span> · <span class="upper-arrow">b</span> = a₁b₁ + a₂b₂ + a₃b₃</strong>
+    </div>
+
+    <div class="visual">
+      <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="d1" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#4f8eff"/></marker>
+          <marker id="d2" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#34d399"/></marker>
+        </defs>
+        <!-- a vector -->
+        <line x1="140" y1="120" x2="340" y2="120" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#d1)"/>
+        <text x="237" y="108" font-family="IBM Plex Mono" font-size="13" fill="#4f8eff" text-anchor="middle">a⃗</text>
+        <!-- b vector -->
+        <line x1="140" y1="120" x2="280" y2="50" stroke="#34d399" stroke-width="2.5" marker-end="url(#d2)"/>
+        <text x="198" y="70" font-family="IBM Plex Mono" font-size="13" fill="#34d399">b⃗</text>
+        <!-- angle arc -->
+        <path d="M 170,120 A 30,30 0 0,0 156,95" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="176" y="103" font-family="IBM Plex Mono" font-size="12" fill="#fbbf24">θ</text>
+        <!-- origin -->
+        <circle cx="140" cy="120" r="4" fill="#a78bfa"/>
+        <text x="122" y="138" font-family="IBM Plex Mono" font-size="12" fill="#a78bfa">O</text>
+        <!-- formula -->
+        <text x="390" y="100" font-family="IBM Plex Mono" font-size="12" fill="#4f8eff" text-anchor="middle">a⃗·b⃗ =</text>
+        <text x="390" y="120" font-family="IBM Plex Mono" font-size="12" fill="#fbbf24" text-anchor="middle">|a⃗||b⃗|cosθ</text>
+      </svg>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Example 1 — Component Method</span>
+      <p> <span class="upper-arrow">a</span> = 2î + 3ĵ − k̂,  <span class="upper-arrow">b</span> = î − 2ĵ + 3k̂</p>
+      <div class="step"><span class="step-num">→</span><p><span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = (2)(1) + (3)(−2) + (−1)(3) = 2 − 6 − 3 = <strong>−7</strong></p></div>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Example 2 — Finding Angle</span>
+      <p><span class="upper-arrow">a</span> = î + ĵ,  <span class="upper-arrow">b</span> = ĵ + k̂. Find angle θ between them.</p>
+      <div class="step"><span class="step-num">1.</span><p><span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = 0+1+0 = 1</p></div>
+      <div class="step"><span class="step-num">2.</span><p>|<span class="upper-arrow">a</span>| = √2,  |<span class="upper-arrow">b</span>| = √2</p></div>
+      <div class="step"><span class="step-num">3.</span><p>cosθ = 1/(√2·√2) = 1/2  →  <strong>θ = 60°</strong></p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(79,142,255,.12)">📐</div>
+      Properties of Dot Product
+    </div>
+    <div class="fbox dot-theme">
+      <span class="fl">Complete Properties List</span>
+      <strong>1. Commutative:</strong>  <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = <span class="upper-arrow">b</span>·<span class="upper-arrow">a</span><br/>
+      <strong>2. Distributive:</strong>  <span class="upper-arrow">a</span>·(<span class="upper-arrow">b</span>+<span class="upper-arrow">c</span>) = <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> + <span class="upper-arrow">a</span>·<span class="upper-arrow">c</span><br/>
+      <strong>3. Scalar factor:</strong>  (λ<span class="upper-arrow">a</span>)·<span class="upper-arrow">b</span> = λ(<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span>) = <span class="upper-arrow">a</span>·(λ<span class="upper-arrow">b</span>)<br/>
+      <strong>4. Self dot product:</strong>  <span class="upper-arrow">a</span>·<span class="upper-arrow">a</span> = |<span class="upper-arrow">a</span>|²<br/>
+      <strong>5. Zero vector:</strong>  0·<span class="upper-arrow">a</span>= 0
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <div class="card-t" style="color:var(--accent)">î, ĵ, k̂ Self-Dot</div>
+        <p><strong>î·î = ĵ·ĵ = k̂·k̂ = 1</strong></p>
+        <p class="sub">(Each unit vector dotted with itself = 1)</p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--green)">î, ĵ, k̂ Cross-Dot</div>
+        <p><strong>î·ĵ = ĵ·k̂ = k̂·î = 0</strong></p>
+        <p class="sub">(Perpendicular unit vectors dot to 0)</p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--gold)">Perpendicularity</div>
+        <p><strong><span class="upper-arrow">a</span> ⊥ <span class="upper-arrow">b</span>  ⟺  <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = 0</strong></p>
+        <p class="sub">(cosθ = cos90° = 0)</p>
+      </div>
+    </div>
+
+    <div class="tip">
+      <span class="tip-l">🎯 JEE — High Priority</span>
+      <p>The result <strong><span class="upper-arrow">a</span>·<span class="upper-arrow">a</span> = |<span class="upper-arrow">a</span>|²</strong> means <strong>|<span class="upper-arrow">a</span>| = √(<span class="upper-arrow">a</span>·<span class="upper-arrow">a</span>)</strong>. This is used to find magnitudes. Also: <strong>|<span class="upper-arrow">a</span> + <span class="upper-arrow">b</span>|² = |<span class="upper-arrow">a</span>|² + 2(<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span>) + |<span class="upper-arrow">b</span>|²</strong> — expanding like algebraic identity using dot product.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(79,142,255,.12)">📏</div>
+      Projection of a Vector
+    </div>
+    <p>The <span class="hb">scalar projection</span> of <span class="upper-arrow">b</span> onto <span class="upper-arrow">a</span> is the component of <span class="upper-arrow">b</span> in the direction of <span class="upper-arrow">a</span>. The <span class="hb">vector projection</span> is that component as a vector.</p>
+
+    <div class="fbox dot-theme">
+      <span class="fl">Projection Formulas</span>
+      <strong>Scalar projection of <span class="upper-arrow">b</span> on <span class="upper-arrow">a</span>:</strong><br/>
+      <strong>= <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> / |<span class="upper-arrow">a</span>|  =  |<span class="upper-arrow">b</span>| cosθ</strong><br/><br/>
+      <strong>Vector projection of <span class="upper-arrow">b</span> on <span class="upper-arrow">a</span>:</strong><br/>
+      <strong>= (<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> / |<span class="upper-arrow">a</span>|²) · <span class="upper-arrow">a</span>  =  (<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> / |<span class="upper-arrow">a</span>|) · <span class="upper-arrow">â</span></strong>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Find projection of <strong><span class="upper-arrow">b</span> = 2î + 3ĵ + 2k̂</strong> on <strong><span class="upper-arrow">a</span> = î + 2ĵ + 2k̂</strong></p>
+      <div class="step"><span class="step-num">1.</span><p><span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = 2+6+4 = 12</p></div>
+      <div class="step"><span class="step-num">2.</span><p>|<span class="upper-arrow">a</span>| = √(1+4+4) = 3</p></div>
+      <div class="step"><span class="step-num">3.</span><p>Scalar projection = 12/3 = <strong>4</strong></p></div>
+    </div>
+
+    <div class="note">
+      <span class="note-l">📌 Board Exam — 4 marks</span>
+      <p>Projection problems are a staple 4-mark question in CBSE boards. Always write the formula first, then substitute — you get step marks even with a calculation error.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(79,142,255,.12)">🔢</div>
+      Angle Between Two Vectors
+    </div>
+    <div class="fbox dot-theme">
+      <span class="fl">Angle Formula</span>
+      <strong>cos θ = (<span class="upper-arrow">a</span> · <span class="upper-arrow">b</span>) / (|<span class="upper-arrow">a</span>| |<span class="upper-arrow">b</span>|)</strong><br/><br/>
+      <strong>θ = cos⁻¹ [ (<span class="upper-arrow">a</span>₁<span class="upper-arrow">b</span>₁ + <span class="upper-arrow">a</span>₂<span class="upper-arrow">b</span>₂ + <span class="upper-arrow">a</span>₃<span class="upper-arrow">b</span>₃) / (|<span class="upper-arrow">a</span>| · |<span class="upper-arrow">b</span>|) ]</strong>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th style="color:var(--accent)">Angle θ</th><th style="color:var(--accent)">cos θ</th><th style="color:var(--accent)">Dot Product</th><th style="color:var(--accent)">Relation</th></tr></thead>
+      <tbody>
+        <tr><td>0°</td><td>1</td><td>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|</td><td>Same direction (parallel)</td></tr>
+        <tr><td>90°</td><td>0</td><td>0</td><td>Perpendicular</td></tr>
+        <tr><td>180°</td><td>−1</td><td>−|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|</td><td>Antiparallel</td></tr>
+        <tr><td>60°</td><td>1/2</td><td>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|/2</td><td>Acute angle</td></tr>
+        <tr><td>120°</td><td>−1/2</td><td>−|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|/2</td><td>Obtuse angle</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ PART B: CROSS PRODUCT ═══ -->
+  <div class="part-label" style="background:rgba(244,114,182,.1);color:var(--pink);border:1px solid rgba(244,114,182,.2)">Part B — Vector (Cross) Product</div>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(244,114,182,.12);color:var(--pink)">×</div>
+      Definition of Cross Product
+    </div>
+    <p>The <span class="hp">vector product</span> (cross product) of two vectors <span class="hg upper-arrow">a</span> and <span class="hg upper-arrow">b</span> produces a new <span class="hl">vector</span> that is <span class="hp">perpendicular to both</span> <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>, with magnitude = |<span class="upper-arrow">a</span>| |<span class="upper-arrow">b</span>| sin θ.</p>
+
+    <div class="fbox cross-theme">
+      <span class="fl">Cross Product — Definition</span>
+      <strong><span class="upper-arrow">a</span> × <span class="upper-arrow">b</span> = |<span class="upper-arrow">a</span>| |<span class="upper-arrow">b</span>| sin θ · n̂</strong><br/>
+      where <strong>θ</strong> is the angle between <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>  (0° ≤ θ ≤ 180°)<br/>
+      and <strong>n̂</strong> is the unit vector ⊥ to both <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span> (Right-Hand Rule)<br/><br/>
+      Magnitude only:  <strong>|<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>| = |<span class="upper-arrow">a</span>| |<span class="upper-arrow">b</span>| sin θ</strong>
+    </div>
+
+    <div class="visual">
+      <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="c1" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#4f8eff"/></marker>
+          <marker id="c2" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#34d399"/></marker>
+          <marker id="c3" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#f472b6"/></marker>
+        </defs>
+        <!-- a vector -->
+        <line x1="200" y1="140" x2="380" y2="140" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#c1)"/>
+        <text x="288" y="128" font-family="IBM Plex Mono" font-size="13" fill="#4f8eff" text-anchor="middle">a⃗</text>
+        <!-- b vector -->
+        <line x1="200" y1="140" x2="296" y2="60" stroke="#34d399" stroke-width="2.5" marker-end="url(#c2)"/>
+        <text x="235" y="88" font-family="IBM Plex Mono" font-size="13" fill="#34d399">b⃗</text>
+        <!-- cross product direction (out of page) -->
+        <line x1="200" y1="140" x2="200" y2="30" stroke="#f472b6" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#c3)"/>
+        <text x="212" y="28" font-family="IBM Plex Mono" font-size="13" fill="#f472b6">a×b</text>
+        <text x="215" y="44" font-family="IBM Plex Sans" font-size="11" fill="#4a5a78">(⊥ to both)</text>
+        <!-- angle -->
+        <path d="M 224,140 A 24,24 0 0,0 212,116" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="230" y="124" font-family="IBM Plex Mono" font-size="12" fill="#fbbf24">θ</text>
+        <!-- origin -->
+        <circle cx="200" cy="140" r="4" fill="#a78bfa"/>
+        <text x="182" y="157" font-family="IBM Plex Mono" font-size="12" fill="#a78bfa">O</text>
+        <!-- right hand rule note -->
+        <text x="395" y="130" font-family="IBM Plex Sans" font-size="11" fill="#4a5a78">Right-Hand</text>
+        <text x="395" y="145" font-family="IBM Plex Sans" font-size="11" fill="#4a5a78">Rule applies</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(244,114,182,.12);color:var(--pink)">🧮</div>
+      Cross Product — Component Formula (Determinant)
+    </div>
+    <p>For vectors in component form, the cross product is calculated using a <span class="hp">3×3 determinant</span>:</p>
+
+    <div class="det-box">
+      <div class="det-top">Cross Product — Determinant Method</div>
+      <div class="det-inner">
+        &nbsp;&nbsp;î&nbsp;&nbsp;&nbsp;&nbsp;ĵ&nbsp;&nbsp;&nbsp;&nbsp;k̂<br/>
+        &nbsp;a₁&nbsp;&nbsp;a₂&nbsp;&nbsp;a₃<br/>
+        &nbsp;b₁&nbsp;&nbsp;b₂&nbsp;&nbsp;b₃
+      </div>
+      <div class="det-eq">
+        <span class="upper-arrow">a</span> × <span class="upper-arrow">b</span> = î(a₂b₃ − a₃b₂) − ĵ(a₁b₃ − a₃b₁) + k̂(a₁b₂ − a₂b₁)
+      </div>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Fully Solved — Cross Product</span>
+      <p>Find <span class="upper-arrow">a</span> × <span class="upper-arrow">b</span> where <strong><span class="upper-arrow">a</span> = 2î + 3ĵ − k̂</strong> and <strong><span class="upper-arrow">b</span> = î − 2ĵ + 3k̂</strong></p>
+      <div class="step"><span class="step-num">î:</span><p>(3)(3) − (−1)(−2) = 9 − 2 = <strong>7</strong></p></div>
+      <div class="step"><span class="step-num">ĵ:</span><p>−[(2)(3) − (−1)(1)] = −[6 + 1] = <strong>−7</strong></p></div>
+      <div class="step"><span class="step-num">k̂:</span><p>(2)(−2) − (3)(1) = −4 − 3 = <strong>−7</strong></p></div>
+      <p style="margin-top:10px"><strong><span class="upper-arrow">a</span> × <span class="upper-arrow">b</span> = 7î − 7ĵ − 7k̂</strong></p>
+      <p>|<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>| = √(49+49+49) = 7√3</p>
+    </div>
+
+    <div class="tip">
+      <span class="tip-l">🎯 Memory Trick for Determinant</span>
+      <p>Cover the <strong>î column</strong> → multiply diagonally for î coefficient. Cover the <strong>ĵ column</strong> → multiply (but negate!). Cover the <strong>k̂ column</strong> → multiply for k̂. The sign pattern is <strong>+ , − , +</strong> for î, ĵ, k̂.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(244,114,182,.12);color:var(--pink)">📋</div>
+      Properties of Cross Product
+    </div>
+    <div class="fbox cross-theme">
+      <span class="fl">Complete Properties</span>
+      <strong>1. Anti-commutative:</strong>  <span class="upper-arrow">a</span> × <span class="upper-arrow">b</span> = −(<span class="upper-arrow">b</span> × <span class="upper-arrow">a</span>)<br/>
+      <strong>2. Distributive:</strong>  <span class="upper-arrow">a</span> × (<span class="upper-arrow">b</span> + <span class="upper-arrow">c</span>) = <span class="upper-arrow">a</span>×<span class="upper-arrow">b</span> + <span class="upper-arrow">a</span>×<span class="upper-arrow">c</span><br/>
+      <strong>3. Scalar factor:</strong>  (λ<span class="upper-arrow">a</span>) × <span class="upper-arrow">b</span> = λ(<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>)<br/>
+      <strong>4. Self cross product:</strong>  <span class="upper-arrow">a</span> × <span class="upper-arrow">a</span> = 0⃗  (any vector)<br/>
+      <strong>5. Zero vector:</strong>  <span class="upper-arrow">a</span> × 0⃗ = 0⃗
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="card-t" style="color:var(--pink)">Cross Products of Unit Vectors</div>
+        <p style="font-family:var(--m);font-size:13px;line-height:2;color:var(--muted)">
+          <strong style="color:var(--green)">î×ĵ = k̂</strong> ,  ĵ×k̂ = î ,  k̂×î = ĵ<br/>
+          <strong style="color:var(--pink)">ĵ×î = −k̂</strong> , k̂×ĵ = −î , î×k̂ = −ĵ<br/>
+          <strong style="color:var(--dim)">î×î = ĵ×ĵ = k̂×k̂ = 0⃗</strong>
+        </p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--gold)">Parallel Vectors Test</div>
+        <p><span class="upper-arrow">a</span> ∥ <span class="upper-arrow">b</span>  ⟺  <strong><span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>  = 0⃗</strong></p>
+        <p style="font-size:13.5px">(sinθ = sin0° or sin180° = 0)</p>
+        <p style="font-size:13.5px;margin-top:6px">This is an alternative collinearity test using the cross product.</p>
+      </div>
+    </div>
+
+    <div class="warn">
+      <span class="warn-l">⚠️ Common Mistake</span>
+      <p>Cross product is <strong>NOT commutative</strong>: <span class="upper-arrow">a</span>×<span class="upper-arrow">b</span> ≠ <span class="upper-arrow">b</span>×<span class="upper-arrow">a</span>. In fact <span class="upper-arrow">a</span>×<span class="upper-arrow">b</span> = −<span class="upper-arrow">b</span>×<span class="upper-arrow">a</span>. Never swap without changing the sign. This is the most common error in board and JEE answers.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(244,114,182,.12);color:var(--pink)">📐</div>
+      Geometric Meaning — Area
+    </div>
+    <p>The magnitude of the cross product gives the <span class="hp">area of the parallelogram</span> formed by the two vectors as adjacent sides. Half of that is the area of a triangle.</p>
+
+    <div class="fbox cross-theme">
+      <span class="fl">Area Formulas</span>
+      Area of parallelogram with sides <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>:<br/>
+      <strong>Area = |<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>|</strong><br/><br/>
+      Area of triangle with sides <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>:<br/>
+      <strong>Area = (1/2)|<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>|</strong><br/><br/>
+      Unit normal vector to the plane of <span class="upper-arrow">a</span> and <span class="upper-arrow">b</span>:<br/>
+      <strong>n̂ = (<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>) / |<span class="upper-arrow">a</span> × <span class="upper-arrow">b</span>|</strong>
+    </div>
+
+    <div class="eg">
+      <span class="eg-l">✏️ Area Example — Board Style</span>
+      <p>Find area of triangle with vertices A(1,1,1), B(2,3,4), C(3,2,5).</p>
+      <div class="step"><span class="step-num">1.</span><p><span class="upper-arrow">AB</span> = B−A = î+2ĵ+3k̂</p></div>
+      <div class="step"><span class="step-num">2.</span><p><span class="upper-arrow">AC</span> = C−A = 2î+ĵ+4k̂</p></div>
+      <div class="step"><span class="step-num">3.</span><p><span class="upper-arrow">AB</span>×<span class="upper-arrow">AC</span> = î(8−3) − ĵ(4−6) + k̂(1−4) = 5î+2ĵ−3k̂</p></div>
+      <div class="step"><span class="step-num">4.</span><p>|<span class="upper-arrow">AB</span>×<span class="upper-arrow">AC</span>| = √(25+4+9) = √38</p></div>
+      <div class="step"><span class="step-num">5.</span><p>Area = (1/2)√38 = <strong>(√38)/2 sq. units</strong></p></div>
+    </div>
+
+    <div class="note">
+      <span class="note-l">📌 Board Exam — 5 marks</span>
+      <p>Area of triangle / parallelogram using cross product is a frequently asked 5-mark question. Always label your steps clearly and find <span class="upper-arrow">AB</span> and <span class="upper-arrow">AC</span> from the given vertices before computing the cross product.</p>
+    </div>
+  </section>
+
+  <!-- DOT vs CROSS FINAL TABLE -->
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)">≡</div>
+      Complete Comparison — Dot vs Cross
+    </div>
+    <table class="tbl">
+      <thead><tr>
+        <th>Property</th>
+        <th style="color:var(--accent)">Dot Product (<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span>)</th>
+        <th style="color:var(--pink)">Cross Product (<span class="upper-arrow">a</span>×<span class="upper-arrow">b</span>)</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Result</td><td>Scalar</td><td>Vector</td></tr>
+        <tr><td>Formula</td><td>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|cosθ</td><td>|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|sinθ n̂</td></tr>
+        <tr><td>Commutative</td><td>Yes: <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = <span class="upper-arrow">b</span>·<span class="upper-arrow">a</span></td><td>No: <span class="upper-arrow">a</span>×<span class="upper-arrow">b</span> = −<span class="upper-arrow">b</span>×<span class="upper-arrow">a</span></td></tr>
+        <tr><td>Parallel vectors</td><td><span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = ±|<span span class="upper-arrow">a</span>||<span span class="upper-arrow">b</span>|</td><td><span span class="upper-arrow">a</span>×<span span class="upper-arrow">b</span> = 0⃗</td></tr>
+        <tr><td>Perpendicular vectors</td><td><span span class="upper-arrow">a</span>·<span span class="upper-arrow">b</span> = 0</td><td>|<span span class="upper-arrow">a</span>×<span span class="upper-arrow">b</span>| = |<span span class="upper-arrow">a </span >||<.span style='color:var(--pink)'>b<span style='color:var(--pink)'>|
+        <tr><td>î, ĵ cross</td><td>î·ĵ = 0</td><td>î×ĵ = k̂</td></tr>
+        <tr><td>Application</td><td>Angle, work, projection</td><td>Area, torque, normal</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SCALAR TRIPLE PRODUCT -->
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(251,191,36,.12);color:var(--gold)">🎯</div>
+      Scalar Triple Product (Box Product)
+    </div>
+    <p>The <span class="hg">scalar triple product</span> of vectors <span class="upper-arrow">a</span>, <span class="upper-arrow">b</span>, <span class="upper-arrow">c</span> is defined as <span class="hg"><span class="upper-arrow">a</span>·(<span class="upper-arrow">b</span>×<span class="upper-arrow">c</span>)</span>. It gives the <span class="hl">volume of the parallelepiped</span> formed by the three vectors.</p>
+
+    <div class="fbox gold-theme">
+      <span class="fl">Scalar Triple Product</span>
+      <strong>[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>] = <span class="upper-arrow">a</span>·(<span class="upper-arrow">b</span>×<span class="upper-arrow">c</span>)</strong><br/><br/>
+      Computed as 3×3 determinant:<br/>
+      |a₁ a₂ a₃|<br/>
+      |b₁ b₂ b₃|<br/>
+      |c₁ c₂ c₃|<br/><br/>
+      <strong>Coplanarity:</strong>  [<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>] = 0  ⟺  vectors are coplanar<br/>
+      <strong>Volume of parallelepiped</strong> = |[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>]|<br/>
+      <strong>Volume of tetrahedron</strong> = (1/6)|[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>]|
+    </div>
+
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Advanced — Very High Value</span>
+      <p>The scalar triple product is tested heavily in JEE Advanced. Key facts:<br/>
+      • <strong>[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>] = [<span class="upper-arrow">b</span> <span class="upper-arrow">c</span> <span class="upper-arrow">a</span>] = [<span class="upper-arrow">c</span> <span class="upper-arrow">a</span> <span class="upper-arrow">b</span>]</strong> (cyclic permutation = same value)<br/>
+      • <strong>[<span class="upper-arrow">a</span> <span class="upper-arrow">b</span> <span class="upper-arrow">c</span>] = −[<span class="upper-arrow">a</span> <span class="upper-arrow">c</span> <span class="upper-arrow">b</ span>]</strong> (swapping two = sign change)<br/>
+      • Vectors coplanar ⟺ box product = 0</p>
+    </div>
+  </section>
+
+  <!-- FORMULA CHEATSHEET -->
+  <section class="sec">
+    <div class="sec-title">
+      <div class="dot-icon" style="background:rgba(34,211,238,.1);color:var(--cyan)">📑</div>
+      Formula Cheatsheet — Chapter 10 Complete
+    </div>
+    <div class="fbox gold-theme">
+      <span class="fl">All Key Formulas at a Glance</span>
+      <strong>Magnitude:</strong>  |<span class="upper-arrow">a</span>| = √(a₁²+a₂²+a₃²)<br/>
+      <strong>Unit vector:</strong>  â = <span class="upper-arrow">a</span>/|<span class="upper-arrow">a</span>|<br/>
+      <strong>Direction cosines:</strong>  l²+m²+n² = 1<br/>
+      <strong>Section formula (internal):</strong>  <span class="upper-arrow">r</span> = (m<span class="upper-arrow">b</span>+n<span class="upper-arrow">a</span>)/(m+n)<br/>
+      <strong>Dot product:</strong>  <span class="upper-arrow">a</span>·<span class="upper-arrow">b</span> = a₁b₁+a₂b₂+a₃b₃ = |<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|cosθ<br/>
+      <strong>Angle:</strong>  cosθ = (<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span>)/(|<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|)<br/>
+      <strong>Projection of <span class="upper-arrow">b</span> on <span class="upper-arrow">a</span>:</strong>  (<span class="upper-arrow">a</span>·<span class="upper-arrow">b</span>)/|<span class="upper-arrow">a</span>|<br/>
+      <strong>Cross product mag:</strong>  |<span class="upper-arrow">a</span>×<span class="upper-arrow">b</span>| = |<span class="upper-arrow">a</span>||<span class="upper-arrow">b</span>|sinθ<br/>
+      <strong>Parallelogram area:</strong>  |<span class="upper-arrow">a</span>×<span class="upper-arrow">b</span>|<br/>
+      <strong>Triangle area:</strong>  (1/2)|<span class="upper-arrow">a</span>×<span class="upper-arrow">b</span>|<br/>
+      <strong>Coplanarity:</strong>  <span class="upper-arrow">a</span>·(<span class="upper-arrow">b</span>×<span class="upper-arrow">c</span>) = 0<br/>
+      <strong>Parallelepiped vol:</strong>  |<span class="upper-arrow">a</span>·(<span class="upper-arrow">b</span>×<span class="upper-arrow">c</span>)|
+    </div>
+  </section>
+
+  <!-- COMPLETE BANNER -->
+  <div class="complete-banner">
+    <h3>🎉 Chapter 10 — Vectors Complete!</h3>
+    <p>You've covered all six topics. Revise them in order or jump to any section below.</p>
+    <div class="all-links">
+      <a href="vector1.html">01 · Introduction</a>
+      <a href="vector2.html">02 · Basic Concepts</a>
+      <a href="vector3.html">03 · Types of Vectors</a>
+      <a href="vector4.html">04 · Vector Addition</a>
+      <a href="vector5.html">05 · Scalar Multiplication</a>
+      <a href="vector6.html">06 · Product of Vectors</a>
+    </div>
+  </div>
+
+  <div class="pnav">
+    <a href="vector5.html" class="prev">← Scalar Multiplication</a>
+    <a href="vector1.html" class="finish">↺ Start from Beginning</a>
+  </div>
+  <div style="height:48px"></div>
+</main>
+
+<footer class="site-footer footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vectors</div>
+    </div>
+</footer>
+<button class="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const burger  = document.getElementById('burger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  function toggleNav() {
+    const open = sidebar.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+  }
+
+  burger.addEventListener('click', toggleNav);
+  overlay.addEventListener('click', toggleNav);
+
+  // Close sidebar on nav link click (mobile)
+  sidebar.querySelectorAll('.ni').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) toggleNav();
+    });
+  });
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const total     = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('prog').style.width = (scrollTop / total * 100) + '%';
+  });
+</script>
+</body>
+</html>

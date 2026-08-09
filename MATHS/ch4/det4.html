@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on Determinants for Class 12 Maths. Learn about the definition, properties, and applications of determinants with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 4, Determinants, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Determinants | Inverse of a Matrix</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#e96c6c;--green:#3fb950;--red:#f85149;--purple:#bc8cff;--orange:#ff9256;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.8;}
+   nav { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 5px; display:flex; align-items:center; justify-content:space-between; position:sticky; top: 0%; z-index:100;overflow-x: auto; height: 80px ;overflow-y: hidden; }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); letter-spacing:.05em; white-space: nowrap;}
+  .nav-links { display:flex; gap:5px; flex-wrap:no-wrap; margin: 5%; flex-shrink: 0; }
+  .nav-links a{padding:6px 14px;border-radius:20px;font-size:.8rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--gold);color:var(--gold);}
+  .nav-links a.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#1f1508 50%,#0d1117 100%);border-bottom:1px solid var(--border);padding:64px 32px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(255,146,86,.08) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(255,146,86,.4);border-radius:20px;font-size:.75rem;color:var(--orange);margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;}
+  .hero h1 span{color:var(--orange);}
+  .hero p{color:var(--text-muted);max-width:600px;margin:0 auto 24px;font-size:1rem;}
+  .topic-num{font-size:4rem;font-weight:900;color:rgba(255,146,86,.08);position:absolute;top:16px;right:40px;font-family:'Playfair Display',serif;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:56px;animation:fadeUp .6s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .section-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),#cc5500);color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;}
+  p{margin-bottom:14px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(255,146,86,.06),rgba(255,146,86,.02));border:1px solid rgba(255,146,86,.3);border-left:4px solid var(--orange);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;}
+  .def-box .def-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin:24px 0;text-align:center;overflow-x:auto;}
+  .formula-box .f-label{font-size:.7rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--orange);line-height:2;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:16px 20px;margin:20px 0;display:flex;gap:12px;align-items:flex-start;}
+  .note-box .icon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.93rem;}
+  .warn-box{background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.25);border-radius:10px;padding:16px 20px;margin:20px 0;display:flex;gap:12px;}
+  .warn-box p{margin:0;color:#f7a5a0;font-size:.93rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0;}
+  .example-box .ex-label{font-size:.7rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:12px;}
+  .example-box .ex-title{font-weight:600;color:#fff;margin-bottom:14px;font-size:1rem;}
+  .step{display:flex;gap:12px;margin:10px 0;}
+  .step-dot{width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl-gold{color:var(--gold);font-weight:600;}
+  .hl-blue{color:var(--accent);}
+  .hl-green{color:var(--green);}
+  .hl-red{color:var(--red);}
+  .hl-orange{color:var(--orange);}
+  .hl-purple{color:var(--purple);}
+
+  /* Big formula display */
+  .big-formula{background:var(--surface2);border:2px solid rgba(255,146,86,.3);border-radius:16px;padding:36px;margin:32px 0;text-align:center;}
+  .big-formula .bf-label{font-size:.75rem;color:var(--orange);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.15em;margin-bottom:20px;}
+  .bf-main{font-family:'JetBrains Mono',monospace;font-size:1.6rem;color:#fff;margin-bottom:8px;}
+  .bf-sub{font-size:.85rem;color:var(--text-muted);}
+
+  /* Steps list */
+  .steps-list{counter-reset:steps;margin:20px 0;}
+  .sl-item{display:flex;gap:16px;margin:16px 0;align-items:flex-start;}
+  .sl-num{min-width:32px;height:32px;border-radius:8px;background:var(--orange);color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .sl-content h4{color:#fff;margin-bottom:4px;font-size:.95rem;}
+  .sl-content p{color:var(--text-muted);font-size:.88rem;margin:0;}
+
+  /* Verify box */
+  .verify-box{background:rgba(63,185,80,.07);border:1px solid rgba(63,185,80,.25);border-radius:10px;padding:16px 20px;margin:16px 0;}
+  .verify-box p{margin:0;color:#a8e6b3;font-size:.93rem;}
+
+  .footer-nav{border-top:1px solid var(--border);padding:32px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:var(--bg);}
+  .btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}
+  .btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--orange) 0%,#cc5500 100%);width:80%;position:fixed;top:0;left:0;z-index:200;}
+  .tbl-wrap{overflow-x:auto;margin:20px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  th{background:var(--surface2);color:var(--orange);padding:10px 16px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:10px 16px;border-bottom:1px solid var(--border);color:#cdd5df;}
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none;}
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📐 Ch.4 — Determinants</div>
+  <div class="nav-links">
+    <a href="det1.html">1. Intro</a>
+    <a href="det2.html">2. Properties</a>
+    <a href="det3.html">3. Minors & Cofactors</a>
+    <a href="det4.html" class="active">4. Inverse</a>
+    <a href="det5.html">5. Applications</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">04</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 4</div>
+  <h1>Inverse of<br><span>a Matrix</span></h1>
+  <p>Using determinants and the adjoint to find the inverse of a matrix.</p>
+</div>
+
+<div class="content">
+
+  <!-- CONCEPT -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">1</div><h2>Concept of Inverse</h2></div>
+    <div class="def-box">
+      <div class="def-label">📘 Definition — Inverse of Matrix A</div>
+      <p>For a square matrix A of order n, another matrix B is called the <strong>inverse of A</strong> if:</p>
+      <p style="margin-top:10px;"><strong>A · B = B · A = I</strong></p>
+      <p style="margin-top:4px;font-size:.9rem;">where I is the identity matrix of order n. We write B = A⁻¹.</p>
+    </div>
+
+    <div class="warn-box">
+      <p>⚠️ <strong>Condition:</strong> The inverse of A exists <strong>if and only if |A| ≠ 0</strong>. A matrix with |A| = 0 is called <span style="color:var(--red)">singular</span> and has <strong>no inverse</strong>.</p>
+    </div>
+
+    <div class="note-box">
+      <div class="icon">💡</div>
+      <p>Always <strong>check |A| ≠ 0</strong> before attempting to find the inverse. This is Step 0 in every inverse problem.</p>
+    </div>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">2</div><h2>The Inverse Formula</h2></div>
+
+    <div class="big-formula">
+      <div class="bf-label">⭐ The Master Formula for Inverse</div>
+      <div class="bf-main">A⁻¹ = (1 / |A|) × adj(A)</div>
+      <div class="bf-sub" style="margin-top:12px;">valid only when |A| ≠ 0</div>
+    </div>
+
+    <p>This formula is derived from the fundamental result: <span class="hl-orange">A · adj(A) = |A| · I</span></p>
+    <p>Dividing both sides by |A|: A · (adj(A)/|A|) = I, which means A⁻¹ = adj(A)/|A|</p>
+
+    <div class="note-box">
+      <div class="icon">🔑</div>
+      <p>For a <strong>2×2 matrix</strong> A = [[a,b],[c,d]], the inverse has a shortcut:<br>
+      <strong>A⁻¹ = (1/|A|) × [[d, −b],[−c, a]]</strong><br>
+      Just swap the diagonal elements and negate the off-diagonal elements, then divide by |A|.</p>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">3</div><h2>Step-by-Step Method</h2></div>
+    <div class="steps-list">
+      <div class="sl-item"><div class="sl-num">0</div><div class="sl-content"><h4>Check |A| ≠ 0</h4><p>Compute the determinant first. If |A| = 0, inverse does not exist — stop.</p></div></div>
+      <div class="sl-item"><div class="sl-num">1</div><div class="sl-content"><h4>Find all Cofactors Aᵢⱼ</h4><p>Compute the cofactor for every element using (−1)^(i+j) × Mᵢⱼ.</p></div></div>
+      <div class="sl-item"><div class="sl-num">2</div><div class="sl-content"><h4>Form the Cofactor Matrix</h4><p>Arrange all cofactors into a matrix at their corresponding positions.</p></div></div>
+      <div class="sl-item"><div class="sl-num">3</div><div class="sl-content"><h4>Transpose → get adj(A)</h4><p>Take the transpose of the cofactor matrix to get adj(A).</p></div></div>
+      <div class="sl-item"><div class="sl-num">4</div><div class="sl-content"><h4>Divide by |A|</h4><p>A⁻¹ = (1/|A|) × adj(A). Multiply each element of adj(A) by 1/|A|.</p></div></div>
+      <div class="sl-item"><div class="sl-num">✓</div><div class="sl-content"><h4>Verify: A · A⁻¹ = I</h4><p>Multiply A by A⁻¹ and confirm you get the identity matrix.</p></div></div>
+    </div>
+  </div>
+
+  <!-- 2x2 EXAMPLE -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">4</div><h2>Inverse of a 2×2 Matrix</h2></div>
+    <div class="example-box">
+      <div class="ex-label">✏️ Solved Example</div>
+      <div class="ex-title">Find A⁻¹ for A = [[3, 1], [5, 2]]</div>
+      <div class="step"><div class="step-dot">1</div><p>|A| = (3)(2) − (1)(5) = 6 − 5 = <span class="hl-orange">1 ≠ 0</span> ✓ Inverse exists</p></div>
+      <div class="step"><div class="step-dot">2</div><p>adj(A) = [[2, −1],[−5, 3]] (swap diagonal, negate off-diagonal)</p></div>
+      <div class="step"><div class="step-dot">3</div><p>A⁻¹ = (1/1) × [[2,−1],[−5,3]] = <span class="hl-gold">[[2,−1],[−5,3]]</span></p></div>
+      <div class="verify-box">
+        <p>✅ Verify: A × A⁻¹ = [[3,1],[5,2]] × [[2,−1],[−5,3]] = [[6−5, −3+3],[10−10, −5+6]] = [[1,0],[0,1]] = I ✓</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3x3 EXAMPLE -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">5</div><h2>Inverse of a 3×3 Matrix</h2></div>
+    <div class="example-box">
+      <div class="ex-label">✏️ Full Solved Example</div>
+      <div class="ex-title">Find A⁻¹ for A = [[1, 0, 0], [3, 3, 0], [5, 2, −1]]</div>
+      <div class="step"><div class="step-dot">|A|</div><p>Expand along R1: 1·|3,0;2,−1| − 0 + 0 = 1·(−3−0) = <span class="hl-orange">−3 ≠ 0</span> ✓</p></div>
+      <div class="step"><div class="step-dot">C₁₁</div><p>(+1)|3,0;2,−1| = −3</p></div>
+      <div class="step"><div class="step-dot">C₁₂</div><p>(−1)|3,0;5,−1| = −(−3−0) = 3</p></div>
+      <div class="step"><div class="step-dot">C₁₃</div><p>(+1)|3,3;5,2| = 6−15 = −9</p></div>
+      <div class="step"><div class="step-dot">C₂₁</div><p>(−1)|0,0;2,−1| = −(0−0) = 0</p></div>
+      <div class="step"><div class="step-dot">C₂₂</div><p>(+1)|1,0;5,−1| = −1−0 = −1</p></div>
+      <div class="step"><div class="step-dot">C₂₃</div><p>(−1)|1,0;5,2| = −(2−0) = −2</p></div>
+      <div class="step"><div class="step-dot">C₃₁</div><p>(+1)|0,0;3,0| = 0−0 = 0</p></div>
+      <div class="step"><div class="step-dot">C₃₂</div><p>(−1)|1,0;3,0| = −(0−0) = 0</p></div>
+      <div class="step"><div class="step-dot">C₃₃</div><p>(+1)|1,0;3,3| = 3−0 = 3</p></div>
+      <div class="step"><div class="step-dot">adj</div>
+        <p>Cofactor matrix transposed:<br>
+        adj(A) = [[−3, 0, 0],[3, −1, 0],[−9, −2, 3]]</p>
+      </div>
+      <div class="step"><div class="step-dot">A⁻¹</div>
+        <p>A⁻¹ = (1/−3) × adj(A) = <span class="hl-gold">[[1, 0, 0],[−1, 1/3, 0],[3, 2/3, −1]]</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY RESULTS -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">6</div><h2>Important Results & Properties</h2></div>
+    <div class="def-box">
+      <div class="def-label">📌 Key Results</div>
+      <p>• <span class="hl-orange">(A⁻¹)⁻¹ = A</span> — Inverse of inverse is the original matrix<br>
+      • <span class="hl-orange">(AB)⁻¹ = B⁻¹A⁻¹</span> — Reversal rule for products<br>
+      • <span class="hl-orange">(Aᵀ)⁻¹ = (A⁻¹)ᵀ</span> — Inverse of transpose<br>
+      • <span class="hl-orange">|A⁻¹| = 1/|A|</span> — Determinant of inverse<br>
+      • <span class="hl-orange">A·A⁻¹ = A⁻¹·A = I</span> — Definition check</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Matrix Type</th><th>Condition</th><th>Inverse Exists?</th></tr></thead>
+        <tbody>
+          <tr><td>Non-Singular</td><td class="hl-green">|A| ≠ 0</td><td class="hl-green">Yes ✓</td></tr>
+          <tr><td>Singular</td><td class="hl-red">|A| = 0</td><td class="hl-red">No ✗</td></tr>
+          <tr><td>Identity I</td><td>|I| = 1</td><td class="hl-green">Yes (I⁻¹ = I)</td></tr>
+          <tr><td>Scalar Matrix kI</td><td>k ≠ 0</td><td class="hl-green">Yes ((kI)⁻¹ = (1/k)I)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="det3.html" class="btn btn-prev">← Minors & Cofactors</a>
+  <a href="det5.html" class="btn btn-next">Applications →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 4 &middot; Determinants</div>
+  </div>
+</footer>
+
+</body>
+</html>

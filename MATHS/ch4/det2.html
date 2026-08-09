@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on Determinants for Class 12 Maths. Learn about the definition, properties, and applications of determinants with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 4, Determinants, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Determinants | Properties</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117; --surface: #161b22; --surface2: #1c2333; --border: #30363d;
+    --gold: #f0c040; --gold-dim: #a08020; --text: #e6edf3; --text-muted: #8b949e;
+    --accent: #58a6ff; --green: #3fb950; --red: #f85149; --purple: #bc8cff;
+    --teal: #39d353; --accent: #e96c6c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Source Serif 4',Georgia,serif; font-size:17px; line-height:1.8; }
+  /* SITE NAVIGATION */
+  nav { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 5px; display:flex; align-items:center; justify-content:space-between; position:sticky; top: 0%; z-index:100;overflow-x: auto; height: 80px ;overflow-y: hidden; }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); letter-spacing:.05em; white-space: nowrap;}
+  .nav-links { display:flex; gap:5px; flex-wrap:no-wrap; margin: 5%; flex-shrink: 0; }
+  .nav-links a { padding:6px 14px; border-radius:20px; font-size:0.8rem; text-decoration:none; color:var(--text-muted); border:1px solid var(--border); transition:.2s; font-family:'JetBrains Mono',monospace; }
+  .nav-links a:hover { border-color:var(--gold); color:var(--gold); }
+  .nav-links a.active { background:var(--gold); color:var(--bg); border-color:var(--gold); font-weight:600; }
+  .hero { background:linear-gradient(135deg,#0d1117 0%,#1a1a2e 50%,#0d1117 100%); border-bottom:1px solid var(--border); padding:64px 32px 48px; text-align:center; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(188,140,255,.08) 0%,transparent 70%); }
+  .chapter-tag { display:inline-block; padding:4px 16px; border:1px solid rgba(188,140,255,.4); border-radius:20px; font-size:.75rem; color:var(--purple); margin-bottom:16px; font-family:'JetBrains Mono',monospace; letter-spacing:.1em; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,5vw,3.8rem); font-weight:900; color:#fff; line-height:1.15; margin-bottom:12px; }
+  .hero h1 span { color:var(--purple); }
+  .hero p { color:var(--text-muted); max-width:600px; margin:0 auto 24px; font-size:1rem; }
+  .topic-num { font-size:4rem; font-weight:900; color:rgba(188,140,255,.08); position:absolute; top:16px; right:40px; font-family:'Playfair Display',serif; }
+  .content { max-width:860px; margin:0 auto; padding:48px 24px; }
+  .section { margin-bottom:56px; animation:fadeUp .6s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .section:nth-child(n+2) { animation-delay: calc(0.1s * var(--i,1)); }
+  .section-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+  .section-num { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--purple),#8844cc); color:#fff; font-weight:700; font-size:.85rem; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; flex-shrink:0; }
+  .section h2 { font-family:'Playfair Display',serif; font-size:1.6rem; color:#fff; }
+  p { margin-bottom:14px; color:#cdd5df; }
+  .def-box { background:linear-gradient(135deg,rgba(188,140,255,.06),rgba(188,140,255,.02)); border:1px solid rgba(188,140,255,.3); border-left:4px solid var(--purple); border-radius:0 12px 12px 0; padding:20px 24px; margin:24px 0; }
+  .def-box .def-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--purple); font-family:'JetBrains Mono',monospace; margin-bottom:8px; }
+  .def-box p { color:var(--text); margin:0; }
+  .formula-box { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:28px 32px; margin:24px 0; text-align:center; overflow-x:auto; }
+  .formula-box .f-label { font-size:.7rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.1em; margin-bottom:16px; }
+  .formula { font-family:'JetBrains Mono',monospace; font-size:1.05rem; color:var(--accent); line-height:2; }
+  .note-box { background:rgba(88,166,255,.07); border:1px solid rgba(88,166,255,.25); border-radius:10px; padding:16px 20px; margin:20px 0; display:flex; gap:12px; align-items:flex-start; }
+  .note-box .icon { font-size:1.1rem; flex-shrink:0; margin-top:2px; }
+  .note-box p { margin:0; color:#a5c8f8; font-size:.93rem; }
+  .warn-box { background:rgba(248,81,73,.07); border:1px solid rgba(248,81,73,.25); border-radius:10px; padding:16px 20px; margin:20px 0; display:flex; gap:12px; align-items:flex-start; }
+  .warn-box .icon { font-size:1.1rem; flex-shrink:0; }
+  .warn-box p { margin:0; color:#f7a5a0; font-size:.93rem; }
+  .example-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:24px; margin:24px 0; }
+  .example-box .ex-label { font-size:.7rem; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.12em; color:var(--green); margin-bottom:12px; }
+  .example-box .ex-title { font-weight:600; color:#fff; margin-bottom:12px; font-size:1rem; }
+  .step { display:flex; gap:12px; margin:10px 0; }
+  .step-dot { width:22px; height:22px; border-radius:50%; background:var(--surface2); border:1.5px solid var(--border); color:var(--text-muted); font-size:.7rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:3px; font-family:'JetBrains Mono',monospace; }
+  .step p { margin:0; color:#cdd5df; }
+  .hl-gold { color:var(--gold); font-weight:600; }
+  .hl-blue { color:var(--accent); }
+  .hl-green { color:var(--green); }
+  .hl-red { color:var(--red); }
+  .hl-purple { color:var(--purple); }
+  /* Property Cards */
+  .prop-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; margin:20px 0; transition:.25s; position:relative; overflow:hidden; }
+  .prop-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:linear-gradient(180deg,var(--purple),#5533aa); border-radius:2px 0 0 2px; }
+  .prop-card:hover { border-color:rgba(188,140,255,.4); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.3); }
+  .prop-num { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:var(--purple); text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
+  .prop-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:#fff; margin-bottom:10px; }
+  .prop-card p { margin:0; color:#cdd5df; font-size:.93rem; }
+  .prop-card .formula-inline { font-family:'JetBrains Mono',monospace; color:var(--accent); background:var(--surface2); padding:8px 16px; border-radius:6px; display:inline-block; margin-top:10px; font-size:.9rem; }
+  /* Footer nav */
+  .footer-nav { border-top:1px solid var(--border); padding:32px 24px; display:flex; justify-content:space-between; max-width:860px; margin:0 auto; }
+  .btn { padding:12px 28px; border-radius:8px; text-decoration:none; font-weight:600; font-size:.9rem; display:inline-flex; align-items:center; gap:8px; transition:.2s; font-family:'JetBrains Mono',monospace; }
+  .btn-next { background:var(--gold); color:var(--bg); }
+  .btn-next:hover { background:#ffd060; transform:translateX(3px); }
+  .btn-prev { background:var(--surface); border:1px solid var(--border); color:var(--text-muted); }
+  .btn-prev:hover { border-color:var(--text-muted); color:var(--text); }
+  .progress-bar { height:3px; background:linear-gradient(90deg,var(--purple) 0%,#5533aa 100%); width:40%; position:fixed; top:0; left:0; z-index:200; }
+  .tbl-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; }
+  th { background:var(--surface2); color:var(--purple); padding:10px 16px; text-align:left; font-family:'JetBrains Mono',monospace; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; border-bottom:2px solid var(--border); }
+  td { padding:10px 16px; border-bottom:1px solid var(--border); color:#cdd5df; }
+  tr:hover td { background:rgba(255,255,255,.02); }
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📐 Ch.4 — Determinants</div>
+  <div class="nav-links">
+    <a href="det1.html">1. Intro</a>
+    <a href="det2.html" class="active">2. Properties</a>
+    <a href="det3.html">3. Minors & Cofactors</a>
+    <a href="det4.html">4. Inverse</a>
+    <a href="det5.html">5. Applications</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">02</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 4</div>
+  <h1>Properties of<br><span>Determinants</span></h1>
+  <p>Six powerful properties that simplify determinant calculations dramatically.</p>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">P</div>
+      <h2>Why Properties Matter</h2>
+    </div>
+    <p>Computing a 3×3 determinant from scratch involves many multiplications. Properties of determinants allow us to <span class="hl-gold">simplify the matrix first</span> (introduce zeros, reduce rows) and then evaluate it easily. In exams, these properties save enormous time.</p>
+    <div class="note-box">
+      <div class="icon">💡</div>
+      <p>The value of a determinant <strong>does not change</strong> when valid row/column operations are applied (with exceptions noted). The goal is always to make the matrix triangular or introduce zeros.</p>
+    </div>
+  </div>
+
+  <!-- Property 1 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">1</div><h2>Property 1 — Transpose</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 01</div>
+      <div class="prop-title">|A| = |Aᵀ|</div>
+      <p>The value of the determinant remains unchanged when rows and columns are interchanged (i.e., when the matrix is transposed).</p>
+      <div class="formula-inline">det(A) = det(Aᵀ)</div>
+    </div>
+    <p><strong>Implication:</strong> Any property that holds for rows also holds for columns and vice versa. This doubles the number of useful operations available to us.</p>
+    <div class="example-box">
+      <div class="ex-label">✏️ Example</div>
+      <div class="ex-title">Verify for A = [[1,2],[3,4]]</div>
+      <div class="step"><div class="step-dot">1</div><p>|A| = 1×4 − 2×3 = 4 − 6 = <span class="hl-gold">−2</span></p></div>
+      <div class="step"><div class="step-dot">2</div><p>Aᵀ = [[1,3],[2,4]], |Aᵀ| = 1×4 − 3×2 = 4 − 6 = <span class="hl-gold">−2</span> ✓</p></div>
+    </div>
+  </div>
+
+  <!-- Property 2 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">2</div><h2>Property 2 — Row/Column of Zeros</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 02</div>
+      <div class="prop-title">If any row (or column) is all zeros → |A| = 0</div>
+      <p>A determinant is zero if all elements of any one row or one column are zero.</p>
+      <div class="formula-inline">R_i = [0, 0, 0] ⟹ |A| = 0</div>
+    </div>
+    <div class="example-box">
+      <div class="ex-label">✏️ Example</div>
+      <div class="ex-title">A = [[1,2,3],[0,0,0],[7,8,9]]</div>
+      <div class="step"><div class="step-dot">—</div><p>Row 2 is all zeros → <span class="hl-gold">|A| = 0</span> (no calculation needed!)</p></div>
+    </div>
+  </div>
+
+  <!-- Property 3 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">3</div><h2>Property 3 — Row Interchange</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 03</div>
+      <div class="prop-title">Interchanging two rows (or columns) changes the sign of |A|</div>
+      <p>If any two rows (or columns) of a determinant are interchanged, then the sign of the determinant changes but its magnitude stays the same.</p>
+      <div class="formula-inline">R_i ↔ R_j  ⟹  |A| → −|A|</div>
+    </div>
+    <div class="warn-box">
+      <div class="icon">⚠️</div>
+      <p>Each swap of rows/columns negates the determinant. Two swaps bring it back to the original. Keep track of the number of swaps!</p>
+    </div>
+    <div class="example-box">
+      <div class="ex-label">✏️ Example</div>
+      <div class="ex-title">A = [[1,2],[3,4]], swap R1 and R2</div>
+      <div class="step"><div class="step-dot">1</div><p>|A| = 1×4 − 2×3 = −2</p></div>
+      <div class="step"><div class="step-dot">2</div><p>After R1↔R2: B = [[3,4],[1,2]], |B| = 3×2 − 4×1 = 6 − 4 = <span class="hl-gold">+2 = −(−2)</span> ✓</p></div>
+    </div>
+  </div>
+
+  <!-- Property 4 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">4</div><h2>Property 4 — Identical Rows</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 04</div>
+      <div class="prop-title">If two rows (or columns) are identical → |A| = 0</div>
+      <p>When any two rows (or columns) of a determinant are identical (or proportional), the value of the determinant is zero.</p>
+      <div class="formula-inline">R_i = R_j  ⟹  |A| = 0</div>
+    </div>
+    <p><strong>Proof sketch:</strong> Swap the two identical rows → sign changes → |A| = −|A| → 2|A| = 0 → |A| = 0. Elegant!</p>
+    <p>This also applies if two rows are <span class="hl-gold">proportional</span> (one is a scalar multiple of the other).</p>
+    <div class="example-box">
+      <div class="ex-label">✏️ Example</div>
+      <div class="ex-title">Show |A| = 0 for A = [[1,2,3],[4,5,6],[2,4,6]]</div>
+      <div class="step"><div class="step-dot">—</div><p>R3 = 2×R1. Since rows are proportional → <span class="hl-gold">|A| = 0</span></p></div>
+    </div>
+  </div>
+
+  <!-- Property 5 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">5</div><h2>Property 5 — Scalar Multiple</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 05</div>
+      <div class="prop-title">If each element of a row is multiplied by k, the determinant is multiplied by k</div>
+      <p>Multiplying all elements of any one row (or column) by a scalar k multiplies the determinant by k.</p>
+      <div class="formula-inline">kRᵢ  ⟹  |A| becomes k·|A|</div>
+    </div>
+    <div class="note-box">
+      <div class="icon">💡</div>
+      <p><strong>Important contrast with matrices:</strong> For an n×n matrix, <span class="hl-gold">|kA| = kⁿ|A|</span> (scalar applies to ALL rows). But this property is about multiplying just ONE row.</p>
+    </div>
+    <div class="formula-box">
+      <div class="f-label">For n×n matrix A</div>
+      <div class="formula">|kA| = kⁿ |A|</div>
+    </div>
+  </div>
+
+  <!-- Property 6 -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">6</div><h2>Property 6 — Row Operation</h2></div>
+    <div class="prop-card">
+      <div class="prop-num">Property 06 ⭐ Most Used in Exams</div>
+      <div class="prop-title">Rᵢ → Rᵢ + k·Rⱼ does NOT change |A|</div>
+      <p>Adding to any row (or column) a scalar multiple of another row (or column) leaves the determinant unchanged.</p>
+      <div class="formula-inline">Rᵢ → Rᵢ + k·Rⱼ  ⟹  |A| unchanged</div>
+    </div>
+    <p>This is the most powerful property — it's the basis of <span class="hl-gold">row reduction</span>. We use it to introduce zeros in the matrix and simplify computation.</p>
+    <div class="example-box">
+      <div class="ex-label">✏️ Exam Strategy — Introducing Zeros</div>
+      <div class="ex-title">Simplify before computing</div>
+      <div class="step"><div class="step-dot">1</div><p>Apply R₁ → R₁ − R₂ (or other combinations) to introduce zeros</p></div>
+      <div class="step"><div class="step-dot">2</div><p>Apply R₂ → R₂ − R₃ etc.</p></div>
+      <div class="step"><div class="step-dot">3</div><p>Expand along the row/column with most zeros</p></div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">✦</div><h2>Quick Reference Summary</h2></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Property</th><th>Effect on |A|</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Transpose</td><td class="hl-green">No change</td></tr>
+          <tr><td>2</td><td>Row/Column of zeros</td><td class="hl-red">|A| = 0</td></tr>
+          <tr><td>3</td><td>Swap two rows/columns</td><td class="hl-red">Sign changes (×−1)</td></tr>
+          <tr><td>4</td><td>Identical or proportional rows</td><td class="hl-red">|A| = 0</td></tr>
+          <tr><td>5</td><td>Multiply one row by k</td><td class="hl-gold">Multiplied by k</td></tr>
+          <tr><td>6</td><td>Rᵢ → Rᵢ + k·Rⱼ</td><td class="hl-green">No change ⭐</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="det1.html" class="btn btn-prev">← Introduction</a>
+  <a href="det3.html" class="btn btn-next">Minors, Cofactors & Adjoint →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+   <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 4 &middot; Determinants</div>
+  </div>
+</footer>
+
+</body>
+</html>

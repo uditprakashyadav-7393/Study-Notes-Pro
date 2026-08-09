@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Continuity of a Function</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --surface:#161b22; --surface2:#1c2333; --border:#30363d;
+    --gold:#f0c040; --gold-dim:#a08020; --text:#e6edf3; --text-muted:#8b949e;
+    --accent:#38bdf8; --accent-dim:#0e7490;
+    --green:#3fb950; --red:#f85149; --purple:#bc8cff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+  /* NAV */
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:0px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{  font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#071a2e 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(56,189,248,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(56,189,248,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(56,189,248,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+  /* CONTENT */
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}.section:nth-child(3){animation-delay:.14s}.section:nth-child(4){animation-delay:.21s}.section:nth-child(5){animation-delay:.28s}.section:nth-child(6){animation-delay:.35s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#000;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+  /* BOXES */
+  .def-box{background:linear-gradient(135deg,rgba(56,189,248,.07),rgba(56,189,248,.02));border:1px solid rgba(56,189,248,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent);line-height:2.1;}
+  .note-box{background:rgba(63,185,80,.07);border:1px solid rgba(63,185,80,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#9ee8b0;font-size:.91rem;}
+  .warn-box{background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;}
+  .warn-box p{margin:0;color:#f9a8a4;font-size:.91rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  /* HIGHLIGHT */
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  .hlr{color:var(--red);}
+  /* CARDS */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:22px 0;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;transition:.22s;}
+  .card:hover{border-color:var(--accent-dim);transform:translateY(-2px);}
+  .card .ci{font-size:1.4rem;margin-bottom:9px;}
+  .card h4{color:#fff;font-size:.92rem;margin-bottom:5px;}
+  .card p{font-size:.82rem;color:var(--text-muted);margin:0;}
+  /* CONDITIONS LIST */
+  .cond-list{margin:18px 0;}
+  .cond-item{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:10px 0;transition:.2s;}
+  .cond-item:hover{border-color:rgba(56,189,248,.3);}
+  .cond-num{min-width:30px;height:30px;border-radius:8px;background:var(--accent);color:#000;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .cond-body h4{color:#fff;font-size:.93rem;margin-bottom:3px;}
+  .cond-body p{color:var(--text-muted);font-size:.87rem;margin:0;}
+  /* TABLE */
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  th{background:var(--surface2);color:var(--accent);padding:10px 15px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:9px 15px;border-bottom:1px solid var(--border);color:#cdd5df;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  /* FOOTER NAV */
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:flex-end;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:#000;}.btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  /* PROGRESS */
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:16.6%;position:fixed;top:0;left:0;z-index:200;}
+  /* SITE FOOTER */
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html" class="active">1. Continuity</a>
+    <a href="C&D2.html">2. Differentiability</a>
+    <a href="C&D3.html">3. Exp & Log</a>
+    <a href="C&D4.html">4. Log Diff.</a>
+    <a href="C&D5.html">5. Inv. Trig</a>
+    <a href="C&D6.html">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">01</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Continuity of<br><span>a Function</span></h1>
+  <p>Understanding when a function is unbroken — no holes, no jumps, no gaps.</p>
+</div>
+
+<div class="content">
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>What is Continuity?</h2></div>
+    <p>Informally, a function is <span class="hl">continuous</span> at a point if you can draw its graph at that point <strong>without lifting your pen</strong>. There should be no holes, jumps, or breaks in the graph.</p>
+    <div class="card-grid">
+      <div class="card"><div class="ci">✏️</div><h4>No Hole</h4><p>The function must be defined at the point (f(a) exists).</p></div>
+      <div class="card"><div class="ci">🎯</div><h4>Limit Exists</h4><p>The left-hand and right-hand limits must be equal.</p></div>
+      <div class="card"><div class="ci">🔗</div><h4>They Match</h4><p>The limit value must equal the function value.</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>Formal Definition</h2></div>
+    <div class="def-box">
+      <div class="lbl">📘 Definition</div>
+      <p>A function <strong>f(x)</strong> is said to be <strong>continuous at x = a</strong> if all three conditions hold simultaneously:</p>
+    </div>
+    <div class="cond-list">
+      <div class="cond-item"><div class="cond-num">C1</div><div class="cond-body"><h4>f(a) is defined</h4><p>The function must have a value at x = a. (No holes!)</p></div></div>
+      <div class="cond-item"><div class="cond-num">C2</div><div class="cond-body"><h4>lim f(x) exists as x → a</h4><p>LHL = RHL → Left-hand limit must equal right-hand limit.</p></div></div>
+      <div class="cond-item"><div class="cond-num">C3</div><div class="cond-body"><h4>lim f(x) = f(a)</h4><p>The limit value must equal the actual function value.</p></div></div>
+    </div>
+    <div class="formula-box">
+      <div class="lbl">Continuity Condition at x = a</div>
+      <div class="formula">
+        lim f(x) = lim f(x) = f(a)<br>
+        x→a⁻          x→a⁺
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Left-Hand & Right-Hand Limits</h2></div>
+    <p><span class="hlg">Left-Hand Limit (LHL):</span> The value f(x) approaches as x comes from the <em>left</em> side of a.</p>
+    <p><span class="hlg">Right-Hand Limit (RHL):</span> The value f(x) approaches as x comes from the <em>right</em> side of a.</p>
+    <div class="formula-box">
+      <div class="lbl">LHL and RHL Notation</div>
+      <div class="formula">
+        LHL = lim f(x) = lim f(a − h)  [h → 0⁺]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x→a⁻<br><br>
+        RHL = lim f(x) = lim f(a + h)  [h → 0⁺]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x→a⁺
+      </div>
+    </div>
+    <div class="note-box">
+      <p>💡 <strong>Key Point:</strong> If LHL ≠ RHL, the limit does not exist at that point → function is discontinuous there.</p>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Example 1</div>
+      <div class="etitle">Check continuity of f(x) = 2x + 3 at x = 2</div>
+      <div class="step"><div class="sd">1</div><p>f(2) = 2(2) + 3 = <span class="hl">7</span> ✓ (defined)</p></div>
+      <div class="step"><div class="sd">2</div><p>LHL: lim(x→2⁻) 2x+3 = 2(2)+3 = <span class="hl">7</span></p></div>
+      <div class="step"><div class="sd">3</div><p>RHL: lim(x→2⁺) 2x+3 = 2(2)+3 = <span class="hl">7</span></p></div>
+      <div class="step"><div class="sd">✓</div><p>LHL = RHL = f(2) = 7 → <span class="hlgr">Continuous at x = 2</span></p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Types of Discontinuity</h2></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>What Happens</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="hlr">Removable</td><td>Limit exists but ≠ f(a), or f(a) not defined</td><td>f(x) = (x²−1)/(x−1) at x=1</td></tr>
+          <tr><td class="hlr">Jump</td><td>LHL ≠ RHL (limit doesn't exist)</td><td>Greatest Integer Function ⌊x⌋</td></tr>
+          <tr><td class="hlr">Infinite</td><td>Function → ±∞ at that point</td><td>f(x) = 1/x at x = 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Example 2 — Piecewise Function</div>
+      <div class="etitle">Check continuity: f(x) = { x+1 if x ≤ 1 ; 3−x if x > 1 } at x = 1</div>
+      <div class="step"><div class="sd">1</div><p>f(1) = 1 + 1 = <span class="hl">2</span></p></div>
+      <div class="step"><div class="sd">2</div><p>LHL = lim(x→1⁻) (x+1) = 1+1 = <span class="hl">2</span></p></div>
+      <div class="step"><div class="sd">3</div><p>RHL = lim(x→1⁺) (3−x) = 3−1 = <span class="hl">2</span></p></div>
+      <div class="step"><div class="sd">✓</div><p>LHL = RHL = f(1) = 2 → <span class="hlgr">Continuous at x = 1</span></p></div>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Example 3 — Discontinuous Case</div>
+      <div class="etitle">f(x) = { x+2 if x ≤ 1 ; x−1 if x > 1 } at x = 1</div>
+      <div class="step"><div class="sd">1</div><p>f(1) = 1+2 = 3</p></div>
+      <div class="step"><div class="sd">2</div><p>LHL = lim(x→1⁻) (x+2) = <span class="hl">3</span></p></div>
+      <div class="step"><div class="sd">3</div><p>RHL = lim(x→1⁺) (x−1) = <span class="hl">0</span></p></div>
+      <div class="step"><div class="sd">✗</div><p>LHL ≠ RHL → <span class="hlr">Discontinuous at x = 1 (Jump discontinuity)</span></p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">5</div><h2>Continuity on an Interval</h2></div>
+    <p>A function f is continuous on an <span class="hl">open interval (a, b)</span> if it is continuous at every point in that interval.</p>
+    <p>A function f is continuous on a <span class="hlg">closed interval [a, b]</span> if:</p>
+    <div class="cond-list">
+      <div class="cond-item"><div class="cond-num">i</div><div class="cond-body"><h4>Continuous on (a, b)</h4><p>Continuous at every interior point.</p></div></div>
+      <div class="cond-item"><div class="cond-num">ii</div><div class="cond-body"><h4>Right-continuous at x = a</h4><p>lim(x→a⁺) f(x) = f(a)</p></div></div>
+      <div class="cond-item"><div class="cond-num">iii</div><div class="cond-body"><h4>Left-continuous at x = b</h4><p>lim(x→b⁻) f(x) = f(b)</p></div></div>
+    </div>
+    <div class="note-box">
+      <p>💡 <strong>Always Continuous Functions:</strong> Polynomials, Rational functions (where denominator ≠ 0), Trigonometric functions, Exponential &amp; Logarithmic functions — all are continuous on their domains.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <div class="section-header"><div class="sn">6</div><h2>Algebra of Continuous Functions</h2></div>
+    <p>If f and g are continuous at x = a, then the following are also continuous at x = a:</p>
+    <div class="def-box">
+      <div class="lbl">📌 Key Results</div>
+      <p>
+        • <span class="hl">f ± g</span> is continuous<br>
+        • <span class="hl">f · g</span> is continuous<br>
+        • <span class="hl">f / g</span> is continuous (if g(a) ≠ 0)<br>
+        • <span class="hl">k · f</span> is continuous (k is a constant)<br>
+        • <span class="hl">f(g(x))</span> — composite — is continuous if g is continuous at a and f is continuous at g(a)
+      </p>
+    </div>
+    <div class="warn-box">
+      <p>⚠️ <strong>Finding k for continuity:</strong> A common exam problem gives a piecewise function and asks for the value of k that makes it continuous. Set LHL = RHL = f(a) and solve for k.</p>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Exam-Type Example</div>
+      <div class="etitle">Find k if f(x) = { kx+1 for x ≤ 5 ; 3x−5 for x > 5 } is continuous at x = 5</div>
+      <div class="step"><div class="sd">1</div><p>For continuity: LHL = RHL</p></div>
+      <div class="step"><div class="sd">2</div><p>LHL = k(5)+1 = 5k+1</p></div>
+      <div class="step"><div class="sd">3</div><p>RHL = 3(5)−5 = 10</p></div>
+      <div class="step"><div class="sd">4</div><p>5k + 1 = 10 → 5k = 9 → <span class="hlg">k = 9/5</span></p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D2.html" class="btn btn-next">Differentiability →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="index.html"><img src="Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+</body>
+</html>

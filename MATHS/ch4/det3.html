@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Determinants | Minors, Cofactors & Adjoint</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<meta name="description" content="Comprehensive notes on Determinants for Class 12 Maths. Learn about the definition, properties, and applications of determinants with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 4, Determinants, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117; --surface:#161b22; --surface2:#1c2333; --border:#30363d;
+    --gold:#f0c040; --gold-dim:#a08020; --text:#e6edf3; --text-muted:#8b949e;
+    --accent:#e96c6c; --green:#3fb950; --red:#f85149; --purple:#bc8cff; --teal:#39c5bb;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.8;}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100; overflow-x: auto; height: 50px ;}
+   nav { background:var(--surface); border-bottom:1px solid var(--border); padding:20px 5px; display:flex; align-items:center; justify-content:space-between; position:sticky; top: 0%; z-index:100;overflow-x: auto; height: 80px ;overflow-y: hidden; }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); letter-spacing:.05em; white-space: nowrap;}
+  .nav-links { display:flex; gap:5px; flex-wrap:no-wrap; margin: 5%; flex-shrink: 0; }
+  .nav-links a{padding:6px 14px;border-radius:20px;font-size:.8rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--gold);color:var(--gold);}
+  .nav-links a.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:600;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#0f1f2e 50%,#0d1117 100%);border-bottom:1px solid var(--border);padding:64px 32px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(57,197,187,.08) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(57,197,187,.4);border-radius:20px;font-size:.75rem;color:var(--teal);margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;}
+  .hero h1 span{color:var(--teal);}
+  .hero p{color:var(--text-muted);max-width:600px;margin:0 auto 24px;font-size:1rem;}
+  .topic-num{font-size:4rem;font-weight:900;color:rgba(57,197,187,.08);position:absolute;top:16px;right:40px;font-family:'Playfair Display',serif;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:56px;animation:fadeUp .6s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+  .section-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#228877);color:#000;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;}
+  p{margin-bottom:14px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(57,197,187,.06),rgba(57,197,187,.02));border:1px solid rgba(57,197,187,.3);border-left:4px solid var(--teal);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;}
+  .def-box .def-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:28px 32px;margin:24px 0;text-align:center;overflow-x:auto;}
+  .formula-box .f-label{font-size:.7rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1.05rem;color:var(--accent);line-height:2;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:16px 20px;margin:20px 0;display:flex;gap:12px;align-items:flex-start;}
+  .note-box .icon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.93rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0;}
+  .example-box .ex-label{font-size:.7rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:12px;}
+  .example-box .ex-title{font-weight:600;color:#fff;margin-bottom:12px;font-size:1rem;}
+  .step{display:flex;gap:12px;margin:10px 0;}
+  .step-dot{width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl-gold{color:var(--gold);font-weight:600;}
+  .hl-blue{color:var(--accent);}
+  .hl-green{color:var(--green);}
+  .hl-red{color:var(--red);}
+  .hl-teal{color:var(--teal);}
+
+  /* Sign matrix display */
+  .sign-matrix{display:inline-grid;grid-template-columns:repeat(3,50px);gap:4px;border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--surface2);font-family:'JetBrains Mono',monospace;font-size:1.2rem;}
+  .sm-cell{text-align:center;padding:6px;}
+  .sm-plus{color:var(--green);font-weight:700;}
+  .sm-minus{color:var(--red);font-weight:700;}
+
+  /* Matrix visual */
+  .matrix-visual{display:flex;align-items:center;justify-content:center;gap:20px;margin:20px 0;flex-wrap:wrap;}
+  .mv-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:.9rem;min-width:160px;text-align:center;}
+  .mv-box .mv-label{font-size:.65rem;color:var(--text-muted);margin-bottom:8px;letter-spacing:.08em;}
+  .mv-row{display:flex;gap:12px;justify-content:center;margin:3px 0;}
+  .mv-val{color:var(--text);}
+  .mv-crossed{color:rgba(255,255,255,.15);text-decoration:line-through;}
+  .mv-highlight{color:var(--teal);font-weight:700;}
+
+  /* Adjoint table */
+  .adj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0;}
+  .adj-cell{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+  .adj-cell .ac-label{font-size:.65rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+  .adj-cell .ac-val{font-size:1rem;color:var(--teal);font-family:'JetBrains Mono',monospace;}
+
+  .footer-nav{border-top:1px solid var(--border);padding:32px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:var(--bg);}
+  .btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}
+  .btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--teal) 0%,#228877 100%);width:60%;position:fixed;top:0;left:0;z-index:200;}
+  .tbl-wrap{overflow-x:auto;margin:20px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  th{background:var(--surface2);color:var(--teal);padding:10px 16px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:10px 16px;border-bottom:1px solid var(--border);color:#cdd5df;}
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none;}
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📐 Ch.4 — Determinants</div>
+  <div class="nav-links">
+    <a href="det1.html">1. Intro</a>
+    <a href="det2.html">2. Properties</a>
+    <a href="det3.html" class="active">3. Minors & Cofactors</a>
+    <a href="det4.html">4. Inverse</a>
+    <a href="det5.html">5. Applications</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">03</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 4</div>
+  <h1>Minors, Cofactors<br><span>& Adjoint</span></h1>
+  <p>The building blocks for finding inverse matrices and expanding determinants.</p>
+</div>
+
+<div class="content">
+
+  <!-- MINORS -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">1</div><h2>Minor of an Element</h2></div>
+    <div class="def-box">
+      <div class="def-label">📘 Definition — Minor (Mᵢⱼ)</div>
+      <p>The <strong>minor</strong> of element aᵢⱼ is the determinant of the sub-matrix obtained by deleting the <strong>i-th row</strong> and <strong>j-th column</strong> from the matrix.</p>
+    </div>
+    <p>For a 3×3 matrix A with element at position (i, j), we delete that row and column, and the determinant of the remaining 2×2 matrix is <span class="hl-teal">Mᵢⱼ</span>.</p>
+
+    <div class="note-box">
+      <div class="icon">🔍</div>
+      <p>The minor is always a determinant (a number), not a matrix. For a 3×3 matrix, each minor is a 2×2 determinant.</p>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Visual Example</div>
+      <div class="ex-title">Find M₁₁ for A = [[1,2,3],[4,5,6],[7,8,9]]</div>
+      <div class="matrix-visual">
+        <div class="mv-box">
+          <div class="mv-label">ORIGINAL MATRIX</div>
+          <div class="mv-row"><span class="mv-crossed">1</span><span class="mv-crossed">2</span><span class="mv-crossed">3</span></div>
+          <div class="mv-row"><span class="mv-crossed">4</span><span class="mv-highlight">5</span><span class="mv-highlight">6</span></div>
+          <div class="mv-row"><span class="mv-crossed">7</span><span class="mv-highlight">8</span><span class="mv-highlight">9</span></div>
+        </div>
+        <div style="color:var(--text-muted);font-size:1.5rem;">→</div>
+        <div class="mv-box">
+          <div class="mv-label">SUBMATRIX (delete R₁, C₁)</div>
+          <div class="mv-row"><span class="mv-highlight">5</span><span class="mv-highlight">6</span></div>
+          <div class="mv-row"><span class="mv-highlight">8</span><span class="mv-highlight">9</span></div>
+        </div>
+      </div>
+      <div class="step"><div class="step-dot">→</div><p>M₁₁ = |5,6;8,9| = 45 − 48 = <span class="hl-gold">−3</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ More Minors</div>
+      <div class="ex-title">Find M₁₂ and M₂₁</div>
+      <div class="step"><div class="step-dot">M₁₂</div><p>Delete R₁ and C₂: submatrix [[4,6],[7,9]] → |4,6;7,9| = 36−42 = <span class="hl-gold">−6</span></p></div>
+      <div class="step"><div class="step-dot">M₂₁</div><p>Delete R₂ and C₁: submatrix [[2,3],[8,9]] → |2,3;8,9| = 18−24 = <span class="hl-gold">−6</span></p></div>
+    </div>
+  </div>
+
+  <!-- COFACTORS -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">2</div><h2>Cofactor of an Element</h2></div>
+    <div class="def-box">
+      <div class="def-label">📘 Definition — Cofactor (Aᵢⱼ or Cᵢⱼ)</div>
+      <p>The <strong>cofactor</strong> of element aᵢⱼ is the minor with an appropriate sign determined by position:</p>
+      <p style="margin-top:10px;"><strong>Aᵢⱼ = (−1)^(i+j) × Mᵢⱼ</strong></p>
+    </div>
+
+    <p>The sign depends on whether <span class="hl-gold">(i + j)</span> is even (+) or odd (−). This creates the checkerboard sign pattern:</p>
+
+    <div style="text-align:center;margin:24px 0;">
+      <div class="sign-matrix">
+        <div class="sm-cell sm-plus">+</div>
+        <div class="sm-cell sm-minus">−</div>
+        <div class="sm-cell sm-plus">+</div>
+        <div class="sm-cell sm-minus">−</div>
+        <div class="sm-cell sm-plus">+</div>
+        <div class="sm-cell sm-minus">−</div>
+        <div class="sm-cell sm-plus">+</div>
+        <div class="sm-cell sm-minus">−</div>
+        <div class="sm-cell sm-plus">+</div>
+      </div>
+      <p style="color:var(--text-muted);font-size:.8rem;margin-top:8px;">Sign pattern for 3×3 (−1)^(i+j)</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="f-label">Cofactor Formula</div>
+      <div class="formula">Aᵢⱼ = (−1)^(i+j) · Mᵢⱼ</div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Solved Example</div>
+      <div class="ex-title">Find cofactors A₁₁, A₁₂, A₁₃ for A = [[1,2,3],[4,5,6],[7,8,9]]</div>
+      <div class="step"><div class="step-dot">A₁₁</div><p>(−1)^(1+1) × M₁₁ = (+1)(−3) = <span class="hl-teal">−3</span></p></div>
+      <div class="step"><div class="step-dot">A₁₂</div><p>(−1)^(1+2) × M₁₂ = (−1)(−6) = <span class="hl-teal">+6</span></p></div>
+      <div class="step"><div class="step-dot">A₁₃</div><p>M₁₃ = |4,5;7,8| = 32−35 = −3; (−1)^(1+3)(−3) = (+1)(−3) = <span class="hl-teal">−3</span></p></div>
+    </div>
+
+    <div class="note-box">
+      <div class="icon">⭐</div>
+      <p><strong>Determinant Expansion via Cofactors:</strong> |A| = a₁₁A₁₁ + a₁₂A₁₂ + a₁₃A₁₃ = sum of (element × its cofactor) along any row or column.</p>
+    </div>
+  </div>
+
+  <!-- ADJOINT -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">3</div><h2>Adjoint (Adjugate) of a Matrix</h2></div>
+    <div class="def-box">
+      <div class="def-label">📘 Definition — adj(A)</div>
+      <p>The <strong>adjoint</strong> (or adjugate) of a matrix A is the <strong>transpose of the cofactor matrix</strong>.</p>
+      <p style="margin-top:8px;"><strong>adj(A) = [Aᵢⱼ]ᵀ</strong></p>
+      <p style="margin-top:4px;font-size:.9rem;">Where Aᵢⱼ is the cofactor of element aᵢⱼ. Each element of adj(A) at position (i,j) is the cofactor Aⱼᵢ (note the swap!).</p>
+    </div>
+
+    <p><strong>Step-by-step to find adj(A):</strong></p>
+    <div class="step"><div class="step-dot">1</div><p>Find ALL 9 cofactors (for a 3×3 matrix)</p></div>
+    <div class="step"><div class="step-dot">2</div><p>Write them as the cofactor matrix C</p></div>
+    <div class="step"><div class="step-dot">3</div><p>Transpose C → this gives adj(A)</p></div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Complete Example</div>
+      <div class="ex-title">Find adj(A) for A = [[2,1,3],[1,0,1],[−1,2,1]]</div>
+      <div class="step"><div class="step-dot">C₁₁</div><p>(−1)²|0,1;2,1| = (0−2) = −2</p></div>
+      <div class="step"><div class="step-dot">C₁₂</div><p>(−1)³|1,1;−1,1| = −(1+1) = −2</p></div>
+      <div class="step"><div class="step-dot">C₁₃</div><p>(−1)⁴|1,0;−1,2| = (2−0) = 2</p></div>
+      <div class="step"><div class="step-dot">C₂₁</div><p>(−1)³|1,3;2,1| = −(1−6) = 5</p></div>
+      <div class="step"><div class="step-dot">C₂₂</div><p>(−1)⁴|2,3;−1,1| = (2+3) = 5</p></div>
+      <div class="step"><div class="step-dot">C₂₃</div><p>(−1)⁵|2,1;−1,2| = −(4+1) = −5</p></div>
+      <div class="step"><div class="step-dot">C₃₁</div><p>(−1)⁴|1,3;0,1| = (1−0) = 1</p></div>
+      <div class="step"><div class="step-dot">C₃₂</div><p>(−1)⁵|2,3;1,1| = −(2−3) = 1</p></div>
+      <div class="step"><div class="step-dot">C₃₃</div><p>(−1)⁶|2,1;1,0| = (0−1) = −1</p></div>
+      <p style="margin-top:12px;color:var(--text-muted);font-size:.9rem;">adj(A) = Transpose of cofactor matrix:<br>
+      <span class="hl-teal">adj(A) = [[−2, 5, 1],[−2, 5, 1],[2, −5, −1]]</span></p>
+    </div>
+  </div>
+
+  <!-- KEY RESULT -->
+  <div class="section">
+    <div class="section-header"><div class="section-num">4</div><h2>Key Result: A · adj(A) = |A| · I</h2></div>
+    <div class="def-box">
+      <div class="def-label">⭐ Fundamental Result</div>
+      <p><strong>A · adj(A) = adj(A) · A = |A| · I</strong></p>
+      <p style="margin-top:8px;">Where I is the identity matrix. This forms the foundation for finding the inverse of a matrix.</p>
+    </div>
+
+    <p>This result tells us:</p>
+    <ul style="list-style:none;padding:0;">
+      <li style="padding:6px 0;color:#cdd5df;">• If we multiply a matrix by its adjoint, we get a scalar multiple of the identity</li>
+      <li style="padding:6px 0;color:#cdd5df;">• The scalar is the determinant |A|</li>
+      <li style="padding:6px 0;color:#cdd5df;">• This directly leads to the inverse formula: A⁻¹ = adj(A) / |A|</li>
+    </ul>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Term</th><th>Meaning</th><th>How to Get It</th></tr></thead>
+        <tbody>
+          <tr><td class="hl-teal">Mᵢⱼ</td><td>Minor of aᵢⱼ</td><td>Delete row i & col j → determinant</td></tr>
+          <tr><td class="hl-gold">Aᵢⱼ or Cᵢⱼ</td><td>Cofactor of aᵢⱼ</td><td>(−1)^(i+j) × Mᵢⱼ</td></tr>
+          <tr><td class="hl-blue">adj(A)</td><td>Adjoint / Adjugate</td><td>Transpose of cofactor matrix</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="det2.html" class="btn btn-prev">← Properties</a>
+  <a href="det4.html" class="btn btn-next">Inverse of Matrix →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+       <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 4 &middot; Determinants</div>
+  </div>
+</footer>
+
+</body>
+</html>

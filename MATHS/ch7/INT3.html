@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standard Integrals · Ch.7 · StudyNotesPro</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0d16;
+      --surface: #10131e;
+      --surface2: #161b29;
+      --surface3: #1c2133;
+      --border: #222840;
+      --border-light: #2c3350;
+      --accent: #5b8dee;
+      --accent-dim: rgba(91,141,238,0.13);
+      --gold: #e8b84b;
+      --gold-dim: rgba(232,184,75,0.13);
+      --green: #4fd19a;
+      --green-dim: rgba(79,209,154,0.12);
+      --pink: #e8678a;
+      --pink-dim: rgba(232,103,138,0.12);
+      --cyan: #38c9d4;
+      --cyan-dim: rgba(56,201,212,0.12);
+      --text: #d8deef;
+      --text-muted: #7880a0;
+      --text-dim: #3e4660;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+    .topnav { position: sticky; top: 0; z-index: 200; background: rgba(10,12,20,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 46px; }
+    .nav-inner { display: flex; align-items: center; height: 100%; padding: 0 14px; gap: 4px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 900; color: #fff; text-decoration: none; letter-spacing: .03em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 8px; }
+    .nav-brand span { color: var(--gold); }
+    .nav-chapter { font-size: .68rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: .06em; flex-shrink: 0; padding-right: 10px; border-right: 1px solid var(--border); margin-right: 4px; }
+    .nav-link { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: .78rem; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: all .2s; flex-shrink: 0; }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+    .nav-link.active { color: var(--bg); background: var(--green); font-weight: 600; }
+    .nav-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; opacity: .7; }
+
+    .hero { padding: 64px 24px 48px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: 'Σ'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 260px; color: rgba(79,209,154,0.04); font-family: 'Playfair Display', serif; pointer-events: none; line-height: 1; user-select: none; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; color: var(--green); text-transform: uppercase; border: 1px solid rgba(79,209,154,0.3); padding: 4px 12px; border-radius: 20px; background: var(--green-dim); margin-bottom: 20px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.15; background: linear-gradient(135deg, #fff 0%, var(--green) 55%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px; }
+    .hero-sub { max-width: 580px; margin: 0 auto 28px; color: var(--text-muted); font-size: .95rem; line-height: 1.8; }
+    .hero-pills { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .pill { font-size: .72rem; padding: 4px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; letter-spacing: .04em; }
+    .pill-blue { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,141,238,0.25); }
+    .pill-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); }
+    .pill-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(79,209,154,0.25); }
+    .pill-pink { background: var(--pink-dim); color: var(--pink); border: 1px solid rgba(232,103,138,0.25); }
+    .pill-cyan { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(56,201,212,0.25); }
+
+    .main { max-width: 880px; margin: 0 auto; padding: 0 20px 60px; }
+    .section { margin-bottom: 52px; }
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-num { font-family: 'JetBrains Mono', monospace; font-size: .65rem; color: var(--green); background: var(--green-dim); border: 1px solid rgba(79,209,154,0.2); padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-light), transparent); }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 16px; }
+    .card-title { font-size: .8rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+    .card-green { border-color: rgba(79,209,154,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(79,209,154,0.05) 100%); }
+    .card-accent { border-color: rgba(91,141,238,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(91,141,238,0.05) 100%); }
+    .card-gold { border-color: rgba(232,184,75,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,184,75,0.05) 100%); }
+    .card-pink { border-color: rgba(232,103,138,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,103,138,0.05) 100%); }
+    .card-cyan { border-color: rgba(56,201,212,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(56,201,212,0.05) 100%); }
+
+    /* ── FORMULA GRID TILES ── */
+    .ftiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+    .ftile { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; transition: border-color .2s, transform .15s; }
+    .ftile:hover { border-color: var(--border-light); transform: translateY(-1px); }
+    .ftile-num { font-family: 'JetBrains Mono', monospace; font-size: .62rem; color: var(--text-dim); margin-bottom: 6px; letter-spacing: .04em; }
+    .ftile-label { font-size: .68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .04em; }
+    .ftile .f { font-size: .95rem; }
+     .ftile, .fcard {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+
+
+    /* ── BIG FORMULA TABLE ── */
+    .formula-table { display: grid; grid-template-columns: 1fr; gap: 0; }
+    .ft-row { display: grid; grid-template-columns: 36px 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border); align-items: center; }
+    .ft-row:last-child { border-bottom: none; }
+    .ft-row:hover { background: var(--surface2); }
+    .ft-n { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--text-dim); padding: 12px 0 12px 14px; }
+    .ft-lhs { padding: 12px 14px; color: var(--text); font-size: .9rem; }
+    .ft-rhs { padding: 12px 14px; color: var(--green); font-size: .9rem; border-left: 1px solid var(--border); }
+
+    /* formula box */
+    .formula-box { background: var(--surface2); border: 1px solid var(--border-light); border-left: 3px solid var(--green); border-radius: 10px; padding: 18px 22px; margin: 14px 0; overflow-x: auto; }
+    .formula-box.blue { border-left-color: var(--accent); }
+    .formula-box.gold { border-left-color: var(--gold); }
+    .formula-box.pink { border-left-color: var(--pink); }
+    .formula-box.cyan { border-left-color: var(--cyan); }
+    .formula-label { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .05em; }
+
+    .note { display: flex; gap: 12px; align-items: flex-start; background: var(--green-dim); border: 1px solid rgba(79,209,154,0.25); border-radius: 10px; padding: 14px 18px; margin-top: 16px; }
+    .note-gold { background: var(--gold-dim); border-color: rgba(232,184,75,0.25); }
+    .note-blue { background: var(--accent-dim); border-color: rgba(91,141,238,0.25); }
+    .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .note p { color: var(--text-muted); font-size: .87rem; line-height: 1.7; }
+    .note strong { color: var(--green); }
+    .note-gold strong { color: var(--gold); }
+    .note-blue strong { color: var(--accent); }
+
+    .hl-green { color: var(--green); font-weight: 600; }
+    .hl-gold { color: var(--gold); font-weight: 600; }
+    .hl-blue { color: var(--accent); font-weight: 600; }
+    .hl-pink { color: var(--pink); font-weight: 600; }
+    .hl-cyan { color: var(--cyan); font-weight: 600; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th { background: var(--surface3); color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border-light); }
+    td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: var(--text-muted); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+
+    .site-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 28px 32px; }
+    .sf-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+    .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+    .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+    .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+    .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 44px 16px 36px; }
+      .main { padding: 0 14px 48px; }
+      .card { padding: 18px 16px; }
+      .ftiles { grid-template-columns: 1fr; }
+
+      /* Horizontal scroll only — no vertical scrollbar added */
+      .formula-box {
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 14px 16px;
+      }
+      mjx-container {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 2px;
+      }
+      .ftile, .fcard {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+    <span class="nav-chapter">CH·07 · INTEGRALS</span>
+    <a href="INT1.html" class="nav-link"><span class="nav-num">01</span> Basics</a>
+    <a href="INT2.html" class="nav-link"><span class="nav-num">02</span> Methods</a>
+    <a href="INT3.html" class="nav-link active"><span class="nav-num">03</span> Standard Integrals</a>
+    <a href="INT4.html" class="nav-link"><span class="nav-num">04</span> Definite Integrals</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-tag">Chapter 7 · Topic 03</div>
+  <h1>Standard Integrals</h1>
+  <p class="hero-sub">A comprehensive reference of all standard integral formulas for Class 12 — trigonometric, algebraic, inverse trigonometric, exponential and special forms.</p>
+  <div class="hero-pills">
+    <span class="pill pill-green">Trigonometric</span>
+    <span class="pill pill-blue">Algebraic Forms</span>
+    <span class="pill pill-gold">Inverse Trig</span>
+    <span class="pill pill-cyan">Special Forms</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- 1. Basic Trig Integrals -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Trigonometric Integrals</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">All Trig Standard Forms</div>
+      <div class="ftiles">
+        <div class="ftile">
+          <div class="ftile-label">F1</div>
+          <div class="f">\(\displaystyle\int \sin x\,dx = -\cos x+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F2</div>
+          <div class="f">\(\displaystyle\int \cos x\,dx = \sin x+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F3</div>
+          <div class="f">\(\displaystyle\int \tan x\,dx = \ln|\sec x|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F4</div>
+          <div class="f">\(\displaystyle\int \cot x\,dx = \ln|\sin x|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F5</div>
+          <div class="f">\(\displaystyle\int \sec x\,dx = \ln|\sec x+\tan x|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F6</div>
+          <div class="f">\(\displaystyle\int \csc x\,dx = \ln|\csc x-\cot x|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F7</div>
+          <div class="f">\(\displaystyle\int \sec^2 x\,dx = \tan x+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F8</div>
+          <div class="f">\(\displaystyle\int \csc^2 x\,dx = -\cot x+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F9</div>
+          <div class="f">\(\displaystyle\int \sec x\tan x\,dx = \sec x+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">F10</div>
+          <div class="f">\(\displaystyle\int \csc x\cot x\,dx = -\csc x+C\)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Algebraic Standard Forms -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Algebraic Standard Forms</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-accent">
+      <div class="card-title">Forms Involving x² ± a²</div>
+      <div class="ftiles">
+        <div class="ftile">
+          <div class="ftile-label">A1 — 1/(x²−a²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{x^2-a^2} = \frac{1}{2a}\ln\!\left|\frac{x-a}{x+a}\right|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">A2 — 1/(a²−x²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{a^2-x^2} = \frac{1}{2a}\ln\!\left|\frac{a+x}{a-x}\right|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">A3 — 1/(x²+a²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{x^2+a^2} = \frac{1}{a}\tan^{-1}\!\frac{x}{a}+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-green" style="margin-top:16px">
+      <div class="card-title">Forms Involving √(x² ± a²) and √(a² − x²)</div>
+      <div class="ftiles">
+        <div class="ftile">
+          <div class="ftile-label">B1 — 1/√(x²−a²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{\sqrt{x^2-a^2}} = \ln\!\left|x+\sqrt{x^2-a^2}\right|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">B2 — 1/√(x²+a²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{\sqrt{x^2+a^2}} = \ln\!\left|x+\sqrt{x^2+a^2}\right|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">B3 — 1/√(a²−x²)</div>
+          <div class="f">\(\displaystyle\int \frac{dx}{\sqrt{a^2-x^2}} = \sin^{-1}\!\frac{x}{a}+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">Square Root Integrals</div>
+      <div class="ftiles">
+        <div class="ftile">
+          <div class="ftile-label">C1 — √(x²−a²)</div>
+          <div class="f">\(\displaystyle\int \!\sqrt{x^2-a^2}\,dx = \frac{x\sqrt{x^2-a^2}}{2}-\frac{a^2}{2}\ln|x+\sqrt{x^2-a^2}|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">C2 — √(x²+a²)</div>
+          <div class="f">\(\displaystyle\int \!\sqrt{x^2+a^2}\,dx = \frac{x\sqrt{x^2+a^2}}{2}+\frac{a^2}{2}\ln|x+\sqrt{x^2+a^2}|+C\)</div>
+        </div>
+        <div class="ftile">
+          <div class="ftile-label">C3 — √(a²−x²)</div>
+          <div class="f">\(\displaystyle\int \!\sqrt{a^2-x^2}\,dx = \frac{x\sqrt{a^2-x^2}}{2}+\frac{a^2}{2}\sin^{-1}\!\frac{x}{a}+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-icon">💡</div>
+      <p><strong>Memory Tip:</strong> For \(\int\frac{dx}{x^2-a^2}\), recall the partial fraction: \(\frac{1}{x^2-a^2} = \frac{1}{2a}\!\left(\frac{1}{x-a}-\frac{1}{x+a}\right)\). Integrating gives the log form directly.</p>
+    </div>
+  </div>
+
+  <!-- 3. Special Integrals -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Integrals of Special Forms</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-title">Reducible Quadratic Forms — ax² + bx + c</div>
+      <p>Complete the square in the denominator to reduce to a standard form:</p>
+      <div class="formula-box gold">
+        <div class="formula-label">COMPLETE THE SQUARE TRICK</div>
+        \[ ax^2+bx+c = a\!\left[\left(x+\frac{b}{2a}\right)^2 + \left(c - \frac{b^2}{4a}\right)\!\cdot\frac{1}{a}\right] \]
+      </div>
+      <p>Then use \(t = x+\tfrac{b}{2a}\) and apply forms A1/A2/A3 or B1/B2/B3 as appropriate.</p>
+    </div>
+
+    <div class="card card-pink">
+      <div class="card-title">Form: (px + q) / (ax² + bx + c)</div>
+      <p>Split the numerator as: \(px+q = \lambda\cdot\frac{d}{dx}(ax^2+bx+c) + \mu\)</p>
+      <div class="formula-box pink">
+        <div class="formula-label">DECOMPOSITION STRATEGY</div>
+        \[ \int \frac{px+q}{ax^2+bx+c}\,dx = \lambda\ln|ax^2+bx+c|+\mu\int\frac{dx}{ax^2+bx+c} \]
+      </div>
+      <p>Find \(\lambda\) and \(\mu\) by comparing coefficients.</p>
+    </div>
+
+    <div class="card card-cyan">
+      <div class="card-title">Form: (px + q) / √(ax² + bx + c)</div>
+      <p>Same split strategy as above, but with a square root in the denominator:</p>
+      <div class="formula-box cyan">
+        \[ \int \frac{px+q}{\sqrt{ax^2+bx+c}}\,dx = \lambda\sqrt{ax^2+bx+c}+\mu\int\frac{dx}{\sqrt{ax^2+bx+c}} \]
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Complete Reference Table -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Quick Reference Table</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Integrand \(f(x)\)</th>
+            <th>Integral \(\int f(x)\,dx\)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>\(x^n,\; n\ne-1\)</td><td>\(\dfrac{x^{n+1}}{n+1}+C\)</td></tr>
+          <tr><td>2</td><td>\(\dfrac{1}{x}\)</td><td>\(\ln|x|+C\)</td></tr>
+          <tr><td>3</td><td>\(e^x\)</td><td>\(e^x+C\)</td></tr>
+          <tr><td>4</td><td>\(a^x\)</td><td>\(\dfrac{a^x}{\ln a}+C\)</td></tr>
+          <tr><td>5</td><td>\(\sin x\)</td><td>\(-\cos x+C\)</td></tr>
+          <tr><td>6</td><td>\(\cos x\)</td><td>\(\sin x+C\)</td></tr>
+          <tr><td>7</td><td>\(\tan x\)</td><td>\(\ln|\sec x|+C\)</td></tr>
+          <tr><td>8</td><td>\(\cot x\)</td><td>\(\ln|\sin x|+C\)</td></tr>
+          <tr><td>9</td><td>\(\sec^2 x\)</td><td>\(\tan x+C\)</td></tr>
+          <tr><td>10</td><td>\(\csc^2 x\)</td><td>\(-\cot x+C\)</td></tr>
+          <tr><td>11</td><td>\(\dfrac{1}{x^2+a^2}\)</td><td>\(\dfrac{1}{a}\tan^{-1}\!\dfrac{x}{a}+C\)</td></tr>
+          <tr><td>12</td><td>\(\dfrac{1}{x^2-a^2}\)</td><td>\(\dfrac{1}{2a}\ln\!\left|\dfrac{x-a}{x+a}\right|+C\)</td></tr>
+          <tr><td>13</td><td>\(\dfrac{1}{\sqrt{a^2-x^2}}\)</td><td>\(\sin^{-1}\!\dfrac{x}{a}+C\)</td></tr>
+          <tr><td>14</td><td>\(\dfrac{1}{\sqrt{x^2+a^2}}\)</td><td>\(\ln\!\left|x+\sqrt{x^2+a^2}\right|+C\)</td></tr>
+          <tr><td>15</td><td>\(\dfrac{1}{\sqrt{x^2-a^2}}\)</td><td>\(\ln\!\left|x+\sqrt{x^2-a^2}\right|+C\)</td></tr>
+          <tr><td>16</td><td>\(\sqrt{a^2-x^2}\)</td><td>\(\dfrac{x\sqrt{a^2-x^2}}{2}+\dfrac{a^2}{2}\sin^{-1}\!\dfrac{x}{a}+C\)</td></tr>
+          <tr><td>17</td><td>\(\sqrt{x^2+a^2}\)</td><td>\(\dfrac{x\sqrt{x^2+a^2}}{2}+\dfrac{a^2}{2}\ln\!\left|x+\sqrt{x^2+a^2}\right|+C\)</td></tr>
+          <tr><td>18</td><td>\(\sqrt{x^2-a^2}\)</td><td>\(\dfrac{x\sqrt{x^2-a^2}}{2}-\dfrac{a^2}{2}\ln\!\left|x+\sqrt{x^2-a^2}\right|+C\)</td></tr>
+          <tr><td>19</td><td>\(e^x[f(x)+f'(x)]\)</td><td>\(e^x\cdot f(x)+C\)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note note-gold" style="margin-top:16px">
+      <div class="note-icon">⭐</div>
+      <p><strong>Exam Tip:</strong> Formulas 11–18 are frequently tested in board exams. Memorise them as a group — notice how they pair up: <em>x²+a²</em> pairs with <em>arctan</em>, and the square root forms pair with <em>arcsin</em> or <em>ln</em>.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 7 &middot; Integrals</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Logarithmic Differentiation</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#f472b6;--accent-dim:#9d174d;
+    --green:#3fb950;--red:#f85149;--blue:#58a6ff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#1a0616 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(244,114,182,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(244,114,182,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(244,114,182,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}.section:nth-child(3){animation-delay:.14s}.section:nth-child(4){animation-delay:.21s}.section:nth-child(5){animation-delay:.28s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#fff;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(244,114,182,.07),rgba(244,114,182,.02));border:1px solid rgba(244,114,182,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent);line-height:2.1;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.91rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  /* Steps method */
+  .method-steps{margin:22px 0;}
+  .ms-item{display:flex;gap:15px;align-items:flex-start;margin:14px 0;}
+  .ms-num{min-width:34px;height:34px;border-radius:9px;background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .ms-body h4{color:#fff;margin-bottom:3px;font-size:.95rem;}
+  .ms-body p{color:var(--text-muted);font-size:.87rem;margin:0;}
+  /* When to use cards */
+  .when-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:18px 0;}
+  .wc{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px;transition:.2s;}
+  .wc:hover{border-color:rgba(244,114,182,.35);}
+  .wc .wci{font-size:1.3rem;margin-bottom:8px;}
+  .wc h4{color:#fff;font-size:.88rem;margin-bottom:4px;}
+  .wc p{color:var(--text-muted);font-size:.8rem;margin:0;}
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:#000;}.btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:66.4%;position:fixed;top:0;left:0;z-index:200;}
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html">1. Continuity</a>
+    <a href="C&D2.html">2. Differentiability</a>
+    <a href="C&D3.html">3. Exp & Log</a>
+    <a href="C&D4.html" class="active">4. Log Diff.</a>
+    <a href="C&D5.html">5. Inv. Trig</a>
+    <a href="C&D6.html">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">04</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Logarithmic<br><span>Differentiation</span></h1>
+  <p>A powerful technique for differentiating complex products, quotients, and functions of the form u^v.</p>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>What is Logarithmic Differentiation?</h2></div>
+    <p>Logarithmic differentiation is a technique where we <span class="hl">take the natural log of both sides</span> of y = f(x) before differentiating. It converts hard multiplications and powers into easy additions.</p>
+    <div class="when-grid">
+      <div class="wc"><div class="wci">🔢</div><h4>Power in variable</h4><p>y = x^x or y = (sin x)^x</p></div>
+      <div class="wc"><div class="wci">✖️</div><h4>Long products</h4><p>y = x² · sin x · eˣ · ln x</p></div>
+      <div class="wc"><div class="wci">➗</div><h4>Complex fractions</h4><p>y = (x²·sin x) / (eˣ·cos x)</p></div>
+      <div class="wc"><div class="wci">⬆️</div><h4>Function raised to function</h4><p>y = (f(x))^(g(x))</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>The Method — Step by Step</h2></div>
+    <div class="method-steps">
+      <div class="ms-item"><div class="ms-num">1</div><div class="ms-body"><h4>Take ln of both sides</h4><p>Write: ln y = ln [f(x)]</p></div></div>
+      <div class="ms-item"><div class="ms-num">2</div><div class="ms-body"><h4>Simplify using log properties</h4><p>Use: ln(ab) = ln a + ln b, ln(a/b) = ln a − ln b, ln(aⁿ) = n ln a</p></div></div>
+      <div class="ms-item"><div class="ms-num">3</div><div class="ms-body"><h4>Differentiate both sides w.r.t. x</h4><p>LHS becomes: (1/y) · dy/dx &nbsp; (using chain rule)</p></div></div>
+      <div class="ms-item"><div class="ms-num">4</div><div class="ms-body"><h4>Solve for dy/dx</h4><p>Multiply both sides by y to get dy/dx = y · [...]</p></div></div>
+      <div class="ms-item"><div class="ms-num">5</div><div class="ms-body"><h4>Substitute back y = f(x)</h4><p>Replace y with the original expression to get the final answer.</p></div></div>
+    </div>
+    <div class="formula-box">
+      <div class="lbl">Key — Differentiating ln y</div>
+      <div class="formula">
+        d/dx [ln y] = (1/y) · dy/dx<br><br>
+        ⟹ dy/dx = y · d/dx [ln y]
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Solved Examples</h2></div>
+    <div class="example-box">
+      <div class="lbl">✏️ Example 1 — y = xˣ (Variable base AND power)</div>
+      <div class="etitle">Find dy/dx for y = xˣ</div>
+      <div class="step"><div class="sd">1</div><p>Take ln: ln y = ln(xˣ) = x · ln x</p></div>
+      <div class="step"><div class="sd">2</div><p>Differentiate: (1/y)·dy/dx = d/dx[x·ln x]</p></div>
+      <div class="step"><div class="sd">3</div><p>= 1·ln x + x·(1/x) = ln x + 1</p></div>
+      <div class="step"><div class="sd">4</div><p>dy/dx = y·(ln x + 1) = <span class="hlg">xˣ (ln x + 1)</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 2 — Product of Many Functions</div>
+      <div class="etitle">Find dy/dx for y = x² · sin x · eˣ</div>
+      <div class="step"><div class="sd">1</div><p>Take ln: ln y = ln(x²) + ln(sin x) + ln(eˣ)</p></div>
+      <div class="step"><div class="sd">2</div><p>= 2 ln x + ln(sin x) + x</p></div>
+      <div class="step"><div class="sd">3</div><p>Differentiate: (1/y)·dy/dx = 2/x + cos x/sin x + 1</p></div>
+      <div class="step"><div class="sd">4</div><p>= 2/x + cot x + 1</p></div>
+      <div class="step"><div class="sd">5</div><p>dy/dx = y · (2/x + cot x + 1) = <span class="hlg">x²·sin x·eˣ · (2/x + cot x + 1)</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 3 — Complex Fraction</div>
+      <div class="etitle">Find dy/dx for y = √(x · sin x) / eˣ</div>
+      <div class="step"><div class="sd">1</div><p>Take ln: ln y = ½ln x + ½ln(sin x) − x</p></div>
+      <div class="step"><div class="sd">2</div><p>Differentiate: (1/y)·dy/dx = 1/(2x) + cos x/(2 sin x) − 1</p></div>
+      <div class="step"><div class="sd">3</div><p>= 1/(2x) + cot x/2 − 1</p></div>
+      <div class="step"><div class="sd">4</div><p>dy/dx = <span class="hlg">y · (1/(2x) + cot x/2 − 1)</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="lbl">✏️ Example 4 — (sin x)^(cos x)</div>
+      <div class="etitle">Find dy/dx for y = (sin x)^(cos x)</div>
+      <div class="step"><div class="sd">1</div><p>Take ln: ln y = cos x · ln(sin x)</p></div>
+      <div class="step"><div class="sd">2</div><p>Differentiate using Product Rule on RHS:</p></div>
+      <div class="step"><div class="sd">3</div><p>(1/y)·dy/dx = −sin x·ln(sin x) + cos x·(cos x/sin x)</p></div>
+      <div class="step"><div class="sd">4</div><p>= −sin x·ln(sin x) + cos²x/sin x</p></div>
+      <div class="step"><div class="sd">5</div><p>dy/dx = <span class="hlg">(sin x)^(cos x) · [cos²x/sin x − sin x·ln(sin x)]</span></p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Key Takeaway</h2></div>
+    <div class="def-box">
+      <div class="lbl">⭐ Remember</div>
+      <p>
+        Logarithmic differentiation is the <strong>only practical method</strong> for functions like y = f(x)^g(x) where both base and power contain x.<br><br>
+        The trick: <span class="hl">d/dx[ln y] = (1/y)·dy/dx</span> — always leads you to dy/dx.
+      </p>
+    </div>
+    <div class="note-box">
+      <p>💡 In exams, after applying log differentiation — always substitute y back in terms of x for the final answer. Don't leave dy/dx in terms of y.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D3.html" class="btn btn-prev">← Exp & Log</a>
+  <a href="C&D5.html" class="btn btn-next">Inv. Trig Derivatives →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="index.html"><img src="Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 12 – Linear Programming | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0b0f1a;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --surface3: #1f2d45;
+  --border: #2a3a55;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --gold: #fbbf24;
+  --gold-dim: #92680a;
+  --green: #34d399;
+  --red: #f87171;
+  --pink: #f472b6;
+  --text: #e2e8f0;
+  --text-muted: #7a8fa8;
+  --text-dim: #4a6080;
+  --radius: 14px;
+  --shadow: 0 8px 32px rgba(0,0,0,.45);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ── BACKGROUND GRID ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(56,189,248,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;z-index:0;
+}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  padding:80px 32px 60px;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(56,189,248,.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);
+  border-radius:999px;padding:6px 18px;
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  color:var(--accent);letter-spacing:.08em;margin-bottom:24px;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,6vw,3.8rem);
+  font-weight:900;line-height:1.15;
+  background:linear-gradient(135deg,#fff 30%,var(--accent) 70%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:16px;
+}
+.hero p{
+  color:var(--text-muted);font-size:1.1rem;max-width:620px;margin:0 auto 36px;
+}
+.hero-stats{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:24px;
+}
+.stat-pill{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:999px;padding:8px 20px;
+  font-size:.82rem;font-family:'JetBrains Mono',monospace;
+  color:var(--text-muted);
+}
+.stat-pill span{color:var(--gold);font-weight:700;}
+
+/* ── NAV TABS ── */
+.nav-wrap{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,15,26,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;
+}
+.nav-tabs{
+  display:flex;gap:0;max-width:1000px;margin:0 auto;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{
+  flex-shrink:0;padding:16px 20px;
+  font-size:.88rem;font-weight:500;
+  color:var(--text-muted);
+  background:transparent;border:none;
+  border-bottom:2px solid transparent;
+  cursor:pointer;transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+  white-space:nowrap;
+}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── MAIN ── */
+main{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+
+/* ── SECTION ── */
+.section{
+  display:none;
+  animation:fadeUp .4s ease;
+}
+.section.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADER ── */
+.sec-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:36px;padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+.sec-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;
+}
+.sec-icon.blue{background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.3);}
+.sec-icon.purple{background:rgba(129,140,248,.15);border:1px solid rgba(129,140,248,.3);}
+.sec-icon.green{background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);}
+.sec-icon.gold{background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);}
+.sec-icon.pink{background:rgba(244,114,182,.15);border:1px solid rgba(244,114,182,.3);}
+.sec-header-text h2{
+  font-family:'Playfair Display',serif;
+  font-size:1.65rem;font-weight:700;color:#fff;
+}
+.sec-header-text p{color:var(--text-muted);font-size:.92rem;margin-top:4px;}
+
+/* ── CARDS ── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px 30px;
+  margin-bottom:24px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.card:hover{border-color:rgba(56,189,248,.35);}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;transition:.2s;
+}
+.card:hover::before{opacity:1;}
+.card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:12px;
+}
+.card p{color:var(--text-muted);line-height:1.8;}
+.card ul,.card ol{color:var(--text-muted);padding-left:20px;line-height:2;}
+.card li{margin-bottom:4px;}
+.card li strong{color:var(--text);}
+
+/* ── DEFINITION BOX ── */
+.def-box{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:20px 24px;margin-bottom:18px;
+}
+.def-box .def-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:8px;
+}
+.def-box p{color:var(--text);line-height:1.8;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight-box{
+  background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(251,191,36,.03));
+  border:1px solid rgba(251,191,36,.3);
+  border-radius:var(--radius);
+  padding:20px 24px;margin:20px 0;
+}
+.highlight-box .hl-title{
+  font-weight:600;color:var(--gold);margin-bottom:8px;
+  font-size:.95rem;
+}
+.highlight-box p,.highlight-box ul{color:var(--text-muted);line-height:1.85;}
+.highlight-box ul{padding-left:20px;}
+.highlight-box li{margin-bottom:6px;}
+
+/* ── TIP BOX ── */
+.tip-box{
+  border-radius:var(--radius);
+  padding:18px 24px;margin:18px 0;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.tip-box.board{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.25);}
+.tip-box.jee{background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.25);}
+.tip-box .tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.tip-box .tip-content .tip-label{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;
+  font-weight:600;
+}
+.tip-box.board .tip-label{color:var(--green);}
+.tip-box.jee .tip-label{color:var(--pink);}
+.tip-box .tip-content p,.tip-box .tip-content ul{
+  color:var(--text-muted);font-size:.92rem;line-height:1.75;
+}
+.tip-box .tip-content ul{padding-left:18px;}
+.tip-box .tip-content li{margin-bottom:4px;}
+
+/* ── EXAMPLE BOX ── */
+.example-box{
+  background:var(--surface3);border:1px solid var(--border);
+  border-radius:var(--radius);padding:24px;margin:20px 0;
+}
+.example-box .ex-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.ex-badge{
+  background:rgba(129,140,248,.2);border:1px solid rgba(129,140,248,.4);
+  border-radius:6px;padding:3px 10px;
+  font-size:.72rem;font-family:'JetBrains Mono',monospace;
+  color:var(--accent2);letter-spacing:.06em;
+}
+.example-box h4{color:#fff;font-size:1rem;}
+.example-box p,.example-box ol,.example-box ul{color:var(--text-muted);line-height:1.85;}
+.example-box ol,.example-box ul{padding-left:20px;}
+.example-box li{margin-bottom:6px;}
+.example-box .solution{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:16px 20px;margin-top:16px;
+}
+.example-box .solution .sol-label{
+  font-size:.72rem;font-family:'JetBrains Mono',monospace;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green);margin-bottom:10px;
+}
+
+/* ── FORMULA SHEET ── */
+.formula-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+}
+.formula-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px 24px;
+  transition:border-color .25s,transform .2s;
+}
+.formula-card:hover{
+  border-color:var(--accent);
+  transform:translateY(-2px);
+}
+.formula-card .fc-label{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;
+}
+.formula-card .fc-name{
+  font-weight:600;color:#fff;font-size:.95rem;margin-bottom:10px;
+}
+.formula{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.88rem;color:var(--gold);
+  line-height:1.7;letter-spacing:.02em;
+  margin:8px 0;
+}
+.formula-card p{color:var(--text-muted);font-size:.85rem;margin-top:8px;line-height:1.7;}
+
+/* ── TABLE ── */
+.styled-table{
+  width:100%;border-collapse:collapse;margin:20px 0;
+  font-size:.9rem;
+}
+.styled-table th{
+  background:var(--surface3);
+  padding:12px 16px;text-align:left;
+  color:var(--accent);font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.styled-table td{
+  padding:12px 16px;
+  border-bottom:1px solid rgba(42,58,85,.5);
+  color:var(--text-muted);
+  vertical-align:top;line-height:1.7;
+}
+.styled-table tr:hover td{background:rgba(56,189,248,.04);}
+
+/* ── INTERACTIVE CORNER CHECK ── */
+.quiz-wrap{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;margin:28px 0;
+}
+.quiz-wrap h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;color:#fff;margin-bottom:6px;
+}
+.quiz-wrap .quiz-sub{color:var(--text-muted);font-size:.88rem;margin-bottom:20px;}
+.quiz-q{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:20px;margin-bottom:16px;
+}
+.quiz-q p{color:var(--text);margin-bottom:14px;font-weight:500;}
+.quiz-opts{display:flex;flex-direction:column;gap:8px;}
+.quiz-opt{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px 16px;
+  font-size:.9rem;color:var(--text-muted);
+  cursor:pointer;transition:all .2s;text-align:left;
+  font-family:'DM Sans',sans-serif;
+}
+.quiz-opt:hover{border-color:var(--accent);color:var(--text);}
+.quiz-opt.correct{background:rgba(52,211,153,.12);border-color:var(--green);color:var(--green);}
+.quiz-opt.wrong{background:rgba(248,113,113,.12);border-color:var(--red);color:var(--red);}
+.quiz-feedback{
+  margin-top:10px;padding:10px 16px;
+  border-radius:8px;font-size:.88rem;display:none;
+}
+.quiz-feedback.show{display:block;}
+.quiz-feedback.correct{background:rgba(52,211,153,.1);color:var(--green);}
+.quiz-feedback.wrong{background:rgba(248,113,113,.1);color:var(--red);}
+
+/* ── PROGRESS ── */
+.progress-bar-wrap{
+  background:var(--surface2);border-radius:999px;
+  height:6px;margin:12px 0 24px;overflow:hidden;
+}
+.progress-bar{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .4s ease;
+}
+
+/* ── FOOTER ── */
+.site-footer{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  padding:28px 32px;
+}
+.sf-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;flex-direction:column;
+  align-items:center;gap:10px;text-align:center;
+}
+.sf-brand a{
+  font-family:'Playfair Display',serif;font-size:1.15rem;
+  font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;
+}
+.sf-brand a:hover{color:var(--accent);}
+.sf-brand span{color:var(--gold);}
+.sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+.sf-info{
+  display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;justify-content:center;font-size:.82rem;
+}
+.sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+.sf-dot{color:var(--border);}
+.sf-author{color:var(--text-muted);}
+.sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+.sf-author a:hover{color:var(--accent);}
+.sf-chapter{
+  font-size:.72rem;color:var(--border);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ── TOPIC PROGRESS ── */
+.topic-map{
+  display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px;
+}
+.topic-chip{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:999px;padding:8px 18px;
+  font-size:.82rem;color:var(--text-muted);
+  cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:8px;
+}
+.topic-chip:hover,.topic-chip.done{
+  background:rgba(52,211,153,.1);
+  border-color:var(--green);color:var(--green);
+}
+.topic-chip .check{font-size:.75rem;}
+
+/* ── STEP BOX ── */
+.steps-list{counter-reset:step;list-style:none;padding:0;}
+.steps-list li{
+  counter-increment:step;
+  display:flex;gap:16px;align-items:flex-start;
+  padding:14px 0;border-bottom:1px solid rgba(42,58,85,.4);
+}
+.steps-list li:last-child{border-bottom:none;}
+.step-num{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;
+  color:#000;margin-top:2px;
+}
+.step-num::before{content:counter(step);}
+.step-content{color:var(--text-muted);line-height:1.8;}
+.step-content strong{color:var(--text);}
+
+/* ── TYPES GRID ── */
+.types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:20px 0;}
+.type-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px;
+  transition:border-color .2s,transform .2s;
+}
+.type-card:hover{border-color:var(--accent2);transform:translateY(-3px);}
+.type-card .type-icon{font-size:1.8rem;margin-bottom:12px;}
+.type-card h4{color:#fff;font-size:.95rem;font-weight:600;margin-bottom:8px;}
+.type-card p{color:var(--text-muted);font-size:.85rem;line-height:1.7;}
+
+/* ── SCROLL TO TOP ── */
+#scrollTop{
+  position:fixed;bottom:32px;right:32px;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--accent);border:none;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  z-index:200;box-shadow:0 4px 16px rgba(56,189,248,.4);
+}
+#scrollTop.show{opacity:1;pointer-events:all;}
+
+@media(max-width:640px){
+  .hero{padding:60px 20px 40px;}
+  main{padding:24px 16px 60px;}
+  .card{padding:20px;}
+  .formula-grid{grid-template-columns:1fr;}
+  .types-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">📐 Class 12 · Mathematics · Chapter 12</div>
+  <h1>Linear Programming</h1>
+  <p>Complete notes with definitions, graphical method, problem types, worked examples, Board & JEE tips, and a full formula sheet.</p>
+  <div class="hero-stats">
+    <div class="stat-pill">Topics: <span>3 Main</span></div>
+    <div class="stat-pill">NCERT Weightage: <span>5–6 Marks</span></div>
+    <div class="stat-pill">JEE: <span>Concept Based</span></div>
+    <div class="stat-pill">Difficulty: <span>Moderate</span></div>
+  </div>
+</section>
+
+<!-- NAV -->
+<nav class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('intro',this)">1. Introduction</button>
+    <button class="nav-tab" onclick="showSection('formulation',this)">2. Formulation</button>
+    <button class="nav-tab" onclick="showSection('graphical',this)">3. Graphical Method</button>
+    <button class="nav-tab" onclick="showSection('types',this)">4. Problem Types</button>
+    <button class="nav-tab" onclick="showSection('practice',this)">5. Practice MCQs</button>
+    <button class="nav-tab" onclick="showSection('formulas',this)">📋 Formula Sheet</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ════════════════════════════════════════════
+  SECTION 1 — INTRODUCTION
+════════════════════════════════════════════ -->
+<section id="intro" class="section active">
+  <div class="sec-header">
+    <div class="sec-icon blue">🧭</div>
+    <div class="sec-header-text">
+      <h2>Introduction to Linear Programming</h2>
+      <p>What it is, why it matters, and core terminology</p>
+    </div>
+  </div>
+
+  <div class="topic-map">
+    <div class="topic-chip" onclick="toggleChip(this)"><span>Linear Programming Problem (LPP)</span><span class="check">○</span></div>
+    <div class="topic-chip" onclick="toggleChip(this)"><span>Objective Function</span><span class="check">○</span></div>
+    <div class="topic-chip" onclick="toggleChip(this)"><span>Constraints</span><span class="check">○</span></div>
+    <div class="topic-chip" onclick="toggleChip(this)"><span>Feasible Region</span><span class="check">○</span></div>
+    <div class="topic-chip" onclick="toggleChip(this)"><span>Optimal Solution</span><span class="check">○</span></div>
+  </div>
+
+  <div class="card">
+    <h3>What is Linear Programming?</h3>
+    <p>Linear Programming (LP) is a mathematical technique used to <strong>optimize</strong> (maximize or minimize) a linear objective function subject to a set of linear constraints (equalities or inequalities). It is widely used in business, economics, engineering, and resource management.</p>
+  </div>
+
+  <div class="def-box">
+    <div class="def-label">Definition</div>
+    <p><strong>Linear Programming Problem (LPP)</strong> is the problem of finding the values of variables x and y that <em>optimise</em> (max/min) a linear function Z = ax + by, subject to linear constraints and non-negativity restrictions x ≥ 0, y ≥ 0.</p>
+  </div>
+
+  <div class="card">
+    <h3>Key Terminology</h3>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Term</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Objective Function</strong></td><td>The linear function Z = ax + by to be maximised or minimised.</td></tr>
+        <tr><td><strong>Decision Variables</strong></td><td>The unknowns x, y whose optimal values we seek.</td></tr>
+        <tr><td><strong>Constraints</strong></td><td>Linear inequalities or equations that limit the decision variables.</td></tr>
+        <tr><td><strong>Non-negativity Restriction</strong></td><td>x ≥ 0, y ≥ 0 (quantities can't be negative in real life).</td></tr>
+        <tr><td><strong>Feasible Region</strong></td><td>The common region satisfying ALL constraints including x ≥ 0, y ≥ 0.</td></tr>
+        <tr><td><strong>Feasible Solution</strong></td><td>Any point (x, y) lying in the feasible region.</td></tr>
+        <tr><td><strong>Optimal Solution</strong></td><td>A feasible solution that gives the maximum/minimum value of Z.</td></tr>
+        <tr><td><strong>Corner Point</strong></td><td>A vertex (corner) of the feasible region polygon.</td></tr>
+        <tr><td><strong>Infeasible Problem</strong></td><td>When the feasible region is empty (no solution exists).</td></tr>
+        <tr><td><strong>Unbounded Problem</strong></td><td>When the feasible region extends infinitely and Z has no max (or no min).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box">
+    <div class="hl-title">⚡ Key Theorem — Corner Point Theorem</div>
+    <p>If the feasible region is <strong>bounded</strong>, then the objective function Z attains its maximum and minimum values at the <strong>corner points</strong> (vertices) of the feasible region. If the feasible region is unbounded, the maximum/minimum may or may not exist — always verify using an open half-plane test.</p>
+  </div>
+
+  <div class="tip-box board">
+    <div class="tip-icon">📌</div>
+    <div class="tip-content">
+      <div class="tip-label">Board Exam Tip</div>
+      <ul>
+        <li>Always <strong>state and label</strong> the objective function and constraints clearly in your answer.</li>
+        <li>For 2–3 mark questions, defining terms like feasible region and optimal solution can earn easy marks.</li>
+        <li>NCERT-style questions always have a bounded feasible region — check all corner points.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box jee">
+    <div class="tip-icon">🎯</div>
+    <div class="tip-content">
+      <div class="tip-label">JEE Tip</div>
+      <ul>
+        <li>JEE mainly tests conceptual understanding and speed. Know the corner point theorem cold.</li>
+        <li>Quickly sketch the region mentally — identifying corner points fast is the key skill.</li>
+        <li>Watch for unbounded regions: the problem may ask whether a max or min exists.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>General Form of an LPP</h3>
+    <div class="formula">Maximise (or Minimise):  Z = c₁x₁ + c₂x₂ + … + cₙxₙ</div>
+    <div class="formula">Subject to constraints:
+  a₁₁x₁ + a₁₂x₂ + … ≤ b₁
+  a₂₁x₁ + a₂₂x₂ + … ≤ b₂
+  ⋮
+  x₁, x₂, … ≥ 0</div>
+    <p style="margin-top:12px;">For Class 12, we deal with <strong>two decision variables (x, y)</strong>, making graphical solution possible.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  SECTION 2 — MATHEMATICAL FORMULATION
+════════════════════════════════════════════ -->
+<section id="formulation" class="section">
+  <div class="sec-header">
+    <div class="sec-icon purple">📝</div>
+    <div class="sec-header-text">
+      <h2>Mathematical Formulation of LPP</h2>
+      <p>Translating real-world problems into mathematical models</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Steps to Formulate an LPP</h3>
+    <ol class="steps-list">
+      <li><div class="step-num"></div><div class="step-content"><strong>Identify Decision Variables:</strong> What quantities can we control? Name them x and y (e.g., units of product A and product B).</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Write the Objective Function:</strong> Express the quantity to be optimised (profit, cost, distance, etc.) as Z = ax + by.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Identify Constraints:</strong> List all restrictions (resources, capacity, demand, time, etc.) as linear inequalities.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Add Non-negativity Constraints:</strong> x ≥ 0, y ≥ 0 (physical quantities cannot be negative).</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Solve:</strong> Use the graphical method to find the feasible region and evaluate Z at corner points.</div></li>
+    </ol>
+  </div>
+
+  <div class="example-box">
+    <div class="ex-header">
+      <span class="ex-badge">EXAMPLE 1</span>
+      <h4>Manufacturing Problem — Formulation</h4>
+    </div>
+    <p>A factory manufactures two products A and B. Each unit of A requires <strong>2 hours</strong> on machine M₁ and <strong>1 hour</strong> on M₂. Each unit of B requires <strong>1 hour</strong> on M₁ and <strong>2 hours</strong> on M₂. M₁ is available for <strong>10 hours/day</strong> and M₂ for <strong>8 hours/day</strong>. Profit on A is ₹5/unit and on B is ₹7/unit. Formulate the LPP.</p>
+    <div class="solution">
+      <div class="sol-label">Formulation</div>
+      <p><strong>Decision variables:</strong> Let x = units of A, y = units of B</p>
+      <p style="margin-top:8px;"><strong>Objective Function:</strong> Maximise Z = 5x + 7y</p>
+      <p style="margin-top:8px;"><strong>Constraints:</strong></p>
+      <div class="formula">Machine M₁:  2x + y ≤ 10
+Machine M₂:  x + 2y ≤ 8
+Non-negativity:  x ≥ 0,  y ≥ 0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tabular Method for Formulation</h3>
+    <p style="margin-bottom:14px;">Always organise the given data in a table before writing the LPP. This reduces errors significantly.</p>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Resource/Activity</th><th>Product A (x)</th><th>Product B (y)</th><th>Availability</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Machine M₁ (hrs)</td><td>2</td><td>1</td><td>≤ 10</td></tr>
+        <tr><td>Machine M₂ (hrs)</td><td>1</td><td>2</td><td>≤ 8</td></tr>
+        <tr><td>Profit (₹)</td><td>5</td><td>7</td><td>Maximise Z</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="example-box">
+    <div class="ex-header">
+      <span class="ex-badge">EXAMPLE 2</span>
+      <h4>Diet Problem — Formulation</h4>
+    </div>
+    <p>A dietician wants a patient to get at least <strong>80 units</strong> of protein and at least <strong>48 units</strong> of carbohydrates per day. Food F₁ contains <strong>4 units protein &amp; 2 units carbs</strong> per serving; Food F₂ contains <strong>2 units protein &amp; 4 units carbs</strong> per serving. F₁ costs ₹3/serving, F₂ costs ₹2/serving. Formulate the LPP to minimise cost.</p>
+    <div class="solution">
+      <div class="sol-label">Formulation</div>
+      <div class="formula">Minimise:  Z = 3x + 2y
+Subject to:
+  4x + 2y ≥ 80  (protein)
+  2x + 4y ≥ 48  (carbohydrates)
+  x ≥ 0, y ≥ 0</div>
+    </div>
+  </div>
+
+  <div class="tip-box board">
+    <div class="tip-icon">📌</div>
+    <div class="tip-content">
+      <div class="tip-label">Board Exam Tip</div>
+      <ul>
+        <li>In formulation-only questions (2 marks), writing the objective function and all constraints correctly earns full marks — you don't need to solve.</li>
+        <li>Read the problem at least <strong>twice</strong> before writing variables. Common error: swapping x and y roles.</li>
+        <li>Explicitly state units (e.g., "x = number of units of Product A").</li>
+        <li>Don't forget to write x ≥ 0, y ≥ 0 — marks are often lost here!</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box jee">
+    <div class="tip-icon">🎯</div>
+    <div class="tip-content">
+      <div class="tip-label">JEE Tip</div>
+      <ul>
+        <li>JEE rarely tests pure formulation — focus on quickly identifying constraints and directly computing corner points.</li>
+        <li>For multiple-choice: if the question gives the formulation, jump straight to graphing or corner point evaluation.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  SECTION 3 — GRAPHICAL METHOD
+════════════════════════════════════════════ -->
+<section id="graphical" class="section">
+  <div class="sec-header">
+    <div class="sec-icon green">📊</div>
+    <div class="sec-header-text">
+      <h2>Graphical Method of Solving LPP</h2>
+      <p>Corner point method and iso-profit line method — step by step</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Graphical Method — Overview</h3>
+    <p>Since Class 12 LPPs have only two variables (x and y), we can plot constraints on the xy-plane and find the <strong>feasible region</strong> graphically. The optimal solution always occurs at one of the <strong>corner points</strong> of this region.</p>
+  </div>
+
+  <div class="card">
+    <h3>Step-by-Step Procedure</h3>
+    <ol class="steps-list">
+      <li><div class="step-num"></div><div class="step-content"><strong>Convert constraints to equations:</strong> Replace ≤ or ≥ with = and plot each line on the graph. Find x and y intercepts for each line.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Determine which side satisfies each inequality:</strong> Test the origin (0,0). If it satisfies the inequality, shade that side; otherwise shade the other side.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Identify the Feasible Region:</strong> The region satisfying ALL constraints simultaneously (the intersection of all shaded regions), also bounded by x ≥ 0, y ≥ 0 (first quadrant).</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Find Corner Points:</strong> Identify all vertices of the feasible region polygon. Solve pairs of constraint equations simultaneously to find intersection points accurately.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Evaluate Z at each corner point:</strong> Calculate the value of the objective function at every vertex.</div></li>
+      <li><div class="step-num"></div><div class="step-content"><strong>Identify the Optimal Value:</strong> The largest value of Z gives the maximum; the smallest gives the minimum. State the optimal x, y, and Z.</div></li>
+    </ol>
+  </div>
+
+  <div class="example-box">
+    <div class="ex-header">
+      <span class="ex-badge">SOLVED EXAMPLE</span>
+      <h4>Complete Graphical Solution</h4>
+    </div>
+    <p><strong>Problem:</strong> Maximise Z = 5x + 7y subject to:</p>
+    <div class="formula">2x + y ≤ 10
+x + 2y ≤ 8
+x ≥ 0,  y ≥ 0</div>
+    <div class="solution">
+      <div class="sol-label">Solution</div>
+      <p><strong>Step 1 — Find intercepts:</strong></p>
+      <table class="styled-table" style="margin-top:10px;">
+        <thead><tr><th>Constraint Line</th><th>x-intercept</th><th>y-intercept</th></tr></thead>
+        <tbody>
+          <tr><td>2x + y = 10</td><td>(5, 0)</td><td>(0, 10)</td></tr>
+          <tr><td>x + 2y = 8</td><td>(8, 0)</td><td>(0, 4)</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;"><strong>Step 2 — Test origin for each:</strong><br/>
+      2(0)+0 = 0 ≤ 10 ✓ &nbsp;&nbsp; 0+2(0) = 0 ≤ 8 ✓ → Origin side is feasible for both.</p>
+      <p style="margin-top:10px;"><strong>Step 3 — Find intersection of the two lines:</strong><br/>
+      2x + y = 10 and x + 2y = 8 → Subtract: x − y = 2 and add: 3x = 12 → x = 4, y = 2 → Point (4, 2)</p>
+      <p style="margin-top:10px;"><strong>Step 4 — Corner Points of feasible region:</strong></p>
+      <table class="styled-table" style="margin-top:8px;">
+        <thead><tr><th>Corner Point</th><th>Z = 5x + 7y</th></tr></thead>
+        <tbody>
+          <tr><td>O(0, 0)</td><td>5(0) + 7(0) = 0</td></tr>
+          <tr><td>A(5, 0)</td><td>5(5) + 7(0) = 25</td></tr>
+          <tr><td>B(4, 2)</td><td>5(4) + 7(2) = 20 + 14 = <strong style="color:var(--gold)">34</strong></td></tr>
+          <tr><td>C(0, 4)</td><td>5(0) + 7(4) = 28</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;color:var(--green);"><strong>∴ Maximum Z = 34 at x = 4, y = 2</strong></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Types of Feasible Regions</h3>
+    <div class="types-grid" style="margin-top:16px;">
+      <div class="type-card">
+        <div class="type-icon">🔷</div>
+        <h4>Bounded Feasible Region</h4>
+        <p>A closed polygon — both maximum and minimum values of Z always exist at corner points. Most Class 12 problems are bounded.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">⬚</div>
+        <h4>Unbounded Feasible Region</h4>
+        <p>Extends infinitely in some direction. Maximum may not exist for maximisation, or minimum may not exist for minimisation. Must verify using open half-plane test.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">🚫</div>
+        <h4>Empty / Infeasible</h4>
+        <p>No common region satisfies all constraints. No solution exists. The problem is said to be infeasible.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">↔️</div>
+        <h4>Multiple Optimal Solutions</h4>
+        <p>If Z has the same value at two adjacent corner points, then all points on the line segment joining them are also optimal solutions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Unbounded Region — Open Half-Plane Test</h3>
+    <div class="def-box">
+      <div class="def-label">Procedure</div>
+      <p>If the feasible region is unbounded and you get a value M at a corner point:<br/><br/>
+      Draw the half-plane: <strong>ax + by &gt; M</strong> (for max) or <strong>ax + by &lt; M</strong> (for min).<br/><br/>
+      • If this half-plane has <strong>no point in common</strong> with the feasible region → M is indeed the optimal value.<br/>
+      • If it <strong>has common points</strong> → the problem has no finite maximum (or minimum).</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="hl-title">⚡ Iso-Profit Line Method (Alternative)</div>
+    <p>Draw several lines of the form Z = ax + by = k for increasing values of k. The last such line that still touches the feasible region gives the optimal solution. Less reliable for exams — prefer the corner point method.</p>
+  </div>
+
+  <div class="tip-box board">
+    <div class="tip-icon">📌</div>
+    <div class="tip-content">
+      <div class="tip-label">Board Exam Tip</div>
+      <ul>
+        <li>Always draw the graph neatly. Label all corner points and shade the feasible region.</li>
+        <li>Show the table of Z values at each corner point — this earns stepmark in 5-6 mark questions.</li>
+        <li>State the optimal solution clearly: "Maximum value of Z is ___ attained at x = ___, y = ___".</li>
+        <li>For minimisation with unbounded region, always perform the open half-plane test.</li>
+        <li>Common mistake: forgetting to include the origin O(0,0) as a corner point — always check if it's a vertex.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box jee">
+    <div class="tip-icon">🎯</div>
+    <div class="tip-content">
+      <div class="tip-label">JEE Tip</div>
+      <ul>
+        <li>For JEE, find corner points algebraically by solving pairs of constraint equations — avoid relying on the graph alone.</li>
+        <li>If corner points are rational numbers, double-check by substituting back into constraints before computing Z.</li>
+        <li>In objective-type questions, often only one or two corner points need evaluation if you spot the geometry quickly.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  SECTION 4 — TYPES OF LPP
+════════════════════════════════════════════ -->
+<section id="types" class="section">
+  <div class="sec-header">
+    <div class="sec-icon gold">🏭</div>
+    <div class="sec-header-text">
+      <h2>Different Types of LPP</h2>
+      <p>Manufacturing, Diet, Transportation — with examples and strategies</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Classification of LPP Problems</h3>
+    <div class="types-grid" style="margin-top:16px;">
+      <div class="type-card">
+        <div class="type-icon">🏭</div>
+        <h4>Manufacturing Problems</h4>
+        <p>Determine quantities of products to manufacture to maximise profit or minimise cost, subject to machine time, labour, or raw material constraints.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">🥗</div>
+        <h4>Diet Problems</h4>
+        <p>Find the minimum cost diet that meets nutritional requirements (proteins, vitamins, calories). Usually minimisation problems with ≥ type constraints.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">🚚</div>
+        <h4>Transportation Problems</h4>
+        <p>Minimise total transportation cost of shipping goods from sources to destinations. Involves supply constraints (≤) at source and demand constraints (≥) at destination.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-icon">📦</div>
+        <h4>Allocation Problems</h4>
+        <p>Allocate limited resources (labour, time, materials) to activities in order to optimise a given objective. Generalisation of manufacturing problems.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manufacturing Example -->
+  <div class="example-box">
+    <div class="ex-header">
+      <span class="ex-badge">MANUFACTURING</span>
+      <h4>NCERT-Style Complete Problem</h4>
+    </div>
+    <p>A company produces two types of furniture: chairs (x) and tables (y). Each chair requires <strong>3 hrs carpentry</strong> and <strong>1 hr finishing</strong>. Each table requires <strong>5 hrs carpentry</strong> and <strong>2 hrs finishing</strong>. Available: <strong>15 hrs carpentry</strong>, <strong>6 hrs finishing</strong> per day. Profit per chair: <strong>₹45</strong>, per table: <strong>₹80</strong>. How many of each to maximise profit?</p>
+    <div class="solution">
+      <div class="sol-label">Complete Solution</div>
+      <div class="formula">Maximise Z = 45x + 80y
+Subject to:
+  3x + 5y ≤ 15   (carpentry)
+  x + 2y ≤ 6    (finishing)
+  x ≥ 0, y ≥ 0</div>
+      <p style="margin-top:12px;"><strong>Corner Points:</strong></p>
+      <table class="styled-table">
+        <thead><tr><th>Point</th><th>How Found</th><th>Z = 45x + 80y</th></tr></thead>
+        <tbody>
+          <tr><td>O(0,0)</td><td>Origin</td><td>0</td></tr>
+          <tr><td>A(5,0)</td><td>x-intercept of 3x+5y=15</td><td>225</td></tr>
+          <tr><td>B(0,3)</td><td>y-intercept of x+2y=6</td><td>240</td></tr>
+          <tr><td>C(0,3)... check intersection</td><td>3x+5y=15 ∩ x+2y=6 → x=0, y=3</td><td></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px;">Solving: from x+2y=6 → x=6-2y; sub: 3(6-2y)+5y=15 → 18-6y+5y=15 → y=3, x=0</p>
+      <p>Also check (5,0): x+2(0)=5 > 6? No, 5 ≤ 6 ✓. And 3(5)=15 ✓</p>
+      <p style="margin-top:8px;color:var(--green);"><strong>Maximum Z = 240 at x = 0, y = 3 → Produce 3 tables/day</strong></p>
+    </div>
+  </div>
+
+  <!-- Diet Example -->
+  <div class="example-box">
+    <div class="ex-header">
+      <span class="ex-badge">DIET PROBLEM</span>
+      <h4>Minimisation Example</h4>
+    </div>
+    <p>A person needs at least <strong>10 units of Vitamin A</strong> and <strong>12 units of Vitamin C</strong> daily. Food P contains 2 units of Vit A and 4 units of Vit C per unit; Food Q contains 4 units of Vit A and 2 units of Vit C per unit. Cost of P: ₹5/unit, Q: ₹3/unit. Minimise cost.</p>
+    <div class="solution">
+      <div class="sol-label">Formulation &amp; Solution</div>
+      <div class="formula">Minimise Z = 5x + 3y
+Subject to:
+  2x + 4y ≥ 10   →   x + 2y ≥ 5   (Vitamin A)
+  4x + 2y ≥ 12   →   2x + y ≥ 6   (Vitamin C)
+  x ≥ 0, y ≥ 0</div>
+      <p style="margin-top:12px;"><strong>Corner Points (unbounded region):</strong></p>
+      <table class="styled-table">
+        <thead><tr><th>Point</th><th>Z = 5x + 3y</th></tr></thead>
+        <tbody>
+          <tr><td>A(5, 0): x+2(0)=5≥5 ✓; 2(5)+0=10≥6 ✓</td><td>25</td></tr>
+          <tr><td>B(7/3, 4/3): intersection of both lines</td><td>5(7/3)+3(4/3) = 35/3+4 = 47/3 ≈ 15.67</td></tr>
+          <tr><td>C(0, 6): 0+2(6)=12≥5 ✓; 0+6≥6 ✓</td><td>18</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;"><strong>Open half-plane test for min:</strong> Draw 5x+3y &lt; 47/3. It has common points with feasible region? Check (0,6): 5(0)+3(6)=18 &lt; 47/3=15.67? No, 18 &gt; 15.67. Check if any feasible point gives Z &lt; 47/3 — intersection point gives minimum.</p>
+      <p style="margin-top:8px;color:var(--green);"><strong>Minimum Z = 47/3 ≈ ₹15.67 at x = 7/3, y = 4/3</strong></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Identifying the Type — Quick Guide</h3>
+    <table class="styled-table">
+      <thead><tr><th>Keyword in Problem</th><th>Type</th><th>Objective</th><th>Constraint Type</th></tr></thead>
+      <tbody>
+        <tr><td>Profit, Revenue, Earnings</td><td>Manufacturing</td><td>Maximise</td><td>≤ (resources)</td></tr>
+        <tr><td>Cost, Expenditure, Minimum cost</td><td>Diet/Transport</td><td>Minimise</td><td>≥ (requirements)</td></tr>
+        <tr><td>At most, not more than, available</td><td>Any</td><td>Max/Min</td><td>≤</td></tr>
+        <tr><td>At least, not less than, required</td><td>Any</td><td>Max/Min</td><td>≥</td></tr>
+        <tr><td>Exactly, equal to</td><td>Any</td><td>Max/Min</td><td>= (equality)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box board">
+    <div class="tip-icon">📌</div>
+    <div class="tip-content">
+      <div class="tip-label">Board Exam Tip</div>
+      <ul>
+        <li>Most 6-mark questions combine formulation + solving. Allocate ~1.5 min for formulation, ~4.5 min for solving.</li>
+        <li>For diet problems, the feasible region is unbounded above-right. Always do the open half-plane test to confirm the minimum exists.</li>
+        <li>If you get non-integer corner points in a manufacturing problem, the answer can be fractional — don't panic and round off unless specifically asked.</li>
+        <li>Re-read the final answer against the question: "maximise profit" → pick the maximum Z value, not minimum.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box jee">
+    <div class="tip-icon">🎯</div>
+    <div class="tip-content">
+      <div class="tip-label">JEE Tip</div>
+      <ul>
+        <li>JEE problems on LPP are usually 4-mark questions — test whether the student can identify corner points and evaluate Z quickly.</li>
+        <li>Common JEE trap: providing an unbounded region and asking for a maximum — the answer may be "does not exist".</li>
+        <li>Watch for questions that give the objective function value and ask which corner point achieves it (reverse problem).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  SECTION 5 — PRACTICE MCQs
+════════════════════════════════════════════ -->
+<section id="practice" class="section">
+  <div class="sec-header">
+    <div class="sec-icon pink">🧪</div>
+    <div class="sec-header-text">
+      <h2>Practice MCQs</h2>
+      <p>Test your understanding — click to check answers</p>
+    </div>
+  </div>
+
+  <div class="quiz-wrap">
+    <h3>🎯 Quick Concept Check</h3>
+    <p class="quiz-sub">8 questions — Board + JEE level. Click an option to see the answer instantly.</p>
+
+    <!-- Q1 -->
+    <div class="quiz-q" id="q1">
+      <p>Q1. The feasible region of an LPP is always a ___</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">a) Circle</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">b) Parabola</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',true)">c) Convex polygon (or empty set)</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">d) Any closed region</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q" id="q2">
+      <p>Q2. Corner point theorem states the optimal value is attained at a ___</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">a) Point on any boundary edge</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',true)">b) Vertex (corner point) of the feasible region</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">c) Interior point of the feasible region</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">d) Origin</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q" id="q3">
+      <p>Q3. The objective function Z = 3x + 5y is to be maximised over the feasible region with corner points: (0,0), (6,0), (4,3), (0,5). What is the maximum value?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">a) 25</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">b) 18</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',true)">c) 27</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">d) 30</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q" id="q4">
+      <p>Q4. If the feasible region for a maximisation LPP is unbounded, then the maximum value of Z ___</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">a) Always exists</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">b) Never exists</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',true)">c) May or may not exist</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">d) Exists only at origin</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q" id="q5">
+      <p>Q5. Constraints of an LPP are: x + y ≤ 6, x ≥ 2, y ≥ 2. Which point is NOT in the feasible region?</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">a) (2, 2)</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">b) (3, 3)</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',true)">c) (4, 4)</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">d) (2, 3)</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q" id="q6">
+      <p>Q6. The maximum value of Z = x + y, subject to x + y ≤ 5, 3x + y ≤ 9, x ≥ 0, y ≥ 0 is:</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q6',false)">a) 3</button>
+        <button class="quiz-opt" onclick="answer(this,'q6',true)">b) 5</button>
+        <button class="quiz-opt" onclick="answer(this,'q6',false)">c) 9</button>
+        <button class="quiz-opt" onclick="answer(this,'q6',false)">d) 4</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q" id="q7">
+      <p>Q7. [JEE Level] If the objective function is Z = px + qy and the maximum occurs at both (3,4) and (5,2), then:</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q7',false)">a) p = q</button>
+        <button class="quiz-opt" onclick="answer(this,'q7',true)">b) p = q (since 3p+4q = 5p+2q → 2q = 2p → p = q)</button>
+        <button class="quiz-opt" onclick="answer(this,'q7',false)">c) 2p = 3q</button>
+        <button class="quiz-opt" onclick="answer(this,'q7',false)">d) p + q = 0</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q" id="q8">
+      <p>Q8. For a minimisation LPP, if the feasible region is unbounded with minimum value M at a corner point, the condition for M to be the true minimum is that the open half-plane ax + by &lt; M should have ___</p>
+      <div class="quiz-opts">
+        <button class="quiz-opt" onclick="answer(this,'q8',false)">a) At least one point in common with the feasible region</button>
+        <button class="quiz-opt" onclick="answer(this,'q8',true)">b) No point in common with the feasible region</button>
+        <button class="quiz-opt" onclick="answer(this,'q8',false)">c) All points in common</button>
+        <button class="quiz-opt" onclick="answer(this,'q8',false)">d) Exactly one point in common</button>
+      </div>
+      <div class="quiz-feedback" id="fb-q8"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════
+  SECTION 6 — FORMULA SHEET
+════════════════════════════════════════════ -->
+<section id="formulas" class="section">
+  <div class="sec-header">
+    <div class="sec-icon pink">📋</div>
+    <div class="sec-header-text">
+      <h2>Formula Sheet &amp; Quick Reference</h2>
+      <p>Everything you need — one page, one glance</p>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="margin-bottom:28px;">
+    <div class="hl-title">⚡ One-Line Summary</div>
+    <p>LPP = Maximise/Minimise Z = ax + by | subject to linear constraints and x,y ≥ 0 | solved graphically by evaluating Z at all corner points of the feasible region.</p>
+  </div>
+
+  <div class="formula-grid">
+
+    <div class="formula-card">
+      <div class="fc-label">General Form</div>
+      <div class="fc-name">Standard LPP Structure</div>
+      <div class="formula">Optimise Z = ax + by
+Subject to:
+  a₁x + b₁y ≤ c₁
+  a₂x + b₂y ≤ c₂
+  x ≥ 0, y ≥ 0</div>
+      <p>Replace ≤ with ≥ for minimum/diet type problems.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Corner Point Theorem</div>
+      <div class="fc-name">Bounded Feasible Region</div>
+      <div class="formula">Z_max = max{Z(A), Z(B), Z(C)...}
+Z_min = min{Z(A), Z(B), Z(C)...}</div>
+      <p>Where A, B, C… are corner points (vertices) of the feasible polygon.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Line Intercepts</div>
+      <div class="fc-name">For line ax + by = c</div>
+      <div class="formula">x-intercept: (c/a, 0)
+y-intercept: (0, c/b)</div>
+      <p>Set y=0 for x-intercept; set x=0 for y-intercept.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Intersection Point</div>
+      <div class="fc-name">Solving Two Constraint Lines</div>
+      <div class="formula">a₁x + b₁y = c₁  ...(i)
+a₂x + b₂y = c₂  ...(ii)
+Solve simultaneously</div>
+      <p>Use substitution or elimination. Verify point satisfies ALL constraints.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Unbounded — Max Test</div>
+      <div class="fc-name">Open Half-Plane for Maximum</div>
+      <div class="formula">Draw: ax + by > M
+If no feasible point lies in
+this half-plane → M is max</div>
+      <p>If common points exist → no finite maximum.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Unbounded — Min Test</div>
+      <div class="fc-name">Open Half-Plane for Minimum</div>
+      <div class="formula">Draw: ax + by < M
+If no feasible point lies in
+this half-plane → M is min</div>
+      <p>If common points exist → no finite minimum.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Multiple Optima</div>
+      <div class="fc-name">Infinite Solutions Condition</div>
+      <div class="formula">If Z(P) = Z(Q) for adjacent
+corner points P and Q,
+then every point on PQ is optimal</div>
+      <p>Occurs when the objective function is parallel to a constraint boundary.</p>
+    </div>
+
+    <div class="formula-card">
+      <div class="fc-label">Objective Function Check</div>
+      <div class="fc-name">Parallel Condition</div>
+      <div class="formula">Z = ax + by  is parallel to
+ax + by = c  (a constraint line)
+when slope of Z = slope of constraint</div>
+      <p>Slope of ax + by = k is −a/b. If Z has same slope as a binding constraint → multiple optima.</p>
+    </div>
+
+  </div>
+
+  <!-- KEY FACTS TABLE -->
+  <div class="card" style="margin-top:28px;">
+    <h3>📌 Key Facts — Exam Cheat Sheet</h3>
+    <table class="styled-table">
+      <thead><tr><th>Situation</th><th>Conclusion</th></tr></thead>
+      <tbody>
+        <tr><td>Feasible region is bounded</td><td>Both max and min always exist at corner points</td></tr>
+        <tr><td>Feasible region is unbounded + maximisation</td><td>Max may not exist — do half-plane test</td></tr>
+        <tr><td>Feasible region is unbounded + minimisation</td><td>Min may not exist — do half-plane test</td></tr>
+        <tr><td>Feasible region is empty</td><td>No solution — problem is infeasible</td></tr>
+        <tr><td>Z same at two adjacent corner points</td><td>Infinite solutions along that edge</td></tr>
+        <tr><td>All constraints are ≤ type (+ x,y ≥ 0)</td><td>Origin O(0,0) is always a corner point</td></tr>
+        <tr><td>All constraints are ≥ type</td><td>Origin is NOT in feasible region</td></tr>
+        <tr><td>Non-negativity restriction is missing</td><td>Problem extends to negative quadrants — rare in Class 12</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMMON MISTAKES -->
+  <div class="card" style="margin-top:8px;">
+    <h3>⚠️ Common Mistakes to Avoid</h3>
+    <ul>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Forgetting non-negativity constraints</strong> x ≥ 0, y ≥ 0 → always include them.</li>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Not labelling corner points</strong> — show coordinates clearly on graph.</li>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Assuming max = corner with max x or y</strong> — always evaluate Z at ALL corners.</li>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Skipping verification</strong> of intersection points in original constraints.</li>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Not doing open half-plane test</strong> for unbounded regions in minimisation.</li>
+      <li style="margin-bottom:10px;color:var(--text-muted);">❌ <strong style="color:var(--red)">Shading wrong region</strong> — always test (0,0) first to determine which side satisfies each constraint.</li>
+    </ul>
+  </div>
+
+  <div class="tip-box board" style="margin-top:8px;">
+    <div class="tip-icon">🏆</div>
+    <div class="tip-content">
+      <div class="tip-label">Board Exam — Last Minute Checklist</div>
+      <ul>
+        <li>✅ Define variables clearly at the start</li>
+        <li>✅ Write objective function with "Maximise Z = " or "Minimise Z = "</li>
+        <li>✅ List all constraints including x ≥ 0, y ≥ 0</li>
+        <li>✅ Draw neat graph — label axes, lines, and region</li>
+        <li>✅ Find ALL corner points (algebraically — don't guess from graph)</li>
+        <li>✅ Make a table of Z values</li>
+        <li>✅ State conclusion: "Maximum/Minimum value of Z is ___ at (___, ___)"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box jee" style="margin-top:8px;">
+    <div class="tip-icon">🚀</div>
+    <div class="tip-content">
+      <div class="tip-label">JEE — Speed Tips</div>
+      <ul>
+        <li>⚡ Identify the binding constraints (those forming corner points) quickly by elimination</li>
+        <li>⚡ For Z = ax + by, gradient direction (a, b) points toward increasing Z — the optimal corner is in that direction</li>
+        <li>⚡ For MCQs: plug corner points directly into Z rather than graphing fully</li>
+        <li>⚡ If Z appears to be constant along a line segment, check if it's parallel to a constraint — multiple optima</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 12 &middot; Linear Programming</div>
+  </div>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Tab navigation
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Topic chip toggle
+function toggleChip(el) {
+  el.classList.toggle('done');
+  const check = el.querySelector('.check');
+  check.textContent = el.classList.contains('done') ? '✓' : '○';
+}
+
+// Quiz answer checking
+const explanations = {
+  q1: 'The feasible region is the intersection of multiple half-planes, which forms a convex set — either a convex polygon (bounded) or an unbounded convex region.',
+  q2: 'The Corner Point Theorem guarantees that for a bounded feasible region, the optimal value is always achieved at a vertex (corner point).',
+  q3: 'Evaluate Z at all corners: (0,0)→0, (6,0)→18, (4,3)→12+15=27✓, (0,5)→25. Maximum = 27 at (4,3).',
+  q4: 'For an unbounded feasible region, the existence of a maximum is not guaranteed. Use the open half-plane test to confirm.',
+  q5: '(4,4): x+y = 8 > 6. Violates x+y ≤ 6. So (4,4) is NOT in the feasible region.',
+  q6: 'Corner points: O(0,0)→0, (3,0)→3, (2,3)→5, (0,5)→5. Max Z=5 achieved at (2,3) and (0,5) — multiple optima on the segment.',
+  q7: 'If max occurs at both (3,4) and (5,2), then Z(3,4)=Z(5,2) → 3p+4q = 5p+2q → 2q = 2p → p = q.',
+  q8: 'For the minimum M to be valid in an unbounded region, the open half-plane ax+by < M must have NO common point with the feasible region. Otherwise, smaller values exist and M is not the minimum.'
+};
+
+function answer(btn, qid, isCorrect) {
+  const q = document.getElementById(qid);
+  const fb = document.getElementById('fb-' + qid);
+  // Disable all options in this question
+  q.querySelectorAll('.quiz-opt').forEach(b => { b.disabled = true; });
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    // Highlight the correct answer
+    q.querySelectorAll('.quiz-opt').forEach(b => {
+      if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+    });
+  }
+  fb.className = 'quiz-feedback show ' + (isCorrect ? 'correct' : 'wrong');
+  fb.textContent = (isCorrect ? '✓ Correct! ' : '✗ Incorrect. ') + explanations[qid];
+}
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+});
+</script>
+</body>
+</html>

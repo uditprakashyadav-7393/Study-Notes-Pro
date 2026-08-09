@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on inverse trigonometric functions, covering their definitions, properties, and graphs. Learn how to work with arcsin, arccos, arctan, and more, with clear explanations and examples.">
+<meta name="keywords" content="inverse trigonometric functions, arcsin, arccos, arctan, properties of inverse trig functions, graphs of inverse trig functions, trigonometry, math notes">
+<meta name="author" content="Udit Prakash Yadav">
+<title>ITF — 1. Introduction & Basic Concepts</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#181c27;--surface2:#1e2333;--border:rgba(255,255,255,0.07);--accent:#4fd1c5;--accent2:#f6c90e;--accent3:#f87171;--text:#e2e8f0;--muted:#8892a4;--mono:'JetBrains Mono',monospace;--serif:'Lora',Georgia,serif;--sans:'DM Sans',sans-serif;--gold: #f6c90e;--gold-dim: #93780c; --accent:#e96c6c;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:1rem;line-height:1.75;min-height:100vh}
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;overflow-x:auto;gap:0}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--accent);white-space:nowrap;margin-right:1.5rem;text-decoration:none;font-style:italic;flex-shrink:0}
+.nav-links{display:flex;gap:0;flex-shrink:0}
+.nav-links a{font-family:var(--mono);font-size:0.63rem;letter-spacing:0.04em;color:var(--muted);text-decoration:none;padding:0 10px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent);border-bottom-color:var(--accent)}
+.progress-bar{position:fixed;top:56px;left:0;right:0;height:2px;z-index:99;background:var(--border)}
+.progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.1s}
+.hero{padding:4rem 2rem 2.5rem;max-width:900px;margin:0 auto}
+.hero-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--accent);text-transform:uppercase;margin-bottom:0.9rem}
+.hero h1{font-family:var(--serif);font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;font-weight:700;margin-bottom:0.9rem}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero-desc{color:var(--muted);max-width:560px;font-size:1rem}
+.page-body{max-width:900px;margin:0 auto;padding:0 2rem 5rem}
+.sec{margin-bottom:2.8rem;opacity:0;transform:translateY(18px);animation:revealUp 0.5s ease forwards}
+@keyframes revealUp{to{opacity:1;transform:none}}
+.sec:nth-child(1){animation-delay:0.05s}.sec:nth-child(2){animation-delay:0.12s}.sec:nth-child(3){animation-delay:0.19s}.sec:nth-child(4){animation-delay:0.26s}.sec:nth-child(5){animation-delay:0.33s}.sec:nth-child(6){animation-delay:0.40s}
+.sec-head{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--text);margin-bottom:1.1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.7rem}
+.sec-num{font-family:var(--mono);font-size:0.62rem;background:var(--accent);color:var(--bg);padding:2px 8px;border-radius:2px;font-weight:600;flex-shrink:0}
+p{margin-bottom:0.85rem;color:var(--text)}
+.m{font-family:var(--mono);background:rgba(255,255,255,0.06);padding:1px 7px;border-radius:3px;font-size:0.88em;color:var(--accent2);white-space:nowrap}
+.box{border-radius:6px;padding:1.1rem 1.4rem;margin:1.1rem 0}
+.box-teal{background:rgba(79,209,197,0.08);border-left:3px solid var(--accent)}
+.box-gold{background:rgba(246,201,14,0.08);border-left:3px solid var(--accent2)}
+.box-red{background:rgba(248,113,113,0.08);border-left:3px solid var(--accent3)}
+.box-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.4rem;font-weight:600}
+.box-teal .box-label{color:var(--accent)}.box-gold .box-label{color:var(--accent2)}.box-red .box-label{color:var(--accent3)}
+.box p{margin-bottom:0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:1.1rem 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.1rem;transition:border-color 0.2s,transform 0.2s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card-title{font-family:var(--serif);font-size:1rem;color:var(--accent);margin-bottom:0.35rem}
+.card-expr{font-family:var(--mono);font-size:0.8rem;color:var(--accent2);background:rgba(246,201,14,0.07);padding:3px 8px;border-radius:3px;margin-bottom:0.45rem;display:inline-block}
+.card-info{font-size:0.83rem;color:var(--muted);line-height:1.5}
+.card-info span{color:var(--text)}
+.analogy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1.1rem 0}
+@media(max-width:520px){.analogy-grid{grid-template-columns:1fr}}
+.analogy-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.2rem;text-align:center}
+.analogy-box .a-label{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.6rem;color:var(--muted)}
+.analogy-box .a-fn{font-family:var(--serif);font-size:1.3rem;color:var(--accent);margin-bottom:0.4rem;font-style:italic}
+.analogy-box .a-map{font-family:var(--mono);font-size:0.8rem;color:var(--muted)}
+.analogy-box .a-map span{color:var(--accent2)}
+.divider{height:1px;background:var(--border);margin:2rem 0}
+
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(79,209,197,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; font-family: 'Playfair Display', serif; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="./mathsch2.html">ITF Notes</a>
+  <div class="nav-links">
+    <a href="./IFT1.html" class="active">01 Intro</a>
+    <a href="./IFT2.html">02 Domain & Range</a>
+    <a href="./IFT3.html">03 Principal Value</a>
+    <a href="./IFT4.html">04 Properties I</a>
+    <a href="./IFT5.html">05 Properties II</a>
+    <a href="./IFT6.html">06 Graphs</a>
+    <a href="./graphs.html">07 Animated Graphs</a>
+  </div>
+</nav>
+<div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+
+<div class="hero">
+  <div class="hero-tag">Chapter 2 · Inverse Trigonometric Functions</div>
+  <h1>Introduction &amp; <em>Basic Concepts</em></h1>
+  <p class="hero-desc">Understanding what inverse trig functions are, why they exist, and how they reverse the familiar trig ratios.</p>
+</div>
+
+<div class="page-body">
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.1</span> The Core Idea</div>
+    <p>You know that <span class="m">sin(30°) = ½</span>. But what if the question is reversed: <em>"Which angle has a sine of ½?"</em> This reverse question is exactly what inverse trigonometric functions answer.</p>
+    <div class="box box-teal">
+      <div class="box-label">Definition</div>
+      <p>If <span class="m">y = sin(x)</span>, then its inverse is <span class="m">x = sin⁻¹(y)</span>, read as <em>"arcsin of y"</em>. It returns the <strong>angle</strong> whose sine equals the given value.</p>
+    </div>
+    <p>The six inverse trig functions correspond one-to-one with the six standard trig functions: arcsin, arccos, arctan, arccosec, arcsec, arccot.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.2</span> The Function ↔ Inverse Analogy</div>
+    <div class="analogy-grid">
+      <div class="analogy-box">
+        <div class="a-label">Forward Function</div>
+        <div class="a-fn">sin(θ) = x</div>
+        <div class="a-map">Angle <span>→</span> Ratio</div>
+      </div>
+      <div class="analogy-box">
+        <div class="a-label">Inverse Function</div>
+        <div class="a-fn">sin⁻¹(x) = θ</div>
+        <div class="a-map">Ratio <span>→</span> Angle</div>
+      </div>
+      <div class="analogy-box">
+        <div class="a-label">Forward Function</div>
+        <div class="a-fn">cos(θ) = x</div>
+        <div class="a-map">Angle <span>→</span> Ratio</div>
+      </div>
+      <div class="analogy-box">
+        <div class="a-label">Inverse Function</div>
+        <div class="a-fn">cos⁻¹(x) = θ</div>
+        <div class="a-map">Ratio <span>→</span> Angle</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.3</span> Critical Notation Warning</div>
+    <div class="box box-red">
+      <div class="box-label">⚠ Common Mistake</div>
+      <p><span class="m">sin⁻¹(x)</span> is <strong>NOT</strong> the same as <span class="m">1/sin(x)</span>. The <span class="m">⁻¹</span> here denotes the <em>inverse function</em>, not a reciprocal power. The reciprocal of sin is written as <span class="m">cosec(x)</span>.</p>
+    </div>
+    <p>Alternative notation: Instead of <span class="m">sin⁻¹(x)</span>, you may also see <span class="m">arcsin(x)</span> — both mean exactly the same thing.</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.4</span> All Six Inverse Functions</div>
+    <div class="card-grid">
+      <div class="card"><div class="card-title">Arcsine</div><div class="card-expr">sin⁻¹(x)</div><div class="card-info">Inverse of sine<br><span>Also written: arcsin(x)</span></div></div>
+      <div class="card"><div class="card-title">Arccosine</div><div class="card-expr">cos⁻¹(x)</div><div class="card-info">Inverse of cosine<br><span>Also written: arccos(x)</span></div></div>
+      <div class="card"><div class="card-title">Arctangent</div><div class="card-expr">tan⁻¹(x)</div><div class="card-info">Inverse of tangent<br><span>Also written: arctan(x)</span></div></div>
+      <div class="card"><div class="card-title">Arccosecant</div><div class="card-expr">cosec⁻¹(x)</div><div class="card-info">Inverse of cosecant<br><span>Also written: arccsc(x)</span></div></div>
+      <div class="card"><div class="card-title">Arcsecant</div><div class="card-expr">sec⁻¹(x)</div><div class="card-info">Inverse of secant<br><span>Also written: arcsec(x)</span></div></div>
+      <div class="card"><div class="card-title">Arccotangent</div><div class="card-expr">cot⁻¹(x)</div><div class="card-info">Inverse of cotangent<br><span>Also written: arccot(x)</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.5</span> Why Restrict the Domain?</div>
+    <p>For a function to have an inverse, it must be <strong>one-to-one (injective)</strong> — each output must come from exactly one input. However, trig functions are <em>periodic</em> and repeat values infinitely.</p>
+    <p>For example: <span class="m">sin(30°) = sin(150°) = sin(390°) = ½</span>. If we asked for <span class="m">sin⁻¹(½)</span>, there would be infinitely many answers! To fix this, we <strong>restrict the domain</strong> to a specific interval where the function is one-to-one, called the <strong>principal value branch</strong>.</p>
+    <div class="box box-gold">
+      <div class="box-label">Key Takeaway</div>
+      <p>Inverse trig functions are only well-defined because we agree to restrict the original function to a specific interval. This selected interval is the <em>principal value branch</em> — covered in detail on Page 3.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="sec-num">1.6</span> Standard Values to Know</div>
+    <p>These direct values are essential. Memorise them — they appear constantly in problems.</p>
+    <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;border-radius:6px;overflow:hidden">
+      <thead><tr style="background:var(--surface2)"><th style="padding:10px 14px;text-align:left;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase">Value x</th><th style="padding:10px 14px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase">sin⁻¹(x)</th><th style="padding:10px 14px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase">cos⁻¹(x)</th><th style="padding:10px 14px;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase">tan⁻¹(x)</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">0</td><td style="padding:9px 14px">0</td><td style="padding:9px 14px">π/2</td><td style="padding:9px 14px">0</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">1/2</td><td style="padding:9px 14px">π/6</td><td style="padding:9px 14px">π/3</td><td style="padding:9px 14px">—</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">1/√2</td><td style="padding:9px 14px">π/4</td><td style="padding:9px 14px">π/4</td><td style="padding:9px 14px">—</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">√3/2</td><td style="padding:9px 14px">π/3</td><td style="padding:9px 14px">π/6</td><td style="padding:9px 14px">—</td></tr>
+        <tr style="border-bottom:1px solid var(--border)"><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">1</td><td style="padding:9px 14px">π/2</td><td style="padding:9px 14px">0</td><td style="padding:9px 14px">π/4</td></tr>
+        <tr><td style="padding:9px 14px;font-family:var(--mono);color:var(--accent2)">√3</td><td style="padding:9px 14px">—</td><td style="padding:9px 14px">—</td><td style="padding:9px 14px">π/3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <span></span>
+    <a class="pnav-btn" href="./IFT2.html"><span>Next →</span> Domain &amp; Range</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{
+  const p=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('pbar').style.width=p+'%';
+});
+</script>
+</body>
+</html>

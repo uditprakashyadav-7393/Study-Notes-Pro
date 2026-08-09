@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>02 · Basic Concepts — Chapter 10 Vectors</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c18;--surface:#0f1524;--surface2:#161d30;--border:#1e2a45;--accent:#4f8eff;--accent2:#a78bfa;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;--text:#e2e8f0;--muted:#7a8ba8;--dim:#4a5a78;--h:'Syne',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;--sw:264px;--r:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--b);font-size:15.5px;line-height:1.8;min-height:100vh}
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--pink));z-index:999;width:0;transition:width .1s}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;align-items:center;justify-content:space-between;padding:0 16px}
+.topbar-title{font-family:var(--h);font-size:14px;font-weight:700}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}
+.overlay.show{display:block}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;overflow-y:auto;z-index:160;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}
+.sb-label{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sb-brand h2{font-family:var(--h);font-size:16px;font-weight:700;line-height:1.3}
+.sb-nav{padding:16px 12px;flex:1}
+.sb-sec{font-family:var(--m);font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin-bottom:8px}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;transition:all .2s;margin-bottom:3px}
+.ni:hover{background:var(--surface2);color:var(--text)}
+.ni.on{background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.25)}
+.ni .n{font-family:var(--m);font-size:10px;color:var(--dim);min-width:18px}
+.ni.on .n{color:var(--accent2)}
+.main{margin-left:var(--sw);padding:52px 56px 80px;max-width:calc(var(--sw) + 820px)}
+.ph{margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(167,139,250,.07),transparent 70%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);color:var(--accent2);font-family:var(--m);font-size:11px;padding:4px 13px;border-radius:20px;margin-bottom:16px}
+.ph h1{font-family:var(--h);font-size:40px;font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0,#8aa5c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.ph p{color:var(--muted);font-size:15px;max-width:540px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 11px;border-radius:20px;font-family:var(--m)}
+.b-board{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.b-jee{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}
+.sec{margin-bottom:44px}
+.sec-title{font-family:var(--h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--accent2);border-radius:2px;flex-shrink:0}
+p{color:var(--muted);margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px}
+.card-t{font-family:var(--h);font-size:14px;font-weight:700;margin-bottom:8px}
+.card p{margin-bottom:0;font-size:14px}
+.card .sub{font-size:12.5px;color:var(--dim);margin-top:6px}
+.fbox{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r);padding:20px 24px;margin:16px 0;font-family:var(--m);font-size:14px;color:var(--gold);line-height:2.2;overflow-x:auto}
+.fbox .fl{font-family:var(--b);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+.note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.note-l{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.note p{color:var(--muted);margin:0}
+.tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.tip-l{font-family:var(--m);font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.tip p{color:var(--muted);margin:0}
+.eg{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.eg-l{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block}
+.eg p{color:var(--muted);margin:3px 0}
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--surface2);color:var(--accent2);font-family:var(--h);font-size:13px;font-weight:600;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 18px;border-bottom:1px solid var(--border);color:var(--muted);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.sl{list-style:none;margin:12px 0 16px;padding:0}
+.sl li{padding:8px 0 8px 26px;position:relative;color:var(--muted);border-bottom:1px solid rgba(30,42,69,.5);font-size:14.5px}
+.sl li:last-child{border-bottom:none}
+.sl li::before{content:'→';position:absolute;left:0;color:var(--accent2);font-size:13px}
+.hl{color:var(--text);font-weight:600}.hb{color:var(--accent);font-weight:600}.hg{color:var(--gold);font-weight:600}.hv{color:var(--green);font-weight:600}.hp{color:var(--pink);font-weight:600}.ha{color:var(--accent2);font-weight:600}
+.footer{margin-left:var(--sw);border-top:1px solid var(--border);min-height:80px;padding:0 56px}
+.stop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--accent2);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(167,139,250,.4);transition:transform .2s;z-index:100}
+.stop:hover{transform:scale(1.1)}
+.pnav{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.pnav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:10px 20px;border-radius:8px;font-family:var(--h);font-size:14px;font-weight:600}
+.pnav .prev{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.pnav .next{background:var(--accent2);color:#fff}
+@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .topbar{display:flex}.sidebar{transform:translateX(-100%);top:0}.sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 18px 80px;max-width:100%}.footer{margin-left:0;padding:0 18px}
+  .ph h1{font-size:28px}.grid2,.grid3{grid-template-columns:1fr}.sec-title{font-size:18px}
+  .fbox{font-size:13px;padding:16px 16px}.tbl th,.tbl td{padding:9px 12px;font-size:13px}
+}
+@media(max-width:480px){.ph h1{font-size:24px}.main{padding:72px 14px 60px}.fbox{font-size:12.5px}}
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+/* vector arrow  */
+ .upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:3px;
+  }
+  .upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.9 ;
+    font-size: 15px;
+  } 
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="topbar">
+  <div class="topbar-title">Ch.10 · Basic Concepts</div>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</div>
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-label">Class XII · Mathematics</div><h2>Chapter 10<br/>Vectors</h2></div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Topics</div>
+    <a href="vector1.html" class="ni"><span class="n">01</span> Introduction</a>
+    <a href="vector2.html" class="ni on"><span class="n">02</span> Basic Concepts</a>
+    <a href="vector3.html" class="ni"><span class="n">03</span> Types of Vectors</a>
+    <a href="vector4.html" class="ni"><span class="n">04</span> Vector Addition</a>
+    <a href="vector5.html" class="ni"><span class="n">05</span> Scalar Multiplication</a>
+    <a href="vector6.html" class="ni"><span class="n">06</span> Product of Vectors</a>
+  </nav>
+</aside>
+
+<main class="main">
+  <header class="ph">
+    <div class="tag">02 / Basic Concepts</div>
+    <h1>Some Basic<br/>Concepts</h1>
+    <p>Magnitude, unit vectors, direction cosines, components, section formula — the essential building blocks of vector algebra.</p>
+    <div class="badges"><span class="badge b-board">CBSE Board</span><span class="badge b-jee">JEE Mains & Adv.</span></div>
+  </header>
+
+  <section class="sec">
+    <div class="sec-title">Magnitude of a Vector</div>
+    <p>The <span class="ha">magnitude</span> of vector <span class="hg upper-arrow">a</span> is its <span class="hl">length</span>. It is always non-negative and is found using the distance formula extended to 3D.</p>
+    <div class="fbox">
+      <span class="fl">Magnitude Formula</span>
+      If  <strong><span class="upper-arrow">a</span> = x î + y ĵ + z k̂</strong>:<br/>
+      <strong><span class="upper-arrow">|a|</span> = √(x² + y² + z²)</strong><br/><br/>
+      In 2D — if  <strong><span class="upper-arrow">a</span> = x î + y ĵ</strong>:  <strong><span class="upper-arrow">|a|</span> = √(x² + y²)</strong>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Find <span class="upper-arrow">|a|</span> if <strong><span class="upper-arrow">a</span> = 2î − 3ĵ + 6k̂</strong></p>
+      <p><span class="upper-arrow">|a|</span> = √(4 + 9 + 36) = √49 = <strong>7</strong></p>
+    </div>
+    <div class="note">
+      <span class="note-l">📌 Note</span>
+      <p>Magnitude is always a <strong>scalar ≥ 0</strong>. <span class="upper-arrow">|a|</span> = 0 only when <span class="upper-arrow">a</span> =<span class="upper-arrow">0</span> (zero vector).</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">Unit Vector</div>
+    <p>A <span class="ha">unit vector</span> has magnitude = <span class="hl">exactly 1</span>. It is used to represent direction alone. The unit vector in the direction of <span class="hg">a⃗</span> is written as <span class="hg">â</span> (read "a-hat").</p>
+    <div class="fbox">
+      <span class="fl">Unit Vector Formula</span>
+      <strong>â = <span class="upper-arrow">a</span> /<span class="upper-arrow">|a|</span></strong><br/>
+      Always: <strong>|â| = 1</strong>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Find unit vector along <strong><span class="upper-arrow">b</span> = 3î + 4ĵ</strong></p>
+      <p><span class="upper-arrow">|b|</span> = √(9+16) = 5</p>
+      <p><strong>b̂ = (3/5)î + (4/5)ĵ</strong></p>
+      <p>Verify: √((3/5)²+(4/5)²) = √(9/25+16/25) = 1 ✓</p>
+    </div>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Tip</span>
+      <p><strong>î, ĵ, k̂</strong> are themselves unit vectors. They are mutually perpendicular. This means: <strong>î·ĵ = ĵ·k̂ = k̂·î = 0</strong> and <strong>î·î = ĵ·ĵ = k̂·k̂ = 1</strong></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">Direction Cosines & Direction Ratios</div>
+    <p>If vector <span class="hg upper-arrow">a</span> makes angles <span class="hl">α, β, γ</span> with the positive x, y, z axes, then <strong>cos α, cos β, cos γ</strong> are called the <span class="ha">direction cosines</span> (written l, m, n).</p>
+    <div class="fbox">
+      <span class="fl">Direction Cosines</span>
+      For <strong><span class="upper-arrow">a</span> = xî + yĵ + zk̂</strong> with <strong><span class="upper-arrow">|a|</span> = r</strong>:<br/>
+      <strong>l = x/r,&nbsp;&nbsp; m = y/r,&nbsp;&nbsp; n = z/r</strong><br/><br/>
+      ★ Golden Identity:  <strong>l² + m² + n² = 1</strong>  (always true)
+    </div>
+    <p><span class="hl">Direction ratios</span> (a, b, c) are any numbers proportional to direction cosines. From them, we recover direction cosines as:</p>
+    <div class="fbox">
+      <span class="fl">DC from DR</span>
+      <strong>l = a/√(a²+b²+c²)</strong><br/>
+      <strong>m = b/√(a²+b²+c²)</strong><br/>
+      <strong>n = c/√(a²+b²+c²)</strong>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Solved Example</span>
+      <p>Direction cosines of <strong><span class="upper-arrow">a</span> = î + 2ĵ + 2k̂</strong></p>
+      <p><span class="upper-arrow">|a|</span> = √(1+4+4) = 3</p>
+      <p><strong>l = 1/3,  m = 2/3,  n = 2/3</strong></p>
+      <p>Check: (1/9)+(4/9)+(4/9) = 9/9 = 1 ✓</p>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Feature</th><th>Direction Cosines</th><th>Direction Ratios</th></tr></thead>
+      <tbody>
+        <tr><td>Notation</td><td>l, m, n</td><td>a, b, c</td></tr>
+        <tr><td>Constraint</td><td>l²+m²+n² = 1</td><td>No constraint</td></tr>
+        <tr><td>Uniqueness</td><td>Unique (up to sign)</td><td>Infinitely many sets</td></tr>
+        <tr><td>Use</td><td>Standard form</td><td>Easier to write initially</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Focus — HIGH PRIORITY</span>
+      <p><strong>l² + m² + n² = 1</strong> is used repeatedly in proofs and problems. The direction cosines of axes: x-axis = (1,0,0), y-axis = (0,1,0), z-axis = (0,0,1).</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">Components of a Vector</div>
+    <p>Any vector in 3D is expressed as a linear combination of <span class="hb">î, ĵ, k̂</span>. The scalars x, y, z are its components.</p>
+    <div class="fbox">
+      <span class="fl">Component Form</span>
+      <strong><span class="upper-arrow">a</span> = a₁î + a₂ĵ + a₃k̂</strong><br/>
+      a₁ = x-component, a₂ = y-component, a₃ = z-component
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-t" style="color:var(--accent)">Addition</div>
+        <p>Add component-wise:<br/><strong style="color:var(--gold)">(a₁+b₁)î + (a₂+b₂)ĵ + (a₃+b₃)k̂</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-t" style="color:var(--pink)">Equality</div>
+        <p><span class="upper-arrow">a</span> = <span class="upper-arrow">b</span>   &nbsp; if &nbsp; <strong style="color:var(--gold)">a₁=b₁, a₂=b₂, a₃=b₃</strong><br/>All three components must match.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">Section Formula</div>
+    <p>Point R divides segment AB (with position vectors <span class="hg upper-arrow">a</span> and <span class="hg upper-arrow">b</span>) in ratio m : n.</p>
+    <div class="fbox">
+      <span class="fl">Section Formula</span>
+      <strong>Internal Division:</strong><br/>
+      <strong><span class="upper-arrow">r</span> = (m·<span class="upper-arrow">b</span> + n·<span class="upper-arrow">a</span>) / (m + n)</strong><br/><br/>
+      <strong>External Division:</strong><br/>
+      <strong><span class="upper-arrow">r</span> = (m·<span class="upper-arrow">b</span> − n·<span class="upper-arrow">a</span>) / (m − n)</strong><br/><br/>
+      <strong>Midpoint (m = n):</strong><br/>
+      <strong><span class="upper-arrow">r</span> = (<span class="upper-arrow">a</span> + <span class="upper-arrow">b</span>) / 2</strong>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>A = (1,2,3), B = (4,5,6). Find midpoint M.</p>
+      <p><strong>M = ((1+4)/2, (2+5)/2, (3+6)/2) = (5/2, 7/2, 9/2)</strong></p>
+    </div>
+    <div class="note">
+      <span class="note-l">📌 Board Exam</span>
+      <p>Section formula appears in 4-mark questions. Express the result as a position vector: <strong><span class="upper-arrow">r</span> = (5/2)î + (7/2)ĵ + (9/2)k̂</strong></p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-title">Collinearity of Vectors</div>
+    <p>Two vectors are <span class="ha">collinear (parallel)</span> if one is a scalar multiple of the other.</p>
+    <div class="fbox">
+      <span class="fl">Collinearity Condition</span>
+      <strong> <span class="upper-arrow">a</span> = λ<span class="upper-arrow">b</span></strong>     for some λ ∈ ℝ<br/><br/>
+      Equivalently:  <strong>a₁/b₁ = a₂/b₂ = a₃/b₃</strong>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Are <strong><span class="upper-arrow">a</span> = 2î+4ĵ−6k̂</strong> and <strong><span class="upper-arrow">b</span> = î+2ĵ−3k̂</strong> parallel?</p>
+      <p>Ratios: 2/1 = 4/2 = −6/−3 = 2 (all equal) → <strong>Yes, <span class="upper-arrow">a</span> = 2<span class="upper-arrow">b</span></strong> ✓</p>
+    </div>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Application</span>
+      <p>To prove three points A, B, C are collinear: show <strong><span class="upper-arrow">AB</span> = λ · <span class="upper-arrow">AC</span></strong>. This is the fastest method and always works.</p>
+    </div>
+  </section>
+
+  <div class="pnav">
+    <a href="vector1.html" class="prev">← Introduction</a>
+    <a href="vector3.html" class="next">Types of Vectors →</a>
+  </div>
+  <div style="height:40px"></div>
+</main>
+
+<footer class="site-footer footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vectors</div>
+    </div>
+</footer>
+<button class="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+  const burger=document.getElementById('burger'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+  function t(){const o=sidebar.classList.toggle('open');burger.classList.toggle('open',o);overlay.classList.toggle('show',o)}
+  burger.addEventListener('click',t);overlay.addEventListener('click',t);
+  window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('prog').style.width=(s/h*100)+'%'});
+</script>
+</body>
+</html>

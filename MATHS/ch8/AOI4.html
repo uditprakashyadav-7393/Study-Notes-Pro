@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Integration with Graph – Application of Integrals | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --bg:#0c0e16;--surface:#13161f;--surface2:#1b1f2d;
+    --border:#252a3a;--border2:#2f3550;
+    --accent:#34d399;--accent2:#10b981;--gold:#f5c518;--gold-dim:rgba(245,197,24,.25);
+    --red:#f87171;--blue:#38bdf8;--purple:#c084fc;--orange:#fb923c;
+    --text:#e2e8f4;--text-muted:#7a82a0;--text-dim:#4a5270;
+    --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(12,14,22,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;}
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:8px;height:52px;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;white-space:nowrap;margin-right:12px;font-size:.95rem;}
+  .nav-brand span{color:var(--gold);}
+  .nav-sep{width:1px;height:18px;background:var(--border2);flex-shrink:0;}
+  .nav-link{white-space:nowrap;padding:5px 12px;border-radius:6px;font-size:.78rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
+  .nav-link:hover{color:var(--text);background:var(--surface2);}
+  .nav-link.active{color:var(--accent);background:rgba(52,211,153,.1);font-weight:600;}
+
+  .hero{padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(52,211,153,.07),transparent);}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:20px;padding:4px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:20px;letter-spacing:.05em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:14px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:580px;margin:0 auto 28px;}
+  .chapter-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
+
+  .container{max-width:900px;margin:0 auto;padding:0 24px 64px;}
+
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+  .section.gold-top::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .section.blue-top::before{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
+  .section.purple-top::before{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+  .section.orange-top::before{background:linear-gradient(90deg,transparent,var(--orange),transparent);}
+
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:16px;color:#fff;}
+  .sec-body{color:var(--text-muted);font-size:.97rem;line-height:1.8;}
+  .sec-body p{margin-bottom:12px;}
+
+  .formula-box{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center;}
+  .formula-box .formula-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+  .formula-box .formula-body{font-size:1.08rem;color:var(--text);}
+  .formula-box.gold{border-left-color:var(--gold);}.formula-box.gold .formula-label{color:var(--gold);}
+  .formula-box.blue{border-left-color:var(--blue);}.formula-box.blue .formula-label{color:var(--blue);}
+
+  /* SVG GRAPH AREA */
+  .graph-container{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:20px;margin:20px 0;display:flex;flex-direction:column;align-items:center;}
+  .graph-container h4{font-size:.82rem;font-family:'JetBrains Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+  .graph-container svg{max-width:100%;height:auto;}
+
+  .example-box{background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.15);border-radius:10px;padding:22px;margin:20px 0;}
+  .example-box .ex-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .example-box .ex-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:10px;}
+  .example-box .ex-body{font-size:.88rem;color:var(--text-muted);line-height:1.75;}
+  .example-box .ex-body p{margin-bottom:8px;}
+
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:14px;margin:16px 0;}
+  .step{display:flex;gap:16px;align-items:flex-start;}
+  .step::before{counter-increment:step;content:counter(step);flex-shrink:0;width:30px;height:30px;border-radius:50%;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);font-weight:700;margin-top:2px;}
+  .step p{font-size:.92rem;color:var(--text-muted);line-height:1.7;}
+
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin:16px 0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--text-muted);}
+  .checklist li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px;}
+
+  .sketch-guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:20px 0;}
+  .sg-card{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:18px;}
+  .sg-card .sg-curve{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);margin-bottom:8px;}
+  .sg-card h4{font-size:.9rem;font-weight:600;color:#fff;margin-bottom:6px;}
+  .sg-card ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
+  .sg-card ul li{font-size:.8rem;color:var(--text-muted);}
+  .sg-card ul li::before{content:'→ ';color:var(--accent);}
+
+  .callout{border-radius:10px;padding:18px 22px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;}
+  .callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+  .callout-body h4{font-size:.88rem;font-weight:700;margin-bottom:5px;}
+  .callout-body p,.callout-body li{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+  .callout-body ul{padding-left:16px;}
+  .board{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);}
+  .board .callout-body h4{color:#4ade80;}
+  .jee{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);}
+  .jee .callout-body h4{color:var(--red);}
+  .warn{background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.2);}
+  .warn .callout-body h4{color:var(--orange);}
+
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+
+  @media(max-width:600px){.hero{padding:44px 16px 32px;}.section{padding:22px 18px;}.container{padding:0 14px 48px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">StudyNotes<span>Pro</span></span>
+    <div class="nav-sep"></div>
+    <a class="nav-link" href="AOI1.html">01 · Introduction</a>
+    <a class="nav-link" href="AOI2.html">02 · Area Under Curve</a>
+    <a class="nav-link" href="AOI3.html">03 · Area Between Curves</a>
+    <a class="nav-link active" href="AOI4.html">04 · Integration &amp; Graph</a>
+    <a class="nav-link" href="AOI5.html">05 · Properties</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Chapter 8 · Page 4 of 5</div>
+  <h1>Integration<br/><em>with Graphs</em></h1>
+  <p class="hero-sub">Sketching standard curves, identifying bounded regions, and solving area problems graphically.</p>
+  <span class="chapter-tag">Class 12 · Mathematics · CBSE &amp; JEE</span>
+</header>
+
+<div class="container">
+
+  <!-- Why Sketch -->
+  <div class="section">
+    <div class="sec-num">01 · Why Draw a Graph?</div>
+    <div class="sec-title">The Role of Sketching in Area Problems</div>
+    <div class="sec-body">
+      <p>A rough sketch is not optional — it is the most important step. Without a sketch you cannot:</p>
+    </div>
+    <ul class="checklist">
+      <li>Know which function is above / below in the region.</li>
+      <li>Decide whether to integrate w.r.t. \(x\) or \(y\).</li>
+      <li>Identify whether the curve crosses an axis (requiring split integrals).</li>
+      <li>Check if the region is symmetric (allowing you to multiply by 2 or 4).</li>
+      <li>Spot mistakes — if your area is negative but the region is clearly positive, you swapped limits.</li>
+    </ul>
+    <div class="callout warn">
+      <div class="callout-icon">📌</div>
+      <div class="callout-body">
+        <h4>CBSE Mark Allocation</h4>
+        <p>In a 5-mark area problem: 1 mark is typically given just for a correct sketch with the shaded region. Never skip it!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Sketch Standard Curves -->
+  <div class="section gold-top">
+    <div class="sec-num">02 · Sketching Guide</div>
+    <div class="sec-title">How to Sketch Standard Curves Quickly</div>
+    <div class="sketch-guide">
+      <div class="sg-card">
+        <div class="sg-curve">y = x²</div>
+        <h4>Upward Parabola</h4>
+        <ul>
+          <li>Vertex at (0, 0)</li>
+          <li>Passes through (1,1), (−1,1), (2,4)</li>
+          <li>Symmetric about y-axis</li>
+        </ul>
+      </div>
+      <div class="sg-card">
+        <div class="sg-curve">y² = 4ax</div>
+        <h4>Rightward Parabola</h4>
+        <ul>
+          <li>Vertex at (0, 0)</li>
+          <li>Opens right; passes (a, 2a)</li>
+          <li>Symmetric about x-axis</li>
+        </ul>
+      </div>
+      <div class="sg-card">
+        <div class="sg-curve">x² + y² = r²</div>
+        <h4>Circle</h4>
+        <ul>
+          <li>Centre (0,0), radius r</li>
+          <li>Mark (\(r\),0), (0,\(r\)), etc.</li>
+          <li>Use 4-fold symmetry</li>
+        </ul>
+      </div>
+      <div class="sg-card">
+        <div class="sg-curve">x²/a² + y²/b² = 1</div>
+        <h4>Ellipse</h4>
+        <ul>
+          <li>Vertices: (±a, 0), (0, ±b)</li>
+          <li>Major axis along x if a > b</li>
+          <li>4-fold symmetric</li>
+        </ul>
+      </div>
+      <div class="sg-card">
+        <div class="sg-curve">y = sin x / cos x</div>
+        <h4>Trig Curves</h4>
+        <ul>
+          <li>Mark zeros and maxima/minima</li>
+          <li>sin: 0 at nπ, max at π/2</li>
+          <li>cos: 0 at (2n+1)π/2</li>
+        </ul>
+      </div>
+      <div class="sg-card">
+        <div class="sg-curve">y = mx + c</div>
+        <h4>Straight Line</h4>
+        <ul>
+          <li>Find x-intercept: y=0</li>
+          <li>Find y-intercept: x=0</li>
+          <li>Join the two points</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identifying bounded region -->
+  <div class="section blue-top">
+    <div class="sec-num">03 · Identifying Region</div>
+    <div class="sec-title">How to Identify the Bounded Region</div>
+    <div class="sec-body">
+      <p>After sketching, follow this process to correctly identify the shaded (required) region:</p>
+    </div>
+    <div class="steps">
+      <div class="step"><p><strong>Find all intersection points</strong> of the given curves/lines. Mark them on the sketch.</p></div>
+      <div class="step"><p><strong>Shade the enclosed region</strong> — the area completely surrounded by the given boundaries.</p></div>
+      <div class="step"><p><strong>Determine limits of integration</strong> — the x-coordinates (or y-coordinates) of the intersection points become your limits.</p></div>
+      <div class="step"><p><strong>Choose integration variable</strong> — if boundaries are easier to express as \(x = g(y)\), integrate w.r.t. y.</p></div>
+      <div class="step"><p><strong>Check sign</strong> — substitute a test point from inside the region to confirm which function is upper/right boundary.</p></div>
+    </div>
+  </div>
+
+  <!-- SVG Graph: Parabola + Line Example -->
+  <div class="section">
+    <div class="sec-num">04 · Visual Example</div>
+    <div class="sec-title">Bounded Region — Parabola \(y=x^2\) and Line \(y=x+2\)</div>
+
+    <div class="graph-container">
+      <h4>Graph: y = x² (blue) and y = x + 2 (gold) — Shaded Region</h4>
+      <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+        <!-- Grid -->
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#4a5270"/>
+          </marker>
+        </defs>
+        <!-- Grid lines -->
+        <g stroke="#1b1f2d" stroke-width="1">
+          <line x1="50" y1="50" x2="50" y2="320"/>
+          <line x1="100" y1="50" x2="100" y2="320"/>
+          <line x1="150" y1="50" x2="150" y2="320"/>
+          <line x1="200" y1="50" x2="200" y2="320"/>
+          <line x1="250" y1="50" x2="250" y2="320"/>
+          <line x1="300" y1="50" x2="300" y2="320"/>
+          <line x1="350" y1="50" x2="350" y2="320"/>
+          <line x1="400" y1="50" x2="400" y2="320"/>
+          <line x1="450" y1="50" x2="450" y2="320"/>
+          <line x1="20" y1="80" x2="480" y2="80"/>
+          <line x1="20" y1="130" x2="480" y2="130"/>
+          <line x1="20" y1="180" x2="480" y2="180"/>
+          <line x1="20" y1="230" x2="480" y2="230"/>
+          <line x1="20" y1="280" x2="480" y2="280"/>
+        </g>
+        <!-- Axes -->
+        <line x1="20" y1="230" x2="480" y2="230" stroke="#4a5270" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="250" y1="320" x2="250" y2="40" stroke="#4a5270" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <!-- Axis labels -->
+        <text x="475" y="245" fill="#4a5270" font-size="12">x</text>
+        <text x="255" y="38" fill="#4a5270" font-size="12">y</text>
+        <!-- Tick labels on x-axis -->
+        <text x="293" y="248" fill="#4a5270" font-size="10">1</text>
+        <text x="343" y="248" fill="#4a5270" font-size="10">2</text>
+        <text x="393" y="248" fill="#4a5270" font-size="10">3</text>
+        <text x="193" y="248" fill="#4a5270" font-size="10">-1</text>
+        <text x="143" y="248" fill="#4a5270" font-size="10">-2</text>
+        <!-- Tick labels on y-axis -->
+        <text x="225" y="184" fill="#4a5270" font-size="10">1</text>
+        <text x="225" y="134" fill="#4a5270" font-size="10">2</text>
+        <text x="225" y="84" fill="#4a5270" font-size="10">3</text>
+        <text x="225" y="284" fill="#4a5270" font-size="10">-1</text>
+
+        <!-- Shaded region between parabola and line from x=-1 to x=2 -->
+        <!-- Region: line above parabola. Points along region boundary -->
+        <path d="
+          M 200,180
+          Q 240,145 250,130 Q 270,90 300,80
+          L 350,55
+          L 350,55
+          L 300,80
+          L 300,130
+          Q 275,145 250,230
+          Q 230,190 200,180 Z"
+          fill="rgba(52,211,153,0.12)" stroke="none"/>
+        <!-- Proper shaded area: parabola bottom, line top, x=-1 to x=2 -->
+        <!-- x=-1 → screen x=200, y: parabola y=1 → screen 180; line y=1 → screen 180 -->
+        <!-- x=0 → screen x=250, parabola y=0 → screen 230; line y=2 → screen 130 -->
+        <!-- x=1 → screen x=300, parabola y=1 → screen 180; line y=3 → screen 80 -->
+        <!-- x=2 → screen x=350, parabola y=4 → screen 30; line y=4 → screen 30 -->
+        <path d="M 200,180 C 225,140 245,100 250,130 C 255,160 275,100 300,80 L 350,30
+                 L 300,80 C 280,110 260,160 250,130 C 240,100 220,160 200,180 Z"
+              fill="none"/>
+        <!-- Parabola y=x² from x=-2.5 to x=3 -->
+        <!-- x→screenX: screenX = 250 + x*50; y→screenY: screenY = 230 - y*50 -->
+        <path d="M 125,361 Q 150,292 175,198 Q 200,130 225,55 Q 237,25 250,230
+                 Q 262,180 275,130 Q 300,55 325,5"
+              stroke="none"/>
+        <!-- Better parabola using polyline -->
+        <polyline points="
+          125,336
+          150,286
+          175,236
+          200,186
+          225,136
+          240,111
+          250,230
+          260,180
+          275,155
+          300,80
+          325,5
+        " fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linejoin="round"/>
+        <!-- Actually recalc: y=x² at x=-2.5: y=6.25→sy=230-6.25*50=-82.5 too high -->
+        <!-- Let scale = 40px per unit -->
+        <!-- screenX = 250+x*50, screenY = 230-y*40 -->
+        <!-- Parabola: y=x² -->
+        <polyline id="parabola" points="
+          50,310
+          100,270
+          150,230
+          175,210
+          200,192
+          225,176
+          250,230
+          260,222
+          275,212
+          300,190
+          325,160
+          350,110
+          375,42
+        " fill="none" stroke="none"/>
+        <!-- Let me use a proper scale: origin at (250,230), 1 unit = 50px x, 40px y -->
+        <!-- Parabola y=x^2: x in [-2,3] -->
+        <!-- (-2,4)→(150,70); (-1,1)→(200,190); (0,0)→(250,230); (1,1)→(300,190); (2,4)→(350,70); (3,9)→(400,-130 clipped) -->
+        <polyline points="150,70 175,128 200,190 225,220 250,230 275,220 300,190 325,150 350,70" 
+                  fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Line y=x+2: x in [-2,3] -->
+        <!-- (-2,0)→(150,230); (-1,1)→(200,190); (0,2)→(250,150); (1,3)→(300,110); (2,4)→(350,70) -->
+        <line x1="150" y1="230" x2="370" y2="54" stroke="#f5c518" stroke-width="2.5"/>
+
+        <!-- Shaded region fill between intersection points (-1,1) and (2,4) -->
+        <!-- Boundary: line from (-1,1)→(2,4), then parabola back from (2,4)→(-1,1) -->
+        <path d="M 200,190 L 300,110 L 350,70 
+                 C 325,150 300,190 275,220 L 250,230 C 240,225 220,210 200,190 Z"
+              fill="rgba(52,211,153,0.15)" stroke="rgba(52,211,153,0.4)" stroke-width="1"/>
+
+        <!-- Intersection point markers -->
+        <circle cx="200" cy="190" r="5" fill="#34d399"/>
+        <circle cx="350" cy="70" r="5" fill="#34d399"/>
+        <!-- Labels -->
+        <text x="172" y="185" fill="#34d399" font-size="11">(-1,1)</text>
+        <text x="352" y="68" fill="#34d399" font-size="11">(2,4)</text>
+
+        <!-- Curve labels -->
+        <text x="155" y="60" fill="#38bdf8" font-size="12">y = x²</text>
+        <text x="360" y="50" fill="#f5c518" font-size="12">y = x+2</text>
+        <!-- Shaded label -->
+        <text x="252" y="190" fill="#34d399" font-size="11" text-anchor="middle">Area</text>
+      </svg>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Solution using the graph</div>
+      <div class="ex-title">Area enclosed by \(y = x^2\) and \(y = x + 2\)</div>
+      <div class="ex-body">
+        <p><strong>From graph:</strong> Intersection points are \((-1, 1)\) and \((2, 4)\). The line \(y = x+2\) is above the parabola in this interval.</p>
+        <p>\(A = \displaystyle\int_{-1}^2 \big[(x+2) - x^2\big]\,dx = \left[\dfrac{x^2}{2}+2x-\dfrac{x^3}{3}\right]_{-1}^2\)</p>
+        <p>\(= \left(2+4-\dfrac{8}{3}\right)-\left(\dfrac{1}{2}-2+\dfrac{1}{3}\right) = \dfrac{10}{3}-\left(-\dfrac{7}{6}\right) = \dfrac{20}{6}+\dfrac{7}{6} = \mathbf{\dfrac{9}{2}}\) sq. units</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identifying region w.r.t. y-axis -->
+  <div class="section purple-top">
+    <div class="sec-num">05 · Integration w.r.t. y</div>
+    <div class="sec-title">When to Integrate with Respect to y</div>
+    <div class="sec-body">
+      <p>When the region is naturally described by horizontal strips, integrating w.r.t. \(y\) is much cleaner. Use this when curves are given as \(x = g(y)\).</p>
+    </div>
+
+    <div class="formula-box blue">
+      <div class="formula-label">Area via horizontal strips</div>
+      <div class="formula-body">
+        \[ A = \int_c^d \big[x_{\text{right}}(y) - x_{\text{left}}(y)\big]\,dy \]
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Example — w.r.t. y</div>
+      <div class="ex-title">Area bounded by \(y^2 = x\) and \(x = y + 2\).</div>
+      <div class="ex-body">
+        <p><strong>Rewrite:</strong> \(x_{\text{right}} = y + 2\), \(x_{\text{left}} = y^2\).</p>
+        <p><strong>Intersections:</strong> \(y^2 = y+2 \Rightarrow y^2-y-2=0 \Rightarrow (y-2)(y+1)=0 \Rightarrow y=-1,\;2\).</p>
+        <p>\(A = \displaystyle\int_{-1}^2 [(y+2)-y^2]\,dy = \left[\dfrac{y^2}{2}+2y-\dfrac{y^3}{3}\right]_{-1}^2 = \mathbf{\dfrac{9}{2}}\) sq. units</p>
+        <p><em>Notice: same numerical answer as previous example — coincidence! But the method is different.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout board">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body">
+      <h4>Board Exam — Graph Tips</h4>
+      <ul>
+        <li>For a circle, mark four points: (r,0), (0,r), (-r,0), (0,-r).</li>
+        <li>For parabola \(y^2=4ax\): mark focus \((a,0)\) and latus rectum at \(x=a\).</li>
+        <li>Always label the intersection points with coordinates on the graph.</li>
+        <li>Shade the required region and write "Required Area" with an arrow.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout jee">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <h4>JEE — Graph-Based Questions</h4>
+      <ul>
+        <li>JEE often gives a graph and asks for the area directly — read intersection points from the graph carefully.</li>
+        <li>Parametric curves: sketch using \((x(t), y(t))\) at key values of \(t\).</li>
+        <li>For \(y = f(|x|)\): use symmetry about y-axis — sketch for \(x \geq 0\) then reflect.</li>
+        <li>Practice recognising regions quickly: parabola-line, two parabolas, circle-line.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 8 &middot; Application of Integrals</div>
+  </div>
+</footer>
+</body>
+</html>

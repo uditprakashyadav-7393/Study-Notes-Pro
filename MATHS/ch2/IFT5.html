@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on inverse trigonometric functions, covering their definitions, properties, and graphs. Learn how to work with arcsin, arccos, arctan, and more, with clear explanations and examples.">
+<meta name="keywords" content="inverse trigonometric functions, arcsin, arccos, arctan, properties of inverse trig functions, graphs of inverse trig functions, trigonometry, math notes">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Properties Set II — Inverse Trigonometry</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<script>MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea']}}</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;--s1:#0b0f1c;--s2:#101726;--card:#131d30;--border:#1d2d45;
+  --text:#cdd8ea;--muted:#5a7090;--dim:#3a5070;
+  --gold:#e8960a;--gold2:#ffd060;--gold3:#7a4800;
+  --teal:#22d3b0;--rose:#f06080;--sky:#5ab0ff;--violet:#b070ff;
+  --accent: #e96c6c;
+  --hf:'Playfair Display',serif;--bf:'Source Serif 4',serif;--mf:'Fira Code',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--bf);font-size:1.08rem;line-height:1.75;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 85% 5%,#100d25 0%,transparent 60%),
+    radial-gradient(ellipse 70% 60% at 15% 95%,#0a1520 0%,transparent 60%);
+  background-attachment:fixed;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(30,60,100,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(30,60,100,.07) 1px,transparent 1px);
+  background-size:60px 60px}
+
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(17, 20, 30, 0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;overflow-x:auto;gap:0}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--gold);white-space:nowrap;margin-right:1.5rem;text-decoration:none;font-style:italic;flex-shrink:0}
+.nav-links{display:flex;gap:0;flex-shrink:0}
+.nav-links a{font-family:var(--mono);font-size:0.63rem;letter-spacing:0.04em;color:var(--muted);text-decoration:none;padding:0 10px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--gold);border-bottom-color:var(--accent)}
+
+
+/* HERO */
+.hero{position:relative;z-index:1;text-align:center;padding:3.5rem 2rem 2.5rem;max-width:800px;margin:0 auto}
+.ch-label{font-family:var(--mf);font-size:.7rem;color:var(--gold);letter-spacing:.25em;text-transform:uppercase;
+  margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem}
+.ch-label::before,.ch-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--gold3)}
+.hero h1{font-family:var(--hf);font-size:clamp(2.2rem,6vw,3.8rem);font-weight:900;
+  background:linear-gradient(145deg,var(--gold2) 0%,var(--gold) 50%,#c06000 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15}
+.hero-sub{margin-top:1rem;color:var(--muted);font-style:italic;font-size:1rem}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.8rem auto}
+
+/* CONTENT */
+main{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:0 1.5rem 5rem}
+.sec-head{margin:2.8rem 0 1.4rem;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:1rem}
+.sec-num{font-family:var(--mf);font-size:2.5rem;color:var(--gold3);font-weight:500;line-height:1}
+.sec-title{font-family:var(--hf);font-size:1.35rem;color:var(--gold2);font-weight:700}
+.sec-desc{font-size:.9rem;color:var(--muted);font-style:italic;margin-top:.2rem}
+
+/* PROPERTY CARDS */
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:1rem 0 2rem}
+.prop{background:var(--card);padding:1.3rem 1.5rem;transition:background .2s;position:relative;overflow:hidden}
+.prop:hover{background:var(--s2)}
+.prop::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold3);transition:background .2s}
+.prop:hover::before{background:var(--gold)}
+.prop-eq{font-size:1.05rem;margin-bottom:.4rem;line-height:1.5}
+.prop-cond{font-family:var(--mf);font-size:.72rem;color:var(--teal);margin-top:.3rem}
+
+.prop-wide{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;
+  margin:.8rem 0;position:relative;overflow:hidden;transition:background .2s}
+.prop-wide:hover{background:var(--s2)}
+.prop-wide::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4}
+
+/* COMPLEMENTARY PAIRS */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0 2rem}
+@media(max-width:640px){.comp-grid{grid-template-columns:1fr}}
+.comp-card{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:1.2rem 1.2rem 1rem;text-align:center;position:relative;overflow:hidden;transition:all .25s}
+.comp-card:hover{border-color:rgba(232,150,10,.4);transform:translateY(-2px)}
+.comp-card::before{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.comp-pair{font-size:1rem;line-height:1.7;margin-bottom:.4rem}
+.comp-sum{font-family:var(--mf);font-size:.75rem;color:var(--gold);
+  background:rgba(232,150,10,.1);padding:.2rem .6rem;border-radius:12px;display:inline-block}
+
+/* NEGATION CARDS */
+.neg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:1rem 0 2rem}
+.neg-card{background:var(--card);padding:1.1rem 1.3rem;transition:background .2s;position:relative}
+.neg-card:hover{background:var(--s2)}
+.neg-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--rose);opacity:.5}
+.neg-card:hover::before{opacity:1}
+.neg-fn{font-family:var(--mf);font-size:.7rem;color:var(--muted);margin-bottom:.3rem;letter-spacing:.06em}
+.neg-eq{font-size:.98rem;line-height:1.5}
+.neg-tag{font-family:var(--mf);font-size:.65rem;margin-top:.3rem}
+.neg-tag.odd{color:var(--teal)} .neg-tag.even{color:var(--rose)}
+
+/* TAN ADDITION CARDS */
+.tan-add-card{background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.6rem 2rem;margin:.8rem 0;position:relative;overflow:hidden}
+.tan-add-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--violet)}
+.tan-add-label{font-family:var(--mf);font-size:.7rem;color:var(--violet);letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:.8rem}
+.tan-cases{margin-top:.8rem;padding-left:1rem;border-left:1px solid var(--border)}
+.tan-case{margin:.4rem 0;font-size:.9rem}
+.tan-case-cond{font-family:var(--mf);font-size:.72rem;color:var(--muted);margin-left:.5rem}
+
+/* DOUBLE ANGLE */
+.double-card{background:linear-gradient(135deg,rgba(176,112,255,.07),rgba(232,150,10,.05));
+  border:1px solid rgba(176,112,255,.2);border-radius:12px;padding:1.8rem 2rem;margin:1rem 0}
+.double-label{font-family:var(--mf);font-size:.7rem;color:var(--violet);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:1rem}
+.double-eq{margin:.6rem 0;font-size:1.05rem}
+
+/* HIGHLIGHT */
+.highlight{background:linear-gradient(135deg,rgba(232,150,10,.08),rgba(232,150,10,.03));
+  border:1px solid rgba(232,150,10,.25);border-radius:10px;padding:1.4rem 1.8rem;margin:1.5rem 0}
+.highlight-label{font-family:var(--mf);font-size:.65rem;color:var(--gold);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.highlight p{font-size:.95rem}
+.note{background:rgba(90,176,255,.06);border-left:3px solid var(--sky);border-radius:0 8px 8px 0;
+  padding:.9rem 1.2rem;margin:1.2rem 0;font-size:.92rem;color:var(--muted)}
+.note strong{color:var(--sky)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:1rem 0 2rem;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+thead tr{background:var(--s2)}
+th{font-family:var(--hf);font-size:.78rem;font-weight:700;color:var(--gold);
+  padding:.8rem 1.1rem;text-align:left;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+td{padding:.7rem 1.1rem;border-bottom:1px solid rgba(30,45,70,.6);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(20,30,50,.5)}
+td:first-child{font-family:var(--mf);font-size:.82rem;color:var(--gold2)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .6s ease both}
+.site-footer{border-top:1px solid var(--border);padding:1.5rem 2rem;text-align:center;font-size:0.75rem;color:var(--muted);font-family:var(--mono)}
+.site-footer a{color:var(--accent);text-decoration:none}
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--gold);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(251,146,60,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none;}
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+
+<nav class="site-nav">
+  <a class="nav-brand" href="./mathsch2.html">ITF Notes</a>
+  <div class="nav-links">
+    <a href="./IFT1.html">01 Intro</a>
+    <a href="./IFT2.html">02 Domain & Range</a>
+    <a href="./IFT3.html" >03 Principal Value</a>
+    <a href="./IFT4.html" >04 Properties I</a>
+    <a href="./IFT5.html" class="active">05 Properties II</a>
+    <a href="./IFT6.html">06 Graphs</a>
+    <a href="./graphs.html">07 Animated Graphs</a>
+  </div>
+</nav>
+
+
+<div class="hero">
+  <div class="ch-label">Chapter · Properties</div>
+  <h1>Properties Set II</h1>
+  <p class="hero-sub">Odd/even symmetry, complementary pairs, addition formulae &amp; double angle</p>
+  <div class="rule"></div>
+</div>
+
+<main>
+
+  <!-- ══ A: NEGATION / ODD-EVEN ══ -->
+  <div class="sec-head">
+    <div class="sec-num">A</div>
+    <div>
+      <div class="sec-title">Negation Properties (Odd & Even)</div>
+      <div class="sec-desc">Effect of replacing $x$ with $-x$ in each inverse function</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-label">Key Pattern</div>
+    <p>$\sin^{-1}$, $\tan^{-1}$, $\csc^{-1}$ are <strong>odd functions</strong> (negation gives $-f(x)$). <br>
+       $\cos^{-1}$, $\sec^{-1}$, $\cot^{-1}$ are <strong>neither odd nor even</strong> (negation gives $\pi - f(x)$).</p>
+  </div>
+
+  <div class="neg-grid">
+    <div class="neg-card">
+      <div class="neg-fn">sin⁻¹</div>
+      <div class="neg-eq">$\sin^{-1}(-x) = -\sin^{-1} x$</div>
+      <div class="neg-tag odd">▸ Odd function</div>
+    </div>
+    <div class="neg-card">
+      <div class="neg-fn">cos⁻¹</div>
+      <div class="neg-eq">$\cos^{-1}(-x) = \pi - \cos^{-1} x$</div>
+      <div class="neg-tag even">▸ Neither odd nor even</div>
+    </div>
+    <div class="neg-card">
+      <div class="neg-fn">tan⁻¹</div>
+      <div class="neg-eq">$\tan^{-1}(-x) = -\tan^{-1} x$</div>
+      <div class="neg-tag odd">▸ Odd function</div>
+    </div>
+    <div class="neg-card">
+      <div class="neg-fn">cot⁻¹</div>
+      <div class="neg-eq">$\cot^{-1}(-x) = \pi - \cot^{-1} x$</div>
+      <div class="neg-tag even">▸ Neither odd nor even</div>
+    </div>
+    <div class="neg-card">
+      <div class="neg-fn">sec⁻¹</div>
+      <div class="neg-eq">$\sec^{-1}(-x) = \pi - \sec^{-1} x$</div>
+      <div class="neg-tag even">▸ Neither odd nor even</div>
+    </div>
+    <div class="neg-card">
+      <div class="neg-fn">csc⁻¹</div>
+      <div class="neg-eq">$\csc^{-1}(-x) = -\csc^{-1} x$</div>
+      <div class="neg-tag odd">▸ Odd function</div>
+    </div>
+  </div>
+
+  <!-- ══ B: COMPLEMENTARY PAIRS ══ -->
+  <div class="sec-head">
+    <div class="sec-num">B</div>
+    <div>
+      <div class="sec-title">Complementary Pairs (Sum = π/2)</div>
+      <div class="sec-desc">Each function and its co-function always sum to π/2</div>
+    </div>
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp-card">
+      <div class="comp-pair">$\sin^{-1} x$<br>$+ \cos^{-1} x$</div>
+      <div class="comp-sum">= π/2</div>
+      <div style="font-family:var(--mf);font-size:.7rem;color:var(--muted);margin-top:.6rem">$x \in [-1,\,1]$</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-pair">$\tan^{-1} x$<br>$+ \cot^{-1} x$</div>
+      <div class="comp-sum">= π/2</div>
+      <div style="font-family:var(--mf);font-size:.7rem;color:var(--muted);margin-top:.6rem">$x \in \mathbb{R}$</div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-pair">$\sec^{-1} x$<br>$+ \csc^{-1} x$</div>
+      <div class="comp-sum">= π/2</div>
+      <div style="font-family:var(--mf);font-size:.7rem;color:var(--muted);margin-top:.6rem">$|x| \geq 1$</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Trick:</strong> These follow directly from the co-function identity: e.g., $\sin\theta = \cos(\pi/2 - \theta)$, so $\sin^{-1}x + \cos^{-1}x = \pi/2$.
+  </div>
+
+  <!-- ══ C: TAN ADDITION ══ -->
+  <div class="sec-head">
+    <div class="sec-num">C</div>
+    <div>
+      <div class="sec-title">Addition Formulae for tan⁻¹</div>
+      <div class="sec-desc">Sum and difference of two inverse tangent values</div>
+    </div>
+  </div>
+
+  <div class="tan-add-card">
+    <div class="tan-add-label">Addition — three cases</div>
+    $$\tan^{-1} x + \tan^{-1} y = \begin{cases} \tan^{-1}\!\left(\dfrac{x+y}{1-xy}\right) & \text{if } xy < 1 \\[10pt] \pi + \tan^{-1}\!\left(\dfrac{x+y}{1-xy}\right) & \text{if } xy > 1,\; x > 0,\; y > 0 \\[10pt] -\pi + \tan^{-1}\!\left(\dfrac{x+y}{1-xy}\right) & \text{if } xy > 1,\; x < 0,\; y < 0 \end{cases}$$
+  </div>
+
+  <div class="tan-add-card" style="border-left-color:var(--teal);margin-top:.8rem">
+    <div class="tan-add-label" style="color:var(--teal)">Subtraction</div>
+    $$\tan^{-1} x - \tan^{-1} y = \tan^{-1}\!\left(\frac{x - y}{1 + xy}\right), \quad xy > -1$$
+  </div>
+
+  <!-- ══ D: DOUBLE ANGLE ══ -->
+  <div class="sec-head">
+    <div class="sec-num">D</div>
+    <div>
+      <div class="sec-title">Double Angle Formulae (2 tan⁻¹)</div>
+      <div class="sec-desc">Converting $2\tan^{-1}x$ into $\sin^{-1}$, $\cos^{-1}$, or $\tan^{-1}$</div>
+    </div>
+  </div>
+
+  <div class="double-card">
+    <div class="double-label">Three equivalent forms</div>
+    <div class="double-eq">$$2\tan^{-1} x = \sin^{-1}\!\left(\frac{2x}{1+x^2}\right), \quad |x| \leq 1$$</div>
+    <div class="double-eq">$$2\tan^{-1} x = \cos^{-1}\!\left(\frac{1-x^2}{1+x^2}\right), \quad x \geq 0$$</div>
+    <div class="double-eq">$$2\tan^{-1} x = \tan^{-1}\!\left(\frac{2x}{1-x^2}\right), \quad |x| < 1$$</div>
+  </div>
+
+  <!-- ══ FULL SUMMARY TABLE ══ -->
+  <div class="sec-head">
+    <div class="sec-num">✦</div>
+    <div>
+      <div class="sec-title">Complete Summary — Set II</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Property</th><th>Formula</th><th>Condition</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Negation (sin)</td><td>$\sin^{-1}(-x)=-\sin^{-1}x$</td><td>$x\in[-1,1]$</td></tr>
+        <tr><td>Negation (cos)</td><td>$\cos^{-1}(-x)=\pi-\cos^{-1}x$</td><td>$x\in[-1,1]$</td></tr>
+        <tr><td>Negation (tan)</td><td>$\tan^{-1}(-x)=-\tan^{-1}x$</td><td>$x\in\mathbb{R}$</td></tr>
+        <tr><td>Negation (cot)</td><td>$\cot^{-1}(-x)=\pi-\cot^{-1}x$</td><td>$x\in\mathbb{R}$</td></tr>
+        <tr><td>Negation (sec)</td><td>$\sec^{-1}(-x)=\pi-\sec^{-1}x$</td><td>$|x|\geq1$</td></tr>
+        <tr><td>Negation (csc)</td><td>$\csc^{-1}(-x)=-\csc^{-1}x$</td><td>$|x|\geq1$</td></tr>
+        <tr><td>Complementary (sin+cos)</td><td>$\sin^{-1}x+\cos^{-1}x=\pi/2$</td><td>$x\in[-1,1]$</td></tr>
+        <tr><td>Complementary (tan+cot)</td><td>$\tan^{-1}x+\cot^{-1}x=\pi/2$</td><td>$x\in\mathbb{R}$</td></tr>
+        <tr><td>Complementary (sec+csc)</td><td>$\sec^{-1}x+\csc^{-1}x=\pi/2$</td><td>$|x|\geq1$</td></tr>
+        <tr><td>tan⁻¹ Addition (xy&lt;1)</td><td>$\tan^{-1}x+\tan^{-1}y=\tan^{-1}\!\left(\frac{x+y}{1-xy}\right)$</td><td>$xy<1$</td></tr>
+        <tr><td>tan⁻¹ Subtraction</td><td>$\tan^{-1}x-\tan^{-1}y=\tan^{-1}\!\left(\frac{x-y}{1+xy}\right)$</td><td>$xy>-1$</td></tr>
+        <tr><td>Double angle (sin⁻¹)</td><td>$2\tan^{-1}x=\sin^{-1}\!\left(\frac{2x}{1+x^2}\right)$</td><td>$|x|\leq1$</td></tr>
+        <tr><td>Double angle (cos⁻¹)</td><td>$2\tan^{-1}x=\cos^{-1}\!\left(\frac{1-x^2}{1+x^2}\right)$</td><td>$x\geq0$</td></tr>
+        <tr><td>Double angle (tan⁻¹)</td><td>$2\tan^{-1}x=\tan^{-1}\!\left(\frac{2x}{1-x^2}\right)$</td><td>$|x|<1$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+ <div class="page-nav">
+    <a class="pnav-btn" href="./IFT4.html"><span>← Prev</span> Properties I</a>
+    <a class="pnav-btn" href="./IFT6.html"><span>Next →</span> Graphs</a>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+       <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+</body>
+</html>

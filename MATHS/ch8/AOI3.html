@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Area Between Curves – Application of Integrals | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --bg:#0c0e16;--surface:#13161f;--surface2:#1b1f2d;--surface3:#222740;
+    --border:#252a3a;--border2:#2f3550;
+    --accent:#a78bfa;--accent2:#818cf8;--gold:#f5c518;--gold-dim:rgba(245,197,24,.25);
+    --red:#f87171;--green:#4ade80;--teal:#5eead4;--orange:#fb923c;
+    --text:#e2e8f4;--text-muted:#7a82a0;--text-dim:#4a5270;
+    --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(12,14,22,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;}
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:8px;height:52px;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;white-space:nowrap;margin-right:12px;font-size:.95rem;}
+  .nav-brand span{color:var(--gold);}
+  .nav-sep{width:1px;height:18px;background:var(--border2);flex-shrink:0;}
+  .nav-link{white-space:nowrap;padding:5px 12px;border-radius:6px;font-size:.78rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
+  .nav-link:hover{color:var(--text);background:var(--surface2);}
+  .nav-link.active{color:var(--accent);background:rgba(167,139,250,.1);font-weight:600;}
+
+  .hero{padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(167,139,250,.07),transparent);}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:20px;padding:4px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:20px;letter-spacing:.05em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:14px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:580px;margin:0 auto 28px;}
+  .chapter-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
+
+  .container{max-width:900px;margin:0 auto;padding:0 24px 64px;}
+
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+  .section.gold-top::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .section.teal-top::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+  .section.red-top::before{background:linear-gradient(90deg,transparent,var(--red),transparent);}
+
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:16px;color:#fff;}
+  .sec-body{color:var(--text-muted);font-size:.97rem;line-height:1.8;}
+  .sec-body p{margin-bottom:12px;}
+
+  .formula-box{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center;}
+  .formula-box .formula-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+  .formula-box .formula-body{font-size:1.08rem;color:var(--text);}
+  .formula-box.gold{border-left-color:var(--gold);}
+  .formula-box.gold .formula-label{color:var(--gold);}
+  .formula-box.teal{border-left-color:var(--teal);}
+  .formula-box.teal .formula-label{color:var(--teal);}
+  .formula-box.red{border-left-color:var(--red);}
+  .formula-box.red .formula-label{color:var(--red);}
+
+  .example-box{background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.15);border-radius:10px;padding:22px;margin:20px 0;}
+  .example-box .ex-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;}
+  .example-box .ex-title{font-size:1rem;font-weight:600;color:#fff;margin-bottom:10px;}
+  .example-box .ex-body{font-size:.88rem;color:var(--text-muted);line-height:1.75;}
+  .example-box .ex-body p{margin-bottom:8px;}
+
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:14px;margin:16px 0;}
+  .step{display:flex;gap:16px;align-items:flex-start;}
+  .step::before{counter-increment:step;content:counter(step);flex-shrink:0;width:30px;height:30px;border-radius:50%;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);font-weight:700;margin-top:2px;}
+  .step p{font-size:.92rem;color:var(--text-muted);line-height:1.7;}
+
+  .callout{border-radius:10px;padding:18px 22px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;}
+  .callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+  .callout-body h4{font-size:.88rem;font-weight:700;margin-bottom:5px;}
+  .callout-body p,.callout-body li{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+  .callout-body ul{padding-left:16px;}
+  .board{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);}
+  .board .callout-body h4{color:var(--green);}
+  .jee{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);}
+  .jee .callout-body h4{color:var(--red);}
+  .info{background:rgba(94,234,212,.06);border:1px solid rgba(94,234,212,.2);}
+  .info .callout-body h4{color:var(--teal);}
+
+  .tbl-wrap{overflow-x:auto;margin:20px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  th{background:var(--surface2);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.73rem;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border2);}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+
+  @media(max-width:600px){.hero{padding:44px 16px 32px;}.section{padding:22px 18px;}.container{padding:0 14px 48px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">StudyNotes<span>Pro</span></span>
+    <div class="nav-sep"></div>
+    <a class="nav-link" href="AOI1.html">01 · Introduction</a>
+    <a class="nav-link" href="AOI2.html">02 · Area Under Curve</a>
+    <a class="nav-link active" href="AOI3.html">03 · Area Between Curves</a>
+    <a class="nav-link" href="AOI4.html">04 · Integration &amp; Graph</a>
+    <a class="nav-link" href="AOI5.html">05 · Properties</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Chapter 8 · Page 3 of 5</div>
+  <h1>Area Between<br/><em>Two Curves</em></h1>
+  <p class="hero-sub">Area enclosed by two functions, curve–curve, and curve–line combinations.</p>
+  <span class="chapter-tag">Class 12 · Mathematics · CBSE &amp; JEE</span>
+</header>
+
+<div class="container">
+
+  <!-- Core Formula -->
+  <div class="section">
+    <div class="sec-num">01 · Core Concept</div>
+    <div class="sec-title">The Master Formula</div>
+    <div class="sec-body">
+      <p>When two curves \(y = f(x)\) and \(y = g(x)\) enclose a region, the area is the integral of the <strong>difference</strong> of the upper and lower function over the interval \([a, b]\).</p>
+      <p>The key: find where they intersect to get limits \(a\) and \(b\), then always subtract <em>lower from upper</em>.</p>
+    </div>
+
+    <div class="formula-box">
+      <div class="formula-label">Area Between Two Curves — Master Formula</div>
+      <div class="formula-body">
+        \[ A = \int_a^b \big[f(x) - g(x)\big]\,dx \]
+        <br/><small style="color:var(--text-muted);font-size:.82rem;">where \(f(x) \geq g(x)\) on \([a, b]\)</small>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <h4>Why does this work?</h4>
+        <p>\(\displaystyle\int_a^b f(x)\,dx\) = area under \(f\) above x-axis. Subtracting \(\displaystyle\int_a^b g(x)\,dx\) removes the area under \(g\). What remains is the area between the two curves.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="section gold-top">
+    <div class="sec-num">02 · Method</div>
+    <div class="sec-title">Step-by-Step Approach</div>
+    <div class="steps">
+      <div class="step"><p><strong>Identify the two curves</strong> — \(y = f(x)\) and \(y = g(x)\).</p></div>
+      <div class="step"><p><strong>Find intersection points</strong> — Solve \(f(x) = g(x)\). These give the limits \(a\) and \(b\).</p></div>
+      <div class="step"><p><strong>Determine which is upper</strong> — Check by substituting a test value in \((a, b)\). Whichever gives a larger \(y\) is the upper curve.</p></div>
+      <div class="step"><p><strong>Set up and integrate</strong> — \(A = \int_a^b [f(x) - g(x)]\,dx\).</p></div>
+      <div class="step"><p><strong>Check sign</strong> — If the result is positive, you're done. If negative, you've swapped upper/lower; take absolute value.</p></div>
+    </div>
+  </div>
+
+  <!-- Case 1: Parabola and Line -->
+  <div class="section teal-top">
+    <div class="sec-num">Case 1 — Most Common</div>
+    <div class="sec-title">Parabola and a Line</div>
+    <div class="sec-body">
+      <p>This is the most tested combination in both CBSE and JEE. The parabola and line intersect at two points, forming a closed region.</p>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Example 1 — CBSE Classic (5 marks)</div>
+      <div class="ex-title">Find area enclosed between \(y = x^2\) and \(y = x\).</div>
+      <div class="ex-body">
+        <p><strong>Step 1 — Intersections:</strong> \(x^2 = x \Rightarrow x(x-1)=0 \Rightarrow x=0,\;1\)</p>
+        <p><strong>Step 2 — Upper/Lower:</strong> At \(x=0.5\): \(y=x=0.5\), \(y=x^2=0.25\). So \(y=x\) is upper.</p>
+        <p><strong>Step 3 — Integrate:</strong></p>
+        <p>\(A = \displaystyle\int_0^1 (x - x^2)\,dx = \left[\dfrac{x^2}{2} - \dfrac{x^3}{3}\right]_0^1 = \dfrac{1}{2} - \dfrac{1}{3} = \mathbf{\dfrac{1}{6}}\) sq. units</p>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Example 2 — Parabola + Line</div>
+      <div class="ex-title">Find area between \(y = x^2 - 2\) and \(y = x\).</div>
+      <div class="ex-body">
+        <p><strong>Intersections:</strong> \(x^2-2=x \Rightarrow x^2-x-2=0 \Rightarrow (x-2)(x+1)=0 \Rightarrow x=-1,\;2\)</p>
+        <p><strong>Upper:</strong> At \(x=0\): line gives 0, parabola gives \(-2\). So \(y=x\) is upper.</p>
+        <p>\(A = \displaystyle\int_{-1}^2 [x-(x^2-2)]\,dx = \int_{-1}^2(x-x^2+2)\,dx\)</p>
+        <p>\(= \left[\dfrac{x^2}{2}-\dfrac{x^3}{3}+2x\right]_{-1}^2 = \left(2-\dfrac{8}{3}+4\right)-\left(\dfrac{1}{2}+\dfrac{1}{3}-2\right) = \mathbf{\dfrac{9}{2}}\) sq. units</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 2: Two Parabolas -->
+  <div class="section">
+    <div class="sec-num">Case 2</div>
+    <div class="sec-title">Area Enclosed by Two Parabolas</div>
+
+    <div class="example-box">
+      <div class="ex-label">Example 3 — JEE Favourite</div>
+      <div class="ex-title">Find area between \(y^2 = 4x\) and \(x^2 = 4y\).</div>
+      <div class="ex-body">
+        <p><strong>Intersections:</strong> From \(x^2=4y \Rightarrow y = x^2/4\). Substitute into \(y^2=4x\):</p>
+        <p>\(\dfrac{x^4}{16}=4x \Rightarrow x^4 = 64x \Rightarrow x(x^3-64)=0 \Rightarrow x=0,\;4\). Points: \((0,0)\) and \((4,4)\).</p>
+        <p><strong>Upper:</strong> On \([0,4]\): \(y=2\sqrt{x}\) (from \(y^2=4x\)) is upper; \(y=x^2/4\) is lower.</p>
+        <p>\(A = \displaystyle\int_0^4\left(2\sqrt{x}-\dfrac{x^2}{4}\right)dx = \left[\dfrac{4x^{3/2}}{3}-\dfrac{x^3}{12}\right]_0^4 = \dfrac{32}{3}-\dfrac{16}{3} = \mathbf{\dfrac{16}{3}}\) sq. units</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 3: Curve and Lines (Triangle-like) -->
+  <div class="section red-top">
+    <div class="sec-num">Case 3</div>
+    <div class="sec-title">Area Enclosed by Multiple Lines / Curve + Two Lines</div>
+    <div class="sec-body">
+      <p>Sometimes three or more boundaries (two lines and a curve, or three lines forming a triangle) define the region. Find all intersection points and set up accordingly.</p>
+    </div>
+
+    <div class="formula-box red">
+      <div class="formula-label">Multi-boundary region</div>
+      <div class="formula-body">
+        \[ A = \int_a^c [f(x) - g(x)]\,dx + \int_c^b [h(x) - g(x)]\,dx \]
+        <br/><small style="color:var(--text-muted);font-size:.8rem;">Split at intersection point \(c\) if upper curve changes</small>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">Example 4 — CBSE Board 2023 Type</div>
+      <div class="ex-title">Area enclosed by \(y = |x + 1|\), x-axis, \(x = -4\), \(x = 2\).</div>
+      <div class="ex-body">
+        <p>Split at \(x = -1\) where \(|x+1|=0\).</p>
+        <p>For \(x\in[-4,-1]\): \(y=-(x+1)\). For \(x\in[-1,2]\): \(y=(x+1)\).</p>
+        <p>\(A = \displaystyle\int_{-4}^{-1}(-(x+1))\,dx + \int_{-1}^2(x+1)\,dx = \dfrac{9}{2}+\dfrac{9}{2} = \mathbf{9}\) sq. units</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="section">
+    <div class="sec-num">Summary</div>
+    <div class="sec-title">Common Combinations — Quick Reference</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Combination</th><th>Find Limits By</th><th>Formula</th><th>Typical Answer</th></tr></thead>
+        <tbody>
+          <tr><td>\(y=x^2\) and \(y=x\)</td><td>Solve \(x^2=x\)</td><td>\(\int_0^1(x-x^2)dx\)</td><td>\(1/6\)</td></tr>
+          <tr><td>\(y^2=4x\) and \(x^2=4y\)</td><td>Solve simultaneously</td><td>\(\int_0^4(2\sqrt{x}-x^2/4)dx\)</td><td>\(16/3\)</td></tr>
+          <tr><td>\(y=x^2\) and \(y=4\)</td><td>\(x^2=4 \Rightarrow x=\pm2\)</td><td>\(\int_{-2}^2(4-x^2)dx\)</td><td>\(32/3\)</td></tr>
+          <tr><td>Circle &amp; Parabola</td><td>Simultaneous equations</td><td>Split if needed</td><td>Use symmetry</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout board">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body">
+      <h4>Board Exam Strategy</h4>
+      <ul>
+        <li>Show intersection calculation explicitly — it carries marks.</li>
+        <li>For \(|f(x)|\) type: split at zeros and handle each piece separately.</li>
+        <li>Always verify with a test point which curve is on top.</li>
+        <li>Write area = (upper function) − (lower function) clearly before integrating.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout jee">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <h4>JEE Key Results</h4>
+      <ul>
+        <li>Area between \(y=x^n\) and \(y=x^{1/n}\) over \([0,1]\) = \(\dfrac{n-1}{n+1}\).</li>
+        <li>Area of region bounded by parabola \(y=ax^2+bx+c\) and a chord = \(\dfrac{|a|(\Delta x)^3}{6}\) where \(\Delta x\) = difference of roots.</li>
+        <li>If two congruent regions are formed by intersection, use symmetry to compute one and double.</li>
+        <li>JEE Advanced: area can be asked in terms of a parameter — differentiate w.r.t parameter to find extrema.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+                                              
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 8 &middot; Application of Integrals</div>
+  </div>
+</footer>
+</body>
+</html>

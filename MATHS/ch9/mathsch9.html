@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Chapter 9 class 12 mathematics study notes on Differential Equations">
+<meta name="keywords" content="Class 12 Maths Chapter 9, Differential Equations, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Chapter 9 – Differential Equations</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f1a;
+    --surface: #141625;
+    --card: #1a1d2e;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e96c6c;
+    --accent2: #f5c842;
+    --accent3: #7c6af7;
+    --text: #eef0ff;
+    --muted: #8890b0;
+    --radius: 16px;
+    --gold: goldenrod;
+    --gold-dim: #a08020;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(233,108,108,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(233,108,108,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-glow {
+    position: fixed;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(233,108,108,0.16) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── BACK LINK ─────────────────────────── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 28px;
+    padding: 6px 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* ── HERO ─────────────────────────────── */
+  header {
+    text-align: center;
+    padding: 56px 0 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(233,108,108,0.13);
+    border: 1px solid rgba(233,108,108,0.35);
+    color: #f09090;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  h1 .ch { color: var(--muted); font-size: 0.55em; display: block; margin-bottom: 6px; letter-spacing: 0.04em; font-family: 'DM Sans', sans-serif; font-weight: 500; }
+  h1 .hi { color: var(--accent); }
+  h1 .lo { color: var(--accent2); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 540px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  /* ── SECTION LABEL ─────────────────────── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 44px 0 22px;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .label-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .label-num {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  /* ── TOPIC GRID ────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(233,108,108,0.07) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(233,108,108,0.45);
+    background: #1f1a1a;
+    transform: translateY(-2px);
+  }
+
+  .card:hover::after { opacity: 1; }
+
+  /* icon box */
+  .ch-icon {
+    min-width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .icon-red    { background: rgba(233,108,108,0.12); border: 1px solid rgba(233,108,108,0.28); }
+  .icon-gold   { background: rgba(245,200,66,0.10);  border: 1px solid rgba(245,200,66,0.28); }
+  .icon-purple { background: rgba(124,106,247,0.12); border: 1px solid rgba(124,106,247,0.28); }
+  .icon-green  { background: rgba(45,200,130,0.10);  border: 1px solid rgba(45,200,130,0.28); }
+  .icon-blue   { background: rgba(60,180,240,0.10);  border: 1px solid rgba(60,180,240,0.28); }
+
+  .ch-body { flex: 1; min-width: 0; }
+
+  .ch-title {
+    font-size: 0.93rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .ch-tag {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .ch-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 4px;
+    transition: color 0.2s, transform 0.18s;
+    flex-shrink: 0;
+  }
+
+  .card:hover .ch-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  /* ── KEY FORMULAS TABLE ────────────────── */
+  .formula-section {
+    margin-top: 56px;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .formula-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+
+  .formula-card .f-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .formula-card .f-expr {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #f09090;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .formula-card .f-note {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+
+    /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ── ANIMATIONS ────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card { animation: fadeUp 0.5s ease both; }
+  .card:nth-child(1)  { animation-delay: 0.20s }
+  .card:nth-child(2)  { animation-delay: 0.24s }
+  .card:nth-child(3)  { animation-delay: 0.28s }
+  .card:nth-child(4)  { animation-delay: 0.32s }
+  .card:nth-child(5)  { animation-delay: 0.36s }
+  .card:nth-child(6)  { animation-delay: 0.40s }
+  .card:nth-child(7)  { animation-delay: 0.44s }
+  .card:nth-child(8)  { animation-delay: 0.48s }
+</style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+
+<div class="container">
+  <a class="back-link" href="/MATHS/mathsnotes.html">← Back to All Chapters</a>
+
+  <header>
+    <div class="badge">⚔️∫  Chapter 9 · Class 12 Maths</div>
+    <h1>
+      <span class="ch"></span>
+      <span class="hi">Differential Equations</span>
+    </h1>
+    <p class="subtitle">Differential Equations explain how rates of change are related to the variables involved. This chapter introduces the concept of differential equations and their applications in modeling real-world situations.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Topics</div></div>
+      <div class="stat"><div class="stat-num">~6</div><div class="stat-label">Board Marks</div></div>
+    </div>
+  </header>
+
+  
+
+  <!-- Topics -->
+  <div class="section-label">
+    <h2>Topics Covered</h2>
+    <div class="label-line"></div>
+    <span class="label-num">5 Topics</span>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="./topic1.html" rel="noopener">
+      <div class="ch-icon icon-red">📖</div>
+      <div class="ch-body">
+        <div class="ch-title">Introduction to Differential Equations</div>
+        <div class="ch-tag"> • Introduction   </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./topic2.html" rel="noopener">
+      <div class="ch-icon icon-gold">📊</div>
+      <div class="ch-body">
+        <div class="ch-title">Basic Concepts</div>
+        <div class="ch-tag"> • Order · Degree </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./topic3.html" rel="noopener">
+      <div class="ch-icon icon-purple">🔢</div>
+      <div class="ch-body">
+        <div class="ch-title">General & Particular Solutions</div>
+        <div class="ch-tag"> • General Solutions · Particular Solutions</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="card" href="./topic4.html" rel="noopener">
+      <div class="ch-icon icon-blue">➕</div>
+      <div class="ch-body">
+        <div class="ch-title">Formation of Differential Equations</div>
+        <div class="ch-tag"> • Formation of differential equations </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" href="./topic5.html" rel="noopener">
+      <div class="ch-icon icon-red">📝</div>
+      <div class="ch-body">
+        <div class="ch-title">Variable Separable Method</div>
+        <div class="ch-tag"> • Variable separable differential equations </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+     <a class="card" href="./topic6.html" rel="noopener">
+      <div class="ch-icon icon-red">📝</div>
+      <div class="ch-body">
+        <div class="ch-title">Homogeneous Equations</div>
+        <div class="ch-tag"> • Homogeneous differential equations </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+     <a class="card" href="./topic7.html" rel="noopener">
+      <div class="ch-icon icon-red">📝</div>
+      <div class="ch-body">
+        <div class="ch-title">Linear Equations</div>
+        <div class="ch-tag"> • Linear differential equations </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- Key Formulas -->
+  <div class="formula-section">
+    <div class="section-label">
+      <h2>Key Formulas</h2>
+      <div class="label-line"></div>
+      <span class="label-num">Quick Reference</span>
+    </div>
+
+    <div class="formula-grid">
+
+      <div class="formula-card">
+        <div class="f-label">General Form of Differential Equations</div>
+        <div class="f-expr">F(x, y, dy/dx, d²y/dx², ..., dⁿy/dxⁿ) = 0</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Order & Degree of Differential Equations</div>
+        <div class="f-expr">Order : Highest order of derivative<br>Degree : Power of highest order derivative <br> Example: <br> &nbsp; &nbsp; &nbsp; (d²y/dx²)³ + (dy/dx) + 2 = 0 <br> <span style="color: #00ff3c;" >Order:</span> 2 , <span style="color: #00ff3c;" >Degree:</span> 3</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Variable Separable Differential Equations</div>
+        <div class="f-expr"> <span> General Form :</span> <br> &nbsp; &nbsp; &nbsp; dy/dx = f(x)g(y) <br>  Separate Variables: <br> &nbsp; &nbsp; &nbsp; dy/g(y) = f(x)dx <br> <span> Integrate Both Sides :</span> <br> &nbsp; &nbsp; &nbsp; <span style="border: solid red 2px; padding: 4px;" > ∫(1/g(y))dy = ∫f(x)dx + C </span></div>
+      </div>
+
+      <div class="formula-card">
+        <div class="f-label">Homogeneous Differential Equations</div>
+        <div class="f-expr"> <span> General Form :</span> <br> &nbsp; &nbsp; &nbsp; dy/dx = f(y/x) <br> <span> Put :</span> <br> &nbsp; &nbsp; &nbsp; y = vx, where v is a function of x <br> Then: <br>  &nbsp; &nbsp; &nbsp; <span style="border: solid red 2px; padding: 4px;" > dy/dx = v + x(dv/dx) </span>   </div>
+      </div>
+
+      
+      <div class="formula-card">
+        <div class="f-label">Linear Differential Equations</div>
+        <div class="f-expr"><span>General Form:</span> <br> &nbsp; &nbsp; &nbsp; dy/dx + P(x)y = Q(x) <br> Integrating Factor <span style="color: #36ea05;" >(I.F.):</span> <br> &nbsp; &nbsp; &nbsp; I.F. = e <sup> ∫P(x)dx </sup>  <br>  Solution Formula: <br> &nbsp; &nbsp; &nbsp;<span style="border: solid red 2px ; padding: 4px;"> y(I.F.) = ∫(Q(x) * I.F.)dx + C </span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download full chapter -->
+     <div class="section-label">
+    <h2>Download Full Chapter</h2>
+    <div class="label-line"></div>
+    <span class="label-num">NCERT</span>
+  </div>
+  <div style="text-align:center; margin-top: 52px;">
+    <a href="https://ncert.nic.in/textbook/pdf/lemh203.pdf" target="_blank" rel="noopener"
+       style="display:inline-flex; align-items:center; gap:10px; background: rgba(233,108,108,0.12); border: 1px solid rgba(233,108,108,0.35); color: #f09090; font-weight:600; font-size:14px; padding: 13px 28px; border-radius:999px; text-decoration:none; transition: background 0.2s;"
+       onmouseover="this.style.background='rgba(233,108,108,0.22)'" onmouseout="this.style.background='rgba(233,108,108,0.12)'">
+      📄 Download Full Chapter PDF (NCERT)
+    </a>
+  </div>
+
+</div>
+<footer class="site-footer">
+   <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 9 &middot; Differential Equations</div>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Science — StudyNotesPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0a0e27;--bg-panel:#0d0f1a;
+    --c1:#38bdf8;--c2:#6366f1;--c3:#a78bfa;--c4:#0ea5e9;
+    --text-light:#e2e8f0;--text-muted:#94a3b8;
+    --border-glass:rgba(255,255,255,0.08);--glass-bg:rgba(255,255,255,0.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:linear-gradient(180deg,var(--bg-deep) 0%,var(--bg-panel) 100%);color:var(--text-light);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  a{text-decoration:none;color:inherit;}
+  .bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(ellipse 600px 400px at 15% 10%, rgba(56,189,248,0.12), transparent 60%),
+      radial-gradient(ellipse 600px 500px at 85% 30%, rgba(99,102,241,0.09), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 50% 90%, rgba(167,139,250,0.07), transparent 60%);}
+  nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:20px 6%;background:rgba(10,14,39,0.75);backdrop-filter:blur(14px);border-bottom:1px solid var(--border-glass);}
+  .logo{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .logo span{color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:12px;-webkit-text-fill-color:var(--text-muted);}
+  .nav-links{display:flex;gap:22px;font-size:14px;color:var(--text-muted);}
+  .nav-links a:hover{color:var(--c1);}
+  .nav-back{font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);border:1px solid var(--border-glass);padding:8px 16px;border-radius:8px;transition:all .2s;}
+  .nav-back:hover{border-color:var(--c1);color:var(--c1);}
+  .hero{position:relative;z-index:1;padding:90px 6% 60px;text-align:center;opacity:0;animation:fadeUp .7s ease forwards;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--c1);margin-bottom:18px;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(56,189,248,0.3);padding:6px 16px;border-radius:999px;background:rgba(56,189,248,0.06);}
+  .hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,6vw,68px);line-height:1.08;margin-bottom:20px;}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--c1) 0%,var(--c2) 50%,var(--c3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero p{max-width:640px;margin:0 auto 34px;color:var(--text-muted);font-size:17px;line-height:1.7;}
+  .hero-stats{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;margin-top:50px;}
+  .stat{text-align:center;}
+  .stat b{display:block;font-family:'Playfair Display',serif;font-size:32px;background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .stat span{font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;}
+  .section{position:relative;z-index:1;padding:44px 6%;}
+  .section-head{margin-bottom:30px;}
+  .section-tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .section-head h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,3.4vw,36px);}
+  .domain-pill{font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 16px;border-radius:999px;border:1px solid var(--border-glass);color:var(--text-muted);display:inline-block;margin-bottom:36px;}
+  .chapters{display:flex;flex-direction:column;gap:16px;}
+  .chapter-card{opacity:0;animation:fadeUp .6s ease forwards;display:flex;align-items:center;gap:24px;background:var(--glass-bg);border:1px solid var(--border-glass);border-radius:16px;padding:24px 28px;backdrop-filter:blur(10px);transition:transform .25s ease, background .25s ease;}
+  .chapter-card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.06);}
+  .ch-num{font-family:'Playfair Display',serif;font-weight:700;font-size:34px;min-width:56px;}
+  .ch-body{flex:1;min-width:0;}
+  .ch-tag{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:4px;}
+  .ch-title{font-family:'Playfair Display',serif;font-weight:700;font-size:21px;margin-bottom:6px;}
+  .ch-desc{color:var(--text-muted);font-size:14px;line-height:1.6;}
+  .ch-icon{font-size:26px;min-width:44px;text-align:center;opacity:.85;}
+  .explore-btn{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px 20px;border-radius:8px;border:1px solid var(--border-glass);color:var(--text-light);white-space:nowrap;transition:all .2s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  footer{position:relative;z-index:1;margin-top:60px;padding:36px 6%;border-top:1px solid var(--border-glass);text-align:center;}
+  footer p{font-size:13px;color:var(--text-muted);}
+  footer .credit{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);margin-top:6px;}
+  footer .credit b{background:linear-gradient(120deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  @media(max-width:720px){.nav-links{display:none;}.chapter-card{flex-wrap:wrap;padding:20px;}.ch-icon{display:none;}.explore-btn{width:100%;text-align:center;order:4;}.hero-stats{gap:24px;}}
+  .d1 .ch-num{color:var(--c1);} .d1 .explore-btn:hover{background:var(--c1);border-color:var(--c1);color:var(--bg-deep);} .d1:hover{border-color:rgba(56,189,248,0.5);}
+  .d2 .ch-num{color:var(--c2);} .d2 .explore-btn:hover{background:var(--c2);border-color:var(--c2);color:var(--bg-deep);} .d2:hover{border-color:rgba(99,102,241,0.5);}
+  .d3 .ch-num{color:var(--c3);} .d3 .explore-btn:hover{background:var(--c3);border-color:var(--c3);color:var(--bg-deep);} .d3:hover{border-color:rgba(167,139,250,0.5);}
+  .d4 .ch-num{color:var(--c4);} .d4 .explore-btn:hover{background:var(--c4);border-color:var(--c4);color:var(--bg-deep);} .d4:hover{border-color:rgba(14,165,233,0.5);}
+  .p1{border-color:rgba(56,189,248,0.4);color:var(--c1);} .p2{border-color:rgba(99,102,241,0.4);color:var(--c2);}
+  .p3{border-color:rgba(167,139,250,0.4);color:var(--c3);} .p4{border-color:rgba(14,165,233,0.4);color:var(--c4);}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<nav>
+  <a href="/index.html" class="logo"><img src="/Img/logo.png" alt="StudyNotesPro" style="width:250px;height:auto;"></a>
+  <div class="nav-links"><a href="#programming">Programming</a><a href="#data">Data &amp; DB</a><a href="#networks">Networks</a><a href="#project">Project</a></div>
+  <a href="/index.html" class="nav-back">← All subjects</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Class 12 · Computer Science</div>
+  <h1>Code, structure, <span class="grad">and connect</span></h1>
+  <p>All 13 chapters of the NCERT Computer Science textbook — exception handling through project-based learning — with runnable Python, SQL, and networking notes.</p>
+  <div class="hero-stats">
+    <div class="stat"><b>13</b><span>Chapters</span></div>
+    <div class="stat"><b>04</b><span>Themes</span></div>
+    <div class="stat"><b>Py + SQL</b><span>+ Networks</span></div>
+  </div>
+</section>
+
+<section class="section" id="programming">
+  <div class="section-head"><div class="section-tag">Theme 01</div><h2>Programming &amp; Data Structures</h2></div>
+  <span class="domain-pill p1">● Chapters 1–6</span>
+  <div class="chapters">
+    <div class="chapter-card d1" style="animation-delay:.03s"><div class="ch-num">01</div><div class="ch-icon">⚠️</div><div class="ch-body"><div class="ch-tag">Programming</div><div class="ch-title">Exception Handling in Python</div><div class="ch-desc">Syntax errors, built-in exceptions, raising and handling exceptions, and the finally clause.</div></div><a href="/cs/exception-handling-in-python.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.06s"><div class="ch-num">02</div><div class="ch-icon">📁</div><div class="ch-body"><div class="ch-tag">Programming</div><div class="ch-title">File Handling in Python</div><div class="ch-desc">Text file types, reading/writing, setting offsets, and the pickle module.</div></div><a href="/cs/file-handling-in-python.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.09s"><div class="ch-num">03</div><div class="ch-icon">📚</div><div class="ch-body"><div class="ch-tag">Data Structures</div><div class="ch-title">Stack</div><div class="ch-desc">Stack operations, Python implementation, and infix-to-postfix conversion and evaluation.</div></div><a href="/cs/stack.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.12s"><div class="ch-num">04</div><div class="ch-icon">🚶</div><div class="ch-body"><div class="ch-tag">Data Structures</div><div class="ch-title">Queue</div><div class="ch-desc">Queue operations, Python implementation, and the deque (double-ended queue).</div></div><a href="/cs/queue.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.15s"><div class="ch-num">05</div><div class="ch-icon">🔀</div><div class="ch-body"><div class="ch-tag">Algorithms</div><div class="ch-title">Sorting</div><div class="ch-desc">Bubble sort, selection sort, insertion sort, and time complexity of algorithms.</div></div><a href="/cs/sorting.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d1" style="animation-delay:.18s"><div class="ch-num">06</div><div class="ch-icon">🔍</div><div class="ch-body"><div class="ch-tag">Algorithms</div><div class="ch-title">Searching</div><div class="ch-desc">Linear search, binary search, and search by hashing.</div></div><a href="/cs/searching.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<section class="section" id="data">
+  <div class="section-head"><div class="section-tag">Theme 02</div><h2>Data &amp; Databases</h2></div>
+  <span class="domain-pill p2">● Chapters 7–9</span>
+  <div class="chapters">
+    <div class="chapter-card d2" style="animation-delay:.03s"><div class="ch-num">07</div><div class="ch-icon">📊</div><div class="ch-body"><div class="ch-tag">Data</div><div class="ch-title">Understanding Data</div><div class="ch-desc">Data collection, storage, processing, and statistical techniques for data processing.</div></div><a href="/cs/understanding-data.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.06s"><div class="ch-num">08</div><div class="ch-icon">🗄️</div><div class="ch-body"><div class="ch-tag">Database</div><div class="ch-title">Database Concepts</div><div class="ch-desc">File systems, DBMS, the relational data model, and keys in a relational database.</div></div><a href="/cs/database-concepts.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d2" style="animation-delay:.09s"><div class="ch-num">09</div><div class="ch-icon">🧮</div><div class="ch-body"><div class="ch-tag">Database</div><div class="ch-title">Structured Query Language (SQL)</div><div class="ch-desc">Data types, DDL/DML/queries, functions, GROUP BY, and joins across two relations.</div></div><a href="/cs/sql.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<section class="section" id="networks">
+  <div class="section-head"><div class="section-tag">Theme 03</div><h2>Networks, Communication &amp; Security</h2></div>
+  <span class="domain-pill p3">● Chapters 10–12</span>
+  <div class="chapters">
+    <div class="chapter-card d3" style="animation-delay:.03s"><div class="ch-num">10</div><div class="ch-icon">🌐</div><div class="ch-body"><div class="ch-tag">Networks</div><div class="ch-title">Computer Networks</div><div class="ch-desc">Evolution of networking, types, devices, topologies, nodes, Internet/Web/IoT, and DNS.</div></div><a href="/cs/computer-networks.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.06s"><div class="ch-num">11</div><div class="ch-icon">📡</div><div class="ch-body"><div class="ch-tag">Communication</div><div class="ch-title">Data Communication</div><div class="ch-desc">Communication components, capacity, switching techniques, transmission media, and protocols.</div></div><a href="/cs/data-communication.html" class="explore-btn">Explore →</a></div>
+    <div class="chapter-card d3" style="animation-delay:.09s"><div class="ch-num">12</div><div class="ch-icon">🛡️</div><div class="ch-body"><div class="ch-tag">Security</div><div class="ch-title">Security Aspects</div><div class="ch-desc">Malware, antivirus, spam, HTTP vs HTTPS, firewalls, cookies, and network security threats.</div></div><a href="/cs/security-aspects.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<section class="section" id="project">
+  <div class="section-head"><div class="section-tag">Theme 04</div><h2>Project Based Learning</h2></div>
+  <span class="domain-pill p4">● Chapter 13</span>
+  <div class="chapters">
+    <div class="chapter-card d4" style="animation-delay:.03s"><div class="ch-num">13</div><div class="ch-icon">🚀</div><div class="ch-body"><div class="ch-tag">Capstone</div><div class="ch-title">Project Based Learning</div><div class="ch-desc">Approaches for solving real-world projects, teamwork, and exemplar project descriptions.</div></div><a href="/cs/project-based-learning.html" class="explore-btn">Explore →</a></div>
+  </div>
+</section>
+
+<footer>
+  <p>StudyNotesPro — Class 12 Computer Science · NCERT textbook, CBSE 2025-26</p>
+  <p class="credit">Built by <a href="mailto:uditprakashyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></p>
+</footer>
+
+<script>
+  const cards = document.querySelectorAll('.chapter-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.animationPlayState = 'running'; observer.unobserve(entry.target); } });
+  }, { threshold: 0.15 });
+  cards.forEach(c => { c.style.animationPlayState = 'paused'; observer.observe(c); });
+</script>
+</body>
+</html>

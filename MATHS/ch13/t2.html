@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 2: Conditional Probability & Bayes' Theorem | Class 12 Probability</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <style>
+    :root {
+      --surface: #1a1a1a;
+      --surface-alt: #252525;
+      --border: #3a3a3a;
+      --text: #e5e5e5;
+      --text-muted: #9a9a9a;
+      --accent: #00d4ff;
+      --gold: #d4af37;
+      --gold-dim: #6b5b2e;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+
+    .header {
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .breadcrumb {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--border); }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .def-box {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(0,212,255,0.05) 100%);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .def-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+    }
+
+    .def-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .def-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p { margin-bottom: 16px; line-height: 1.8; }
+
+    .example-box {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .example-title {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notes-box {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid var(--success);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .notes-title {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .notes-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .notes-content li {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .board-tip {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .tip-title {
+      color: var(--warning);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .jee-tip {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .jee-tip .tip-title {
+      color: var(--danger);
+    }
+
+    .formula-section {
+      margin: 50px 0;
+    }
+
+    .formula-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .formula-title::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+
+    .formula-title.collapsed::after {
+      transform: rotate(-90deg);
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .formula-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .formula-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.1);
+    }
+
+    .formula-name {
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .formula-formula {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-top: 60px;
+    }
+
+    .sf-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .sf-brand a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+
+    .sf-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .sf-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.82rem;
+    }
+
+    .sf-copy {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter {
+      font-size: 0.72rem;
+      color: var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section { animation: fadeInUp 0.6s ease-out; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="breadcrumb">
+      <a href="/index.html">Home</a>
+      <span>/</span>
+      <a href="#">Chapter 13</a>
+      <span>/</span>
+      <span>Topic 2: Conditional Probability & Bayes' Theorem</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Conditional Probability & Bayes' Theorem</h1>
+    <p class="subtitle">Probability when we have additional information about an event</p>
+
+    <div class="def-box">
+      <div class="def-title">What is Conditional Probability?</div>
+      <div class="def-content">
+        Conditional probability is the probability of an event occurring given that another event has already occurred. It answers: "What is P(A) given that B has happened?" This is written as P(A|B), read as "probability of A given B."
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Conditional Probability</h2>
+
+      <h3>Definition</h3>
+      <p>For any two events A and B of a sample space, with P(B) ≠ 0:</p>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Conditional Probability Formula</div>
+        <div class="formula-formula">P(A|B) = P(A ∩ B) / P(B)</div>
+        <div class="formula-desc">Probability of A given B has occurred</div>
+      </div>
+
+      <h3>Interpretation</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>P(A|B):</strong> Probability of event A occurring when B has already occurred</li>
+            <li><strong>P(A ∩ B):</strong> Probability of both A and B occurring together</li>
+            <li><strong>P(B):</strong> Probability of event B (must be non-zero)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Cards from a Deck</div>
+        <p><strong>Problem:</strong> A card is drawn from a deck. Given that it's a red card, what's the probability it's a heart?</p>
+        <p><strong>Solution:</strong></p>
+        <p>Let A = Heart, B = Red card</p>
+        <p>Total hearts = 13, Total red cards = 26, Red hearts = 13</p>
+        <p>P(A ∩ B) = 13/52</p>
+        <p>P(B) = 26/52</p>
+        <p>P(A|B) = (13/52) ÷ (26/52) = 13/26 = 1/2</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Dice Roll</div>
+        <p><strong>Problem:</strong> Two dice are rolled. Given that the sum is greater than 7, find the probability that both dice show odd numbers.</p>
+        <p><strong>Solution:</strong></p>
+        <p>Event A: Both dice show odd = {(1,1), (1,3), (1,5), (3,1), (3,3), (3,5), (5,1), (5,3), (5,5)}</p>
+        <p>Event B: Sum > 7 = {(1,7)...wait, max is 6} = many pairs</p>
+        <p>A ∩ B (both odd AND sum > 7) = {(3,5), (5,3), (5,5)}</p>
+        <p>P(A|B) = n(A ∩ B) / n(B) = 3/15 = 1/5</p>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-title">📌 Key Properties</div>
+        <div class="notes-content">
+          <ul>
+            <li>0 ≤ P(A|B) ≤ 1</li>
+            <li>P(B|B) = 1 (event given itself is certain)</li>
+            <li>If A ∩ B = ∅, then P(A|B) = 0</li>
+            <li>P(A|B) × P(B) = P(A ∩ B) (Multiplication Rule)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Bayes' Theorem</h2>
+
+      <h3>The Theorem</h3>
+      <p>Bayes' Theorem relates the conditional probabilities of two events. It allows us to find the probability of the cause given the effect.</p>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Bayes' Theorem</div>
+        <div class="formula-formula">P(A|B) = [P(B|A) × P(A)] / P(B)</div>
+        <div class="formula-desc">Where P(B) ≠ 0</div>
+      </div>
+
+      <h3>Extended Form (Law of Total Probability)</h3>
+      <p>If A₁, A₂, ..., Aₙ are mutually exclusive and exhaustive events:</p>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Law of Total Probability</div>
+        <div class="formula-formula">P(B) = P(B|A₁)P(A₁) + P(B|A₂)P(A₂) + ... + P(B|Aₙ)P(Aₙ)</div>
+        <div class="formula-desc">For partitioning of sample space</div>
+      </div>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Bayes' Theorem Extended</div>
+        <div class="formula-formula">P(Aᵢ|B) = [P(B|Aᵢ)P(Aᵢ)] / [P(B|A₁)P(A₁) + ... + P(B|Aₙ)P(Aₙ)]</div>
+        <div class="formula-desc">Finding probability of specific partition</div>
+      </div>
+
+      <h3>Terminology</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>P(A):</strong> Prior probability (what we know before B occurs)</li>
+            <li><strong>P(B|A):</strong> Likelihood (probability of observing B if A is true)</li>
+            <li><strong>P(A|B):</strong> Posterior probability (updated probability after observing B)</li>
+            <li><strong>P(B):</strong> Marginal probability (total probability of B)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Medical Test</div>
+        <p><strong>Problem:</strong> A disease affects 1% of the population. A test has 95% accuracy for both positive and negative cases. If a person tests positive, what's the probability they have the disease?</p>
+        <p><strong>Solution:</strong></p>
+        <p>Let D = Has disease, + = Tests positive</p>
+        <p>P(D) = 0.01, P(+|D) = 0.95, P(+|D') = 0.05</p>
+        <p>P(+) = P(+|D)P(D) + P(+|D')P(D') = 0.95(0.01) + 0.05(0.99) = 0.0095 + 0.0495 = 0.059</p>
+        <p>P(D|+) = [P(+|D)P(D)] / P(+) = (0.95 × 0.01) / 0.059 = 0.0095 / 0.059 ≈ 0.161 or 16.1%</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Factory Defects</div>
+        <p><strong>Problem:</strong> Factory A produces 60% of items, Factory B produces 40%. 2% of A's items are defective, 3% of B's are defective. An item is found defective. What's the probability it came from Factory A?</p>
+        <p><strong>Solution:</strong></p>
+        <p>P(A) = 0.6, P(B) = 0.4, P(D|A) = 0.02, P(D|B) = 0.03</p>
+        <p>P(D) = P(D|A)P(A) + P(D|B)P(B) = 0.02(0.6) + 0.03(0.4) = 0.012 + 0.012 = 0.024</p>
+        <p>P(A|D) = [P(D|A)P(A)] / P(D) = (0.02 × 0.6) / 0.024 = 0.012 / 0.024 = 0.5 or 50%</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Important Points</h2>
+
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li>Conditional probability only makes sense when P(B) ≠ 0</li>
+            <li>P(A|B) ≠ P(B|A) in general - these are different!</li>
+            <li>Bayes' Theorem is used to "reverse" conditional probabilities</li>
+            <li>Always identify the sample space and events clearly</li>
+            <li>Use tree diagrams for complex problems with multiple conditions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="board-tip">
+        <div class="tip-title">📋 Board Exam Tips</div>
+        <p><strong>Q:</strong> Define conditional probability and write its formula</p>
+        <p><strong>Q:</strong> Apply conditional probability to practical scenarios</p>
+        <p><strong>Q:</strong> Use Bayes' Theorem to find posterior probability</p>
+        <p><strong>Common Mistake:</strong> Confusing P(A|B) with P(B|A). Always be clear about what is given!</p>
+        <p><strong>Helpful Tip:</strong> Draw a Venn diagram or tree diagram to visualize the problem</p>
+      </div>
+
+      <div class="jee-tip">
+        <div class="tip-title">🎯 JEE Advanced Tips</div>
+        <p><strong>Pattern Recognition:</strong> Bayes' Theorem appears frequently in combination with probability distributions</p>
+        <p><strong>Strategic Approach:</strong> For multi-stage problems, use tree diagrams systematically</p>
+        <p><strong>Common Trap:</strong> Assuming independence when events are actually dependent - always check!</p>
+        <p><strong>Real-world Applications:</strong> Bayes' Theorem is foundational in statistics and machine learning - understanding it deeply helps in advanced questions</p>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="formula-title" onclick="toggleFormulas(this)">📐 Complete Formula Sheet</div>
+      <div class="formula-grid" id="formulas">
+        <div class="formula-card">
+          <div class="formula-name">Conditional Probability</div>
+          <div class="formula-formula">P(A|B) = P(A ∩ B) / P(B)</div>
+          <div class="formula-desc">Probability of A given B</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Multiplication Rule</div>
+          <div class="formula-formula">P(A ∩ B) = P(A|B) × P(B)</div>
+          <div class="formula-desc">Probability of both events</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Bayes' Theorem</div>
+          <div class="formula-formula">P(A|B) = P(B|A)P(A) / P(B)</div>
+          <div class="formula-desc">Reverse conditional probability</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Law of Total Probability</div>
+          <div class="formula-formula">P(B) = ΣP(B|Aᵢ)P(Aᵢ)</div>
+          <div class="formula-desc">Sum over partition</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Extended Bayes' Theorem</div>
+          <div class="formula-formula">P(Aᵢ|B) = P(B|Aᵢ)P(Aᵢ) / ΣP(B|Aⱼ)P(Aⱼ)</div>
+          <div class="formula-desc">For partitioned sample space</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Complement Rule</div>
+          <div class="formula-formula">P(A'|B) = 1 - P(A|B)</div>
+          <div class="formula-desc">Complement under condition</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+      <div class="sf-divider"></div>
+      <div class="sf-info">
+        <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+        <span class="sf-dot">&middot;</span>
+        <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+      </div>
+      <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 13 &middot; Probability</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFormulas(element) {
+      const formulas = document.getElementById('formulas');
+      element.classList.toggle('collapsed');
+      formulas.style.display = formulas.style.display === 'none' ? 'grid' : 'none';
+    }
+  </script>
+
+</body>
+</html>

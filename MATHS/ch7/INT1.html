@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basics of Integration · Ch.7 · StudyNotesPro</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0d16;
+      --surface: #10131e;
+      --surface2: #161b29;
+      --surface3: #1c2133;
+      --border: #222840;
+      --border-light: #2c3350;
+      --accent: #5b8dee;
+      --accent-dim: rgba(91,141,238,0.13);
+      --accent-glow: rgba(91,141,238,0.25);
+      --gold: #e8b84b;
+      --gold-dim: rgba(232,184,75,0.13);
+      --green: #4fd19a;
+      --green-dim: rgba(79,209,154,0.12);
+      --pink: #e8678a;
+      --pink-dim: rgba(232,103,138,0.12);
+      --text: #d8deef;
+      --text-muted: #7880a0;
+      --text-dim: #3e4660;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+    /* ── NAVBAR ── */
+    .topnav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(10,12,20,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      height: 46px;
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      height: 100%; padding: 0 14px; gap: 4px;
+      overflow-x: auto; white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: .9rem; font-weight: 900;
+      color: #fff; text-decoration: none;
+      letter-spacing: .03em; flex-shrink: 0;
+      padding-right: 10px;
+      border-right: 1px solid var(--border);
+      margin-right: 8px;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-chapter {
+      font-size: .68rem; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: .06em; flex-shrink: 0;
+      padding-right: 10px;
+      border-right: 1px solid var(--border);
+      margin-right: 4px;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: .78rem; font-weight: 500;
+      color: var(--text-muted); text-decoration: none;
+      transition: all .2s; flex-shrink: 0;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface2); }
+    .nav-link.active {
+      color: var(--bg); background: var(--accent);
+      font-weight: 600;
+    }
+    .nav-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem; opacity: .7;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 64px 24px 48px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '∫';
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      font-size: 280px; color: rgba(91,141,238,0.04);
+      font-family: 'Playfair Display', serif;
+      pointer-events: none; line-height: 1;
+      user-select: none;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem; letter-spacing: .1em;
+      color: var(--accent); text-transform: uppercase;
+      border: 1px solid rgba(91,141,238,0.3);
+      padding: 4px 12px; border-radius: 20px;
+      background: var(--accent-dim); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.15;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 60%, var(--gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 14px;
+    }
+    .hero-sub {
+      max-width: 560px; margin: 0 auto 28px;
+      color: var(--text-muted); font-size: .95rem; line-height: 1.8;
+    }
+    .hero-pills { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      font-size: .72rem; padding: 4px 12px; border-radius: 20px;
+      font-family: 'JetBrains Mono', monospace; letter-spacing: .04em;
+    }
+    .pill-blue { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(91,141,238,0.25); }
+    .pill-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(232,184,75,0.25); }
+    .pill-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(79,209,154,0.25); }
+
+    /* ── MAIN LAYOUT ── */
+    .main { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 52px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem; color: var(--accent);
+      background: var(--accent-dim); border: 1px solid rgba(91,141,238,0.2);
+      padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; color: #fff;
+    }
+    .section-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border-light), transparent);
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px 28px;
+      margin-bottom: 16px;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: var(--border-light); }
+    .card-title {
+      font-size: .8rem; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted); letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 8px; }
+    .card p:last-child { margin-bottom: 0; }
+
+    .card-accent { border-color: rgba(91,141,238,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(91,141,238,0.05) 100%); }
+    .card-gold { border-color: rgba(232,184,75,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,184,75,0.05) 100%); }
+    .card-green { border-color: rgba(79,209,154,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(79,209,154,0.05) 100%); }
+    .card-pink { border-color: rgba(232,103,138,0.3); background: linear-gradient(135deg, var(--surface) 0%, rgba(232,103,138,0.05) 100%); }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: var(--surface2);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px; padding: 18px 22px;
+      margin: 14px 0;
+      overflow-x: auto;
+    }
+    .formula-box.gold { border-left-color: var(--gold); }
+    .formula-box.green { border-left-color: var(--green); }
+    .formula-box.pink { border-left-color: var(--pink); }
+    .formula-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem; color: var(--text-muted);
+      margin-bottom: 8px; letter-spacing: .05em;
+    }
+
+    /* ── FORMULA GRID ── */
+    .formula-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px; margin-top: 4px;
+    }
+    .fcard {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 18px;
+      transition: border-color .2s, transform .15s;
+    }
+    .fcard:hover { border-color: var(--border-light); transform: translateY(-1px); }
+    .fcard-label {
+      font-size: .67rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim); margin-bottom: 8px; letter-spacing: .04em;
+    }
+    .fcard .f { font-size: 1rem; }
+
+    /* ── HIGHLIGHT TEXT ── */
+    .hl-blue { color: var(--accent); font-weight: 600; }
+    .hl-gold { color: var(--gold); font-weight: 600; }
+    .hl-green { color: var(--green); font-weight: 600; }
+    .hl-pink { color: var(--pink); font-weight: 600; }
+
+    /* ── RULES LIST ── */
+    .rules-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .rules-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 18px;
+    }
+    .rule-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: .72rem;
+      font-weight: 600; margin-top: 1px;
+    }
+    .rule-num.blue { background: var(--accent-dim); color: var(--accent); }
+    .rule-num.gold { background: var(--gold-dim); color: var(--gold); }
+    .rule-num.green { background: var(--green-dim); color: var(--green); }
+    .rule-body { flex: 1; }
+    .rule-name { font-weight: 600; color: #fff; font-size: .88rem; margin-bottom: 6px; }
+    .rule-body p { color: var(--text-muted); font-size: .87rem; }
+
+    /* ── NOTE BOX ── */
+    .note {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--gold-dim); border: 1px solid rgba(232,184,75,0.25);
+      border-radius: 10px; padding: 14px 18px; margin-top: 16px;
+    }
+    .note-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .note p { color: var(--text-muted); font-size: .87rem; line-height: 1.7; }
+    .note strong { color: var(--gold); }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th {
+      background: var(--surface3); color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; font-size: .7rem;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 10px 16px; text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    td {
+      padding: 11px 16px; border-bottom: 1px solid var(--border);
+      color: var(--text-muted); vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface2); }
+    td:first-child { color: var(--text); font-weight: 500; }
+    td .mjx-container { font-size: 1em !important; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+    }
+    .sf-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px; text-align: center;
+    }
+    .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+    .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+    .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+    .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 44px 16px 36px; }
+      .main { padding: 0 14px 48px; }
+      .card { padding: 18px 16px; }
+      .formula-grid { grid-template-columns: 1fr; }
+
+      /* Horizontal scroll only on overflowing math/formula content */
+      .formula-box {
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 14px 16px;
+      }
+      mjx-container {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding-bottom: 2px; /* space for scrollbar without layout jump */
+      }
+      .table-wrap {
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+      .fcard {
+        overflow-x: auto;
+        overflow-y: visible;
+        min-width: 0;
+      }
+      .rules-list li {
+        overflow-x: auto;
+        overflow-y: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="topnav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+    <span class="nav-chapter">CH·07 · INTEGRALS</span>
+    <a href="INT1.html" class="nav-link active"><span class="nav-num">01</span> Basics</a>
+    <a href="INT2.html" class="nav-link"><span class="nav-num">02</span> Methods</a>
+    <a href="INT3.html" class="nav-link"><span class="nav-num">03</span> Standard Integrals</a>
+    <a href="INT4.html" class="nav-link"><span class="nav-num">04</span> Definite Integrals</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="hero-tag">Chapter 7 · Topic 01</div>
+  <h1>Basics of Integration</h1>
+  <p class="hero-sub">Understand integration as the reverse of differentiation, explore fundamental notation, and master the elementary integral formulas of Class 12.</p>
+  <div class="hero-pills">
+    <span class="pill pill-blue">Antiderivative</span>
+    <span class="pill pill-gold">Power Rule</span>
+    <span class="pill pill-green">Elementary Formulas</span>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- 1. What is Integration -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>What is Integration?</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-accent">
+      <div class="card-title">Core Concept</div>
+      <p>Integration is the <span class="hl-blue">reverse process of differentiation</span>. If the derivative of \(F(x)\) is \(f(x)\), then the integral of \(f(x)\) is \(F(x)\) plus a constant \(C\).</p>
+      <div class="formula-box">
+        <div class="formula-label">FUNDAMENTAL RELATIONSHIP</div>
+        \[ \frac{d}{dx}\big[F(x)\big] = f(x) \;\implies\; \int f(x)\,dx = F(x) + C \]
+      </div>
+      <p>Here, \(F(x)\) is called the <span class="hl-blue">antiderivative</span> (or primitive) of \(f(x)\), and \(C\) is the <span class="hl-gold">constant of integration</span>.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Terminology</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Symbol / Term</th><th>Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>\(\int\)</td><td>Integral sign (elongated S, from Latin <em>summa</em>)</td></tr>
+            <tr><td>\(f(x)\)</td><td><strong>Integrand</strong> — the function being integrated</td></tr>
+            <tr><td>\(dx\)</td><td>Indicates integration with respect to \(x\)</td></tr>
+            <tr><td>\(C\)</td><td><strong>Constant of Integration</strong> — added because derivative of constant is 0</td></tr>
+            <tr><td>\(F(x)+C\)</td><td><strong>General Integral</strong> (indefinite integral)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-icon">💡</div>
+      <p><strong>Why +C?</strong> Since the derivative of any constant is zero, there are infinitely many antiderivatives differing only by a constant. For example, \(\int 2x\,dx = x^2 + 5\) or \(x^2 - 3\) or \(x^2 + 100\) — all are valid. We write \(x^2 + C\) to represent all of them.</p>
+    </div>
+  </div>
+
+  <!-- 2. Geometrical Meaning -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Geometrical Interpretation</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-gold">
+      <div class="card-title">Area Under Curve</div>
+      <p>Geometrically, the definite integral \(\int_a^b f(x)\,dx\) represents the <span class="hl-gold">net area</span> bounded by the curve \(y = f(x)\), the \(x\)-axis, and the vertical lines \(x = a\) and \(x = b\).</p>
+      <div class="formula-box gold">
+        <div class="formula-label">AREA INTERPRETATION</div>
+        \[ \text{Area} = \int_a^b f(x)\,dx \quad \text{(when } f(x) \geq 0 \text{ on } [a,b]) \]
+      </div>
+      <p>The indefinite integral \(\int f(x)\,dx = F(x)+C\) gives a <span class="hl-gold">family of curves</span>, each shifted vertically by the constant \(C\).</p>
+    </div>
+  </div>
+
+  <!-- 3. Basic Rules -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Rules of Integration</h2>
+      <div class="section-line"></div>
+    </div>
+    <ul class="rules-list">
+      <li>
+        <span class="rule-num blue">1</span>
+        <div class="rule-body">
+          <div class="rule-name">Constant Multiple Rule</div>
+          <p>A constant factor can be taken out of the integral sign.</p>
+          <div class="formula-box" style="margin-top:10px">
+            \[ \int k\cdot f(x)\,dx = k\int f(x)\,dx, \quad k \in \mathbb{R} \]
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="rule-num gold">2</span>
+        <div class="rule-body">
+          <div class="rule-name">Sum / Difference Rule</div>
+          <p>The integral of a sum (or difference) equals the sum (or difference) of the individual integrals.</p>
+          <div class="formula-box gold" style="margin-top:10px">
+            \[ \int \big[f(x) \pm g(x)\big]\,dx = \int f(x)\,dx \;\pm\; \int g(x)\,dx \]
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="rule-num green">3</span>
+        <div class="rule-body">
+          <div class="rule-name">Linearity (Combined)</div>
+          <p>Both rules together make integration a <em>linear</em> operation.</p>
+          <div class="formula-box green" style="margin-top:10px">
+            \[ \int \big[af(x) + bg(x)\big]\,dx = a\int f(x)\,dx + b\int g(x)\,dx \]
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 4. Standard Formulas -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Elementary Standard Formulas</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card card-green">
+      <div class="card-title">Power & Algebraic</div>
+      <div class="formula-grid">
+        <div class="fcard">
+          <div class="fcard-label">POWER RULE (n ≠ −1)</div>
+          <div class="f">\(\displaystyle\int x^n\,dx = \frac{x^{n+1}}{n+1}+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">RECIPROCAL</div>
+          <div class="f">\(\displaystyle\int \frac{1}{x}\,dx = \ln|x|+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">CONSTANT</div>
+          <div class="f">\(\displaystyle\int k\,dx = kx+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-accent" style="margin-top:16px">
+      <div class="card-title">Exponential & Logarithmic</div>
+      <div class="formula-grid">
+        <div class="fcard">
+          <div class="fcard-label">e^x</div>
+          <div class="f">\(\displaystyle\int e^x\,dx = e^x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">a^x</div>
+          <div class="f">\(\displaystyle\int a^x\,dx = \frac{a^x}{\ln a}+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-pink" style="margin-top:16px">
+      <div class="card-title">Trigonometric Basics</div>
+      <div class="formula-grid">
+        <div class="fcard">
+          <div class="fcard-label">SIN x</div>
+          <div class="f">\(\displaystyle\int \sin x\,dx = -\cos x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">COS x</div>
+          <div class="f">\(\displaystyle\int \cos x\,dx = \sin x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">SEC² x</div>
+          <div class="f">\(\displaystyle\int \sec^2 x\,dx = \tan x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">COSEC² x</div>
+          <div class="f">\(\displaystyle\int \csc^2 x\,dx = -\cot x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">SEC x · TAN x</div>
+          <div class="f">\(\displaystyle\int \sec x\tan x\,dx = \sec x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">COSEC x · COT x</div>
+          <div class="f">\(\displaystyle\int \csc x\cot x\,dx = -\csc x+C\)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">Inverse Trigonometric</div>
+      <div class="formula-grid">
+        <div class="fcard">
+          <div class="fcard-label">1/√(1−x²)</div>
+          <div class="f">\(\displaystyle\int \frac{1}{\sqrt{1-x^2}}\,dx = \sin^{-1}x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">−1/√(1−x²)</div>
+          <div class="f">\(\displaystyle\int \frac{-1}{\sqrt{1-x^2}}\,dx = \cos^{-1}x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">1/(1+x²)</div>
+          <div class="f">\(\displaystyle\int \frac{1}{1+x^2}\,dx = \tan^{-1}x+C\)</div>
+        </div>
+        <div class="fcard">
+          <div class="fcard-label">1/(x√(x²−1))</div>
+          <div class="f">\(\displaystyle\int \frac{1}{x\sqrt{x^2-1}}\,dx = \sec^{-1}x+C\)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Quick Examples -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Worked Examples</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example 1 — Power Rule</div>
+      <p>Find \(\displaystyle\int x^5\,dx\)</p>
+      <div class="formula-box">
+        \[ \int x^5\,dx = \frac{x^{5+1}}{5+1}+C = \frac{x^6}{6}+C \]
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example 2 — Sum Rule</div>
+      <p>Find \(\displaystyle\int (3x^2 - 4\cos x + e^x)\,dx\)</p>
+      <div class="formula-box">
+        \[ = 3\cdot\frac{x^3}{3} - 4\sin x + e^x + C = x^3 - 4\sin x + e^x + C \]
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Example 3 — Rewrite First</div>
+      <p>Find \(\displaystyle\int \sqrt{x}\,dx\)</p>
+      <p style="margin-top:8px; color:var(--text-muted);">Rewrite \(\sqrt{x} = x^{1/2}\), then apply the power rule:</p>
+      <div class="formula-box green">
+        \[ \int x^{1/2}\,dx = \frac{x^{3/2}}{3/2}+C = \frac{2}{3}x^{3/2}+C \]
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-icon">📌</div>
+      <p><strong>Key Tip:</strong> Always simplify or rewrite the integrand into standard forms before integrating — e.g., \(\dfrac{1}{x^3} = x^{-3}\), \(\sqrt[3]{x^2} = x^{2/3}\).</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 7 &middot; Integrals</div>
+  </div>
+</footer>
+
+</body>
+</html>

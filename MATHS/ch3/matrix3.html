@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Notes on Matrix Operations for Class 12 Maths. Learn about addition, scalar multiplication, and multiplication of matrices with examples.">
+<meta name="keywords" content="Class 12 Maths Chapter 3, Matrices, operations, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Matrices - Transpose</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;--gold:#f59e0b;--gold-dim:#a66e0ed4;--accent:#e96c6c;}
+body{background:linear-gradient(135deg,#0f172a,#1e293b);color:#f1f5f9;padding:20px}
+.container{max-width:1100px;margin:auto}
+header{text-align:center;margin-bottom:40px}
+header h1{font-size:2.5rem;color:#38bdf8}
+header p{color:#94a3b8;margin-top:8px}
+.card{background:#1e293b;padding:25px;border-radius:16px;margin-bottom:25px;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+.card h2{color:#22c55e;margin-bottom:10px}
+.card p,.card li{color:#cbd5f5;line-height:1.8}
+
+/* Matrix Styling (same as Topic 2) */
+.matrix{background:#020617;padding:14px 22px;border-radius:8px;margin:10px 8px;display:inline-block;position:relative}
+.matrix::before{content:"[";position:absolute;left:6px;top:0;bottom:0;font-size:34px;display:flex;align-items:center}
+.matrix::after{content:"]";position:absolute;right:6px;top:0;bottom:0;font-size:34px;display:flex;align-items:center}
+.matrix-content{
+  padding:0 18px;
+  line-height:2.3;
+  letter-spacing:8px;
+  font-size:18px;
+  text-align:center;
+}
+
+.operator{font-size:22px;margin:0 6px;color:#e2e8f0}
+
+ /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+<h1>Transpose of a Matrix</h1>
+<p>Topic 3 - Transpose</p>
+</header>
+
+<!-- Definition -->
+<div class="card">
+<h2>What is Transpose?</h2>
+<p>
+Transpose of a matrix is obtained by interchanging its rows and columns.
+That means rows become columns and columns become rows.
+</p>
+</div>
+
+<!-- Example -->
+<div class="card">
+<h2>Example</h2>
+<p><b>Given Matrix A:</b></p>
+<div class="matrix"><div class="matrix-content">1  2  3 <br> 4  5  6</div></div>
+
+<span class="operator">→</span>
+
+<p><b>Transpose Aᵀ:</b></p>
+<div class="matrix"><div class="matrix-content">1  4 <br> 2  5 <br> 3  6</div></div>
+
+<p>
+Rows of A become columns in Aᵀ.
+</p>
+</div>
+
+<!-- Step Explanation -->
+<div class="card">
+<h2>Step-by-Step Explanation</h2>
+<ul>
+<li>First row (1 2 3) becomes first column</li>
+<li>Second row (4 5 6) becomes second column</li>
+<li>Resulting matrix has order 3 × 2</li>
+</ul>
+</div>
+
+<!-- Properties -->
+<div class="card">
+<h2>Important Properties</h2>
+<ul>
+<li>(Aᵀ)ᵀ = A</li>
+<li>(A + B)ᵀ = Aᵀ + Bᵀ</li>
+<li>(AB)ᵀ = BᵀAᵀ</li>
+<li>(kA)ᵀ = kAᵀ</li>
+</ul>
+</div>
+
+<footer class="site-footer">
+   <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 3 &middot; Matrices</div>
+    </div>
+</footer>
+
+
+</div>
+</body>
+</html>

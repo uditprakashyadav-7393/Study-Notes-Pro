@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Introduction – Application of Integrals | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --bg:#0c0e16;--surface:#13161f;--surface2:#1b1f2d;--surface3:#222740;
+    --border:#252a3a;--border2:#2f3550;
+    --accent:#5eead4;--accent2:#38bdf8;--gold:#f5c518;--gold-dim:rgba(245,197,24,.25);
+    --red:#f87171;--green:#4ade80;--purple:#c084fc;
+    --text:#e2e8f4;--text-muted:#7a82a0;--text-dim:#4a5270;
+    --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(12,14,22,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;}
+  .nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:8px;height:52px;overflow-x:auto;scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav-brand{font-family:'Playfair Display',serif;font-weight:900;color:#fff;white-space:nowrap;margin-right:12px;font-size:.95rem;}
+  .nav-brand span{color:var(--gold);}
+  .nav-sep{width:1px;height:18px;background:var(--border2);flex-shrink:0;}
+  .nav-link{white-space:nowrap;padding:5px 12px;border-radius:6px;font-size:.78rem;font-weight:500;color:var(--text-muted);text-decoration:none;transition:all .2s;flex-shrink:0;}
+  .nav-link:hover{color:var(--text);background:var(--surface2);}
+  .nav-link.active{color:var(--accent);background:rgba(94,234,212,.1);font-weight:600;}
+
+  /* HERO */
+  .hero{padding:64px 24px 48px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(94,234,212,.07),transparent);}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(94,234,212,.08);border:1px solid rgba(94,234,212,.2);border-radius:20px;padding:4px 14px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:20px;letter-spacing:.05em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:900;line-height:1.2;margin-bottom:14px;}
+  .hero h1 em{color:var(--accent);font-style:normal;}
+  .hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:580px;margin:0 auto 28px;}
+  .chapter-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
+
+  /* CONTENT */
+  .container{max-width:900px;margin:0 auto;padding:0 24px 64px;}
+
+  /* SECTION CARDS */
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:28px;position:relative;overflow:hidden;}
+  .section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);}
+  .section.gold-top::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .section.purple-top::before{background:linear-gradient(90deg,transparent,var(--purple),transparent);}
+
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:16px;color:#fff;}
+  .sec-body{color:var(--text-muted);font-size:.97rem;line-height:1.8;}
+  .sec-body p{margin-bottom:12px;}
+  .sec-body p:last-child{margin-bottom:0;}
+
+  /* FORMULA BOX */
+  .formula-box{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:20px 24px;margin:20px 0;text-align:center;}
+  .formula-box .formula-label{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+  .formula-box .formula-body{font-size:1.1rem;color:var(--text);}
+  .formula-box.gold{border-left-color:var(--gold);}
+  .formula-box.gold .formula-label{color:var(--gold);}
+  .formula-box.purple{border-left-color:var(--purple);}
+  .formula-box.purple .formula-label{color:var(--purple);}
+
+  /* CONCEPT GRID */
+  .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0;}
+  .concept-card{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:20px;}
+  .concept-card h4{font-size:.9rem;font-weight:600;margin-bottom:8px;color:var(--accent);}
+  .concept-card p{font-size:.85rem;color:var(--text-muted);line-height:1.6;}
+
+  /* CALLOUT BOXES */
+  .callout{border-radius:10px;padding:18px 22px;margin:20px 0;display:flex;gap:14px;align-items:flex-start;}
+  .callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+  .callout-body h4{font-size:.88rem;font-weight:700;margin-bottom:5px;letter-spacing:.03em;}
+  .callout-body p,.callout-body li{font-size:.85rem;line-height:1.7;color:var(--text-muted);}
+  .callout-body ul{padding-left:16px;}
+  .board{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);}
+  .board .callout-body h4{color:var(--green);}
+  .jee{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);}
+  .jee .callout-body h4{color:var(--red);}
+  .info{background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);}
+  .info .callout-body h4{color:var(--accent2);}
+
+  /* STEPS */
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:14px;margin:20px 0;}
+  .step{display:flex;gap:16px;align-items:flex-start;}
+  .step::before{counter-increment:step;content:counter(step);flex-shrink:0;width:30px;height:30px;border-radius:50%;background:rgba(94,234,212,.12);border:1px solid rgba(94,234,212,.3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);font-weight:700;margin-top:2px;}
+  .step p{font-size:.92rem;color:var(--text-muted);line-height:1.7;}
+
+  /* TABLE */
+  .tbl-wrap{overflow-x:auto;margin:20px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  th{background:var(--surface2);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.73rem;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border2);}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-muted);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  /* DIVIDER */
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:32px 0;}
+
+  /* FOOTER */
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+
+  @media(max-width:600px){.hero{padding:44px 16px 32px;}.section{padding:22px 18px;}.container{padding:0 14px 48px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">StudyNotes<span>Pro</span></span>
+    <div class="nav-sep"></div>
+    <a class="nav-link active" href="AOI1.html">01 · Introduction</a>
+    <a class="nav-link" href="AOI2.html">02 · Area Under Curve</a>
+    <a class="nav-link" href="AOI3.html">03 · Area Between Curves</a>
+    <a class="nav-link" href="AOI4.html">04 · Integration &amp; Graph</a>
+    <a class="nav-link" href="AOI5.html">05 · Properties</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge">Chapter 8 · Page 1 of 5</div>
+  <h1>Introduction to<br/><em>Application of Integrals</em></h1>
+  <p class="hero-sub">Meaning of definite integrals as area, foundational idea of finding area using integration.</p>
+  <span class="chapter-tag">Class 12 · Mathematics · CBSE &amp; JEE</span>
+</header>
+
+<div class="container">
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="sec-num">01 · Meaning</div>
+    <div class="sec-title">What is Application of Integrals?</div>
+    <div class="sec-body">
+      <p>In Chapter 7 we studied how to compute integrals. In Chapter 8, we <strong>use</strong> those integrals to find <em>geometric areas</em> — the actual area enclosed by curves, axes, and lines on the coordinate plane.</p>
+      <p>The central idea is: a definite integral \(\int_a^b f(x)\,dx\) is not just a number — it is the <strong>signed area</strong> between the curve \(y = f(x)\) and the \(x\)-axis over the interval \([a, b]\).</p>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h4>Geometry ↔ Calculus</h4>
+        <p>Every definite integral has a direct geometric meaning — the area under/above a curve segment.</p>
+      </div>
+      <div class="concept-card">
+        <h4>Why "Application"?</h4>
+        <p>We apply the tools of integration to measure real 2-D regions, which has uses in physics, economics, and engineering.</p>
+      </div>
+      <div class="concept-card">
+        <h4>CBSE Scope</h4>
+        <p>Standard curves: parabola, circle, ellipse, straight lines. Finding area bounded by them is directly asked in board exams.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section gold-top">
+    <div class="sec-num">02 · Core Idea</div>
+    <div class="sec-title">Finding Area Using Integration</div>
+    <div class="sec-body">
+      <p>Imagine slicing the region under a curve into infinitely thin vertical rectangles of width \(dx\). Each strip has height \(f(x)\) and area \(f(x)\,dx\). Adding all strips from \(x=a\) to \(x=b\) gives the total area.</p>
+    </div>
+
+    <div class="formula-box gold">
+      <div class="formula-label">Fundamental Area Formula</div>
+      <div class="formula-body">
+        \[ A = \int_a^b f(x)\,dx \]
+      </div>
+    </div>
+
+    <div class="sec-body">
+      <p>Here \(f(x) \geq 0\) on \([a,b]\). The area is measured between the curve and the \(x\)-axis.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><p><strong>Write the curve</strong> — identify \(y = f(x)\).</p></div>
+      <div class="step"><p><strong>Find limits</strong> — determine \(x = a\) and \(x = b\) (intersections with axis or given lines).</p></div>
+      <div class="step"><p><strong>Integrate</strong> — evaluate \(\int_a^b f(x)\,dx\).</p></div>
+      <div class="step"><p><strong>Take absolute value</strong> if curve goes below the \(x\)-axis in part of the interval.</p></div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <h4>Intuition — Riemann Sum</h4>
+        <p>The definite integral is the limit of the Riemann sum: \(\displaystyle A = \lim_{n\to\infty}\sum_{i=1}^n f(x_i^*)\Delta x\). As \(\Delta x \to 0\), the sum converges to the exact area.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section purple-top">
+    <div class="sec-num">03 · Two Orientations</div>
+    <div class="sec-title">Vertical vs Horizontal Strips</div>
+    <div class="sec-body">
+      <p>Depending on the curve, it is sometimes easier to integrate with respect to \(y\) (horizontal strips) instead of \(x\).</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Strip Type</th><th>Formula</th><th>When to Use</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vertical (dx)</td>
+            <td>\(\displaystyle\int_a^b f(x)\,dx\)</td>
+            <td>Curve expressed as \(y = f(x)\); bounded top–bottom</td>
+          </tr>
+          <tr>
+            <td>Horizontal (dy)</td>
+            <td>\(\displaystyle\int_c^d g(y)\,dy\)</td>
+            <td>Curve expressed as \(x = g(y)\); bounded left–right</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="formula-box purple">
+      <div class="formula-label">Area w.r.t. y-axis</div>
+      <div class="formula-body">
+        \[ A = \int_c^d g(y)\,dy \]
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 — Key Formulas Summary -->
+  <div class="section">
+    <div class="sec-num">04 · Quick Reference</div>
+    <div class="sec-title">Standard Curves at a Glance</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Curve</th><th>Equation</th><th>Key Feature</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Parabola</td><td>\(y^2 = 4ax\)</td><td>Opens right; vertex at origin</td></tr>
+          <tr><td>Parabola</td><td>\(x^2 = 4ay\)</td><td>Opens upward; vertex at origin</td></tr>
+          <tr><td>Circle</td><td>\(x^2 + y^2 = r^2\)</td><td>Centre origin, radius r</td></tr>
+          <tr><td>Ellipse</td><td>\(\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}=1\)</td><td>Semi-axes a, b</td></tr>
+          <tr><td>Line</td><td>\(y = mx + c\)</td><td>Used as boundary</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOARD & JEE CALLOUTS -->
+  <div class="callout board">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body">
+      <h4>Board Exam Tips</h4>
+      <ul>
+        <li>Always draw a rough sketch and shade the required region — carries 1 mark.</li>
+        <li>Mention the formula being used before integrating.</li>
+        <li>Check limits: if curve crosses axis, split the integral at crossing point.</li>
+        <li>Most 5-mark questions use parabola + line or circle + line combinations.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout jee">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <h4>JEE Main / Advanced Tips</h4>
+      <ul>
+        <li>Know areas of standard curves: Circle area = πr², Ellipse area = πab.</li>
+        <li>Use symmetry aggressively to halve / quarter the computation.</li>
+        <li>JEE often tests area between a parabola and a tangent / chord.</li>
+        <li>Memorise: area under parabola \(y=x^2\) from 0 to \(a\) is \(a^3/3\).</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 8 &middot; Application of Integrals</div>
+  </div>
+</footer>
+</body>
+</html>

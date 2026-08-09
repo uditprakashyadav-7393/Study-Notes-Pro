@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced 3D Geometry | Angles, Distance, Coplanarity | StudyNotesPro</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+:root{--bg:#060a14;--surface:#0b1220;--surface2:#0f1624;--card:#0d1522;--border:#182140;--accent:#c084fc;--accent-dim:rgba(192,132,252,.1);--gold:#f5c518;--gold-dim:rgba(245,197,24,.13);--cyan:#38bdf8;--cyan-dim:rgba(56,189,248,.1);--teal:#2dd4bf;--teal-dim:rgba(45,212,191,.1);--green:#10b981;--green-dim:rgba(16,185,129,.1);--orange:#f97316;--orange-dim:rgba(249,115,22,.1);--red:#ef4444;--red-dim:rgba(239,68,68,.1);--pink:#f472b6;--pink-dim:rgba(244,114,182,.1);--text:#e2e8f5;--text-muted:#637496;--text-dim:#8fa3c8}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.75;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(192,132,252,.05) 0,transparent 55%),radial-gradient(ellipse 40% 40% at 95% 5%,rgba(45,212,191,.04) 0,transparent 60%);pointer-events:none;z-index:0}
+
+.nav-header{position:sticky;top:0;background:rgba(6,10,20,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:13px 24px;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-brand span{color:var(--gold)}
+.nav-chapters{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none}
+.nav-chapters::-webkit-scrollbar{display:none}
+.nav-chapters a{padding:5px 13px;border-radius:20px;font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-decoration:none;border:1px solid transparent;white-space:nowrap;transition:.2s}
+.nav-chapters a:hover{border-color:var(--border);color:var(--text)}
+.nav-chapters a.active{background:var(--accent-dim);border-color:rgba(192,132,252,.45);color:var(--accent)}
+
+main{max-width:960px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
+
+/* HERO */
+.hero{text-align:center;padding:64px 0 52px}
+.hero-tag{display:inline-block;background:var(--accent-dim);border:1px solid rgba(192,132,252,.3);color:var(--accent);font-size:.72rem;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;padding:5px 16px;border-radius:20px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:18px;background:linear-gradient(135deg,#fff 20%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--text-muted);font-size:1.05rem;max-width:580px;margin:0 auto 30px}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.badge{padding:5px 15px;border-radius:20px;font-size:.78rem;font-weight:500}
+.badge-board{background:var(--green-dim);border:1px solid rgba(16,185,129,.3);color:var(--green)}
+.badge-jee{background:var(--orange-dim);border:1px solid rgba(249,115,22,.3);color:var(--orange)}
+.badge-ncert{background:var(--accent-dim);border:1px solid rgba(192,132,252,.3);color:var(--accent)}
+
+/* TOC */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 30px;margin-bottom:52px}
+.toc-head{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin-bottom:16px}
+.toc-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px}
+.toc-list a{color:var(--text-dim);text-decoration:none;font-size:.88rem;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;transition:.18s}
+.toc-list a:hover{background:var(--accent-dim);color:var(--accent)}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:22px}
+
+/* SECTION */
+.section{margin-bottom:60px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:26px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.section-num{width:40px;height:40px;background:var(--accent-dim);border:1px solid rgba(192,132,252,.35);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.88rem;color:var(--accent);font-weight:600;flex-shrink:0}
+.section-header h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text)}
+.sub-h3{font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:600;color:var(--teal);margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.sub-h3::before{content:'';width:3px;height:18px;background:var(--teal);border-radius:2px;flex-shrink:0}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:18px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+
+/* FORMULA BOXES */
+.fbox{background:var(--gold-dim);border:1px solid rgba(245,197,24,.3);border-left:4px solid var(--gold);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.fbox-teal{background:var(--teal-dim);border:1px solid rgba(45,212,191,.3);border-left:4px solid var(--teal);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-teal-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.fbox-purple{background:var(--accent-dim);border:1px solid rgba(192,132,252,.3);border-left:4px solid var(--accent);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-purple-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.fbox-cyan{background:var(--cyan-dim);border:1px solid rgba(56,189,248,.3);border-left:4px solid var(--cyan);border-radius:12px;padding:20px 22px;margin:18px 0}
+.fbox-cyan-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+
+/* CALLOUTS */
+.note-box{background:var(--cyan-dim);border:1px solid rgba(56,189,248,.25);border-left:4px solid var(--cyan);border-radius:12px;padding:16px 20px;margin:14px 0;font-size:.93rem;color:var(--text-dim)}
+.note-box strong{color:var(--cyan)}
+.board-box{background:var(--green-dim);border:1px solid rgba(16,185,129,.25);border-left:4px solid var(--green);border-radius:12px;padding:18px 22px;margin:14px 0}
+.board-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--green);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.jee-box{background:var(--orange-dim);border:1px solid rgba(249,115,22,.25);border-left:4px solid var(--orange);border-radius:12px;padding:18px 22px;margin:14px 0}
+.jee-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--orange);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.err-box{background:var(--red-dim);border:1px solid rgba(239,68,68,.25);border-left:4px solid var(--red);border-radius:12px;padding:18px 22px;margin:14px 0}
+.err-box .bx-title{font-size:.7rem;font-family:'JetBrains Mono',monospace;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.master-box{background:linear-gradient(135deg,rgba(192,132,252,.08) 0,rgba(45,212,191,.06) 100%);border:1px solid rgba(192,132,252,.3);border-radius:14px;padding:24px;margin:20px 0}
+.master-box .mx-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--accent);margin-bottom:16px}
+
+/* EXAMPLES */
+.example{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:22px;margin:18px 0}
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:13px;flex-wrap:wrap}
+.ex-tag{font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:10px;text-transform:uppercase;border:1px solid transparent}
+.ex-tag.board{background:var(--green-dim);border-color:rgba(16,185,129,.3);color:var(--green)}
+.ex-tag.jee{background:var(--orange-dim);border-color:rgba(249,115,22,.3);color:var(--orange)}
+.ex-title{font-weight:600;color:var(--text);font-size:.93rem}
+.solution{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.sol-label{font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+
+/* TABLE */
+.math-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.87rem}
+.math-table th{background:var(--surface);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:.73rem;text-transform:uppercase;letter-spacing:.06em;padding:11px 14px;text-align:left;border:1px solid var(--border)}
+.math-table td{padding:10px 14px;border:1px solid var(--border);color:var(--text-dim);vertical-align:top;line-height:1.6}
+.math-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+
+ul.clist{padding-left:22px;margin:10px 0}
+ul.clist li{margin-bottom:7px;color:var(--text-dim);font-size:.93rem}
+ul.clist li::marker{color:var(--gold)}
+ol.clist{padding-left:22px;margin:10px 0}
+ol.clist li{margin-bottom:8px;color:var(--text-dim);font-size:.93rem}
+
+/* MASTER SUMMARY TABLE */
+.big-summary{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin:36px 0}
+.big-summary-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+
+/* QUICK SUMMARY */
+.qs{background:linear-gradient(135deg,rgba(192,132,252,.07) 0,rgba(45,212,191,.05) 100%);border:1px solid rgba(192,132,252,.2);border-radius:16px;padding:30px;margin:48px 0}
+.qs-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);margin-bottom:20px}
+.qs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
+.qs-item{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.87rem}
+.qs-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+.katex-display{margin:10px 0;overflow-x:auto;padding:4px 0}
+.katex{font-size:1.05em}
+
+/* FOOTER */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px}
+.sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none}
+.sf-brand a:hover{color:var(--accent)}
+.sf-brand span{color:var(--gold)}
+.sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem}
+.sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.sf-dot{color:var(--border)}
+.sf-author{color:var(--text-muted)}
+.sf-author a{color:var(--gold);font-weight:600;text-decoration:none}
+.sf-author a:hover{color:var(--accent)}
+.sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+@media(max-width:640px){main{padding:32px 16px 64px}.hero{padding:40px 0 32px}}
+</style>
+</head>
+<body>
+
+<nav class="nav-header">
+  <a href="/index.html" class="nav-brand">StudyNotes<span>Pro</span></a>
+  <div class="nav-chapters">
+    <a href="3D1.html">01 · Direction Cosines</a>
+    <a href="3D2.html">02 · Lines in Space</a>
+    <a href="3D3.html">03 · Angle &amp; S.D.</a>
+    <a href="3D4.html">04 · Planes</a>
+    <a href="3D5.html" class="active">05 · Advanced</a>
+  </div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Chapter 11 · Three Dimensional Geometry · Topic 05</div>
+    <h1>Advanced Topics in<br>3D Geometry</h1>
+    <p class="hero-sub">Coplanarity of lines, angle between two planes, distance of a point from a plane, and angle between a line and a plane — all in one place.</p>
+    <div class="hero-badges">
+      <span class="badge badge-board">✓ Board Exam</span>
+      <span class="badge badge-jee">⚡ JEE Main &amp; Advanced</span>
+      <span class="badge badge-ncert">📘 NCERT Class 12</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-head">📋 Contents</div>
+    <ul class="toc-list">
+      <li><a href="#coplanar"><span class="toc-num">1.</span>Coplanarity of Two Lines</a></li>
+      <li><a href="#angle-planes"><span class="toc-num">2.</span>Angle Between Two Planes</a></li>
+      <li><a href="#dist-pt-plane"><span class="toc-num">3.</span>Distance: Point from Plane</a></li>
+      <li><a href="#angle-line-plane"><span class="toc-num">4.</span>Angle: Line and Plane</a></li>
+      <li><a href="#foot-perp"><span class="toc-num">5.</span>Foot of Perpendicular &amp; Image</a></li>
+      <li><a href="#master-table"><span class="toc-num">6.</span>Master Summary Table</a></li>
+      <li><a href="#examples"><span class="toc-num">7.</span>Solved Examples</a></li>
+      <li><a href="#pyq"><span class="toc-num">8.</span>PYQ &amp; Tips</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Coplanarity -->
+  <div class="section" id="coplanar">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Coplanarity of Two Lines</h2>
+    </div>
+    <div class="card">
+      <p>Two lines are <strong>coplanar</strong> if they lie in the same plane. Lines can be coplanar by being:</p>
+      <ul class="clist">
+        <li><strong>Parallel</strong> — lie in infinitely many common planes (all parallel to each other)</li>
+        <li><strong>Intersecting</strong> — lie in exactly one common plane</li>
+      </ul>
+      <p>If lines are <strong>skew</strong>, they are NOT coplanar.</p>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Coplanarity Conditions</div>
+      <p>For lines $\vec{r}=\vec{a_1}+\lambda\vec{b_1}$ and $\vec{r}=\vec{a_2}+\mu\vec{b_2}$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📌 Coplanarity — Vector Form</div>
+        $$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})=0$$
+      </div>
+      <p>For lines $\dfrac{x-x_1}{a_1}=\dfrac{y-y_1}{b_1}=\dfrac{z-z_1}{c_1}$ and $\dfrac{x-x_2}{a_2}=\dfrac{y-y_2}{b_2}=\dfrac{z-z_2}{c_2}$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📌 Coplanarity — Cartesian Form</div>
+        $$\begin{vmatrix} x_2-x_1 & y_2-y_1 & z_2-z_1 \\ a_1 & b_1 & c_1 \\ a_2 & b_2 & c_2 \end{vmatrix} = 0$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Equation of the Plane Containing Two Coplanar Lines</div>
+      <p>If the lines are coplanar, the plane containing them has normal $\vec{n}=\vec{b_1}\times\vec{b_2}$ and passes through $\vec{a_1}$:</p>
+      $$(\vec{r}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})=0$$
+    </div>
+  </div>
+
+  <!-- 2. Angle Between Planes -->
+  <div class="section" id="angle-planes">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Angle Between Two Planes</h2>
+    </div>
+    <div class="card">
+      <p>The angle between two planes equals the angle between their <strong>normal vectors</strong>.</p>
+      <p>For planes $\vec{r}\cdot\vec{n_1}=d_1$ and $\vec{r}\cdot\vec{n_2}=d_2$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle — Vector Form</div>
+        $$\cos\theta = \left|\frac{\vec{n_1}\cdot\vec{n_2}}{|\vec{n_1}|\ |\vec{n_2}|}\right|$$
+        <p style="margin-top:8px;font-size:.88rem;color:var(--text-dim)">Modulus gives the acute angle between planes</p>
+      </div>
+      <p>For planes $a_1x+b_1y+c_1z+d_1=0$ and $a_2x+b_2y+c_2z+d_2=0$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle — Cartesian Form</div>
+        $$\cos\theta = \left|\frac{a_1a_2+b_1b_2+c_1c_2}{\sqrt{a_1^2+b_1^2+c_1^2}\;\sqrt{a_2^2+b_2^2+c_2^2}}\right|$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Special Cases</div>
+      <table class="math-table">
+        <thead><tr><th>Condition</th><th>Vector</th><th>Cartesian</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Planes Perpendicular</strong> ($\theta=90°$)</td>
+            <td>$\vec{n_1}\cdot\vec{n_2}=0$</td>
+            <td>$a_1a_2+b_1b_2+c_1c_2=0$</td>
+          </tr>
+          <tr>
+            <td><strong>Planes Parallel</strong> ($\theta=0°$)</td>
+            <td>$\vec{n_1}\times\vec{n_2}=\vec{0}$</td>
+            <td>$\dfrac{a_1}{a_2}=\dfrac{b_1}{b_2}=\dfrac{c_1}{c_2}$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. Distance from Plane -->
+  <div class="section" id="dist-pt-plane">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2>Distance of a Point from a Plane</h2>
+    </div>
+    <div class="card">
+      <p>The <strong>perpendicular distance</strong> from point $P(x_0, y_0, z_0)$ to the plane $ax+by+cz+d=0$ is:</p>
+      <div class="fbox">
+        <div class="fbox-title">⭐ Distance Formula (Most Important)</div>
+        $$\text{Distance} = \frac{|ax_0 + by_0 + cz_0 + d|}{\sqrt{a^2+b^2+c^2}}$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Vector Form</div>
+      <p>Distance from point with position vector $\vec{p}$ to plane $\vec{r}\cdot\hat{n}=d$ (normal form):</p>
+      $$\text{Distance} = |\vec{p}\cdot\hat{n} - d|$$
+      <p>For general vector plane $\vec{r}\cdot\vec{n}=d'$ (where $\vec{n}$ is not necessarily a unit vector):</p>
+      $$\text{Distance} = \frac{|\vec{p}\cdot\vec{n}-d'|}{|\vec{n}|}$$
+    </div>
+    <div class="card">
+      <div class="sub-h3">Distance from Origin</div>
+      <p>Setting $(x_0,y_0,z_0)=(0,0,0)$:</p>
+      $$\text{Distance from origin to plane }ax+by+cz+d=0 \;=\; \frac{|d|}{\sqrt{a^2+b^2+c^2}}$$
+    </div>
+    <div class="note-box">
+      <strong>Memory Aid:</strong> Substitute the point's coordinates into the left side of the plane equation, take absolute value, divide by the magnitude of the normal vector. Same structure as distance formula in 2D!
+    </div>
+  </div>
+
+  <!-- 4. Angle: Line and Plane -->
+  <div class="section" id="angle-line-plane">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2>Angle Between a Line and a Plane</h2>
+    </div>
+    <div class="card">
+      <p>The angle $\phi$ between a line and a plane is the <strong>complement</strong> of the angle between the line's direction and the plane's normal.</p>
+      <p>If $\theta$ is the angle between direction vector $\vec{b}$ and normal $\vec{n}$, then $\phi = 90°-\theta$. Since $\sin\phi=\cos\theta$:</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle Between Line and Plane — Vector Form</div>
+        $$\sin\phi = \left|\frac{\vec{b}\cdot\vec{n}}{|\vec{b}|\ |\vec{n}|}\right|$$
+        <p style="margin-top:8px;font-size:.88rem;color:var(--text-dim)">Note: We use $\sin\phi$, not $\cos\phi$!</p>
+      </div>
+      <p>For line with DRs $(a,b,c)$ and plane $px+qy+rz+s=0$ (normal $(p,q,r)$):</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Angle Between Line and Plane — Cartesian Form</div>
+        $$\sin\phi = \left|\frac{ap+bq+cr}{\sqrt{a^2+b^2+c^2}\;\sqrt{p^2+q^2+r^2}}\right|$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Special Cases for Line &amp; Plane</div>
+      <table class="math-table">
+        <thead><tr><th>Relation</th><th>Condition</th><th>Angle $\phi$</th></tr></thead>
+        <tbody>
+          <tr><td>Line <strong>lies in</strong> the plane</td><td>$\vec{b}\cdot\vec{n}=0$ AND $\vec{a}\cdot\vec{n}=d$</td><td>$\phi=0°$</td></tr>
+          <tr><td>Line <strong>parallel to</strong> plane</td><td>$\vec{b}\cdot\vec{n}=0$</td><td>$\phi=0°$</td></tr>
+          <tr><td>Line <strong>perpendicular to</strong> plane</td><td>$\vec{b}=k\vec{n}$, i.e., $\dfrac{a}{p}=\dfrac{b}{q}=\dfrac{c}{r}$</td><td>$\phi=90°$</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 5. Foot of Perpendicular & Image -->
+  <div class="section" id="foot-perp">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <h2>Foot of Perpendicular &amp; Image in a Plane</h2>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Foot of Perpendicular from Point to Plane</div>
+      <p>To find the foot of perpendicular from $P(x_0,y_0,z_0)$ to plane $ax+by+cz+d=0$:</p>
+      <ol class="clist">
+        <li>Write the line through $P$ along the normal: $\dfrac{x-x_0}{a}=\dfrac{y-y_0}{b}=\dfrac{z-z_0}{c}=t$</li>
+        <li>General point on this line: $(x_0+at,\; y_0+bt,\; z_0+ct)$</li>
+        <li>Substitute into the plane equation and solve for $t$</li>
+        <li>Put $t$ back to get the foot coordinates</li>
+      </ol>
+      <div class="fbox-teal">
+        <div class="fbox-teal-title">🔢 Direct Formula for Foot of Perpendicular</div>
+        $$t = -\frac{ax_0+by_0+cz_0+d}{a^2+b^2+c^2}$$
+        $$\text{Foot} = \left(x_0+at,\; y_0+bt,\; z_0+ct\right)$$
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Image (Reflection) of a Point in a Plane</div>
+      <div class="fbox-purple">
+        <div class="fbox-purple-title">🪞 Image Formula</div>
+        <p>If $F$ is the foot of perpendicular, the image $Q$ of $P$ satisfies: $F$ = midpoint of $P$ and $Q$.</p>
+        $$Q = 2F - P$$
+        <p style="margin-top:8px;font-size:.88rem;color:var(--text-dim)">i.e., $Q_x=2F_x-P_x$, $Q_y=2F_y-P_y$, $Q_z=2F_z-P_z$</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sub-h3">Direct Formula: Image in a Plane</div>
+      <p>For point $P(x_0,y_0,z_0)$ and plane $ax+by+cz+d=0$, the image $Q(x',y',z')$ is given by:</p>
+      <div class="fbox">
+        <div class="fbox-title">📐 Image Coordinates</div>
+        $$\frac{x'-x_0}{a}=\frac{y'-y_0}{b}=\frac{z'-z_0}{c} = -\frac{2(ax_0+by_0+cz_0+d)}{a^2+b^2+c^2}$$
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Master Table -->
+  <div class="section" id="master-table">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <h2>Master Summary Table — All of Chapter 11</h2>
+    </div>
+    <div class="big-summary">
+      <div class="big-summary-title">🗂️ Complete Chapter 11 Formula Reference</div>
+      <table class="math-table">
+        <thead><tr><th>Topic</th><th>Vector Form</th><th>Cartesian Form</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>DC relation</strong></td>
+            <td colspan="2">$l^2+m^2+n^2=1$</td>
+          </tr>
+          <tr>
+            <td><strong>DR → DC</strong></td>
+            <td colspan="2">$l=\dfrac{a}{\sqrt{a^2+b^2+c^2}}$</td>
+          </tr>
+          <tr>
+            <td><strong>Line (pt+dir)</strong></td>
+            <td>$\vec{r}=\vec{a}+\lambda\vec{b}$</td>
+            <td>$\dfrac{x-x_1}{a}=\dfrac{y-y_1}{b}=\dfrac{z-z_1}{c}$</td>
+          </tr>
+          <tr>
+            <td><strong>Angle between lines</strong></td>
+            <td>$\cos\theta=\left|\dfrac{\vec{b_1}\cdot\vec{b_2}}{|\vec{b_1}||\vec{b_2}|}\right|$</td>
+            <td>$\cos\theta=\left|\dfrac{\sum a_1a_2}{\sqrt{\sum a_1^2}\sqrt{\sum a_2^2}}\right|$</td>
+          </tr>
+          <tr>
+            <td><strong>Shortest distance</strong></td>
+            <td>$\dfrac{|(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})|}{|\vec{b_1}\times\vec{b_2}|}$</td>
+            <td>$3\times3$ determinant formula</td>
+          </tr>
+          <tr>
+            <td><strong>Coplanarity</strong></td>
+            <td>$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})=0$</td>
+            <td>$3\times3$ determinant $=0$</td>
+          </tr>
+          <tr>
+            <td><strong>Plane equation</strong></td>
+            <td>$\vec{r}\cdot\vec{n}=d$</td>
+            <td>$ax+by+cz+d=0$</td>
+          </tr>
+          <tr>
+            <td><strong>Angle between planes</strong></td>
+            <td>$\cos\theta=\left|\dfrac{\vec{n_1}\cdot\vec{n_2}}{|\vec{n_1}||\vec{n_2}|}\right|$</td>
+            <td>$\cos\theta=\left|\dfrac{\sum a_1a_2}{\sqrt{\sum a_1^2}\sqrt{\sum a_2^2}}\right|$</td>
+          </tr>
+          <tr>
+            <td><strong>Distance: pt from plane</strong></td>
+            <td>$\dfrac{|\vec{p}\cdot\vec{n}-d'|}{|\vec{n}|}$</td>
+            <td>$\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}$</td>
+          </tr>
+          <tr>
+            <td><strong>Angle: line &amp; plane</strong></td>
+            <td>$\sin\phi=\left|\dfrac{\vec{b}\cdot\vec{n}}{|\vec{b}||\vec{n}|}\right|$</td>
+            <td>$\sin\phi=\left|\dfrac{\sum ap}{\sqrt{\sum a^2}\sqrt{\sum p^2}}\right|$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 7. Examples -->
+  <div class="section" id="examples">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <h2>Solved Examples</h2>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 1 — Angle Between Two Planes</span></div>
+      <p>Find the angle between the planes $2x-y+z=7$ and $x+y+2z=9$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Normals: $\vec{n_1}=(2,-1,1)$, $\vec{n_2}=(1,1,2)$</p>
+        $$\cos\theta = \left|\frac{(2)(1)+(-1)(1)+(1)(2)}{\sqrt{4+1+1}\;\sqrt{1+1+4}}\right| = \left|\frac{2-1+2}{\sqrt{6}\cdot\sqrt{6}}\right| = \frac{3}{6} = \frac{1}{2}$$
+        $$\theta = \cos^{-1}\!\left(\frac{1}{2}\right) = \boxed{60°}$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 2 — Distance from a Point to a Plane</span></div>
+      <p>Find the distance from the point $(2, 3, -5)$ to the plane $x+2y-2z=9$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Plane: $x+2y-2z-9=0$. Point: $(2,3,-5)$. Normal magnitude: $\sqrt{1+4+4}=3$.</p>
+        $$d = \frac{|(1)(2)+(2)(3)+(-2)(-5)-9|}{3} = \frac{|2+6+10-9|}{3} = \frac{|9|}{3} = \boxed{3}$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 3 — Angle Between a Line and a Plane</span></div>
+      <p>Find the angle between the line $\dfrac{x-1}{2}=\dfrac{y+3}{-1}=\dfrac{z-4}{2}$ and the plane $2x+y-2z=5$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Direction of line: $(2,-1,2)$. Normal of plane: $(2,1,-2)$.</p>
+        $$\sin\phi = \left|\frac{(2)(2)+(-1)(1)+(2)(-2)}{\sqrt{4+1+4}\;\sqrt{4+1+4}}\right| = \left|\frac{4-1-4}{3\cdot 3}\right| = \frac{|-1|}{9} = \frac{1}{9}$$
+        $$\phi = \sin^{-1}\!\left(\frac{1}{9}\right)$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag board">Board Level</span><span class="ex-title">Example 4 — Foot of Perpendicular</span></div>
+      <p>Find the foot of perpendicular from $P(1, 3, 4)$ to the plane $2x-y+z+3=0$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$a=2,b=-1,c=1,d=3$; Point $P=(1,3,4)$</p>
+        $$t = -\frac{(2)(1)+(-1)(3)+(1)(4)+3}{4+1+1} = -\frac{2-3+4+3}{6} = -\frac{6}{6} = -1$$
+        $$\text{Foot} = (1+2(-1),\; 3+(-1)(-1),\; 4+(1)(-1)) = (-1,\; 4,\; 3)$$
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 5 — Coplanarity of Lines</span></div>
+      <p>Check if the lines $\dfrac{x-1}{-3}=\dfrac{y-2}{2}=\dfrac{z-4}{1}$ and $\dfrac{x-3}{2}=\dfrac{y-4}{-1}=\dfrac{z-5}{2}$ are coplanar. If yes, find the equation of the plane.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>$(x_1,y_1,z_1)=(1,2,4)$, $(a_1,b_1,c_1)=(-3,2,1)$; $(x_2,y_2,z_2)=(3,4,5)$, $(a_2,b_2,c_2)=(2,-1,2)$</p>
+        $$\Delta = \begin{vmatrix}3-1 & 4-2 & 5-4\\-3&2&1\\2&-1&2\end{vmatrix} = \begin{vmatrix}2&2&1\\-3&2&1\\2&-1&2\end{vmatrix}$$
+        $$=2[(2)(2)-(-1)(1)]-2[(-3)(2)-(2)(1)]+1[(-3)(-1)-(2)(2)]$$
+        $$=2[4+1]-2[-6-2]+1[3-4]=10+16-1=25\neq 0$$
+        <p>Since $\Delta \neq 0$, the lines are <strong>skew (not coplanar)</strong>.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="ex-header"><span class="ex-tag jee">JEE Level</span><span class="ex-title">Example 6 — Image of a Point in a Plane</span></div>
+      <p>Find the image of the point $(1, 2, 3)$ in the plane $x+2y+4z=38$.</p>
+      <div class="solution">
+        <div class="sol-label">Solution</div>
+        <p>Plane: $x+2y+4z-38=0$. Point $P=(1,2,3)$. $(a,b,c)=(1,2,4)$, $a^2+b^2+c^2=21$.</p>
+        $$t = -\frac{(1)(1)+(2)(2)+(4)(3)-38}{21} = -\frac{1+4+12-38}{21} = -\frac{-21}{21} = 1$$
+        $$\text{Foot }F = (1+1,\; 2+2,\; 3+4) = (2,4,7)$$
+        $$\text{Image }Q = 2F-P = (4-1,\; 8-2,\; 14-3) = \boxed{(3,6,11)}$$
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. PYQ & Tips -->
+  <div class="section" id="pyq">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <h2>PYQ Patterns &amp; Tips</h2>
+    </div>
+
+    <div class="master-box">
+      <div class="mx-title">📊 Common Board Exam Questions</div>
+      <table class="math-table">
+        <thead><tr><th>Question Type</th><th>Marks</th><th>Key Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Find distance from point to plane</td><td>2–3</td><td>$\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}$</td></tr>
+          <tr><td>Find angle between two planes</td><td>3–4</td><td>$\cos\theta = |\dfrac{\sum a_1a_2}{\ldots}|$</td></tr>
+          <tr><td>Angle between line and plane</td><td>3–4</td><td>$\sin\phi = |\dfrac{\vec{b}\cdot\vec{n}}{|\vec{b}||\vec{n}|}|$</td></tr>
+          <tr><td>Foot of perpendicular to plane</td><td>5</td><td>Parametrize normal line, substitute</td></tr>
+          <tr><td>Coplanarity + equation of plane</td><td>5</td><td>$3\times3$ det $=0$, then find plane</td></tr>
+          <tr><td>S.D. between skew lines</td><td>5</td><td>Cross-product formula</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="board-box">
+      <div class="bx-title">✅ Board Exam Tips</div>
+      <ul class="clist">
+        <li>Distance formula: plug in, absolute value, divide — always show working clearly</li>
+        <li>For angle between planes: the formula is identical to angle between lines (both use normals/directions)</li>
+        <li>Angle between line and plane uses $\sin\phi$, NOT $\cos\phi$ — most common error in exams</li>
+        <li>Foot of perpendicular: write parametric line along normal, substitute into plane, solve $t$</li>
+        <li>Perpendicular planes condition is the same as perpendicular lines: dot product of normals $= 0$</li>
+      </ul>
+    </div>
+
+    <div class="jee-box">
+      <div class="bx-title">⚡ JEE Tips &amp; Tricks</div>
+      <ul class="clist">
+        <li>For MCQs on distance, compute $ax_0+by_0+cz_0+d$ carefully — sign errors are common</li>
+        <li>Image in a plane: compute $t$ using the direct formula, don't redo from scratch each time</li>
+        <li>JEE Advanced may ask: "Plane containing line $L$ and parallel to line $M$" — use family of planes with constraint</li>
+        <li>If a line is perpendicular to a plane, its DRs are proportional to the plane's normal</li>
+        <li>If a line is parallel to a plane, its direction is perpendicular to the plane's normal: $\vec{b}\cdot\vec{n}=0$</li>
+        <li>Combine: foot of perp + distance + image is one complete JEE question</li>
+      </ul>
+    </div>
+
+    <div class="err-box">
+      <div class="bx-title">❌ Most Common Mistakes — Chapter 11</div>
+      <ul class="clist">
+        <li><strong>Angle line-plane:</strong> Using $\cos\phi$ instead of $\sin\phi$ — the angle is with the plane, not the normal</li>
+        <li><strong>Distance formula:</strong> Forgetting absolute value signs in the numerator</li>
+        <li><strong>Normal form:</strong> Using DRs instead of DCs (divide by $\sqrt{a^2+b^2+c^2}$ first!)</li>
+        <li><strong>Coplanarity:</strong> Skipping the determinant check and assuming lines are coplanar</li>
+        <li><strong>S.D.:</strong> Mixing up the skew line formula with the parallel line formula</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Quick Summary -->
+  <div class="qs">
+    <div class="qs-title">⚡ Quick Formula Sheet — Topic 05</div>
+    <div class="qs-grid">
+      <div class="qs-item"><div class="qs-label">Coplanarity (Vector)</div>$(\vec{a_2}-\vec{a_1})\cdot(\vec{b_1}\times\vec{b_2})=0$</div>
+      <div class="qs-item"><div class="qs-label">Coplanarity (Cartesian)</div>$3\times3$ determinant $=0$</div>
+      <div class="qs-item"><div class="qs-label">Angle: Two Planes</div>$\cos\theta=\left|\dfrac{\vec{n_1}\cdot\vec{n_2}}{|\vec{n_1}||\vec{n_2}|}\right|$</div>
+      <div class="qs-item"><div class="qs-label">Planes ⊥</div>$a_1a_2+b_1b_2+c_1c_2=0$</div>
+      <div class="qs-item"><div class="qs-label">Planes ∥</div>$\dfrac{a_1}{a_2}=\dfrac{b_1}{b_2}=\dfrac{c_1}{c_2}$</div>
+      <div class="qs-item"><div class="qs-label">Distance: pt from plane</div>$\dfrac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}$</div>
+      <div class="qs-item"><div class="qs-label">Angle: Line &amp; Plane</div>$\sin\phi=\left|\dfrac{\vec{b}\cdot\vec{n}}{|\vec{b}||\vec{n}|}\right|$</div>
+      <div class="qs-item"><div class="qs-label">Foot parameter $t$</div>$t=-\dfrac{ax_0+by_0+cz_0+d}{a^2+b^2+c^2}$</div>
+      <div class="qs-item"><div class="qs-label">Image in plane</div>$Q=2F-P$</div>
+      <div class="qs-item"><div class="qs-label">Line ∥ plane</div>$\vec{b}\cdot\vec{n}=0$</div>
+      <div class="qs-item"><div class="qs-label">Line ⊥ plane</div>$\dfrac{a_{\text{line}}}{a_{\text{plane}}}=\dfrac{b_{\text{line}}}{b_{\text{plane}}}=\dfrac{c_{\text{line}}}{c_{\text{plane}}}$</div>
+      <div class="qs-item"><div class="qs-label">Dist. from origin</div>$\dfrac{|d|}{\sqrt{a^2+b^2+c^2}}$</div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 11 &middot; Three Dimensional Geometry</div>
+  </div>
+</footer>
+</body>
+</html>

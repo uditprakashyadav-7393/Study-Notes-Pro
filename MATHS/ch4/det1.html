@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprehensive notes on Determinants for Class 12 Maths. Learn about the definition, properties, and applications of determinants with examples. Perfect for CBSE students preparing for exams.">
+<meta name="keywords" content="Class 12 Maths Chapter 4, Determinants, study notes, key formulas, important topics, exam preparation">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Determinants | Introduction & Basics</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --gold: #f0c040;
+    --gold-dim: #a08020;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --accent: #e96c6c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* TOP NAV */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding:5px 14px;
+    position: sticky;
+    top:0;
+    z-index:100;
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 80px ;
+  }
+  .nav-brand { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--gold); letter-spacing:.05em; white-space: nowrap;}
+  .nav-links { display:flex; gap: 5px; margin: 5% ; flex-shrink: 0; }
+  .nav-links a {
+    padding:6px 14px; border-radius:20px; font-size:0.8rem; text-decoration:none;
+    color:var(--text-muted); border:1px solid var(--border); transition:.2s;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .nav-links a:hover { border-color:var(--gold); color:var(--gold); }
+  .nav-links a.active { background:var(--gold); color:var(--bg); border-color:var(--gold); font-weight:600; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240,192,64,.08) 0%, transparent 70%);
+  }
+  .chapter-tag {
+    display:inline-block; padding:4px 16px; border:1px solid var(--gold-dim);
+    border-radius:20px; font-size:0.75rem; color:var(--gold); margin-bottom:16px;
+    font-family:'JetBrains Mono',monospace; letter-spacing:.1em;
+  }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight:900; color:#fff;
+    line-height:1.15; margin-bottom:12px;
+  }
+  .hero h1 span { color:var(--gold); }
+  .hero p { color:var(--text-muted); max-width:600px; margin:0 auto 24px; font-size:1rem; }
+  .topic-num { font-size:4rem; font-weight:900; color:rgba(240,192,64,.08); position:absolute; top:16px; right:40px; font-family:'Playfair Display',serif; }
+
+  /* CONTENT WRAPPER */
+  .content { max-width:860px; margin:0 auto; padding:48px 24px; }
+
+  /* SECTION */
+  .section { margin-bottom:56px; animation: fadeUp .6s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .section:nth-child(2){animation-delay:.1s}
+  .section:nth-child(3){animation-delay:.2s}
+  .section:nth-child(4){animation-delay:.3s}
+  .section:nth-child(5){animation-delay:.4s}
+
+  .section-header {
+    display:flex; align-items:center; gap:16px; margin-bottom:24px;
+    padding-bottom:12px; border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    width:36px; height:36px; border-radius:50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+    color:var(--bg); font-weight:700; font-size:.85rem;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; flex-shrink:0;
+  }
+  .section h2 { font-family:'Playfair Display',serif; font-size:1.6rem; color:#fff; }
+
+  p { margin-bottom:14px; color:#cdd5df; }
+
+  /* DEFINITION BOX */
+  .def-box {
+    background: linear-gradient(135deg, rgba(240,192,64,.06), rgba(240,192,64,.02));
+    border: 1px solid rgba(240,192,64,.3);
+    border-left: 4px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px; margin: 24px 0;
+  }
+  .def-box .def-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gold); font-family:'JetBrains Mono',monospace; margin-bottom:8px; }
+  .def-box p { color:var(--text); margin:0; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .formula-box .f-label { font-size:.7rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.1em; margin-bottom:16px; }
+  .formula {
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.05rem; color:var(--accent);
+    line-height:2;
+  }
+  .formula .big { font-size:1.4rem; }
+
+  /* MATRIX DISPLAY */
+  .matrix-wrap { display:flex; align-items:center; justify-content:center; gap:4px; margin:16px 0; font-family:'JetBrains Mono',monospace; }
+  .matrix-bracket { font-size:3rem; color:var(--text-muted); line-height:1; }
+  .matrix-grid { display:grid; gap:0 24px; text-align:center; }
+  .matrix-grid.g2 { grid-template-columns: repeat(2, auto); }
+  .matrix-grid.g3 { grid-template-columns: repeat(3, auto); }
+  .matrix-cell { padding:4px 0; color:var(--text); font-size:.95rem; }
+  .det-wrap { display:flex; align-items:center; justify-content:center; gap:4px; margin:16px 0; font-family:'JetBrains Mono',monospace; font-size:1.1rem; }
+  .det-bar { width:2px; background:var(--text-muted); align-self:stretch; border-radius:1px; }
+
+  /* NOTE BOX */
+  .note-box {
+    background: rgba(88,166,255,.07);
+    border: 1px solid rgba(88,166,255,.25);
+    border-radius:10px; padding:16px 20px; margin:20px 0;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .note-box .icon { font-size:1.1rem; flex-shrink:0; margin-top:2px; }
+  .note-box p { margin:0; color:#a5c8f8; font-size:.93rem; }
+
+  /* EXAMPLE BOX */
+  .example-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius:12px; padding:24px; margin:24px 0;
+  }
+  .example-box .ex-label {
+    font-size:.7rem; font-family:'JetBrains Mono',monospace; text-transform:uppercase;
+    letter-spacing:.12em; color:var(--green); margin-bottom:12px;
+  }
+  .example-box .ex-title { font-weight:600; color:#fff; margin-bottom:12px; font-size:1rem; }
+  .step { display:flex; gap:12px; margin:10px 0; }
+  .step-dot { width:22px; height:22px; border-radius:50%; background:var(--surface2); border:1.5px solid var(--border); color:var(--text-muted); font-size:.7rem; display:flex;align-items:center;justify-content:center; flex-shrink:0; margin-top:3px; font-family:'JetBrains Mono',monospace; }
+  .step p { margin:0; color:#cdd5df; }
+
+  /* HIGHLIGHT TEXT */
+  .hl-gold { color:var(--gold); font-weight:600; }
+  .hl-blue { color:var(--accent); }
+  .hl-green { color:var(--green); }
+  .hl-red { color:var(--red); }
+  .hl-purple { color:var(--purple); }
+
+  /* GRID CARD */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin:24px 0; }
+  .card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px; padding:20px;
+    transition:.25s;
+  }
+  .card:hover { border-color:var(--gold-dim); transform:translateY(-2px); }
+  .card .card-icon { font-size:1.5rem; margin-bottom:10px; }
+  .card h4 { color:#fff; font-size:.95rem; margin-bottom:6px; }
+  .card p { font-size:.85rem; color:var(--text-muted); margin:0; }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:.88rem; }
+  th { background:var(--surface2); color:var(--gold); padding:10px 16px; text-align:left; font-family:'JetBrains Mono',monospace; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; border-bottom:2px solid var(--border); }
+  td { padding:10px 16px; border-bottom:1px solid var(--border); color:#cdd5df; }
+  tr:hover td { background:rgba(255,255,255,.02); }
+
+  /* FOOTER NAV */
+  .footer-nav {
+    border-top:1px solid var(--border);
+    padding:32px 24px;
+    display:flex; justify-content:flex-end; max-width:860px; margin:0 auto;
+  }
+  .btn {
+    padding:12px 28px; border-radius:8px; text-decoration:none; font-weight:600; font-size:.9rem;
+    display:inline-flex; align-items:center; gap:8px; transition:.2s;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .btn-next { background:var(--gold); color:var(--bg); }
+  .btn-next:hover { background:#ffd060; transform:translateX(3px); }
+  .btn-prev { background:var(--surface); border:1px solid var(--border); color:var(--text-muted); }
+  .btn-prev:hover { border-color:var(--text-muted); color:var(--text); }
+
+  /* PROGRESS */
+  .progress-bar { height:3px; background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dim) 100%); width:20%; position:fixed; top:0; left:0; z-index:200; }
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+
+<nav>
+  <div class="nav-brand">📐 Ch.4 — Determinants</div>
+  <div class="nav-links">
+    <a href="det1.html" class="active">1. Intro</a>
+    <a href="det2.html">2. Properties</a>
+    <a href="det3.html">3. Minors & Cofactors</a>
+    <a href="det4.html">4. Inverse</a>
+    <a href="det5.html">5. Applications</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">01</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 4</div>
+  <h1>Introduction &<br><span>Basic Determinants</span></h1>
+  <p>Understanding what a determinant is, how to compute it, and when it matters.</p>
+</div>
+
+<div class="content">
+
+  <!-- SECTION 1: What is a Determinant -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>What is a Determinant?</h2>
+    </div>
+    <p>A <span class="hl-gold">determinant</span> is a special number associated with every <strong>square matrix</strong>. It is a scalar value computed from the elements of a matrix and encodes important properties about the matrix — such as whether the matrix has an inverse.</p>
+    <p>Determinant of a matrix <span class="hl-blue">A</span> is written as <span class="hl-gold">det(A)</span> or <span class="hl-gold">|A|</span>.</p>
+
+    <div class="def-box">
+      <div class="def-label">📘 Definition</div>
+      <p>For every square matrix <strong>A</strong>, a unique real number is associated called the <strong>determinant of A</strong>, denoted by <strong>det(A)</strong> or <strong>|A|</strong>. Only square matrices have determinants.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔢</div>
+        <h4>Scalar Output</h4>
+        <p>A determinant always produces a single number (scalar), not a matrix.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⬛</div>
+        <h4>Square Matrices Only</h4>
+        <p>Determinants are defined only for square matrices (n × n), not rectangular ones.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <h4>Key Property</h4>
+        <p>If |A| ≠ 0, the matrix is called <em>non-singular</em> and has an inverse.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: 1x1 and 2x2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Determinant of 1×1 and 2×2 Matrices</h2>
+    </div>
+
+    <p><span class="hl-gold">Order 1×1:</span> For a 1×1 matrix <span class="hl-blue">A = [a]</span>, the determinant is simply the element itself.</p>
+    <div class="formula-box">
+      <div class="f-label">1×1 Determinant</div>
+      <div class="formula">|A| = |[a]| = a</div>
+    </div>
+
+    <p><span class="hl-gold">Order 2×2:</span> For a 2×2 matrix, the determinant is the difference of products of diagonals.</p>
+    <div class="formula-box">
+      <div class="f-label">2×2 Determinant Formula</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+        <div class="det-wrap">
+          <div class="det-bar"></div>
+          <div class="matrix-grid g2" style="padding:0 8px;">
+            <span class="matrix-cell hl-blue">a</span>
+            <span class="matrix-cell hl-blue">b</span>
+            <span class="matrix-cell hl-blue">c</span>
+            <span class="matrix-cell hl-blue">d</span>
+          </div>
+          <div class="det-bar"></div>
+        </div>
+        <div class="formula" style="font-size:1.3rem;">=</div>
+        <div class="formula"><span class="hl-green">ad</span> − <span class="hl-red">bc</span></div>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Solved Example</div>
+      <div class="ex-title">Find the determinant of A = [[3, 4], [5, 2]]</div>
+      <div class="step"><div class="step-dot">1</div><p>Identify elements: a = 3, b = 4, c = 5, d = 2</p></div>
+      <div class="step"><div class="step-dot">2</div><p>Apply formula: |A| = ad − bc = (3×2) − (4×5)</p></div>
+      <div class="step"><div class="step-dot">3</div><p>|A| = 6 − 20 = <span class="hl-gold">−14</span></p></div>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Solved Example 2</div>
+      <div class="ex-title">If |A| = 0, find x for A = [[x, 2], [3, 6]]</div>
+      <div class="step"><div class="step-dot">1</div><p>|A| = 6x − 6 = 0</p></div>
+      <div class="step"><div class="step-dot">2</div><p>6x = 6 → <span class="hl-gold">x = 1</span></p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: 3x3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Determinant of a 3×3 Matrix</h2>
+    </div>
+
+    <p>For a 3×3 matrix, we use <span class="hl-gold">expansion along the first row</span> (also called Laplace's expansion).</p>
+    <div class="formula-box">
+      <div class="f-label">3×3 Matrix — Row Expansion</div>
+      <div class="formula" style="text-align:left; display:inline-block;">
+        |A| = a₁₁(a₂₂a₃₃ − a₂₃a₃₂)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; − a₁₂(a₂₁a₃₃ − a₂₃a₃₁)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; + a₁₃(a₂₁a₃₂ − a₂₂a₃₁)
+      </div>
+    </div>
+
+    <div class="note-box">
+      <div class="icon">💡</div>
+      <p>Signs follow the pattern <strong>+, −, +</strong> when expanding along the first row. This alternating sign pattern is crucial — don't miss it!</p>
+    </div>
+
+    <div class="example-box">
+      <div class="ex-label">✏️ Solved Example</div>
+      <div class="ex-title">Find |A| for A = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</div>
+      <div class="step"><div class="step-dot">1</div><p>Expand along Row 1: |A| = 1·|5,6;8,9| − 2·|4,6;7,9| + 3·|4,5;7,8|</p></div>
+      <div class="step"><div class="step-dot">2</div><p>= 1·(45−48) − 2·(36−42) + 3·(32−35)</p></div>
+      <div class="step"><div class="step-dot">3</div><p>= 1·(−3) − 2·(−6) + 3·(−3)</p></div>
+      <div class="step"><div class="step-dot">4</div><p>= −3 + 12 − 9 = <span class="hl-gold">0</span></p></div>
+    </div>
+
+    <div class="note-box">
+      <div class="icon">⚠️</div>
+      <p>When |A| = 0, the matrix is <strong class="hl-red">singular</strong> (non-invertible). The rows (or columns) are linearly dependent.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Singular vs Non-Singular -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Singular and Non-Singular Matrices</h2>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>Singular Matrix</th><th>Non-Singular Matrix</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Determinant</td><td class="hl-red">|A| = 0</td><td class="hl-green">|A| ≠ 0</td></tr>
+          <tr><td>Inverse</td><td>Does NOT exist</td><td>Exists (A⁻¹)</td></tr>
+          <tr><td>Rows/Columns</td><td>Linearly dependent</td><td>Linearly independent</td></tr>
+          <tr><td>System of equations</td><td>No unique solution</td><td>Unique solution exists</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Key Points -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Important Results to Remember</h2>
+    </div>
+    <div class="def-box">
+      <div class="def-label">📌 Key Formulae</div>
+      <p>• For scalar k and matrix A of order n: <span class="hl-gold">|kA| = kⁿ|A|</span><br>
+      • <span class="hl-gold">|AB| = |A|·|B|</span> (product rule)<br>
+      • <span class="hl-gold">|Aᵀ| = |A|</span> (determinant of transpose equals determinant)<br>
+      • If any row or column is zero → <span class="hl-gold">|A| = 0</span><br>
+      • If any two rows/columns are identical → <span class="hl-gold">|A| = 0</span></p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="det2.html" class="btn btn-next">Properties of Determinants →</a>
+</div>
+
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 4 &middot; Determinants</div>
+  </div>
+</footer>
+
+</body>
+</html>

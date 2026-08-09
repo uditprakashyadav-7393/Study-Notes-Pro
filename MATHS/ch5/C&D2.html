@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity & Differentiability | Differentiability</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --gold:#f0c040;--gold-dim:#a08020;--text:#e6edf3;--text-muted:#8b949e;
+    --accent:#a3e635;--accent-dim:#4d7c0f;
+    --green:#3fb950;--red:#f85149;--blue:#58a6ff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:17px;line-height:1.85;}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px; overflow-x: auto; height: 50px ;   }
+  .nav-brand{font-family:'Playfair Display',serif;font-size:.7rem;color:var(--gold);letter-spacing:.05em;white-space:nowrap;}
+  .nav-links{display:flex;gap:0px; flex-shrink: 0;}
+  .nav-links a{padding:5px 12px;border-radius:20px;font-size:.75rem;text-decoration:none;color:var(--text-muted);border:1px solid var(--border);transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .nav-links a:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-links a.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
+  .hero{background:linear-gradient(135deg,#0d1117 0%,#0d1a06 55%,#0d1117 100%);border-bottom:1px solid var(--border);padding:60px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(163,230,53,.09) 0%,transparent 70%);}
+  .chapter-tag{display:inline-block;padding:4px 16px;border:1px solid rgba(163,230,53,.4);border-radius:20px;font-size:.72rem;color:var(--accent);margin-bottom:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--text-muted);max-width:580px;margin:0 auto;font-size:.98rem;}
+  .topic-num{font-size:5rem;font-weight:900;color:rgba(163,230,53,.06);position:absolute;top:10px;right:36px;font-family:'Playfair Display',serif;line-height:1;}
+  .content{max-width:860px;margin:0 auto;padding:48px 24px;}
+  .section{margin-bottom:52px;animation:fadeUp .55s ease both;}
+  .section:nth-child(2){animation-delay:.07s}.section:nth-child(3){animation-delay:.14s}.section:nth-child(4){animation-delay:.21s}.section:nth-child(5){animation-delay:.28s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:11px;border-bottom:1px solid var(--border);}
+  .sn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#000;font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;flex-shrink:0;}
+  .section h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:#fff;}
+  p{margin-bottom:13px;color:#cdd5df;}
+  .def-box{background:linear-gradient(135deg,rgba(163,230,53,.07),rgba(163,230,53,.02));border:1px solid rgba(163,230,53,.3);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;}
+  .def-box .lbl{font-size:.68rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:7px;}
+  .def-box p{color:var(--text);margin:0;}
+  .formula-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:26px 30px;margin:22px 0;text-align:center;overflow-x:auto;}
+  .formula-box .lbl{font-size:.68rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;}
+  .formula{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent);line-height:2.1;}
+  .note-box{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;align-items:flex-start;}
+  .note-box p{margin:0;color:#a5c8f8;font-size:.91rem;}
+  .warn-box{background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.25);border-radius:10px;padding:14px 18px;margin:18px 0;display:flex;gap:11px;}
+  .warn-box p{margin:0;color:#f9a8a4;font-size:.91rem;}
+  .example-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin:22px 0;}
+  .example-box .lbl{font-size:.68rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.13em;color:var(--green);margin-bottom:10px;}
+  .example-box .etitle{font-weight:600;color:#fff;margin-bottom:12px;font-size:.97rem;}
+  .step{display:flex;gap:11px;margin:9px 0;}
+  .sd{width:21px;height:21px;border-radius:50%;background:var(--surface2);border:1.5px solid var(--border);color:var(--text-muted);font-size:.68rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;font-family:'JetBrains Mono',monospace;}
+  .step p{margin:0;color:#cdd5df;}
+  .hl{color:var(--accent);font-weight:600;}
+  .hlg{color:var(--gold);font-weight:600;}
+  .hlgr{color:var(--green);}
+  .hlr{color:var(--red);}
+  .hlb{color:var(--blue);}
+  /* Comparison Table */
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0;}
+  .cg-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;}
+  .cg-card h4{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:12px;}
+  .cg-card.cont h4{color:var(--blue);}
+  .cg-card.diff h4{color:var(--accent);}
+  .cg-card ul{list-style:none;padding:0;}
+  .cg-card li{padding:5px 0;color:var(--text-muted);font-size:.88rem;border-bottom:1px solid var(--border);}
+  .cg-card li:last-child{border:none;}
+  /* Standard Derivatives table */
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:.87rem;}
+  th{background:var(--surface2);color:var(--accent);padding:10px 15px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid var(--border);}
+  td{padding:9px 15px;border-bottom:1px solid var(--border);color:#cdd5df;font-family:'JetBrains Mono',monospace;font-size:.88rem;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+  .footer-nav{border-top:1px solid var(--border);padding:28px 24px;display:flex;justify-content:space-between;max-width:860px;margin:0 auto;}
+  .btn{padding:11px 26px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;display:inline-flex;align-items:center;gap:7px;transition:.2s;font-family:'JetBrains Mono',monospace;}
+  .btn-next{background:var(--gold);color:#000;}.btn-next:hover{background:#ffd060;transform:translateX(3px);}
+  .btn-prev{background:var(--surface);border:1px solid var(--border);color:var(--text-muted);}.btn-prev:hover{border-color:var(--text-muted);color:var(--text);}
+  .progress-bar{height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-dim));width:33.2%;position:fixed;top:0;left:0;z-index:200;}
+  .site-footer{background:var(--surface);border-top:1px solid var(--border);padding:28px 32px;}
+  .sf-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+  .sf-brand a{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:#fff;letter-spacing:.04em;text-decoration:none;}
+  .sf-brand a:hover{color:var(--accent);}
+  .sf-brand span{color:var(--gold);}
+  .sf-divider{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+  .sf-info{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:.82rem;}
+  .sf-copy{color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
+  .sf-dot{color:var(--border);}
+  .sf-author{color:var(--text-muted);}
+  .sf-author a{color:var(--gold);font-weight:600;text-decoration:none;}
+  .sf-author a:hover{color:var(--accent);}
+  .sf-chapter{font-size:.72rem;color:var(--border);font-family:'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;}
+  @media(max-width:560px){.compare-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="progress-bar"></div>
+<nav>
+  <div class="nav-brand">📘 Ch.5 — Continuity & Differentiability</div>
+  <div class="nav-links">
+    <a href="C&D1.html">1. Continuity</a>
+    <a href="C&D2.html" class="active">2. Differentiability</a>
+    <a href="C&D3.html">3. Exp & Log</a>
+    <a href="C&D4.html">4. Log Diff.</a>
+    <a href="C&D5.html">5. Inv. Trig</a>
+    <a href="C&D6.html">6. Implicit</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="topic-num">02</div>
+  <div class="chapter-tag">CLASS 12 · MATHEMATICS · CHAPTER 5</div>
+  <h1>Differentiability of<br><span>a Function</span></h1>
+  <p>When a function has a well-defined tangent slope at every point — smooth, no sharp corners.</p>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="section-header"><div class="sn">1</div><h2>What is Differentiability?</h2></div>
+    <p>A function is <span class="hl">differentiable</span> at a point if it has a unique, well-defined <strong>derivative (slope)</strong> there. Geometrically, the graph must be <em>smooth</em> — no sharp corners or cusps.</p>
+    <div class="def-box">
+      <div class="lbl">📘 Definition</div>
+      <p>A function f(x) is differentiable at x = a if the following limit exists and is finite:</p>
+    </div>
+    <div class="formula-box">
+      <div class="lbl">Derivative from First Principles</div>
+      <div class="formula">
+        f'(a) = lim   f(a+h) − f(a)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h→0  ————————————<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">2</div><h2>Left & Right Hand Derivatives</h2></div>
+    <p>Just like limits, derivatives can be approached from both sides.</p>
+    <div class="formula-box">
+      <div class="lbl">LHD and RHD</div>
+      <div class="formula">
+        LHD = f'(a⁻) = lim  f(a−h) − f(a)  / (−h)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h→0⁺<br><br>
+        RHD = f'(a⁺) = lim  f(a+h) − f(a)  / h<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h→0⁺
+      </div>
+    </div>
+    <div class="note-box">
+      <p>💡 f(x) is differentiable at x = a if and only if <strong>LHD = RHD</strong> (both exist and are equal).</p>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Example — f(x) = |x| at x = 0</div>
+      <div class="etitle">Check differentiability of f(x) = |x| at x = 0</div>
+      <div class="step"><div class="sd">1</div><p>LHD = lim(h→0⁺) [|0−h| − |0|] / (−h) = lim h/(−h) = <span class="hlr">−1</span></p></div>
+      <div class="step"><div class="sd">2</div><p>RHD = lim(h→0⁺) [|0+h| − |0|] / h = lim h/h = <span class="hl">+1</span></p></div>
+      <div class="step"><div class="sd">✗</div><p>LHD ≠ RHD → <span class="hlr">NOT differentiable at x = 0</span> (sharp corner at origin)</p></div>
+    </div>
+    <div class="note-box">
+      <p>💡 |x| is continuous at x = 0 but NOT differentiable — this shows continuity does NOT guarantee differentiability.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">3</div><h2>Relation: Continuity vs Differentiability</h2></div>
+    <div class="def-box">
+      <div class="lbl">⭐ Golden Rule</div>
+      <p><strong>Differentiable ⟹ Continuous</strong><br>
+      But <strong>Continuous ⟹ Differentiable is NOT always true</strong></p>
+    </div>
+    <div class="compare-grid">
+      <div class="cg-card cont">
+        <h4>✅ Continuous</h4>
+        <ul>
+          <li>No breaks or holes</li>
+          <li>LHL = RHL = f(a)</li>
+          <li>Graph is unbroken</li>
+          <li>May have sharp corners</li>
+        </ul>
+      </div>
+      <div class="cg-card diff">
+        <h4>✅ Differentiable</h4>
+        <ul>
+          <li>Smooth, no sharp corners</li>
+          <li>LHD = RHD exists</li>
+          <li>Always continuous too</li>
+          <li>Unique tangent at every point</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warn-box">
+      <p>⚠️ <strong>If NOT continuous → NOT differentiable.</strong> Discontinuity is a stronger condition — it immediately rules out differentiability.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">4</div><h2>Standard Derivatives (First Principles)</h2></div>
+    <p>These are derived from the limit definition and must be memorised:</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>f(x)</th><th>f'(x) = d/dx [f(x)]</th></tr></thead>
+        <tbody>
+          <tr><td>xⁿ</td><td class="hl">nxⁿ⁻¹</td></tr>
+          <tr><td>sin x</td><td class="hl">cos x</td></tr>
+          <tr><td>cos x</td><td class="hl">−sin x</td></tr>
+          <tr><td>tan x</td><td class="hl">sec²x</td></tr>
+          <tr><td>cot x</td><td class="hl">−cosec²x</td></tr>
+          <tr><td>sec x</td><td class="hl">sec x · tan x</td></tr>
+          <tr><td>cosec x</td><td class="hl">−cosec x · cot x</td></tr>
+          <tr><td>eˣ</td><td class="hl">eˣ</td></tr>
+          <tr><td>ln x</td><td class="hl">1/x</td></tr>
+          <tr><td>constant c</td><td class="hl">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div class="sn">5</div><h2>Rules of Differentiation</h2></div>
+    <div class="def-box">
+      <div class="lbl">📌 Key Rules</div>
+      <p>
+        • <span class="hl">Sum/Difference:</span> d/dx [f ± g] = f' ± g'<br>
+        • <span class="hl">Product Rule:</span> d/dx [fg] = f'g + fg'<br>
+        • <span class="hl">Quotient Rule:</span> d/dx [f/g] = (f'g − fg') / g²<br>
+        • <span class="hl">Chain Rule:</span> d/dx [f(g(x))] = f'(g(x)) · g'(x)<br>
+        • <span class="hl">Scalar:</span> d/dx [kf] = k·f'
+      </p>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Chain Rule Example</div>
+      <div class="etitle">Find d/dx [sin(x²)]</div>
+      <div class="step"><div class="sd">1</div><p>Outer function: sin(u), Inner: u = x²</p></div>
+      <div class="step"><div class="sd">2</div><p>d/dx[sin(x²)] = cos(x²) · d/dx[x²]</p></div>
+      <div class="step"><div class="sd">3</div><p>= cos(x²) · 2x = <span class="hlg">2x cos(x²)</span></p></div>
+    </div>
+    <div class="example-box">
+      <div class="lbl">✏️ Product Rule Example</div>
+      <div class="etitle">Find d/dx [x² · sin x]</div>
+      <div class="step"><div class="sd">1</div><p>f = x², g = sin x → f' = 2x, g' = cos x</p></div>
+      <div class="step"><div class="sd">2</div><p>= f'g + fg' = 2x·sin x + x²·cos x</p></div>
+      <div class="step"><div class="sd">✓</div><p>= <span class="hlg">2x sin x + x² cos x</span></p></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-nav">
+  <a href="C&D1.html" class="btn btn-prev">← Continuity</a>
+  <a href="C&D3.html" class="btn btn-next">Exp & Log Functions →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="index.html"><img src="Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 5 &middot; Continuity and Differentiability</div>
+  </div>
+</footer>
+</body>
+</html>

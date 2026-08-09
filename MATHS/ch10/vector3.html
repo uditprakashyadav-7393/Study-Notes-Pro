@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>03 · Types of Vectors — Chapter 10</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080c18;--surface:#0f1524;--surface2:#161d30;--border:#1e2a45;--accent:#4f8eff;--accent2:#a78bfa;--gold:#fbbf24;--green:#34d399;--pink:#f472b6;--text:#e2e8f0;--muted:#7a8ba8;--dim:#4a5a78;--h:'Syne',sans-serif;--b:'IBM Plex Sans',sans-serif;--m:'IBM Plex Mono',monospace;--sw:264px;--r:12px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--b);font-size:15.5px;line-height:1.8;min-height:100vh}
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--green),var(--accent));z-index:999;width:0;transition:width .1s}
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);z-index:200;align-items:center;justify-content:space-between;padding:0 16px}
+.topbar-title{font-family:var(--h);font-size:14px;font-weight:700}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+.burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}.overlay.show{display:block}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;overflow-y:auto;z-index:160;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.sb-brand{padding:24px 20px 18px;border-bottom:1px solid var(--border)}.sb-label{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sb-brand h2{font-family:var(--h);font-size:16px;font-weight:700;line-height:1.3}
+.sb-nav{padding:16px 12px;flex:1}.sb-sec{font-family:var(--m);font-size:9px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin-bottom:8px}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:500;transition:all .2s;margin-bottom:3px}
+.ni:hover{background:var(--surface2);color:var(--text)}
+.ni.on{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25)}.ni .n{font-family:var(--m);font-size:10px;color:var(--dim);min-width:18px}.ni.on .n{color:var(--green)}
+.main{margin-left:var(--sw);padding:52px 56px 80px;max-width:calc(var(--sw) + 820px)}
+.ph{margin-bottom:44px;padding-bottom:36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(52,211,153,.06),transparent 70%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);color:var(--green);font-family:var(--m);font-size:11px;padding:4px 13px;border-radius:20px;margin-bottom:16px}
+.ph h1{font-family:var(--h);font-size:40px;font-weight:800;line-height:1.15;background:linear-gradient(135deg,#e2e8f0,#8aa5c8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px}
+.ph p{color:var(--muted);font-size:15px;max-width:540px}
+.badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.badge{font-size:11px;padding:3px 11px;border-radius:20px;font-family:var(--m)}
+.b-board{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.2)}.b-jee{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2)}
+.sec{margin-bottom:44px}
+.sec-title{font-family:var(--h);font-size:20px;font-weight:700;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--green);border-radius:2px;flex-shrink:0}
+p{color:var(--muted);margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.vtype{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;position:relative;overflow:hidden;transition:border-color .2s}
+.vtype:hover{border-color:var(--dim)}
+.vtype-icon{font-size:28px;margin-bottom:10px}
+.vtype-name{font-family:var(--h);font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.vtype-def{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:10px}
+.vtype-eg{font-family:var(--m);font-size:12px;color:var(--dim);background:var(--surface2);padding:6px 10px;border-radius:6px;display:inline-block}
+.vtype-badge{position:absolute;top:14px;right:14px;font-family:var(--m);font-size:9px;padding:3px 8px;border-radius:10px;letter-spacing:1px;text-transform:uppercase}
+.fbox{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--r);padding:20px 24px;margin:16px 0;font-family:var(--m);font-size:14px;color:var(--gold);line-height:2.2;overflow-x:auto}
+.fbox .fl{font-family:var(--b);font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block}
+.note{background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.note-l{font-family:var(--m);font-size:10px;color:var(--accent2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.note p{color:var(--muted);margin:0}
+.tip{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:var(--r);padding:16px 20px;margin:14px 0}
+.tip-l{font-family:var(--m);font-size:10px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:block}
+.tip p{color:var(--muted);margin:0}
+.eg{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.15);border-radius:var(--r);padding:18px 22px;margin:16px 0}
+.eg-l{font-family:var(--m);font-size:10px;color:var(--green);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;display:block}
+.eg p{color:var(--muted);margin:3px 0}
+.tbl{width:100%;border-collapse:collapse;margin:16px 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.tbl th{background:var(--surface2);color:var(--green);font-family:var(--h);font-size:13px;font-weight:600;padding:12px 18px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 18px;border-bottom:1px solid var(--border);color:var(--muted);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}.tbl tr:hover td{background:rgba(255,255,255,.02)}
+.sl{list-style:none;margin:12px 0 16px;padding:0}
+.sl li{padding:8px 0 8px 26px;position:relative;color:var(--muted);border-bottom:1px solid rgba(30,42,69,.5);font-size:14.5px}
+.sl li:last-child{border-bottom:none}.sl li::before{content:'→';position:absolute;left:0;color:var(--green);font-size:13px}
+.hl{color:var(--text);font-weight:600}.hb{color:var(--accent);font-weight:600}.hg{color:var(--gold);font-weight:600}.hv{color:var(--green);font-weight:600}.hp{color:var(--pink);font-weight:600}.ha{color:var(--accent2);font-weight:600}
+.visual{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center;margin:20px 0;overflow:hidden}
+.visual svg{max-width:100%;height:auto}
+.footer{margin-left:var(--sw);border-top:1px solid var(--border);min-height:80px;padding:0 56px}
+.stop{position:fixed;bottom:24px;right:24px;width:42px;height:42px;background:var(--green);color:#080c18;border:none;border-radius:50%;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(52,211,153,.3);transition:transform .2s;z-index:100}
+.stop:hover{transform:scale(1.1)}
+.pnav{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.pnav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:10px 20px;border-radius:8px;font-family:var(--h);font-size:14px;font-weight:600}
+.pnav .prev{background:var(--surface);color:var(--muted);border:1px solid var(--border)}.pnav .next{background:var(--green);color:#080c18}
+@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .topbar{display:flex}.sidebar{transform:translateX(-100%);top:0}.sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:80px 18px 80px;max-width:100%}.footer{margin-left:0;padding:0 18px}
+  .ph h1{font-size:28px}.grid2,.grid3{grid-template-columns:1fr}.sec-title{font-size:18px}
+  .fbox{font-size:13px;padding:16px 16px}.tbl th,.tbl td{padding:9px 12px;font-size:13px}
+}
+@media(max-width:480px){.ph h1{font-size:24px}.main{padding:72px 14px 60px}.fbox{font-size:12.5px}}
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* vector arrow  */
+ .upper-arrow {
+    position: relative;
+    display: inline-block;
+    padding-top:3px;
+  }
+  .upper-arrow::before {
+    content: '→';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    text-align: center;
+    line-height:0.9 ;
+    font-size: 15px;
+  } 
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="topbar">
+  <div class="topbar-title">Ch.10 · Types of Vectors</div>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</div>
+<div class="overlay" id="overlay"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-brand"><div class="sb-label">Class XII · Mathematics</div><h2>Chapter 10<br/>Vectors</h2></div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Topics</div>
+    <a href="vector1.html" class="ni"><span class="n">01</span> Introduction</a>
+    <a href="vector2.html" class="ni"><span class="n">02</span> Basic Concepts</a>
+    <a href="vector3.html" class="ni on"><span class="n">03</span> Types of Vectors</a>
+    <a href="vector4.html" class="ni"><span class="n">04</span> Vector Addition</a>
+    <a href="vector5.html" class="ni"><span class="n">05</span> Scalar Multiplication</a>
+    <a href="vector6.html" class="ni"><span class="n">06</span> Product of Vectors</a>
+  </nav>
+</aside>
+
+<main class="main">
+  <header class="ph">
+    <div class="tag">03 / Types of Vectors</div>
+    <h1>Types of<br/>Vectors</h1>
+    <p>Zero vectors, unit vectors, equal vectors, coinitial, collinear, and negative — know every type for your board and JEE exams.</p>
+    <div class="badges"><span class="badge b-board">CBSE Board</span><span class="badge b-jee">JEE Mains & Adv.</span></div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <section class="sec">
+    <div class="sec-title">Overview of All Types</div>
+    <p>Vectors are classified based on their <span class="hv">magnitude</span>, <span class="hv">direction</span>, <span class="hv">position</span>, and <span class="hv">relationship with other vectors</span>. Here is every type you need to know:</p>
+    <div class="grid2">
+      <div class="vtype">
+        <div class="vtype-badge" style="background:rgba(79,142,255,.15);color:var(--accent)">★ High Priority</div>
+        <div class="vtype-icon"><span class="upper-arrow">0</span></div>
+        <div class="vtype-name">Zero Vector (Null Vector)</div>
+        <div class="vtype-def">A vector whose <strong>magnitude is 0</strong>. Its direction is undefined / indeterminate. Denoted <strong><span class="upper-arrow">0</span></strong>.</div>
+        <div class="vtype-eg">Example: <span class="upper-arrow">AA</span> = <span class="upper-arrow">0</span> (same start and end)</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-badge" style="background:rgba(251,191,36,.15);color:var(--gold)">★ High Priority</div>
+        <div class="vtype-icon">â</div>
+        <div class="vtype-name">Unit Vector</div>
+        <div class="vtype-def">A vector with <strong>magnitude = 1</strong>. Used to indicate direction only. Written with a "hat": â, b̂.</div>
+        <div class="vtype-eg">î, ĵ, k̂ are standard unit vectors</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-icon">↗↗</div>
+        <div class="vtype-name">Co-initial Vectors</div>
+        <div class="vtype-def">Two or more vectors that have the <strong>same initial point (tail)</strong>. May differ in direction and magnitude.</div>
+        <div class="vtype-eg"> <span class="upper-arrow">OA</span> and <span class="upper-arrow">OB</span> both start from O</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-icon">∥</div>
+        <div class="vtype-name">Collinear Vectors</div>
+        <div class="vtype-def">Vectors that are <strong>parallel to the same line</strong>. They may point in the same or opposite directions.</div>
+        <div class="vtype-eg"> <span class="upper-arrow">a</span> = 2î and <span class="upper-arrow">b</span> = −5î</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-badge" style="background:rgba(52,211,153,.15);color:var(--green)">★ Important</div>
+        <div class="vtype-icon">= =</div>
+        <div class="vtype-name">Equal Vectors</div>
+        <div class="vtype-def">Vectors with the <strong>same magnitude AND same direction</strong>. Position doesn't matter — they can start anywhere.</div>
+        <div class="vtype-eg">Any two arrows of same length & direction</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-badge" style="background:rgba(244,114,182,.15);color:var(--pink)">★ Important</div>
+        <div class="vtype-icon">-<span class="upper-arrow">a</span></div>
+        <div class="vtype-name">Negative of a Vector</div>
+        <div class="vtype-def">A vector with the <strong>same magnitude but opposite direction</strong>. If <span class="upper-arrow">a</span> goes A→B, then −<span class="upper-arrow">a</span> goes B→A.</div>
+        <div class="vtype-eg"> <span class="upper-arrow">BA</span> = −<span class="upper-arrow">AB</span></div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-icon">→→</div>
+        <div class="vtype-name">Like & Unlike Vectors</div>
+        <div class="vtype-def"><strong>Like vectors:</strong> same direction (parallel, not antiparallel).<br/><strong>Unlike vectors:</strong> opposite directions.</div>
+        <div class="vtype-eg">Like: both pointing East</div>
+      </div>
+      <div class="vtype">
+        <div class="vtype-icon">🔄</div>
+        <div class="vtype-name">Free Vector</div>
+        <div class="vtype-def">A vector <strong>not fixed to any position</strong> in space. Only magnitude and direction matter, not starting point.</div>
+        <div class="vtype-eg">Most vectors in algebra are free vectors</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZERO VECTOR IN DEPTH -->
+  <section class="sec">
+    <div class="sec-title">Zero Vector — Deep Dive</div>
+    <p>The <span class="hv">zero vector</span> <span class="hg upper-arrow">0</span> is special — its magnitude is 0, but its direction is not defined. It plays the role of <span class="hl">additive identity</span> in vector algebra.</p>
+    <div class="fbox">
+      <span class="fl">Properties of Zero Vector</span>
+      <strong><span class="upper-arrow">a</span> + <span class="upper-arrow">0</span> = <span class="upper-arrow">a</span></strong>  (additive identity)<br/>
+      <strong><span class="upper-arrow">a</span> + (−<span class="upper-arrow">a</span>) = <span class="upper-arrow">0</span></strong>  (additive inverse)<br/>
+      <strong>λ · <span class="upper-arrow">0</span> = <span class="upper-arrow">0</span></strong>  for any scalar λ<br/>
+      <strong><span class="upper-arrow">0</span> · <span class="upper-arrow">a</span> = <span class="upper-arrow">0</span></strong>  (multiply by zero scalar)
+    </div>
+    <div class="note">
+      <span class="note-l">📌 Common Mistake</span>
+      <p>The zero vector <strong><span class="upper-arrow">0</span></strong> is different from the scalar 0. Do not confuse them. <strong><span class="upper-arrow">0</span></strong> has no direction; that's what makes it special.</p>
+    </div>
+  </section>
+
+  <!-- UNIT VECTOR DEEP DIVE -->
+  <section class="sec">
+    <div class="sec-title">Unit Vector — In Detail</div>
+    <p>The unit vector <span class="hg">â</span> along <span class="hg upper-arrow">a</span> gives the <span class="hv">pure direction</span> of <span class="upper-arrow">a</span> without its size.</p>
+    <div class="fbox">
+      <span class="fl">Formula</span>
+      <strong>â = <span class="upper-arrow">a</span> / |<span class="upper-arrow">a</span>|</strong>,  where  <strong>|â| = 1</strong><br/><br/>
+      Standard unit vectors:<br/>
+      <strong>|î| = |ĵ| = |k̂| = 1</strong><br/>
+      <strong>î·î = ĵ·ĵ = k̂·k̂ = 1</strong>  (self dot = 1)
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Find unit vector along <strong><span class="upper-arrow">p</span> = 12î + 3ĵ − 4k̂</strong></p>
+      <p>|<span class="upper-arrow">p</span>| = √(144 + 9 + 16) = √169 = 13</p>
+      <p><strong>p̂ = (12/13)î + (3/13)ĵ + (−4/13)k̂</strong></p>
+    </div>
+  </section>
+
+  <!-- EQUAL VECTORS vs COLLINEAR -->
+  <section class="sec">
+    <div class="sec-title">Equal vs Collinear vs Parallel</div>
+    <table class="tbl">
+      <thead><tr><th>Type</th><th>Magnitude</th><th>Direction</th><th>Position</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--green);font-weight:600">Equal Vectors</td><td>Same</td><td>Same</td><td>Anywhere</td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Collinear Vectors</td><td>Any</td><td>Same or Opposite</td><td>Parallel lines</td></tr>
+        <tr><td style="color:var(--gold);font-weight:600">Like Vectors</td><td>Any</td><td>Same</td><td>Parallel</td></tr>
+        <tr><td style="color:var(--pink);font-weight:600">Unlike Vectors</td><td>Any</td><td>Opposite</td><td>Antiparallel</td></tr>
+        <tr><td style="color:var(--accent2);font-weight:600">Co-initial</td><td>Any</td><td>Any</td><td>Same start point</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">
+      <span class="tip-l">🎯 JEE Tip</span>
+      <p>Equal vectors do NOT need to start at the same point. If <span class="upper-arrow">AB</span> = <span class="upper-arrow">CD</span>, it just means ABDC forms a parallelogram. This geometric fact is used frequently in JEE problems.</p>
+    </div>
+  </section>
+
+  <!-- VISUAL SVG: negative vector -->
+  <section class="sec">
+    <div class="sec-title">Visualizing Negative Vector</div>
+    <div class="visual">
+      <svg viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#4f8eff"/></marker>
+          <marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#f472b6"/></marker>
+        </defs>
+        <!-- a vector -->
+        <line x1="60" y1="65" x2="240" y2="65" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#a2)"/>
+        <circle cx="60" cy="65" r="4" fill="#a78bfa"/><circle cx="240" cy="65" r="4" fill="#4f8eff"/>
+        <text x="60" y="52" font-family="IBM Plex Mono" font-size="13" fill="#4f8eff">A</text>
+        <text x="240" y="52" font-family="IBM Plex Mono" font-size="13" fill="#4f8eff">B</text>
+        <text x="148" y="55" font-family="IBM Plex Mono" font-size="13" fill="#4f8eff" text-anchor="middle">a⇀ = AB⃗</text>
+        <!-- -a vector -->
+        <line x1="420" y1="110" x2="270" y2="110" stroke="#f472b6" stroke-width="2.5" marker-end="url(#a3)"/>
+        <circle cx="420" cy="110" r="4" fill="#a78bfa"/><circle cx="270" cy="110" r="4" fill="#f472b6"/>
+        <text x="420" y="128" font-family="IBM Plex Mono" font-size="13" fill="#f472b6">B</text>
+        <text x="270" y="128" font-family="IBM Plex Mono" font-size="13" fill="#f472b6">A</text>
+        <text x="345" y="128" font-family="IBM Plex Mono" font-size="13" fill="#f472b6" text-anchor="middle">−a⃗ = BA⃗</text>
+        <!-- label -->
+        <text x="250" y="16" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78" text-anchor="middle">Same magnitude, opposite direction</text>
+      </svg>
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>If <strong><span class="upper-arrow">a</span> = <span class="upper-arrow">AB</span>= 3î + 2ĵ</strong>, then <strong>−<span class="upper-arrow">a</span> = <span class="upper-arrow">AB</span>= −3î − 2ĵ</strong></p>
+      <p>Both have magnitude = √(9+4) = √13. Only direction is reversed.</p>
+    </div>
+  </section>
+
+  <!-- COINITIAL -->
+  <section class="sec">
+    <div class="sec-title">Co-initial Vectors</div>
+    <p>Co-initial vectors originate from the <span class="hv">same point</span>. They may go in completely different directions.</p>
+    <div class="visual">
+      <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="m1" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#4f8eff"/></marker>
+          <marker id="m2" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#34d399"/></marker>
+          <marker id="m3" markerWidth="8" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L0,7 L8,3.5z" fill="#fbbf24"/></marker>
+        </defs>
+        <circle cx="180" cy="100" r="5" fill="#a78bfa"/>
+        <text x="162" y="118" font-family="IBM Plex Mono" font-size="13" fill="#a78bfa">O</text>
+        <line x1="180" y1="100" x2="320" y2="60" stroke="#4f8eff" stroke-width="2.5" marker-end="url(#m1)"/>
+        <text x="328" y="55" font-family="IBM Plex Sans" font-size="13" fill="#4f8eff">A</text>
+        <line x1="180" y1="100" x2="340" y2="120" stroke="#34d399" stroke-width="2.5" marker-end="url(#m2)"/>
+        <text x="348" y="125" font-family="IBM Plex Sans" font-size="13" fill="#34d399">B</text>
+        <line x1="180" y1="100" x2="200" y2="20" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#m3)"/>
+        <text x="208" y="18" font-family="IBM Plex Sans" font-size="13" fill="#fbbf24">C</text>
+        <text x="180" y="168" font-family="IBM Plex Sans" font-size="12" fill="#4a5a78" text-anchor="middle">OA⃗, OB⃗, OC⃗ — all co-initial from O</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- COLLINEAR VECTORS -->
+  <section class="sec">
+    <div class="sec-title">Collinear Vectors — Formal Definition</div>
+    <p>Two vectors are collinear if and only if they are <span class="hv">scalar multiples</span> of each other.</p>
+    <div class="fbox">
+      <span class="fl">Condition</span>
+      <strong><span class="upper-arrow">a</span> = <span class="upper-arrow">λb</span></strong>  for some real λ<br/><br/>
+      Component form:  <strong>a₁/b₁ = a₂/b₂ = a₃/b₃</strong><br/><br/>
+      If λ > 0 → same direction (like vectors)<br/>
+      If λ &lt; 0 → opposite direction (unlike vectors)
+    </div>
+    <div class="eg">
+      <span class="eg-l">✏️ Example</span>
+      <p>Are <strong><span class="upper-arrow">a</span> = 6î − 9ĵ + 12k̂</strong> and <strong><span class="upper-arrow">b</span> = 2î − 3ĵ + 4k̂</strong> collinear?</p>
+      <p>Check: 6/2 = −9/−3 = 12/4 = <strong>3</strong> → Yes! <strong><span class="upper-arrow">a</span> = 3<span class="upper-arrow">b</span></strong> ✓</p>
+    </div>
+    <div class="tip">
+      <span class="tip-l">🎯 Board + JEE</span>
+      <p>To check if 3 points A, B, C are collinear: Find <strong><span class="upper-arrow">AB</span></strong> and <strong><span class="upper-arrow">AC</span></strong>. If <strong><span class="upper-arrow">AB</span> = λ · <span class="upper-arrow">AC</span></strong>, the points are collinear. This is a 2-mark question in boards and quick step in JEE multi-part problems.</p>
+    </div>
+  </section>
+
+  <!-- SUMMARY TABLE -->
+  <section class="sec">
+    <div class="sec-title">Quick Summary — All Types</div>
+    <table class="tbl">
+      <thead><tr><th>Type</th><th>Key Feature</th><th>Notation</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--accent);font-weight:600">Zero / Null</td><td>Magnitude = 0, direction undefined</td><td><span class="upper-arrow">0</span></td></tr>
+        <tr><td style="color:var(--gold);font-weight:600">Unit</td><td>Magnitude = 1</td><td>â, î, ĵ, k̂</td></tr>
+        <tr><td style="color:var(--green);font-weight:600">Co-initial</td><td>Same starting point</td><td><span class="upper-arrow">OA</span>, <span class="upper-arrow">OB</span></td></tr>
+        <tr><td style="color:var(--accent2);font-weight:600">Equal</td><td>Same magnitude and direction</td><td><span class="upper-arrow">a</span> = <span class="upper-arrow">b</span></td></tr>
+        <tr><td style="color:var(--pink);font-weight:600">Negative</td><td>Same magnitude, opposite direction</td><td>−<span class="upper-arrow">a</span></td></tr>
+        <tr><td style="color:var(--accent);font-weight:600">Collinear</td><td>Parallel (same or opposite direction)</td><td><span class="upper-arrow">a</span> = λ<span class="upper-arrow">b</span></td></tr>
+        <tr><td style="color:var(--green);font-weight:600">Like</td><td>Same direction</td><td>λ > 0</td></tr>
+        <tr><td style="color:var(--gold);font-weight:600">Free</td><td>Position doesn't matter</td><td>Most algebra vectors</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="pnav">
+    <a href="vector2.html" class="prev">← Basic Concepts</a>
+    <a href="vector4.html" class="next">Vector Addition →</a>
+  </div>
+  <div style="height:40px"></div>
+</main>
+<footer class="site-footer footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+          <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+       </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 10 &middot; Vectors</div>
+    </div>
+</footer>
+<button class="stop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+  const burger=document.getElementById('burger'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+  function t(){const o=sidebar.classList.toggle('open');burger.classList.toggle('open',o);overlay.classList.toggle('show',o)}
+  burger.addEventListener('click',t);overlay.addEventListener('click',t);
+  window.addEventListener('scroll',()=>{const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('prog').style.width=(s/h*100)+'%'});
+</script>
+</body>
+</html>

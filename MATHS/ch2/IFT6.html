@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Graphs of inverse trigonometric functions, showing their behavior and key characteristics.">
+<meta name="keywords" content="inverse trigonometric functions, arcsin, arccos, arctan, graphs of inverse trig functions, trigonometry, math notes">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Graphs — Inverse Trigonometry</title>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4831478581295054"
+     crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06080f;--s1:#0b0f1c;--s2:#101726;--card:#0f1828;--border:#1d2d45;
+  --text:#cdd8ea;--muted:#5a7090;--dim:#3a5070;
+  --gold:#e8960a;--gold2:#ffd060;--gold3:#7a4800;
+  --teal:#22d3b0;--rose:#f06080;--sky:#5ab0ff;--violet:#b070ff;
+  --accent: #e96c6c;
+  --hf:'Playfair Display',serif;--bf:'Source Serif 4',serif;--mf:'Fira Code',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--bf);font-size:1.05rem;line-height:1.7;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%,#0c1528 0%,transparent 60%);
+  background-attachment:fixed;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(30,60,100,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(30,60,100,.07) 1px,transparent 1px);
+  background-size:60px 60px}
+
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(17, 20, 30, 0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;height:56px;overflow-x:auto;gap:0}
+.nav-brand{font-family:var(--serif);font-size:1rem;color:var(--rose);white-space:nowrap;margin-right:1.5rem;text-decoration:none;font-style:italic;flex-shrink:0}
+.nav-links{display:flex;gap:0;flex-shrink:0}
+.nav-links a{font-family:var(--mono);font-size:0.63rem;letter-spacing:0.04em;color:var(--muted);text-decoration:none;padding:0 10px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;white-space:nowrap;transition:color 0.2s,border-color 0.2s}
+.nav-links a:hover{color:var(--rose)}
+.nav-links a.active{color:var(--rose);border-bottom-color:var(--accent)}
+
+/* HERO */
+.hero{position:relative;z-index:1;text-align:center;padding:3.5rem 2rem 2.5rem;max-width:800px;margin:0 auto}
+.ch-label{font-family:var(--mf);font-size:.7rem;color:var(--violet);letter-spacing:.25em;text-transform:uppercase;
+  margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.8rem}
+.ch-label::before,.ch-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--violet)}
+.hero h1{font-family:var(--hf);font-size:clamp(2.2rem,6vw,3.8rem);font-weight:900;
+  background:linear-gradient(145deg,var(--gold2) 0%,var(--gold) 50%,#c06000 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15}
+.hero-sub{margin-top:1rem;color:var(--muted);font-style:italic;font-size:1rem}
+.rule{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.8rem auto}
+
+/* CONTENT */
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 1.5rem 5rem}
+
+/* GRAPH GRID */
+.graph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin:1rem 0 3rem}
+
+/* GRAPH CARD */
+.graph-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;transition:all .3s;position:relative}
+.graph-card:hover{border-color:rgba(232,150,10,.35);transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.graph-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.graph-card:hover::before{opacity:1}
+
+.card-head{padding:1rem 1.3rem .6rem;display:flex;align-items:center;justify-content:space-between}
+.fn-name{font-family:var(--hf);font-size:1.15rem;color:var(--gold2);font-weight:700}
+.fn-notation{font-family:var(--mf);font-size:.72rem;color:var(--muted)}
+
+canvas{display:block;width:100%;height:auto}
+
+.card-info{padding:.7rem 1.3rem 1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+.info-item{font-family:var(--mf);font-size:.7rem}
+.info-label{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:.62rem;margin-bottom:.1rem}
+.info-val{color:var(--teal)}
+
+/* HOVER COORD */
+.coord-display{font-family:var(--mf);font-size:.68rem;color:var(--gold);
+  padding:.15rem .5rem;min-height:1.4rem;text-align:right;padding-right:1.1rem}
+
+/* LEGEND */
+.legend{background:var(--s2);border:1px solid var(--border);border-radius:10px;
+  padding:1rem 1.5rem;margin:0 0 2rem;display:flex;flex-wrap:wrap;gap:1rem .5rem}
+.leg-item{display:flex;align-items:center;gap:.5rem;font-family:var(--mf);font-size:.72rem;color:var(--muted)}
+.leg-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.leg-line{width:20px;height:2px;flex-shrink:0}
+.leg-dash{width:20px;height:0;border-top:2px dashed;flex-shrink:0}
+
+/* SECTION HEAD */
+.sec-head{margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:.8rem}
+.sec-head h2{font-family:var(--hf);font-size:1.35rem;color:var(--gold2);font-weight:700}
+.sec-line{flex:1;height:1px;background:var(--border)}
+
+/* NOTE */
+.note{background:rgba(90,176,255,.06);border-left:3px solid var(--sky);border-radius:0 8px 8px 0;
+  padding:.9rem 1.2rem;margin:1.2rem 0;font-size:.9rem;color:var(--muted)}
+.note strong{color:var(--sky)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:fadeUp .6s ease both}
+
+.page-nav{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-top:1px solid var(--border);margin-top:2rem}
+.pnav-btn{font-family:var(--mono);font-size:0.72rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);border-radius:4px;transition:border-color 0.2s,background 0.2s}
+.pnav-btn:hover{border-color:var(--accent);background:rgba(251,146,60,0.06)}
+.pnav-btn span{color:var(--muted);font-size:0.6rem;display:block}
+/* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none;}
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+
+<nav class="site-nav">
+  <a class="nav-brand" href="./mathsch2.html">ITF Notes</a>
+  <div class="nav-links">
+    <a href="./IFT1.html">01 Intro</a>
+    <a href="./IFT2.html">02 Domain & Range</a>
+    <a href="./IFT3.html" >03 Principal Value</a>
+    <a href="./IFT4.html" >04 Properties I</a>
+    <a href="./IFT5.html">05 Properties II</a>
+    <a href="./IFT6.html" class="active">06 Graphs</a>
+    <a href="./graphs.html">07 Animated Graphs</a>
+  </div>
+</nav>
+
+
+<div class="hero">
+  <div class="ch-label">Chapter · Graphs</div>
+  <h1>Graphs of Inverse<br>Trig Functions</h1>
+  <p class="hero-sub">Visual representations of all six inverse trigonometric functions</p>
+  <div class="rule"></div>
+</div>
+
+<main>
+
+  <div class="note">
+    <strong>Hover over any graph</strong> to read coordinates. Dashed lines mark asymptotes. Open/closed dots show whether endpoints are included.
+  </div>
+
+  <div class="legend">
+    <div class="leg-item"><div class="leg-line" style="background:#e8960a"></div> Function curve</div>
+    <div class="leg-item"><div class="leg-dash" style="border-color:#3a5070"></div> Asymptote</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#ffd060"></div> Included endpoint</div>
+    <div class="leg-item"><div class="leg-dot" style="background:transparent;border:2px solid #5a7090"></div> Excluded point</div>
+    <div class="leg-item"><div class="leg-line" style="background:rgba(255,255,255,.1)"></div> Axes</div>
+  </div>
+
+  <div class="graph-grid">
+
+    <!-- sin⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">sin⁻¹ x</div>
+        <div class="fn-notation">arcsin(x)</div>
+      </div>
+      <div class="coord-display" id="coord-asin">Move cursor over graph</div>
+      <canvas id="c-asin" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">[−1, 1]</div></div>
+        <div class="info-item"><div class="info-label">Range</div><div class="info-val">[−π/2, π/2]</div></div>
+      </div>
+    </div>
+
+    <!-- cos⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">cos⁻¹ x</div>
+        <div class="fn-notation">arccos(x)</div>
+      </div>
+      <div class="coord-display" id="coord-acos">Move cursor over graph</div>
+      <canvas id="c-acos" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">[−1, 1]</div></div>
+        <div class="info-item"><div class="info-label">Range</div><div class="info-val">[0, π]</div></div>
+      </div>
+    </div>
+
+    <!-- tan⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">tan⁻¹ x</div>
+        <div class="fn-notation">arctan(x)</div>
+      </div>
+      <div class="coord-display" id="coord-atan">Move cursor over graph</div>
+      <canvas id="c-atan" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">(−∞, ∞)</div></div>
+        <div class="info-item"><div class="info-label">Range</div><div class="info-val">(−π/2, π/2)</div></div>
+      </div>
+    </div>
+
+    <!-- cot⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">cot⁻¹ x</div>
+        <div class="fn-notation">arccot(x)</div>
+      </div>
+      <div class="coord-display" id="coord-acot">Move cursor over graph</div>
+      <canvas id="c-acot" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">(−∞, ∞)</div></div>
+        <div class="info-item"><div class="info-label">Range</div><div class="info-val">(0, π)</div></div>
+      </div>
+    </div>
+
+    <!-- sec⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">sec⁻¹ x</div>
+        <div class="fn-notation">arcsec(x)</div>
+      </div>
+      <div class="coord-display" id="coord-asec">Move cursor over graph</div>
+      <canvas id="c-asec" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">(−∞,−1]∪[1,∞)</div></div>
+        <div class="info-item"><div class="info-label">Range</div><div class="info-val">[0,π] \ {π/2}</div></div>
+      </div>
+    </div>
+
+    <!-- cosec⁻¹ -->
+    <div class="graph-card">
+      <div class="card-head">
+        <div class="fn-name">cosec⁻¹ x</div>
+        <div class="fn-notation">arccsc(x)</div>
+      </div>
+      <div class="coord-display" id="coord-acsc">Move cursor over graph</div>
+      <canvas id="c-acsc" width="360" height="260"></canvas>
+      <div class="card-info">
+        <div class="info-item"><div class="info-label">Domain</div><div class="info-val">(−∞,−1]∪[1,∞)</div></div>
+        <div class="info-item"><div class="info-val">[−π/2,π/2] \ {0}</div></div>
+      </div>
+    </div>
+
+  </div><!-- /graph-grid -->
+
+  <!-- DOMAIN-RANGE TABLE -->
+  <div class="sec-head">
+    <h2>Domain &amp; Range at a Glance</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:3rem">
+    <table style="width:100%;border-collapse:collapse;font-size:.92rem">
+      <thead><tr style="background:var(--s2)">
+        <th style="font-family:var(--hf);font-size:.78rem;color:var(--gold);padding:.8rem 1.2rem;text-align:left;border-bottom:1px solid var(--border)">Function</th>
+        <th style="font-family:var(--hf);font-size:.78rem;color:var(--gold);padding:.8rem 1.2rem;text-align:left;border-bottom:1px solid var(--border)">Domain</th>
+        <th style="font-family:var(--hf);font-size:.78rem;color:var(--gold);padding:.8rem 1.2rem;text-align:left;border-bottom:1px solid var(--border)">Range (Principal Branch)</th>
+        <th style="font-family:var(--hf);font-size:.78rem;color:var(--gold);padding:.8rem 1.2rem;text-align:left;border-bottom:1px solid var(--border)">Asymptotes</th>
+      </tr></thead>
+      <tbody id="domain-range-body"></tbody>
+    </table>
+  </div>
+
+
+
+ <div class="page-nav">
+    <a class="pnav-btn" href="./IFT5.html"><span>← Prev</span> Properties II</a>
+    <a class="pnav-btn" href="./graphs.html"><span>Next →</span> Animated Graphs</a>
+    
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+       <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 2 &middot; Inverse Trigonometric Functions</div>
+  </div>
+</footer>
+
+<script>
+const PI = Math.PI;
+
+// Color palette
+const C = {
+  axis:   'rgba(200,220,255,0.18)',
+  tick:   'rgba(200,220,255,0.12)',
+  grid:   'rgba(200,220,255,0.05)',
+  curve:  '#e8960a',
+  curve2: '#ffd060',
+  asym:   'rgba(90,130,180,0.45)',
+  dot:    '#ffd060',
+  open:   '#5a7090',
+  label:  'rgba(180,210,240,0.6)',
+  bg:     '#0f1828',
+  hover:  'rgba(232,150,10,0.15)',
+};
+
+// Graph config
+function makeGraph(canvasId, coordId, fn, xMin, xMax, yMin, yMax, opts = {}) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const W = canvas.width, H = canvas.height;
+  const PAD = { l: 46, r: 18, t: 14, b: 38 };
+  const ctx = canvas.getContext('2d');
+  ctx.font = '11px "Fira Code", monospace';
+
+  const toCanX = x => PAD.l + (x - xMin) / (xMax - xMin) * (W - PAD.l - PAD.r);
+  const toCanY = y => H - PAD.b - (y - yMin) / (yMax - yMin) * (H - PAD.t - PAD.b);
+  const toMathX = cx => xMin + (cx - PAD.l) / (W - PAD.l - PAD.r) * (xMax - xMin);
+  const toMathY = cy => yMin + (H - PAD.b - cy) / (H - PAD.t - PAD.b) * (yMax - yMin);
+
+  function draw(hoverCX) {
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = C.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid lines
+    ctx.strokeStyle = C.grid;
+    ctx.lineWidth = 1;
+    const xTicks = opts.xTicks || [-3,-2,-1,0,1,2,3];
+    const yTicks = opts.yTicks || [-PI/2, -PI/4, 0, PI/4, PI/2];
+    xTicks.forEach(v => {
+      if (v < xMin || v > xMax) return;
+      ctx.beginPath(); ctx.moveTo(toCanX(v), PAD.t); ctx.lineTo(toCanX(v), H - PAD.b); ctx.stroke();
+    });
+    yTicks.forEach(v => {
+      if (v < yMin || v > yMax) return;
+      ctx.beginPath(); ctx.moveTo(PAD.l, toCanY(v)); ctx.lineTo(W - PAD.r, toCanY(v)); ctx.stroke();
+    });
+
+    // Asymptotes
+    if (opts.asymH) {
+      ctx.strokeStyle = C.asym;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 5]);
+      opts.asymH.forEach(y => {
+        if (y < yMin || y > yMax) return;
+        ctx.beginPath(); ctx.moveTo(PAD.l, toCanY(y)); ctx.lineTo(W - PAD.r, toCanY(y)); ctx.stroke();
+      });
+      ctx.setLineDash([]);
+    }
+
+    // Axes
+    ctx.strokeStyle = C.axis;
+    ctx.lineWidth = 1.5;
+    // Y axis
+    const ax0 = toCanX(0);
+    if (ax0 >= PAD.l && ax0 <= W - PAD.r) {
+      ctx.beginPath(); ctx.moveTo(ax0, PAD.t); ctx.lineTo(ax0, H - PAD.b); ctx.stroke();
+    }
+    // X axis
+    const ay0 = toCanY(0);
+    if (ay0 >= PAD.t && ay0 <= H - PAD.b) {
+      ctx.beginPath(); ctx.moveTo(PAD.l, ay0); ctx.lineTo(W - PAD.r, ay0); ctx.stroke();
+    }
+
+    // Tick labels
+    ctx.fillStyle = C.label;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const yAxisLabel = ay0 > H - PAD.b ? H - PAD.b + 3 : Math.min(ay0 + 3, H - PAD.b + 3);
+    xTicks.forEach(v => {
+      if (v < xMin || v > xMax || v === 0) return;
+      ctx.fillText(v, toCanX(v), yAxisLabel + (ay0 > H - PAD.b - 2 ? -14 : 0));
+    });
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    const xAxisLabel = ax0 < PAD.l ? PAD.l - 3 : Math.max(ax0 - 3, PAD.l);
+    yTicks.forEach(v => {
+      if (v < yMin || v > yMax || v === 0) return;
+      const label = opts.yLabels ? opts.yLabels[v.toFixed(4)] || v.toFixed(2) : v.toFixed(2);
+      ctx.fillText(label, xAxisLabel, toCanY(v));
+    });
+
+    // Curve — supports multiple segments
+    const segments = opts.segments || [[xMin, xMax]];
+    segments.forEach((seg, si) => {
+      ctx.strokeStyle = si === 0 ? C.curve : C.curve2;
+      ctx.lineWidth = 2.5;
+      ctx.shadowColor = si === 0 ? 'rgba(232,150,10,0.6)' : 'rgba(255,208,96,0.4)';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      let started = false;
+      const steps = 600;
+      for (let i = 0; i <= steps; i++) {
+        const x = seg[0] + (seg[1] - seg[0]) * i / steps;
+        let y;
+        try { y = fn(x, si); } catch(e) { started = false; continue; }
+        if (!isFinite(y) || y < yMin - 0.2 || y > yMax + 0.2) { started = false; continue; }
+        const cx = toCanX(x), cy = toCanY(y);
+        if (!started) { ctx.moveTo(cx, cy); started = true; }
+        else ctx.lineTo(cx, cy);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    });
+
+    // Endpoints
+    if (opts.endpoints) {
+      opts.endpoints.forEach(ep => {
+        const cx = toCanX(ep.x), cy = toCanY(fn(ep.x, ep.seg || 0));
+        ctx.beginPath();
+        ctx.arc(cx, cy, 4.5, 0, 2 * PI);
+        if (ep.open) {
+          ctx.strokeStyle = C.open; ctx.lineWidth = 2;
+          ctx.fillStyle = C.bg;
+          ctx.fill(); ctx.stroke();
+        } else {
+          ctx.fillStyle = C.dot; ctx.fill();
+        }
+      });
+    }
+
+    // Hover crosshair
+    if (hoverCX !== null && hoverCX >= PAD.l && hoverCX <= W - PAD.r) {
+      const mx = toMathX(hoverCX);
+      let inSeg = false;
+      const segments2 = opts.segments || [[xMin, xMax]];
+      let segIdx = 0;
+      segments2.forEach((seg, si) => { if (mx >= seg[0] && mx <= seg[1]) { inSeg = true; segIdx = si; }});
+      if (inSeg) {
+        let my;
+        try { my = fn(mx, segIdx); } catch(e) { my = null; }
+        if (my !== null && isFinite(my) && my >= yMin && my <= yMax) {
+          const cy = toCanY(my);
+          ctx.strokeStyle = 'rgba(232,150,10,0.4)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath(); ctx.moveTo(hoverCX, PAD.t); ctx.lineTo(hoverCX, H - PAD.b); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(PAD.l, cy); ctx.lineTo(W - PAD.r, cy); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = C.curve;
+          ctx.beginPath(); ctx.arc(hoverCX, cy, 4, 0, 2 * PI); ctx.fill();
+          // Update coord display
+          const coordEl = document.getElementById(coordId);
+          if (coordEl) {
+            const yLabel = opts.coordY ? opts.coordY(my) : my.toFixed(3);
+            coordEl.textContent = `x = ${mx.toFixed(3)},  y = ${yLabel}`;
+          }
+        }
+      }
+    }
+  }
+
+  draw(null);
+
+  // Hover
+  let hoverX = null;
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    hoverX = (e.clientX - rect.left) * scaleX;
+    draw(hoverX);
+  });
+  canvas.addEventListener('mouseleave', () => {
+    hoverX = null;
+    draw(null);
+    const coordEl = document.getElementById(coordId);
+    if (coordEl) coordEl.textContent = 'Move cursor over graph';
+  });
+}
+
+const piLabels = {
+  [(-PI/2).toFixed(4)]: '−π/2',
+  [(-PI/4).toFixed(4)]: '−π/4',
+  [(0).toFixed(4)]: '0',
+  [(PI/4).toFixed(4)]: 'π/4',
+  [(PI/2).toFixed(4)]: 'π/2',
+  [(PI*3/4).toFixed(4)]: '3π/4',
+  [(PI).toFixed(4)]: 'π',
+};
+const piCoord = y => {
+  const key = y.toFixed(4);
+  if (piLabels[key]) return piLabels[key];
+  return (y/PI).toFixed(3) + 'π';
+};
+
+// 1. arcsin
+makeGraph('c-asin', 'coord-asin',
+  x => Math.asin(x),
+  -1.5, 1.5, -2, 2,
+  { xTicks: [-1, 0, 1],
+    yTicks: [-PI/2, -PI/4, 0, PI/4, PI/2],
+    yLabels: piLabels,
+    segments: [[-1, 1]],
+    endpoints: [{x:-1, open:false},{x:1, open:false}],
+    coordY: piCoord }
+);
+
+// 2. arccos
+makeGraph('c-acos', 'coord-acos',
+  x => Math.acos(x),
+  -1.5, 1.5, -0.3, PI + 0.3,
+  { xTicks: [-1, 0, 1],
+    yTicks: [0, PI/4, PI/2, PI*3/4, PI],
+    yLabels: piLabels,
+    segments: [[-1, 1]],
+    endpoints: [{x:-1, open:false},{x:1, open:false}],
+    coordY: piCoord }
+);
+
+// 3. arctan
+makeGraph('c-atan', 'coord-atan',
+  x => Math.atan(x),
+  -5, 5, -2.2, 2.2,
+  { xTicks: [-4,-3,-2,-1,0,1,2,3,4],
+    yTicks: [-PI/2, -PI/4, 0, PI/4, PI/2],
+    yLabels: piLabels,
+    asymH: [-PI/2, PI/2],
+    segments: [[-5, 5]],
+    endpoints: [],
+    coordY: piCoord }
+);
+
+// 4. arccot  (arccot x = π/2 - arctan x)
+makeGraph('c-acot', 'coord-acot',
+  x => PI/2 - Math.atan(x),
+  -5, 5, -0.3, PI + 0.3,
+  { xTicks: [-4,-3,-2,-1,0,1,2,3,4],
+    yTicks: [0, PI/4, PI/2, PI*3/4, PI],
+    yLabels: piLabels,
+    asymH: [0, PI],
+    segments: [[-5, 5]],
+    endpoints: [],
+    coordY: piCoord }
+);
+
+// 5. arcsec  (arcsec x = arccos(1/x))
+makeGraph('c-asec', 'coord-asec',
+  (x, si) => Math.acos(1/x),
+  -4.5, 4.5, -0.3, PI + 0.3,
+  { xTicks: [-4,-3,-2,-1,0,1,2,3,4],
+    yTicks: [0, PI/4, PI/2, PI*3/4, PI],
+    yLabels: piLabels,
+    asymH: [PI/2],
+    segments: [[-4.5, -1], [1, 4.5]],
+    endpoints: [{x:-1,open:false,seg:0},{x:1,open:false,seg:1}],
+    coordY: piCoord }
+);
+
+// 6. arccsc  (arccsc x = arcsin(1/x))
+makeGraph('c-acsc', 'coord-acsc',
+  (x, si) => Math.asin(1/x),
+  -4.5, 4.5, -2.2, 2.2,
+  { xTicks: [-4,-3,-2,-1,0,1,2,3,4],
+    yTicks: [-PI/2,-PI/4,0,PI/4,PI/2],
+    yLabels: piLabels,
+    asymH: [0],
+    segments: [[-4.5, -1], [1, 4.5]],
+    endpoints: [{x:-1,open:false,seg:0},{x:1,open:false,seg:1}],
+    coordY: piCoord }
+);
+
+// Populate domain-range table
+const tableData = [
+  ['sin⁻¹ x', '[−1, 1]', '[−π/2, π/2]', 'None'],
+  ['cos⁻¹ x', '[−1, 1]', '[0, π]', 'None'],
+  ['tan⁻¹ x', '(−∞, ∞)', '(−π/2, π/2)', 'y = −π/2, y = π/2'],
+  ['cot⁻¹ x', '(−∞, ∞)', '(0, π)', 'y = 0, y = π'],
+  ['sec⁻¹ x', '(−∞,−1] ∪ [1,∞)', '[0, π] \\ {π/2}', 'y = π/2'],
+  ['cosec⁻¹ x', '(−∞,−1] ∪ [1,∞)', '[−π/2, π/2] \\ {0}', 'y = 0'],
+];
+const tbody = document.getElementById('domain-range-body');
+tableData.forEach(row => {
+  const tr = document.createElement('tr');
+  row.forEach((cell, i) => {
+    const td = document.createElement('td');
+    td.textContent = cell;
+    td.style.cssText = `padding:.7rem 1.2rem;border-bottom:1px solid rgba(30,45,70,.6);color:${i===0?'#ffd060':i===3?'rgba(90,130,180,0.8)':'#cdd8ea'};font-family:${i===0||i===3?'"Fira Code",monospace':'inherit'};font-size:${i===0?'.82rem':'.9rem'}`;
+    tr.appendChild(td);
+  });
+  tr.addEventListener('mouseover', () => tr.querySelectorAll('td').forEach(td => td.style.background='rgba(20,30,50,.5)'));
+  tr.addEventListener('mouseout', () => tr.querySelectorAll('td').forEach(td => td.style.background=''));
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 5: Random Variables & Probability Distributions | Class 12 Probability</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <style>
+    :root {
+      --surface: #1a1a1a;
+      --surface-alt: #252525;
+      --border: #3a3a3a;
+      --text: #e5e5e5;
+      --text-muted: #9a9a9a;
+      --accent: #00d4ff;
+      --gold: #d4af37;
+      --gold-dim: #6b5b2e;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--surface);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0.3px;
+    }
+
+    .header {
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .breadcrumb {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span { color: var(--border); }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .def-box {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(0,212,255,0.05) 100%);
+      border: 1px solid var(--gold-dim);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .def-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+    }
+
+    .def-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .def-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    p { margin-bottom: 16px; line-height: 1.8; }
+
+    .example-box {
+      background: var(--surface-alt);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 24px 0;
+      border-radius: 4px;
+    }
+
+    .example-title {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .notes-box {
+      background: rgba(16,185,129,0.08);
+      border: 1px solid var(--success);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .notes-title {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .notes-content {
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    .notes-content li {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 24px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--surface);
+      color: var(--gold);
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    td {
+      color: var(--text);
+    }
+
+    .board-tip {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .tip-title {
+      color: var(--warning);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+    }
+
+    .jee-tip {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .jee-tip .tip-title {
+      color: var(--danger);
+    }
+
+    .formula-section {
+      margin: 50px 0;
+    }
+
+    .formula-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--gold-dim);
+      padding-bottom: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+    }
+
+    .formula-title::after {
+      content: '▼';
+      font-size: 0.8rem;
+      transition: transform 0.3s;
+    }
+
+    .formula-title.collapsed::after {
+      transform: rotate(-90deg);
+    }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .formula-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .formula-card:hover {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.1);
+    }
+
+    .formula-name {
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .formula-formula {
+      background: var(--surface);
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 28px 32px;
+      margin-top: 60px;
+    }
+
+    .sf-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .sf-brand a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    .sf-brand a:hover { color: var(--accent); }
+    .sf-brand span { color: var(--gold); }
+
+    .sf-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .sf-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.82rem;
+    }
+
+    .sf-copy {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sf-dot { color: var(--border); }
+    .sf-author { color: var(--text-muted); }
+    .sf-author a {
+      color: var(--gold);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .sf-author a:hover { color: var(--accent); }
+    .sf-chapter {
+      font-size: 0.72rem;
+      color: var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section { animation: fadeInUp 0.6s ease-out; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="breadcrumb">
+      <a href="/index.html">Home</a>
+      <span>/</span>
+      <a href="#">Chapter 13</a>
+      <span>/</span>
+      <span>Topic 5: Random Variables & Probability Distributions</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Random Variables & Probability Distributions</h1>
+    <p class="subtitle">Quantifying uncertain outcomes and their distributions</p>
+
+    <div class="def-box">
+      <div class="def-title">What is a Random Variable?</div>
+      <div class="def-content">
+        A random variable is a function that assigns a numerical value to each outcome in a sample space. It converts qualitative outcomes into quantitative values that we can analyze mathematically. For example, in coin tosses, we assign 0 to tails and 1 to heads. Random variables are denoted by capital letters like X, Y, Z.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Random Variables</h2>
+
+      <h3>Types of Random Variables</h3>
+
+      <div class="notes-box">
+        <div class="notes-title">📌 Discrete Random Variables</div>
+        <div class="notes-content">
+          <ul>
+            <li><strong>Definition:</strong> Takes on a countable number of distinct values</li>
+            <li><strong>Examples:</strong> Number of heads in 5 coin tosses, number of defective items, test scores</li>
+            <li><strong>Range:</strong> Can be finite or countably infinite</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="notes-box">
+        <div class="notes-title">📌 Continuous Random Variables</div>
+        <div class="notes-content">
+          <ul>
+            <li><strong>Definition:</strong> Takes on any value in an interval or range (uncountably infinite)</li>
+            <li><strong>Examples:</strong> Height, weight, temperature, time duration</li>
+            <li><strong>Range:</strong> Values form a continuum</li>
+            <li><strong>Note:</strong> Continuous RVs are not part of Class 12 curriculum but important to know</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Notation</h3>
+      <div class="example-box">
+        <div class="example-title">Random Variable Notation</div>
+        <p><strong>X:</strong> Represents the random variable</p>
+        <p><strong>X = x:</strong> The event that random variable X takes the value x</p>
+        <p><strong>P(X = x):</strong> Probability that X equals x</p>
+        <p><strong>E(X):</strong> Expected value (mean) of X</p>
+        <p><strong>Var(X):</strong> Variance of X</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Probability Distribution</h2>
+
+      <h3>Definition</h3>
+      <p>A probability distribution is a mathematical function that provides the probabilities of occurrence of different possible outcomes for a random variable. For a discrete random variable, it lists all possible values and their corresponding probabilities.</p>
+
+      <h3>Requirements for a Probability Distribution</h3>
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li>P(X = xᵢ) ≥ 0 for all values of X</li>
+            <li>ΣP(X = xᵢ) = 1 (sum of all probabilities equals 1)</li>
+            <li>0 ≤ P(X = xᵢ) ≤ 1 for each value</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Probability Distribution Table</h3>
+      <p>A probability distribution is often presented as a table:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <tr>
+            <th>X</th>
+            <th>x₁</th>
+            <th>x₂</th>
+            <th>x₃</th>
+            <th>...</th>
+            <th>xₙ</th>
+          </tr>
+          <tr>
+            <td><strong>P(X)</strong></td>
+            <td>p₁</td>
+            <td>p₂</td>
+            <td>p₃</td>
+            <td>...</td>
+            <td>pₙ</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Coin Toss Distribution</div>
+        <p><strong>Problem:</strong> Two coins are tossed. Let X = number of heads. Construct the probability distribution.</p>
+        <p><strong>Solution:</strong></p>
+        <p>Sample Space: {HH, HT, TH, TT}</p>
+        <p>X can be 0, 1, or 2</p>
+        <p>P(X = 0) = P(TT) = 1/4</p>
+        <p>P(X = 1) = P(HT, TH) = 2/4 = 1/2</p>
+        <p>P(X = 2) = P(HH) = 1/4</p>
+        <div class="table-wrapper" style="margin: 12px 0;">
+          <table>
+            <tr>
+              <th>X</th>
+              <th>0</th>
+              <th>1</th>
+              <th>2</th>
+            </tr>
+            <tr>
+              <td><strong>P(X)</strong></td>
+              <td>1/4</td>
+              <td>1/2</td>
+              <td>1/4</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Die Roll Distribution</div>
+        <p><strong>Problem:</strong> A die is rolled. Let X = outcome. Is this a valid probability distribution?</p>
+        <p><strong>Solution:</strong></p>
+        <p>X ∈ {1, 2, 3, 4, 5, 6}</p>
+        <p>Each outcome: P(X = i) = 1/6</p>
+        <p>Sum: 6 × (1/6) = 1 ✓</p>
+        <p>Each probability: 0 ≤ 1/6 ≤ 1 ✓</p>
+        <p>Yes, this is a valid probability distribution (uniform distribution)</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Mean and Variance of Probability Distribution</h2>
+
+      <h3>Expected Value (Mean)</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Expected Value</div>
+        <div class="formula-formula">E(X) = μ = Σ xᵢ × P(X = xᵢ)</div>
+        <div class="formula-desc">Weighted average of all possible values</div>
+      </div>
+
+      <h3>Variance</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Variance (Method 1)</div>
+        <div class="formula-formula">Var(X) = σ² = Σ(xᵢ - μ)² × P(X = xᵢ)</div>
+        <div class="formula-desc">Variance from definition</div>
+      </div>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Variance (Method 2 - Shortcut)</div>
+        <div class="formula-formula">Var(X) = σ² = E(X²) - [E(X)]²</div>
+        <div class="formula-desc">Easier calculation method</div>
+      </div>
+
+      <h3>Standard Deviation</h3>
+
+      <div class="formula-card" style="margin: 24px 0;">
+        <div class="formula-name">Standard Deviation</div>
+        <div class="formula-formula">σ = √[Var(X)]</div>
+        <div class="formula-desc">Square root of variance</div>
+      </div>
+
+      <h3>Worked Examples</h3>
+
+      <div class="example-box">
+        <div class="example-title">Example 1: Calculate E(X) and Var(X)</div>
+        <p><strong>Problem:</strong> For the probability distribution:</p>
+        <div class="table-wrapper" style="margin: 12px 0;">
+          <table>
+            <tr>
+              <th>X</th>
+              <th>0</th>
+              <th>1</th>
+              <th>2</th>
+            </tr>
+            <tr>
+              <td><strong>P(X)</strong></td>
+              <td>1/4</td>
+              <td>1/2</td>
+              <td>1/4</td>
+            </tr>
+          </table>
+        </div>
+        <p><strong>Solution:</strong></p>
+        <p>E(X) = 0 × (1/4) + 1 × (1/2) + 2 × (1/4) = 0 + 1/2 + 1/2 = 1</p>
+        <p>E(X²) = 0² × (1/4) + 1² × (1/2) + 2² × (1/4) = 0 + 1/2 + 1 = 3/2</p>
+        <p>Var(X) = E(X²) - [E(X)]² = 3/2 - 1² = 3/2 - 1 = 1/2</p>
+        <p>σ = √(1/2) ≈ 0.707</p>
+      </div>
+
+      <div class="example-box">
+        <div class="example-title">Example 2: Dice Roll Mean and Variance</div>
+        <p><strong>Problem:</strong> A fair die is rolled. Find E(X) and Var(X).</p>
+        <p><strong>Solution:</strong></p>
+        <p>E(X) = 1(1/6) + 2(1/6) + 3(1/6) + 4(1/6) + 5(1/6) + 6(1/6)</p>
+        <p>E(X) = (1+2+3+4+5+6)/6 = 21/6 = 3.5</p>
+        <p>E(X²) = 1²(1/6) + 2²(1/6) + ... + 6²(1/6) = 91/6</p>
+        <p>Var(X) = 91/6 - (3.5)² = 91/6 - 12.25 ≈ 2.917</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Properties of Expectation and Variance</h2>
+
+      <div class="notes-box">
+        <div class="notes-content">
+          <ul>
+            <li><strong>E(aX + b):</strong> = aE(X) + b (linearity of expectation)</li>
+            <li><strong>Var(aX + b):</strong> = a²Var(X) (variance with constant)</li>
+            <li><strong>E(X + Y):</strong> = E(X) + E(Y) (for any X, Y)</li>
+            <li><strong>Var(X + Y):</strong> = Var(X) + Var(Y) + 2Cov(X,Y)</li>
+            <li><strong>If X and Y independent:</strong> Var(X + Y) = Var(X) + Var(Y)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="board-tip">
+        <div class="tip-title">📋 Board Exam Tips</div>
+        <p><strong>Q:</strong> Define random variables and probability distribution</p>
+        <p><strong>Q:</strong> Construct probability distribution from sample space</p>
+        <p><strong>Q:</strong> Calculate E(X) and Var(X) from distributions</p>
+        <p><strong>Common Mistake:</strong> Forgetting to verify that all probabilities sum to 1</p>
+        <p><strong>Helpful Tip:</strong> Use the shortcut formula Var(X) = E(X²) - [E(X)]² for easier calculation</p>
+      </div>
+
+      <div class="jee-tip">
+        <div class="tip-title">🎯 JEE Advanced Tips</div>
+        <p><strong>Key Insight:</strong> Understanding mean and variance of distributions is crucial for statistics</p>
+        <p><strong>Common Pattern:</strong> Questions often ask for E(X), E(X²), Var(X) sequentially</p>
+        <p><strong>Speed Technique:</strong> Memorize linearity properties for quick calculations</p>
+        <p><strong>Integration:</strong> This topic connects to Chapter 14 (Mathematical Expectation) in some curricula</p>
+      </div>
+    </div>
+
+    <div class="formula-section">
+      <div class="formula-title" onclick="toggleFormulas(this)">📐 Complete Formula Sheet</div>
+      <div class="formula-grid" id="formulas">
+        <div class="formula-card">
+          <div class="formula-name">Expected Value</div>
+          <div class="formula-formula">E(X) = Σ xᵢ × P(X = xᵢ)</div>
+          <div class="formula-desc">Mean of distribution</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Variance (Definition)</div>
+          <div class="formula-formula">Var(X) = Σ(xᵢ - μ)² × P(X = xᵢ)</div>
+          <div class="formula-desc">Spread from mean</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Variance (Shortcut)</div>
+          <div class="formula-formula">Var(X) = E(X²) - [E(X)]²</div>
+          <div class="formula-desc">Easier calculation</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Standard Deviation</div>
+          <div class="formula-formula">σ = √[Var(X)]</div>
+          <div class="formula-desc">Square root of variance</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">E(aX + b)</div>
+          <div class="formula-formula">E(aX + b) = aE(X) + b</div>
+          <div class="formula-desc">Linearity of expectation</div>
+        </div>
+
+        <div class="formula-card">
+          <div class="formula-name">Var(aX + b)</div>
+          <div class="formula-formula">Var(aX + b) = a²Var(X)</div>
+          <div class="formula-desc">Variance with constants</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="sf-inner">
+      <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+      <div class="sf-divider"></div>
+      <div class="sf-info">
+        <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+        <span class="sf-dot">&middot;</span>
+        <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+      </div>
+      <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 13 &middot; Probability</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleFormulas(element) {
+      const formulas = document.getElementById('formulas');
+      element.classList.toggle('collapsed');
+      formulas.style.display = formulas.style.display === 'none' ? 'grid' : 'none';
+    }
+  </script>
+
+</body>
+</html>

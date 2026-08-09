@@ -1,0 +1,499 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Class 12 Mathematics chapter-wise study notes. Comprehensive resources for mastering Relations, Functions, Trigonometry, Calculus, and more.">
+<meta name="keywords" content="Class 12 Maths study notes, chapter-wise notes, Relations and Functions, Inverse Trigonometric Functions, Matrices, Determinants, Continuity, Differentiability, Integrals, Vector Algebra, Linear Programming, Probability">
+<meta name="author" content="Udit Prakash Yadav">
+<title>Class 12 Maths – Chapter Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0f1a;
+    --surface: #141625;
+    --card: #1a1d2e;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7c6af7;
+    --accent2: #e96c6c;
+    --gold: #f5c842;
+    --text: #eef0ff;
+    --muted: #8890b0;
+    --radius: 16px;
+    --gold-dim: rgb(199, 205, 22);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* grid pattern background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,247,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-glow {
+    position: fixed;
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(124,106,247,0.18) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── HERO ─────────────────────────────── */
+  header {
+    text-align: center;
+    padding: 10px 0 60px;
+    position: relative;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(124,106,247,0.15);
+    border: 1px solid rgba(124,106,247,0.35);
+    color: #a89ff8;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  h1 span.hi { color: var(--accent); }
+  h1 span.lo { color: var(--accent2); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION LABEL ─────────────────────── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 56px 0 28px;
+  }
+
+  .section-label h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .label-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .label-num {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── CHAPTER GRID ──────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,106,247,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .card:hover {
+    border-color: rgba(124,106,247,0.45);
+    background: #1e2139;
+    transform: translateY(-2px);
+  }
+
+  .card:hover::after {
+    opacity: 1;
+  }
+
+  .ch-num {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(124,106,247,0.12);
+    border: 1px solid rgba(124,106,247,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a89ff8;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ch-body { flex: 1; min-width: 0; }
+
+  .ch-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .ch-tag {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .ch-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    margin-top: 4px;
+    transition: color 0.2s, transform 0.18s;
+    flex-shrink: 0;
+  }
+
+  .card:hover .ch-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  /* tag colour variants */
+  .card[data-type="algebra"]   .ch-num { background: rgba(233,108,108,0.12); border-color: rgba(233,108,108,0.28); color: #f09090; }
+  .card[data-type="calculus"]  .ch-num { background: rgba(245,200,66,0.10);  border-color: rgba(245,200,66,0.28);  color: #f5c842; }
+  .card[data-type="vectors"]   .ch-num { background: rgba(45,200,130,0.10);  border-color: rgba(45,200,130,0.28);  color: #3ecf8e; }
+  .card[data-type="stats"]     .ch-num { background: rgba(60,180,240,0.10);  border-color: rgba(60,180,240,0.28);  color: #5bc7f0; }
+
+  /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ── ANIMATIONS ────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  header        { animation: fadeUp 0.6s ease both; }
+  .section-label{ animation: fadeUp 0.6s 0.15s ease both; }
+  .card         { animation: fadeUp 0.5s ease both; }
+
+  .card:nth-child(1)  { animation-delay: 0.20s }
+  .card:nth-child(2)  { animation-delay: 0.24s }
+  .card:nth-child(3)  { animation-delay: 0.28s }
+  .card:nth-child(4)  { animation-delay: 0.32s }
+  .card:nth-child(5)  { animation-delay: 0.36s }
+  .card:nth-child(6)  { animation-delay: 0.40s }
+  .card:nth-child(7)  { animation-delay: 0.44s }
+  .card:nth-child(8)  { animation-delay: 0.48s }
+  .card:nth-child(9)  { animation-delay: 0.52s }
+  .card:nth-child(10) { animation-delay: 0.56s }
+  .card:nth-child(11) { animation-delay: 0.60s }
+  .card:nth-child(12) { animation-delay: 0.64s }
+  .card:nth-child(13) { animation-delay: 0.68s }
+  footer a { color:#f09090; text-decoration: none; }
+  footer a:hover {  color: #f20000; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+
+<div class="container">
+  <header>
+    <div class="logo"> <img src="/Img/logo.png" alt="Study Notes Pro Logo" style="width: 300px ;"> </div>
+    <div class="badge">📐 NCERT · CBSE Board</div>
+    <h1>Class <span class="hi">12</span> <span class="lo">Maths</span></h1>
+    <p class="subtitle">Your complete chapter-wise guide to mastering Class 12 Mathematics. Click any chapter to start learning.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num">13</div><div class="stat-label">Chapters</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Parts</div></div>
+      <div class="stat"><div class="stat-num">80</div><div class="stat-label">Board Marks</div></div>
+    </div>
+  </header>
+
+  <!-- Part I -->
+  <div class="section-label">
+    <h2>Part I</h2>
+    <div class="label-line"></div>
+    <span class="label-num">CH 1 – 7</span>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" data-type="algebra"
+       href="/MATHS/ch1/mathsch1.html" target="_blank" rel="noopener">
+      <div class="ch-num">01</div>
+      <div class="ch-body">
+        <div class="ch-title">Relations and Functions</div>
+        <div class="ch-tag">Algebra · Types, Composition, Inverse</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="algebra"
+       href="/MATHS/ch2/mathsch2.html" target="_blank" rel="noopener">
+      <div class="ch-num">02</div>
+      <div class="ch-body">
+        <div class="ch-title">Inverse Trigonometric Functions</div>
+        <div class="ch-tag">Algebra · Domain, Range, Properties</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="algebra"
+       href="/MATHS/ch3/mathsch3.html" target="_blank" rel="noopener">
+      <div class="ch-num">03</div>
+      <div class="ch-body">
+        <div class="ch-title">Matrices</div>
+        <div class="ch-tag">Algebra · Operations, Transpose, Types</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="algebra"
+       href="/MATHS/ch4/mathsch4.html" target="_blank" rel="noopener">
+      <div class="ch-num">04</div>
+      <div class="ch-body">
+        <div class="ch-title">Determinants</div>
+        <div class="ch-tag">Algebra · Cofactors, Inverse, Applications</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="calculus"
+       href="/MATHS/ch5/mathsch5.html" target="_blank" rel="noopener">
+      <div class="ch-num">05</div>
+      <div class="ch-body">
+        <div class="ch-title">Continuity and Differentiability</div>
+        <div class="ch-tag">Calculus · Chain Rule, Mean Value Theorem</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="calculus"
+       href="/MATHS/ch6/mathsch6.html" target="_blank" rel="noopener">
+      <div class="ch-num">06</div>
+      <div class="ch-body">
+        <div class="ch-title">Application of Derivatives</div>
+        <div class="ch-tag">Calculus · Maxima, Minima, Rate of Change</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="calculus"
+       href="/MATHS/ch7/mathsch7.html" target="_blank" rel="noopener">
+      <div class="ch-num">07</div>
+      <div class="ch-body">
+        <div class="ch-title">Integrals</div>
+        <div class="ch-tag">Calculus · Indefinite, Methods of Integration</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- Part II -->
+  <div class="section-label">
+    <h2>Part II</h2>
+    <div class="label-line"></div>
+    <span class="label-num">CH 8 – 13</span>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" data-type="calculus"
+       href="/MATHS/ch8/mathsch8.html" target="_blank" rel="noopener">
+      <div class="ch-num">08</div>
+      <div class="ch-body">
+        <div class="ch-title">Application of Integrals</div>
+        <div class="ch-tag">Calculus · Areas under Curves</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="calculus"
+       href="/MATHS/ch9/mathsch9.html" target="_blank" rel="noopener">
+      <div class="ch-num">09</div>
+      <div class="ch-body">
+        <div class="ch-title">Differential Equations</div>
+        <div class="ch-tag">Calculus · Order, Degree, Solutions</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="vectors"
+       href="/MATHS/ch10/mathsch10.html" target="_blank" rel="noopener">
+      <div class="ch-num">10</div>
+      <div class="ch-body">
+        <div class="ch-title">Vector Algebra</div>
+        <div class="ch-tag">Vectors · Dot, Cross Product, Direction</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="vectors"
+       href="/MATHS/ch11/mathsch11.html" target="_blank" rel="noopener">
+      <div class="ch-num">11</div>
+      <div class="ch-body">
+        <div class="ch-title">Three Dimensional Geometry</div>
+        <div class="ch-tag">Vectors · Lines, Planes, Distance</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="algebra"
+       href="/MATHS/ch12/linear-programming.html" target="_blank" rel="noopener">
+      <div class="ch-num">12</div>
+      <div class="ch-body">
+        <div class="ch-title">Linear Programming</div>
+        <div class="ch-tag">Complete Notes </div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+    <a class="card" data-type="stats"
+       href="/MATHS/ch13/mathsch13.html" target="_blank" rel="noopener">
+      <div class="ch-num">13</div>
+      <div class="ch-body">
+        <div class="ch-title">Probability</div>
+        <div class="ch-tag">Statistics · Bayes' Theorem, Distributions</div>
+      </div>
+      <div class="ch-arrow">→</div>
+    </a>
+
+  </div>
+
+
+
+</div>
+<footer class="site-footer">
+   <div class="sf-inner">
+     <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+       <div class="sf-divider"></div>
+        <div class="sf-info">
+          <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+         <span class="sf-dot">&middot;</span>
+         <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+        </div>
+     <div class="sf-chapter">Class 12 &middot; Mathematics</div>
+   </div>
+</footer>
+</body>
+</html>

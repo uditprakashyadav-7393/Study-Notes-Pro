@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variables Separable Method | Ch.9 Differential Equations | StudyNotes Pro</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})">
+  </script>
+
+  <style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0d16;
+    --surface: #111422;
+    --surface-2: #171b2b;
+    --surface-3: #1e2235;
+    --border: #272c42;
+    --accent: #5b8af5;
+    --accent-dim: rgba(91,138,245,0.13);
+    --gold: #d4a853;
+    --gold-bright: #e8c06a;
+    --gold-dim: rgba(212,168,83,0.18);
+    --text: #d8dbee;
+    --text-muted: #666d90;
+    --text-soft: #9499b8;
+    --heading: #edf0ff;
+    --code-bg: #0e1020;
+    --red: #f06b6b;
+    --green: #5dd98c;
+    --teal: #4ecdc4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    color: var(--heading);
+    line-height: 1.25;
+  }
+
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { color: var(--gold-bright); }
+
+  p { margin-bottom: 1rem; }
+  strong { color: var(--heading); font-weight: 600; }
+  em { font-style: italic; color: var(--text-soft); }
+
+  /* ── TOP NAV ── */
+  .top-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem; font-weight: 900; letter-spacing: .04em;
+    color: #fff;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-links {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: .72rem;
+  }
+  .nav-links a {
+    color: var(--text-muted); padding: 5px 10px; border-radius: 5px;
+    transition: all .2s;
+  }
+  .nav-links a:hover { color: var(--gold); background: var(--gold-dim); }
+  .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    max-width: 900px; margin: 0 auto;
+    padding: 14px 32px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .breadcrumb span { color: var(--border); }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb .current { color: var(--gold); }
+
+  /* ── HERO ── */
+  .topic-hero {
+    max-width: 900px; margin: 0 auto;
+    padding: 48px 32px 32px;
+    position: relative;
+  }
+  .topic-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); background: var(--gold-dim);
+    border: 1px solid rgba(212,168,83,0.3);
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+  }
+  .topic-hero h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--heading) 0%, var(--gold-bright) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    letter-spacing: -.02em;
+  }
+  .topic-hero .subtitle {
+    font-size: 1.08rem; color: var(--text-soft);
+    max-width: 620px; font-style: italic;
+  }
+  .hero-line {
+    width: 64px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    border-radius: 2px; margin: 20px 0;
+  }
+
+  /* ── MAIN CONTENT ── */
+  main { flex: 1; }
+  .content-wrap {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 32px 60px;
+  }
+
+  /* ── SECTION CARDS ── */
+  .section-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 36px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+  .section-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--gold), transparent);
+  }
+  .section-card:hover { border-color: rgba(212,168,83,0.35); }
+
+  .section-card h2 {
+    font-size: 1.45rem; font-weight: 700;
+    margin-bottom: 18px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-icon {
+    width: 32px; height: 32px;
+    background: var(--gold-dim);
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+
+  .section-card h3 {
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--gold-bright); margin: 22px 0 10px;
+  }
+
+  /* ── MATH BLOCKS ── */
+  .math-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 24px;
+    margin: 18px 0;
+    overflow-x: auto;
+    font-size: 1.05rem;
+  }
+  .math-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: .1em;
+    margin-bottom: 8px;
+  }
+
+  /* ── EXAMPLE BOXES ── */
+  .example-box {
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 22px 26px;
+    margin: 18px 0;
+  }
+  .example-box .ex-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px; display: block;
+  }
+  .example-box .ex-label.solved { color: var(--green); }
+  .example-box h4 { font-size: 1rem; color: var(--heading); margin-bottom: 10px; }
+
+  /* ── DEFINITION BOX ── */
+  .def-box {
+    background: linear-gradient(135deg, rgba(212,168,83,0.08), rgba(91,138,245,0.05));
+    border: 1px solid rgba(212,168,83,0.25);
+    border-radius: 12px; padding: 22px 26px;
+    margin: 18px 0;
+  }
+  .def-box .def-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px; display: block;
+  }
+
+  /* ── NOTE BOX ── */
+  .note-box {
+    background: rgba(91,138,245,0.07);
+    border: 1px solid rgba(91,138,245,0.25);
+    border-radius: 10px; padding: 16px 20px; margin: 16px 0;
+    font-size: .92rem; color: var(--text-soft);
+  }
+  .note-box strong { color: var(--accent); }
+
+  /* ── STEPS LIST ── */
+  .steps-list {
+    list-style: none; counter-reset: step;
+    padding: 0; margin: 16px 0;
+  }
+  .steps-list li {
+    counter-increment: step;
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .steps-list li::before {
+    content: counter(step);
+    min-width: 28px; height: 28px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(212,168,83,0.3);
+    border-radius: 50%; display: flex;
+    align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem; color: var(--gold); flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── FORMULA TABLE ── */
+  .formula-table {
+    width: 100%; border-collapse: collapse; margin: 16px 0;
+    font-size: .94rem;
+  }
+  .formula-table th {
+    background: var(--surface-3);
+    color: var(--gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
+    padding: 10px 16px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .formula-table td {
+    padding: 10px 16px; border-bottom: 1px solid rgba(39,44,66,0.6);
+    vertical-align: middle;
+  }
+  .formula-table tr:last-child td { border-bottom: none; }
+  .formula-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── SUMMARY BOX ── */
+  .summary-card {
+    background: linear-gradient(135deg, var(--surface-2), var(--surface-3));
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    border-radius: 14px; padding: 28px 32px; margin-top: 32px;
+  }
+  .summary-card h3 {
+    font-size: 1.1rem; color: var(--gold); margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .key-points { list-style: none; padding: 0; }
+  .key-points li {
+    padding: 8px 0 8px 24px; position: relative;
+    border-bottom: 1px solid rgba(39,44,66,0.5);
+    font-size: .94rem;
+  }
+  .key-points li:last-child { border-bottom: none; }
+  .key-points li::before {
+    content: '◆';
+    position: absolute; left: 0;
+    color: var(--gold); font-size: .6rem; top: 13px;
+  }
+
+  /* ── PREV/NEXT NAV ── */
+  .page-nav {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 32px 40px;
+    display: flex; justify-content: space-between; gap: 16px;
+  }
+  .page-nav a {
+    flex: 1; max-width: 280px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+    transition: all .25s; color: var(--text-soft);
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .page-nav a:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .page-nav .pn-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .page-nav .pn-title { font-weight: 600; font-size: .94rem; }
+  .page-nav .next { text-align: right; margin-left: auto; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #fff; letter-spacing: .04em; text-decoration: none; }
+  .sf-brand a:hover { color: var(--gold); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .top-nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .topic-hero, .content-wrap, .breadcrumb, .page-nav { padding-left: 16px; padding-right: 16px; }
+    .section-card { padding: 22px 20px; }
+    .topic-hero h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-brand"><a href="/index.html">StudyNotes<span>Pro</span></a></div>
+  <div class="nav-links">
+    <a href="topic1.html">T1</a>
+<a href="topic2.html">T2</a>
+<a href="topic3.html">T3</a>
+<a href="topic4.html">T4</a>
+<a href="topic5.html" class="active">T5</a>
+<a href="topic6.html">T6</a>
+<a href="topic7.html">T7</a>
+
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="/index.html">Home</a>
+  <span>/</span><a href="/index.html">Class 12</a>
+  <span>/</span><a href="/MATHS/mathsnotes.html">Mathematics</a>
+  <span>/</span><a href="/MATHS/ch9/mathsch9.html">Chapter 9</a>
+  <span>/</span><span class="current">Variables Separable Method</span>
+</div>
+
+<!-- HERO -->
+<div class="topic-hero">
+  <div class="topic-tag">Topic 5 of 7 &middot; Chapter 9</div>
+  <h1>Variables Separable Method</h1>
+  <div class="hero-line"></div>
+  <p class="subtitle">Solving DEs by Separating Variables and Integrating</p>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="content-wrap">
+    
+<div class="section-card">
+  <h2><span class="section-icon">✂️</span> The Method of Separation of Variables</h2>
+  <div class="def-box">
+    <span class="def-title">Definition</span>
+    <p>A first-order DE is called <strong>separable</strong> if it can be written in the form:</p>
+    <div class="math-block">
+      <div class="label">Separable Form</div>
+      $$\frac{dy}{dx} = f(x) \cdot g(y)$$
+    </div>
+    <p>Here, the right-hand side is a <em>product</em> of a function of $x$ alone and a function of $y$ alone.</p>
+  </div>
+  <p>The idea: <strong>separate</strong> variables to each side, then integrate both sides independently.</p>
+</div>
+
+<div class="section-card">
+  <h2><span class="section-icon">🪜</span> Steps to Solve</h2>
+  <ul class="steps-list">
+    <li>Rewrite the DE in the form $\dfrac{dy}{dx} = f(x)\cdot g(y)$.</li>
+    <li>Separate: $\dfrac{dy}{g(y)} = f(x)\,dx$ &nbsp; (assuming $g(y) \neq 0$).</li>
+    <li>Integrate both sides: $\displaystyle\int \frac{dy}{g(y)} = \int f(x)\,dx + C$</li>
+    <li>Simplify and write the general solution.</li>
+    <li>If initial conditions are given, find the particular solution.</li>
+  </ul>
+</div>
+
+<div class="section-card">
+  <h2><span class="section-icon">💡</span> Worked Examples</h2>
+
+  <div class="example-box">
+    <span class="ex-label solved">Example 1</span>
+    <h4>Solve: $\dfrac{dy}{dx} = \dfrac{x}{y}$</h4>
+    <p>Separate: $y\,dy = x\,dx$</p>
+    <p>Integrate: $\displaystyle\int y\,dy = \int x\,dx$</p>
+    <div class="math-block">$$\frac{y^2}{2} = \frac{x^2}{2} + C \implies \boxed{y^2 - x^2 = K}$$</div>
+    <p>where $K = 2C$ is an arbitrary constant. This is a family of rectangular hyperbolas.</p>
+  </div>
+
+  <div class="example-box">
+    <span class="ex-label solved">Example 2</span>
+    <h4>Solve: $\dfrac{dy}{dx} = e^{x+y}$</h4>
+    <p>Rewrite: $\dfrac{dy}{dx} = e^x \cdot e^y$</p>
+    <p>Separate: $e^{-y}\,dy = e^x\,dx$</p>
+    <p>Integrate: $-e^{-y} = e^x + C$</p>
+    <div class="math-block">$$\boxed{e^x + e^{-y} = C}$$</div>
+  </div>
+
+  <div class="example-box">
+    <span class="ex-label solved">Example 3 — With Initial Condition</span>
+    <h4>Solve $\dfrac{dy}{dx} = y^2$, given $y(0) = 1$</h4>
+    <p>Separate: $\dfrac{dy}{y^2} = dx$</p>
+    <p>Integrate: $-\dfrac{1}{y} = x + C$</p>
+    <p>Apply $y(0)=1$: $-1 = 0 + C \Rightarrow C = -1$</p>
+    <div class="math-block">$$-\frac{1}{y} = x - 1 \implies \boxed{y = \frac{1}{1-x}}$$</div>
+  </div>
+
+  <div class="example-box">
+    <span class="ex-label solved">Example 4</span>
+    <h4>Solve: $(1+x^2)\,dy = (1+y^2)\,dx$</h4>
+    <p>Separate: $\dfrac{dy}{1+y^2} = \dfrac{dx}{1+x^2}$</p>
+    <p>Integrate both sides:</p>
+    <div class="math-block">$$\tan^{-1}y = \tan^{-1}x + C \implies \boxed{\tan^{-1}y - \tan^{-1}x = C}$$</div>
+  </div>
+</div>
+
+<div class="section-card">
+  <h2><span class="section-icon">⚠️</span> Common Mistakes to Avoid</h2>
+  <table class="formula-table">
+    <thead><tr><th>Mistake</th><th>Correct Approach</th></tr></thead>
+    <tbody>
+      <tr><td>Forgetting the constant of integration $C$</td><td>Always add $+ C$ on one side after integrating</td></tr>
+      <tr><td>Dividing by $g(y) = 0$ without checking</td><td>Separately check if $g(y) = 0$ gives a solution</td></tr>
+      <tr><td>Adding $C$ on both sides</td><td>Combine: $C_1 - C_2 = C$ (one constant suffices)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="summary-card">
+  <h3>🔑 Key Takeaways</h3>
+  <ul class="key-points">
+    <li>Use this method when DE can be written as $\frac{dy}{dx} = f(x)\cdot g(y)$.</li>
+    <li>Bring all $y$-terms to left and all $x$-terms to right, then integrate.</li>
+    <li>Always add the arbitrary constant $C$.</li>
+    <li>Apply initial conditions (if given) to find the particular solution.</li>
+    <li>Always check if $g(y) = 0$ is also a valid (trivial) solution.</li>
+  </ul>
+</div>
+
+  </div>
+</main>
+
+<div class="page-nav"><a href="topic4.html">
+          <span class="pn-label">← Previous</span>
+          <span class="pn-title">Formation of Differential Equations</span></a><a href="topic6.html" class="next">
+          <span class="pn-label">Next →</span>
+          <span class="pn-title">Homogeneous Differential Equations</span></a></div>
+
+
+<footer class="site-footer">
+  <div class="sf-inner">
+    <div class="sf-brand"><a href="/index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div>
+    <div class="sf-divider"></div>
+    <div class="sf-info">
+      <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+      <span class="sf-dot">&middot;</span>
+      <span class="sf-author">Created by <a href="mailto:uditprakasheyadav@gmail.com" target="_blank">Udit Prakash Yadav</a></span>
+    </div>
+    <div class="sf-chapter">Class 12 &middot; Mathematics &middot; Chapter 9 &middot; Differential Equations</div>
+  </div>
+</footer>
+
+</body>
+</html>
