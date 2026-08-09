@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - Study Notes Pro | Modern Study Notes Platform</title>
+  <link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+  <meta name="description" content="Study Notes Pro provides modern, easy-to-understand study notes, formulas, revision material, and educational resources for students." />
+  <meta name="keywords" content="Study Notes Pro, class 10 notes, class 12 notes, maths notes, revision notes, study material, formulas, board exam notes" />
+  <meta name="author" content="Udit Prakash Yadav" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Study Notes Pro" />
+  <meta property="og:description" content="Modern educational platform for smart students." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200&auto=format&fit=crop" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+      scroll-behavior:smooth;
+      --accent: #7c3aed;
+      --gold: #f59e0b;
+      --gold-dim: #f59e0b;
+      --surface: #28242461;
+      --border: rgba(255,255,255,0.08);
+      --text-muted: #b4b4b4;
+    }
+
+    body{
+      width:100%;
+      overflow-x:hidden;
+      background:#0a0a0a;
+      color:#ffffff;
+      background-image:
+      radial-gradient(circle at top left, rgba(124,58,237,0.18), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(59,130,246,0.15), transparent 25%);
+    }
+
+    ::selection{
+      background:#7c3aed;
+      color:white;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:80px 9%;
+      position:relative;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      width:600px;
+      height:600px;
+      background:#7c3aed;
+      filter:blur(180px);
+      opacity:0.15;
+      top:-200px;
+      left:-150px;
+      border-radius:50%;
+    }
+
+    .hero::after{
+      content:'';
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#2563eb;
+      filter:blur(170px);
+      opacity:0.15;
+      bottom:-200px;
+      right:-100px;
+      border-radius:50%;
+    }
+
+    .container{
+      width:100%;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:80px;
+      align-items:center;
+      position:relative;
+      z-index:2;
+    }
+
+    .content h4 {
+      color:#8b5cf6;
+      font-size:15px;
+      letter-spacing:3px;
+      margin-bottom:20px;
+    }
+    /* .content img {
+      display:inline;
+      width: 180px;
+      height: auto ;
+    } */
+
+    .content h1{
+      font-size:72px;
+      line-height:1;
+      margin-bottom:30px;
+      font-weight:700;
+      letter-spacing:-3px;
+    }
+
+    .content h1 span{
+      color:#8b5cf6;
+    }
+
+    .content p{
+      color:#b4b4b4;
+      font-size:18px;
+      line-height:1.9;
+      margin-bottom:22px;
+      max-width:650px;
+    }
+
+    .btns{
+      display:flex;
+      gap:18px;
+      margin-top:35px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:15px 30px;
+      border-radius:18px;
+      text-decoration:none;
+      font-weight:600;
+      transition:0.4s;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .primary{
+      background:linear-gradient(135deg,#7c3aed,#2563eb);
+      color:white;
+      box-shadow:0 15px 40px rgba(124,58,237,0.35);
+    }
+
+    .primary:hover{
+      transform:translateY(-6px) scale(1.02);
+    }
+
+    .secondary{
+      background:rgba(255,255,255,0.03);
+      color:white;
+      backdrop-filter:blur(20px);
+    }
+
+    .secondary:hover{
+      background:rgba(255,255,255,0.08);
+    }
+
+    .glass-card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:35px;
+      padding:40px;
+      backdrop-filter:blur(25px);
+      box-shadow:0 20px 60px rgba(0,0,0,0.45);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .glass-card::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(145deg,rgba(255,255,255,0.06),transparent);
+      pointer-events:none;
+    }
+
+    .logo-box{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      width:110px;
+      height:110px;
+      border-radius:34px;
+      background:
+      linear-gradient(145deg,#8b5cf6,#2563eb);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:38px;
+      font-weight:700;
+      margin-bottom:30px;
+      box-shadow:
+      0 25px 60px rgba(124,58,237,0.45),
+      inset 0 4px 12px rgba(255,255,255,0.2),
+      inset 0 -10px 20px rgba(0,0,0,0.25);
+      transform-style:preserve-3d;
+      transform:perspective(1000px) rotateX(10deg) rotateY(-10deg);
+      transition:0.5s ease;
+    }
+
+    .logo-box::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(145deg,rgba(255,255,255,0.22),transparent 45%);
+      pointer-events:none;
+    }
+
+    .logo-box::after{
+      content:'';
+      position:absolute;
+      width:140%;
+      height:40px;
+      background:rgba(255,255,255,0.18);
+      transform:rotate(-25deg);
+      top:-20px;
+      left:-120%;
+      transition:0.7s;
+    }
+
+    .logo-box:hover{
+      transform:perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(-8px) scale(1.04);
+    }
+
+    .logo-box:hover::after{
+      left:120%;
+    }
+
+    .logo-box svg{
+      filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35));
+      transform:translateZ(30px);
+    }
+
+    .glass-card h2{
+      font-family:'Playfair Display',serif;
+      font-size:42px;
+      letter-spacing:-1px;
+      margin-bottom:10px;
+    }
+
+    .brand-line{
+      width:90px;
+      height:3px;
+      background:linear-gradient(90deg,#facc15,#f59e0b);
+      border-radius:50px;
+      margin-bottom:22px;
+      box-shadow:0 0 18px rgba(250,204,21,0.6);
+    }
+
+    .gold{
+      color:#facc15;
+      text-shadow:0 0 12px rgba(250,204,21,0.35);
+    }
+
+    .glass-card h2{
+      font-size:34px;
+      margin-bottom:16px;
+    }
+
+    .glass-card p{
+      color:#b5b5b5;
+      line-height:1.8;
+      margin-bottom:25px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+
+    .stat-box{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:22px;
+      padding:24px;
+      transition:0.4s;
+    }
+
+    .stat-box:hover{
+      transform:translateY(-8px);
+      border-color:#8b5cf6;
+    }
+
+    .stat-box h3{
+      font-size:30px;
+      color:#8b5cf6;
+      margin-bottom:8px;
+    }
+
+    .features,
+    .mission,
+    .creator{
+      padding:120px 9%;
+      position:relative;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:54px;
+      margin-bottom:16px;
+      letter-spacing:-2px;
+    }
+
+    .section-title p{
+      max-width:760px;
+      margin:auto;
+      color:#9f9f9f;
+      line-height:1.9;
+      font-size:17px;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:30px;
+    }
+
+    .feature-card{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:30px;
+      padding:35px;
+      transition:0.45s ease;
+      backdrop-filter:blur(20px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .feature-card:hover{
+      transform:translateY(-12px);
+      border-color:#8b5cf6;
+      box-shadow:0 15px 50px rgba(124,58,237,0.18);
+    }
+
+    .feature-card .icon{
+      width:75px;
+      height:75px;
+      border-radius:24px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:32px;
+      background:linear-gradient(135deg,rgba(124,58,237,0.25),rgba(37,99,235,0.18));
+      margin-bottom:22px;
+    }
+
+    .feature-card h3{
+      font-size:24px;
+      margin-bottom:14px;
+    }
+
+    .feature-card p{
+      color:#a7a7a7;
+      line-height:1.9;
+    }
+
+    .mission{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:70px;
+      align-items:center;
+    }
+
+    .mission-img{
+      height:500px;
+      border-radius:40px;
+      background:
+      linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), /* Corrected path */
+      url('/Img/learing.webp');
+      background-size:cover;
+      background-position:center;
+      box-shadow:0 25px 70px rgba(124,58,237,0.28);
+      animation:float 5s ease-in-out infinite;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .mission-img::after{
+      content:'Smart Learning';
+      position:absolute;
+      bottom:30px;
+      left:30px;
+      font-size:38px;
+      font-weight:700;
+      color:white;
+      backdrop-filter:blur(10px);
+      background:rgba(0,0,0,0.25);
+      padding:14px 24px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0px);} 
+      50%{transform:translateY(-18px);} 
+    }
+
+    .mission-content h2{
+      font-size:56px;
+      margin-bottom:25px;
+      letter-spacing:-2px;
+    }
+
+    .mission-content p{
+      color:#b4b4b4;
+      line-height:1.9;
+      margin-bottom:20px;
+      font-size:17px;
+    }
+
+    .creator-card{
+      max-width:950px;
+      margin:auto;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:40px;
+      padding:50px;
+      backdrop-filter:blur(30px);
+      display:grid;
+      grid-template-columns:250px 1fr;
+      gap:40px;
+      align-items:center;
+      box-shadow:0 25px 70px rgba(0,0,0,0.4);
+    }
+
+    .profile  {
+      width:220px;
+      height:220px;
+      border-radius:35px;
+      background:url(/Img/myimg.jpeg); /* Corrected path */
+      background-size:cover;
+      background-position:center;
+      margin:auto;
+      box-shadow:0 20px 50px rgba(124,58,237,0.35);
+      border:3px solid rgba(255,255,255,0.08);
+    }
+
+    .creator-info h2{
+      font-size:42px;
+      margin-bottom:15px;
+    }
+
+    .creator-info p{
+      color:#b3b3b3;
+      line-height:1.9;
+      margin-bottom:18px;
+      font-size:16px;
+    }
+
+    .socials{
+      display:flex;
+      flex-wrap:wrap;
+      gap:15px;
+      margin-top:25px;
+    }
+
+    .socials a{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:white;
+      padding:14px 22px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:0.4s;
+    }
+
+    .socials a:hover{
+      background:#7c3aed;
+      transform:translateY(-4px);
+    }
+    .socials img { 
+        display: flex;
+        max-width: 40px ;
+        border-radius: 50% ;
+    }
+    .socials img:hover {
+        transform: rotateX(0deg) rotateY(0deg) translateX(-2px)   scale(0.999);
+    }
+
+    /* SITE FOOTER */
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .sf-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px; text-align: center;
+  }
+  .sf-brand a{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: #ffffff; letter-spacing: .04em; text-decoration: none;}
+  .sf-brand a:hover { color: var(--accent); }
+  .sf-brand span { color: var(--gold); }
+  .sf-divider { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .sf-info { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; font-size: .82rem; }
+  .sf-copy { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .sf-dot { color: var(--border); }
+  .sf-author { color: var(--text-muted); }
+  .sf-author a { color: var(--gold); font-weight: 600; text-decoration: none; }
+    .sf-author a:hover { color: var(--accent); }
+  .sf-chapter { font-size: .72rem; color: var(--border); font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+
+
+    .card-area{
+      width:100%;
+    }
+
+    img{
+      max-width:100%;
+      height:auto;
+      display:block;
+    }
+
+    @media(max-width:900px){
+      .content h1{
+        font-size:48px;
+      }
+
+      .section-title h2,
+      .mission-content h2{
+        font-size:40px;
+      }
+
+      .creator-card{
+        grid-template-columns:1fr;
+        padding:35px 25px;
+        text-align:center;
+      }
+
+      .socials{
+        justify-content:center;
+      }
+    }
+
+    @media(max-width:600px){
+      .container{
+        gap:45px;
+      }
+
+      .content,
+      .mission-content,
+      .creator-info{
+        text-align:center;
+      }
+
+      .btns{
+        justify-content:center;
+      }
+
+      .glass-card{
+        padding:30px 22px;
+        border-radius:28px;
+      }
+
+      .stats{
+        grid-template-columns:1fr;
+      }
+
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .feature-card{
+        padding:28px;
+      }
+
+      .mission-img{
+        height:340px;
+      }
+
+      .mission-img::after{
+        font-size:24px;
+        left:18px;
+        bottom:18px;
+        padding:10px 18px;
+      }
+
+      .profile {
+        width:170px;
+        height:170px;
+      }
+
+      .socials a{
+        width:100%;
+        text-align:center;
+      }
+      .content h1{
+        font-size:42px;
+      }
+
+      .section-title h2,
+      .mission-content h2,
+      .creator-info h2{
+        font-size:32px;
+      }
+
+      .hero,
+      .features,
+      .mission,
+      .creator{
+        padding:90px 7%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="container">
+
+      <div class="content">
+        <h4>WELCOME TO STUDY NOTES PRO </h4>
+        <h1>Learning Made <span>Simple, Smart & Modern</span></h1>
+
+        <p>
+          Study Notes Pro is built for students who want fast, easy, and high-quality notes without wasting hours searching across different websites.
+          We focus on providing clean explanations, important formulas, quick revisions, and study material specially designed for school students.
+        </p>
+
+        <p>
+          Our goal is to make studying less stressful and more effective with beautifully organized content, modern learning design, and student-friendly explanations.
+        </p>
+
+        <div class="btns">
+          <a href="/index.html" class="btn primary">Explore Notes</a>
+        </div>
+      </div>
+
+      <div class="card-area">
+        <img src="/Img/logo.png" style="margin-bottom: 20px;">
+
+          <div class="brand-line"></div>
+
+          <p>
+            A student-focused platform designed to help learners understand concepts faster with simplified notes, visual explanations, and revision-friendly content.
+          </p>
+
+          <div class="stats">
+            <div class="stat-box">
+              <h3>10+</h3>
+              <p>Subjects</p>
+            </div>
+
+            <div class="stat-box">
+              <h3>100+</h3>
+              <p>Study Notes</p>
+            </div>
+
+            <div class="stat-box">
+              <h3>24/7</h3>
+              <p>Access</p>
+            </div>
+
+            <div class="stat-box">
+              <h3>Easy</h3>
+              <p>Learning</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="features">
+
+    <div class="section-title">
+      <h2>Why Students Love Study Notes Pro</h2>
+      <p>
+        We combine modern design with educational simplicity so students can focus more on learning and less on confusion.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <div class="icon">📘</div>
+        <h3>Simple Notes</h3>
+        <p>
+          Concepts are explained in easy language so students can quickly understand difficult topics.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>Quick Revision</h3>
+        <p>
+          Short formulas, summaries, and key points help students revise faster before exams.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">🎯</div>
+        <h3>Exam Focused</h3>
+        <p>
+          Notes are designed according to important school and board exam topics.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon">💡</div>
+        <h3>Modern Learning</h3>
+        <p>
+          Attractive layouts, diagrams, and clean structure improve focus and understanding.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="mission">
+
+    <div class="mission-img"></div>
+
+    <div class="mission-content">
+      <h2>Built For Modern Students</h2>
+
+      <p>
+        Study Notes Pro is more than just a notes website. It is a modern learning platform created to help students study smarter with clean notes, visual learning, fast revision tools, and simplified explanations.
+      </p>
+
+      <p>
+        Inspired by modern AI platforms and minimalist interfaces, this website focuses on readability, speed, and a distraction-free learning experience.
+      </p>
+
+      <p>
+        Every section is designed carefully to make learning feel easier, faster, and more enjoyable for students preparing for school and board exams.
+      </p>
+
+      <a href="/index.html" class="btn primary">Explore Platform</a>
+    </div>
+
+  </section>
+
+  <section class="creator">
+
+    <div class="section-title">
+      <h2>About The Creator</h2>
+      <p>
+        Meet the student behind Study Notes Pro.
+      </p>
+    </div>
+
+    <div class="creator-card">
+
+      <div class="profile"></div>
+
+      <div class="creator-info">
+        <h2>Udit Prakash Yadav</h2>
+
+        <p>
+          Hi, I'm Udit — the creator of Study Notes Pro. I built this platform to help students access easy and modern study material without confusion.
+        </p>
+
+        <p>
+          I love designing educational websites, creating study notes, and making learning visually attractive and simple for students.
+        </p>
+
+        <p>
+          This project is continuously improving with better notes, smarter layouts, and new learning features.
+        </p>
+
+        <div class="socials">
+          <a href="mailto:uditprakashyadav@gmail.com" target="_blank">
+            <img src="Img/gmail-icon.webp.jpg" alt="gmail_logo"> <!-- Corrected path -->
+            Mail
+          </a>
+
+          <a href="https://www.instagram.com/yadav_udit_prakash/" target="_blank">
+            <img src="Img/insta-logo.webp" alt="instagram_logo"> <!-- Corrected path -->
+            Instagram
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+   <footer class="site-footer">
+     <div class="sf-inner">
+         <div class="sf-brand"><a href="index.html"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;"></a></div> <!-- Corrected href to index.html -->
+             <div class="sf-divider"></div>
+               <div class="sf-info">
+                  <span class="sf-copy">&copy; 2026&ndash;27 StudyNotes-Pro</span>
+                  <span class="sf-dot">&middot;</span>
+                  <span class="sf-author">Created by <a href="mailto:uditprakashyadav@gmail.com"> <strong>Udit Prakash Yadav</strong></a></span>
+              </div>
+          <div class="sf-chapter">About us  &middot; info  </div>
+     </div>
+  </footer>
+
+</body>
+</html>

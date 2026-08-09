@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="shortcut icon" href="/Img/favicon.png" type="image/x-icon">
+<title>StudyNotes Pro — Class 12</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     SKELETON OVERLAY
+══════════════════════════════════ -->
+<div id="sk-bar"></div>
+<div id="sk-speed-badge">
+  <span id="sk-speed-dot"></span>
+  <span id="sk-speed-txt">Detecting…</span>
+</div>
+
+<div id="sk-overlay">
+
+  <!-- NAV -->
+  <div class="sk-nav">
+    <span class="sk sk-logo"></span>
+    <div class="sk-nav-mid">
+      <span class="sk"></span>
+      <span class="sk"></span>
+      <span class="sk"></span>
+    </div>
+    <div class="sk-nav-end">
+      <span class="sk"></span>
+      <span class="sk"></span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="sk-hero">
+    <div class="sk-hl">
+      <span class="sk sk-eyebrow"></span>
+      <span class="sk sk-h1"></span>
+      <span class="sk sk-h2"></span>
+      <span class="sk sk-h3"></span>
+      <span class="sk sk-p1"></span>
+      <span class="sk sk-p2"></span>
+      <span class="sk sk-p3"></span>
+      <div class="sk-btns">
+        <span class="sk sk-btn-a"></span>
+        <span class="sk sk-btn-b"></span>
+      </div>
+      <div class="sk-hstats">
+        <div class="sk-hstat"><span class="sk sk-hstat-v"></span><span class="sk sk-hstat-l"></span></div>
+        <div class="sk-hstat"><span class="sk sk-hstat-v"></span><span class="sk sk-hstat-l"></span></div>
+        <div class="sk-hstat"><span class="sk sk-hstat-v"></span><span class="sk sk-hstat-l"></span></div>
+      </div>
+    </div>
+    <span class="sk sk-orb"></span>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="sk-srch-zone">
+    <span class="sk sk-srch"></span>
+  </div>
+
+  <!-- STAT STRIP -->
+  <div class="sk-stat-strip">
+    <div class="sk-ss"><span class="sk sk-ss-v"></span><span class="sk sk-ss-l"></span></div>
+    <div class="sk-ss"><span class="sk sk-ss-v"></span><span class="sk sk-ss-l"></span></div>
+    <div class="sk-ss"><span class="sk sk-ss-v"></span><span class="sk sk-ss-l"></span></div>
+    <div class="sk-ss"><span class="sk sk-ss-v"></span><span class="sk sk-ss-l"></span></div>
+  </div>
+
+  <!-- SUBJECTS -->
+  <div class="sk-sec" style="padding-top:68px">
+    <div class="sk-sec-hd">
+      <div><span class="sk sk-kicker"></span><span class="sk sk-sec-ttl"></span></div>
+      <span class="sk sk-all-lnk"></span>
+    </div>
+    <div class="sk-subj-grid">
+      <span class="sk sk-card"></span><span class="sk sk-card"></span>
+      <span class="sk sk-card"></span><span class="sk sk-card"></span>
+      <span class="sk sk-card"></span><span class="sk sk-card"></span>
+      <span class="sk sk-card"></span><span class="sk sk-card"></span>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT BAND -->
+  <div class="sk-hl-band">
+    <div class="sk-hl-left">
+      <span class="sk sk-hl-ki"></span>
+      <span class="sk sk-hl-h2a"></span>
+      <span class="sk sk-hl-h2b"></span>
+      <span class="sk sk-hl-pa"></span>
+      <span class="sk sk-hl-pb"></span>
+      <span class="sk sk-hl-pc"></span>
+      <div class="sk-hl-tags">
+        <span class="sk sk-hl-tag"></span>
+        <span class="sk sk-hl-tag"></span>
+        <span class="sk sk-hl-tag"></span>
+      </div>
+    </div>
+    <div class="sk-hl-right">
+      <span class="sk sk-hl-row"></span>
+      <span class="sk sk-hl-row"></span>
+      <span class="sk sk-hl-row"></span>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="sk-sec">
+    <div class="sk-sec-hd">
+      <div><span class="sk sk-kicker"></span><span class="sk sk-sec-ttl"></span></div>
+    </div>
+    <div class="sk-tools-grid">
+      <span class="sk sk-tool"></span><span class="sk sk-tool"></span>
+      <span class="sk sk-tool"></span><span class="sk sk-tool"></span>
+    </div>
+  </div>
+
+  <!-- RECENT NOTES -->
+  <div class="sk-sec">
+    <div class="sk-sec-hd">
+      <div><span class="sk sk-kicker"></span><span class="sk sk-sec-ttl"></span></div>
+      <span class="sk sk-all-lnk"></span>
+    </div>
+    <div class="sk-notes">
+      <span class="sk sk-note"></span>
+      <span class="sk sk-note"></span>
+      <span class="sk sk-note"></span>
+    </div>
+  </div>
+
+</div>
+<!-- ══ END SKELETON OVERLAY ══ -->
+
+<div class="canvas"><div class="g g1"></div><div class="g g2"></div><div class="g g3"></div></div>
+<div class="dotgrid"></div>
+
+<!--^ NAV -->
+<nav>
+  <a href="index.html" class="logo"><img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 200px; height: auto"> </a>
+  <div class="nav-links">
+    <a href="#subjects" class="hi">Subjects</a>
+    <a href="#">MCQs</a>
+    <a href="#">Past Papers</a>
+  </div>
+  <div class="nav-end">
+    <span class="badge-pill">Class XII · CBSE 2026</span>
+    <a href="#subjects" class="btn-cta">Start Studying →</a>
+  </div>
+</nav>
+
+<!-- &HERO -->
+<section class="hero">
+    <div class="hl">
+    <div class="eyebrow"><span class="pulse"></span>CBSE · ISC · State Board · 2025–26</div>
+    <h1>Ace Class 12 with<br/><span class="grad">Smart Notes</span><br/>for Every Subject</h1>
+    <p class="hero-p">Crisp, chapter-wise study notes built for board exams. From Physics derivations to Organic Chemistry mechanisms — everything structured, everything accessible.</p>
+    <div class="h-btns">
+      <a href="./dashboard.html" class="btn-a">Exam Tracker →</a>
+      <a href="./about.html" class="btn-b">⚡ About Us </a>
+    </div>
+    <div class="h-stats">
+      <div><div class="hst-val">1200+</div><div class="hst-lbl">Study Notes</div></div>
+      <div><div class="hst-val">14</div><div class="hst-lbl">Subjects</div></div>
+      <div><div class="hst-val">98%</div><div class="hst-lbl">Coverage</div></div>
+    </div>
+  </div>
+  <div class="hr">
+    <div class="orb-wrap">
+      <div class="orb-ring orb-r1"></div><div class="orb-ring orb-r2"></div>
+      <div class="chip c1a">⚛️</div><div class="chip c1b">🧪</div>
+      <div class="chip c1c">📐</div><div class="chip c1d">🧬</div>
+      <div class="chip c2a">📖</div><div class="chip c2b">💻</div>
+      <div class="chip c2c">📈</div><div class="chip c2d">📊</div>
+      <div class="orb-core"><div class="orb-core-ic">🎓</div><div class="orb-core-tx">Class XII</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="srch-zone">
+  <div class="srch">
+    <span class="srch-ic">🔍</span>
+    <input type="text" placeholder="Search notes, chapters, formulas…"/>
+    <span class="srch-k">⌘ K</span>
+  </div>
+</div>
+
+<!--?STATS -->
+<div class="stat-strip">
+  <div class="ss"><div class="ss-val em-g">1,200+</div><div class="ss-lbl">Total Notes</div></div>
+  <div class="ss"><div class="ss-val cy-g">500+</div><div class="ss-lbl">Formulas</div></div>
+  <div class="ss"><div class="ss-val or-g">3,000+</div><div class="ss-lbl">MCQs</div></div>
+  <div class="ss"><div class="ss-val pu-g">14</div><div class="ss-lbl">Subjects</div></div>
+</div>
+
+<!-- ~TICKER -->
+<div class="ticker">
+  <div class="tk-track">
+    <div class="tki">E = mc² <span class="sp">◆</span></div><div class="tki">∫ eˣ dx = eˣ + C <span class="sp">◆</span></div>
+    <div class="tki">PV = nRT <span class="sp">◆</span></div><div class="tki">F = ma <span class="sp">◆</span></div>
+    <div class="tki">ΔG = ΔH − TΔS <span class="sp">◆</span></div><div class="tki">sin²θ + cos²θ = 1 <span class="sp">◆</span></div>
+    <div class="tki">λ = h/mv · de Broglie <span class="sp">◆</span></div><div class="tki">C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂ <span class="sp">◆</span></div>
+    <div class="tki">lim(x→0) sinx/x = 1 <span class="sp">◆</span></div><div class="tki">MR = MC → Market Equilibrium <span class="sp">◆</span></div>
+    <div class="tki">DNA → RNA → Protein · Central Dogma <span class="sp">◆</span></div><div class="tki">∇·E = ρ/ε₀ · Gauss's Law <span class="sp">◆</span></div>
+    <div class="tki">E = mc² <span class="sp">◆</span></div><div class="tki">∫ eˣ dx = eˣ + C <span class="sp">◆</span></div>
+    <div class="tki">PV = nRT <span class="sp">◆</span></div><div class="tki">F = ma <span class="sp">◆</span></div>
+    <div class="tki">ΔG = ΔH − TΔS <span class="sp">◆</span></div><div class="tki">sin²θ + cos²θ = 1 <span class="sp">◆</span></div>
+    <div class="tki">λ = h/mv · de Broglie <span class="sp">◆</span></div><div class="tki">C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂ <span class="sp">◆</span></div>
+    <div class="tki">lim(x→0) sinx/x = 1 <span class="sp">◆</span></div><div class="tki">MR = MC → Market Equilibrium <span class="sp">◆</span></div>
+    <div class="tki">DNA → RNA → Protein · Central Dogma <span class="sp">◆</span></div><div class="tki">∇·E = ρ/ε₀ · Gauss's Law <span class="sp">◆</span></div>
+  </div>
+</div>
+
+<!--^ SUBJECTS -->
+<div class="sec" id="subjects" style="padding-top:68px">
+  <div class="sec-hd"><div><div class="sec-kicker">// all subjects</div><div class="sec-ttl">Pick Your Subject</div></div><a href="#" class="all-link">View All →</a></div>
+  <div class="subj-grid">
+    <a href="/PHYSICS/physics_landing.html" class="sc s-cy"><div class="sc-icon">⚛️</div><div class="sc-name">Physics</div><div class="sc-desc">Electrostatics, Optics, Modern Physics. Full derivations, diagrams and numericals.</div><div class="sc-foot"><span class="sc-tag">14 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:82%"></div></div></a>
+    <a href="/CHEMISTRY/chemistry_landing.html" class="sc s-pu"><div class="sc-icon">🧪</div><div class="sc-name">Chemistry</div><div class="sc-desc">Organic, Inorganic & Physical Chemistry. Named reactions, mechanisms, mnemonics.</div><div class="sc-foot"><span class="sc-tag">10 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:68%"></div></div></a>
+    <a href="/MATHS/mathsnotes.html" class="sc s-em"><div class="sc-icon">📐</div><div class="sc-name">Mathematics</div><div class="sc-desc">Calculus, Algebra, Vectors & 3D Geometry. Proofs, examples and shortcut tricks.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:75%"></div></div></a>
+    <a href="/BIO/bio.html" class="sc s-or"><div class="sc-icon">🧬</div><div class="sc-name">Biology</div><div class="sc-desc">Genetics, Ecology, Physiology. NCERT + NEET focused with detailed diagrams.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:58%"></div></div></a>
+    <a href="/ENGLISH/english.html" class="sc s-go"><div class="sc-icon">📖</div><div class="sc-name">English Core</div><div class="sc-desc">Flamingo, Vistas & Writing Skills. Summaries, character sketches, letter formats.</div><div class="sc-foot"><span class="sc-tag">19 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:91%"></div></div></a>
+    <a href="/CS/cs.html" class="sc s-pk"><div class="sc-icon">💻</div><div class="sc-name">Computer Science</div><div class="sc-desc">Python, DBMS, Networking. Programs, SQL queries and complete theory notes.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:63%"></div></div></a>
+    <a href="#" class="sc s-cy"><div class="sc-icon">📊</div><div class="sc-name">Accountancy</div><div class="sc-desc">Partnership, Company Accounts & Cash Flow. All formats, journal entries, adjustments.</div><div class="sc-foot"><span class="sc-tag">10 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:44%"></div></div></a>
+    <a href="#" class="sc s-pu"><div class="sc-icon">📈</div><div class="sc-name">Economics</div><div class="sc-desc">Macro & Micro Economics. Graphs, theories and Indian economy with solved numericals.</div><div class="sc-foot"><span class="sc-tag">11 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:37%"></div></div></a>
+  </div>
+</div>
+
+<!--& HIGHLIGHT -->
+<div class="hl-band">
+  <div>
+    <div class="hl-kicker">🔥 Featured This Week</div>
+    <h2>Complete Organic Chemistry<br/>Reaction Map</h2>
+    <p>Every named reaction, conversion pathway and mechanism for Class 12 Boards + JEE. Colour-coded, memory-trick enhanced, and exam-ready in one condensed reference sheet.</p>
+    <div class="hl-tags"><span class="hl-tag tp">Organic Chemistry</span><span class="hl-tag tc">JEE Ready</span><span class="hl-tag te">Boards 2026</span></div>
+  </div>
+  <div class="hl-right">
+    <a href="#" class="hl-row"><span class="hl-row-ic">📅</span><div><div class="hl-row-name">Last 5 Years Papers</div><div class="hl-row-sub">CBSE 2020–2024 with full solutions</div></div><span class="hl-row-arr">↗</span></a>
+    <a href="#" class="hl-row"><span class="hl-row-ic">🎯</span><div><div class="hl-row-name">High Weightage Chapters</div><div class="hl-row-sub">Marks distribution by CBSE blueprint</div></div><span class="hl-row-arr">↗</span></a>
+    <a href="#" class="hl-row"><span class="hl-row-ic">⚡</span><div><div class="hl-row-name">30-Day Revision Plan</div><div class="hl-row-sub">Smart schedule for exam month</div></div><span class="hl-row-arr">↗</span></a>
+  </div>
+</div>
+
+<!--? TOOLS -->
+<div class="sec">
+  <div class="sec-hd"><div><div class="sec-kicker">// study tools</div><div class="sec-ttl">Quick Study Tools</div></div></div>
+  <div class="tools-grid">
+    <a href="#" class="tc-card"><span class="tc-ic">📝</span><div class="tc-nm">Formula Sheets</div><div class="tc-ds">All formulas subject-wise on one page</div></a>
+    <a href="#" class="tc-card"><span class="tc-ic">🧩</span><div class="tc-nm">MCQ Practice</div><div class="tc-ds">Topic-wise timed quiz mode</div></a>
+    <a href="#" class="tc-card"><span class="tc-ic">🗂️</span><div class="tc-nm">Mind Maps</div><div class="tc-ds">Visual chapter summaries at a glance</div></a>
+    <a href="./dashboard.html" class="tc-card"><span class="tc-ic">📊</span><div class="tc-nm">Exam Tracker</div><div class="tc-ds">Save and revisit your notes anytime</div></a>
+  </div>
+</div>
+
+<!-- // RECENT -->
+<div class="sec">
+  <div class="sec-hd"><div><div class="sec-kicker">// latest updates</div><div class="sec-ttl">Recently Added Notes</div></div><a href="#" class="all-link">See All →</a></div>
+  <div class="notes-list">
+    <a href="./MATHS/ch7/INT2.html" class="nr"><div class="n-dot" style="background:var(--cy)"></div><div class="n-info"><div class="n-ttl">Integration - Methods of Integration</div><div class="n-meta">Mathematics · Chapter 7 · Updated 1 days ago</div></div><span class="n-badge" style="background:rgba(0,200,240,.1);color:var(--cy);border:1px solid rgba(0,200,240,.22)">New</span></a>
+   <a href="./MATHS/ch6/AOD5.html" class="nr"><div class="n-dot" style="background:var(--pu)"></div><div class="n-info"><div class="n-ttl">Application of Derivatives - Approximation using Derivatives</div><div class="n-meta">Mathematics · Chapter 12 · Updated 3 days ago</div></div><span class="n-badge" style="background:rgba(155,109,255,.1);color:var(--pu);border:1px solid rgba(155,109,255,.22)">Updated</span></a>
+     <a href="./MATHS/ch2/graphs.html" class="nr"><div class="n-dot" style="background:var(--em)"></div><div class="n-info"><div class="n-ttl">Inverse Trigonometric Functions - Graphs</div><div class="n-meta">Mathematics · Chapter 7 · Updated 5 days ago</div></div><span class="n-badge" style="background:rgba(0,232,135,.1);color:var(--em);border:1px solid rgba(0,232,135,.22)">Popular</span></a>
+    <!--  <a href="#" class="nr"><div class="n-dot" style="background:var(--or)"></div><div class="n-info"><div class="n-ttl">Molecular Basis of Inheritance — Detailed Notes</div><div class="n-meta">Biology · Chapter 6 · Updated 6 days ago</div></div><span class="n-badge" style="background:rgba(255,124,77,.1);color:var(--or);border:1px solid rgba(255,124,77,.22)">NEET</span></a>
+    <a href="#" class="nr"><div class="n-dot" style="background:var(--s6)"></div><div class="n-info"><div class="n-ttl">Python — File Handling, Exception Handling &amp; SQL</div><div class="n-meta">Computer Science · Chapter 3 · Updated 1 week ago</div></div><span class="n-badge" style="background:rgba(244,114,182,.1);color:var(--s6);border:1px solid rgba(244,114,182,.22)">Code</span></a> -->
+  </div>
+</div>
+
+<!--~ FOOTER -->
+<footer>
+  <div class="ft-main">
+
+    <!-- ^Brand -->
+    <div class="ft-brand">
+      <a href="index.html" class="ft-logo-row">
+        <img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 150px; height: auto;">
+      </a>
+      <p class="ft-desc">Your complete Class 12 study companion. Free notes, formulas, MCQs and revision resources for CBSE, ISC & State Boards.</p>
+      <div class="ft-made">
+        <span class="heart">♥</span>
+        Made by <strong style="color: var(--em);">Udit Prakash Yadav</strong>
+      </div>
+      <div class="ft-socials">
+        <a href="#" class="ft-soc" title="Twitter">𝕏</a>
+        <a href="https://www.instagram.com/yadav_udit_prakash/" class="ft-soc" title="Instagram">📸</a>
+        <a href="#" class="ft-soc" title="YouTube">▶</a>
+        <a href="#" class="ft-soc" title="Telegram">✈</a>
+      </div>
+    </div>
+
+    <!--& Subjects -->
+    <div class="ft-col">
+      <div class="ft-col-title">Subjects</div>
+      <ul>
+        <li><a href="#">Physics</a></li>
+        <li><a href="#">Chemistry</a></li>
+        <li><a href="./MATHS/mathsnotes.html">Mathematics</a></li>
+        <li><a href="#">Biology</a></li>
+        <li><a href="#">English Core</a></li>
+        <li><a href="#">Computer Science</a></li>
+        <li><a href="#">Economics</a></li>
+        <li><a href="#">Accountancy</a></li>
+      </ul>
+    </div>
+
+    <!--? Resources -->
+    <div class="ft-col">
+      <div class="ft-col-title">Resources</div>
+      <ul>
+        <li><a href="#">Formula Sheets</a></li>
+        <li><a href="#">Past Papers</a></li>
+        <li><a href="#">MCQ Bank</a></li>
+        <li><a href="#">Mind Maps</a></li>
+        <li><a href="#">Revision Plans</a></li>
+        <li><a href="#">Sample Papers</a></li>
+      </ul>
+    </div>
+
+    <!--// About -->
+    <div class="ft-col">
+      <div class="ft-col-title">About</div>
+      <ul>
+        <li><a href="./about.html">About Me</a></li>
+        <!-- <li><a href="#">Contact</a></li>
+        <li><a href="#">Feedback</a></li>
+        <li><a href="#">Contribute</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li> -->
+      </ul>
+    </div>
+
+  </div>
+
+  <!--~ Divider -->
+  <div class="ft-divider"></div>
+
+  <!--^ Bottom bar -->
+  <div class="ft-bottom">
+    <div class="ft-copy">
+      © 2026 <img src="/Img/logo.png" alt="StudyNotes Pro Logo" style="width: 100px; height: auto;"> · Designed &amp; built by
+      <a href="mailto:uditprakashyadav@gmail.com">Udit Prakash Yadav</a> · All rights reserved.
+    </div>
+    <div class="ft-bottom-right">
+      <div class="ft-status">
+        <span class="ft-live-dot"></span>
+        All systems live
+      </div>
+      <a href="#" class="ft-topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'});return false">
+        ↑ Top
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- & ═══════════════════════════════════
+     ?🤖 AI STUDYBOT — FLOATING WIDGET
+~═══════════════════════════════════ -->
+
+<!--^ FAB -->
+<!-- <button id="cb-fab" onclick="cbToggle()" title="Ask StudyBot your doubt!">
+  🤖
+  <span class="fab-label">AI Tutor</span>
+</button> -->
+
+<!--& Chat Window -->
+<!-- <div id="cb-win"> -->
+
+  <!-- todo Header -->
+  <!-- <div class="cb-head">
+    <div class="cb-av">🤖</div>
+    <div class="cb-head-info">
+      <div class="cb-head-name">StudyBot · Class 12 AI Tutor</div>
+      <div class="cb-head-status"><span class="cb-live"></span>Online · Powered by AI · Free Forever</div>
+    </div>
+    <button class="cb-close" onclick="cbToggle()">✕</button>
+  </div> -->
+
+  <!-- *Subject Chips -->
+  <!-- <div class="cb-chips" id="cb-chips">
+    <span class="cb-chip on" onclick="cbSubject(this,'All Subjects')">📚 All</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Physics')">⚛️ Physics</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Chemistry')">🧪 Chemistry</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Mathematics')">📐 Maths</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Biology')">🧬 Biology</span>
+    <span class="cb-chip" onclick="cbSubject(this,'English')">📖 English</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Computer Science')">💻 CS</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Economics')">📈 Eco</span>
+    <span class="cb-chip" onclick="cbSubject(this,'Accountancy')">📊 Accounts</span>
+  </div> -->
+
+  <!--~ Messages -->
+  <!-- <div class="cb-msgs" id="cb-msgs">
+    <div class="msg bot">
+      <div class="msg-av-sm">🤖</div>
+      <div class="msg-wrap">
+        <div class="msg-bbl">👋 Hello! I'm <strong>StudyBot</strong>, your personal Class 12 AI tutor.<br><br>Ask me <em>anything</em> — derivations, concepts, formulas, numericals, or exam tips. I cover all Class 12 subjects! 🚀<br><br><strong>Tip:</strong> Select a subject chip above to filter my suggestions.</div>
+        <div class="msg-ts">Just now</div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- &Suggestions -->
+  <!-- <div class="cb-suggest" id="cb-suggest">
+    <span class="sug-btn" onclick="cbUseSug(this)">Explain lens formula derivation</span>
+    <span class="sug-btn" onclick="cbUseSug(this)">SN1 vs SN2 difference</span>
+    <span class="sug-btn" onclick="cbUseSug(this)">Integration by parts formula</span>
+    <span class="sug-btn" onclick="cbUseSug(this)">Mitosis vs Meiosis</span>
+  </div> -->
+
+  <!-- ?Input -->
+     <!--  <div class="cb-bottom">
+    <div class="cb-input-row">
+     <textarea class="cb-textarea" id="cb-input"
+        placeholder="Type your doubt… (Enter to send)"
+        onkeydown="cbKey(event)"
+         oninput="cbResize(this)"></textarea>
+      <button class="cb-send-btn" id="cb-send" onclick="cbSend()">➤</button>
+    </div>
+    <div class="cb-foot-row">
+      <span class="cb-hint">Shift+Enter for new line</span>
+      <button class="cb-clear-btn" onclick="cbClear()">🗑 Clear chat</button>
+    </div>
+  </div>
+</div>
+<script src="Chatbot.js"></script>   -->
+
+<!-- SKELETON LOADER - NETWORK-AWARE JS -->
+<script>
+(function () {
+  'use strict';
+  var overlay  = document.getElementById('sk-overlay');
+  var bar      = document.getElementById('sk-bar');
+  var badge    = document.getElementById('sk-speed-badge');
+  var badgeTxt = document.getElementById('sk-speed-txt');
+
+  var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  var speedLabel = 'fast';
+
+  function classifySpeed(rtt, downlink, type) {
+    if (!navigator.onLine)            return 'offline';
+    if (type === '2g'  || rtt > 600)  return 'slow';
+    if (type === '3g'  || rtt > 200 || downlink < 1.5) return 'medium';
+    return 'fast';
+  }
+
+  function applySpeed(label) {
+    speedLabel = label;
+    badge.className = 'visible ' + label;
+    var txt = {
+      fast:    'Fast network · Loading fast',
+      medium:  'Medium network · May take a moment',
+      slow:    'Slow network · Please wait…',
+      offline: 'Offline · No connection'
+    };
+    badgeTxt.textContent = txt[label] || 'Detecting…';
+    if (label === 'slow' || label === 'offline') {
+      document.body.classList.add('sk-slow');
+    } else {
+      document.body.classList.remove('sk-slow');
+    }
+    var barColors = {
+      slow:    'linear-gradient(90deg,#ff7c4d,#f5c542)',
+      offline: '#f87171'
+    };
+    if (barColors[label]) bar.style.background = barColors[label];
+  }
+
+  // Initial classification
+  if (!navigator.onLine) {
+    applySpeed('offline');
+  } else if (conn) {
+    applySpeed(classifySpeed(conn.rtt, conn.downlink, conn.effectiveType));
+  } else {
+    var t0 = Date.now();
+    fetch(window.location.href + '?_sk=' + t0, { method: 'HEAD', cache: 'no-store' })
+      .then(function () {
+        var rtt = Date.now() - t0;
+        applySpeed(rtt < 200 ? 'fast' : rtt < 600 ? 'medium' : 'slow');
+      })
+      .catch(function () { applySpeed('offline'); });
+    applySpeed('fast');
+  }
+
+  if (conn) {
+    conn.addEventListener('change', function () {
+      applySpeed(!navigator.onLine ? 'offline' :
+        classifySpeed(conn.rtt, conn.downlink, conn.effectiveType));
+    });
+  }
+  window.addEventListener('online',  function () { applySpeed('fast'); });
+  window.addEventListener('offline', function () { applySpeed('offline'); });
+
+  // Progress bar
+  var progress = 0;
+  var barTimer;
+  var tickMap = {
+    fast:    { step: 3,   interval: 80 },
+    medium:  { step: 1.5, interval: 120 },
+    slow:    { step: 0.8, interval: 150 },
+    offline: { step: 0,   interval: 9999 }
+  };
+
+  function advanceBar() {
+    var t = tickMap[speedLabel] || tickMap.fast;
+    var remaining = 90 - progress;
+    progress += Math.max(0.2, remaining * (t.step / 100));
+    if (progress > 90) progress = 90;
+    bar.style.width = progress + '%';
+    barTimer = setTimeout(advanceBar, t.interval);
+  }
+  advanceBar();
+
+  function dismiss() {
+    clearTimeout(barTimer);
+    bar.style.transition = 'width .2s ease';
+    bar.style.width = '100%';
+    setTimeout(function () { bar.style.opacity = '0'; }, 250);
+    badge.className = badge.className.replace('visible', '').trim();
+    overlay.classList.add('sk-out');
+    setTimeout(function () {
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+      if (bar.parentNode)     bar.parentNode.removeChild(bar);
+      if (badge.parentNode)   badge.parentNode.removeChild(badge);
+    }, 650);
+  }
+
+  if (document.readyState === 'complete') {
+    dismiss();
+  } else {
+    window.addEventListener('load', function () {
+      var grace = speedLabel === 'slow' ? 200 : 80;
+      setTimeout(dismiss, grace);
+    });
+    var maxWait = speedLabel === 'slow' ? 12000 : speedLabel === 'medium' ? 7000 : 4000;
+    setTimeout(dismiss, maxWait);
+  }
+})();
+</script>
+
+</body>
+</html>
