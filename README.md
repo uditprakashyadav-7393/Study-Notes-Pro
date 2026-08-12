@@ -31,33 +31,7 @@ Our mission is to democratize quality education and make learning accessible, en
 
 ## 🚀 Live Website
 
-**[🔗 Visit Study Notes Pro Live](https://study-notes-pro.com)** *(Add your live website URL here)*
-
----
-
-## 💻 Technology Stack
-
-- **Frontend:** React.js / Vue.js / Next.js
-- **Backend:** Node.js / Express
-- **Database:** MongoDB / Firebase
-- **Styling:** Tailwind CSS / SASS
-- **Hosting:** Vercel / Netlify / AWS
-
----
-
-## 📦 Project Structure
-
-```
-Study-Notes-Pro/
-├── public/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── assets/
-│   └── styles/
-├── README.md
-└── package.json
-```
+**[🔗 Visit Study Notes Pro Live](https://www.studynotespro.great-site.net)**
 
 ---
 
@@ -83,44 +57,6 @@ Study-Notes-Pro/
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/uditprakashyadav-7393/Study-Notes-Pro.git
-
-# Navigate to project directory
-cd Study-Notes-Pro
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
-Visit `http://localhost:3000` to see the application.
-
----
-
-## 📝 Build & Deploy
-
-```bash
-# Build for production
-npm run build
-
-# Deploy to your hosting platform
-npm run deploy
-```
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions! Whether it's adding new study materials, fixing bugs, or improving the UI, your help is valued.
@@ -137,10 +73,9 @@ We welcome contributions! Whether it's adding new study materials, fixing bugs, 
 
 Have questions or suggestions? We'd love to hear from you!
 
-- 📧 Email: [your-email@example.com]
-- 💬 Discord: [Your Discord Server Link]
-- 🐦 Twitter: [@YourHandle]
-- 📱 Instagram: [@YourHandle]
+- 📧 Email: [uditprakashyadav@gmail.com]
+
+
 
 ---
 
@@ -164,17 +99,6 @@ This project is open-source and available under the MIT License. See the [LICENS
 - **📖 Study Materials:** 500+
 - **⭐ GitHub Stars:** Help us grow by starring this repo!
 - **🌍 Countries Reached:** 50+
-
----
-
-## 🔮 Roadmap
-
-- [ ] Mobile App (iOS & Android)
-- [ ] Video Tutorials & Lectures
-- [ ] Live Interactive Sessions
-- [ ] AI-Powered Personalized Learning
-- [ ] Competitive Exam Prep (JEE, NEET, etc.)
-- [ ] Multi-Language Support
 
 ---
 
