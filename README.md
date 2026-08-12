@@ -31,7 +31,7 @@ Our mission is to democratize quality education and make learning accessible, en
 
 ## 🚀 Live Website
 
-<div style='font-weight:Bold;' >🔗 Visit [Study Notes Pro](https://www.studynotespro.great-site.net) Live </div>
+**🔗 Visit [Study Notes Pro](https://www.studynotespro.great-site.net) Live**
 
 ---
 
