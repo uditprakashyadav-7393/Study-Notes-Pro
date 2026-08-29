@@ -7,6 +7,29 @@
 <title>StudyNotes Pro — Class 12</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="style.css"/>
+
+<style id="cb-mobile-fullscreen-fix">
+#cb-win:fullscreen,#cb-win:-webkit-full-screen{
+ width:100vw!important;height:100dvh!important;max-height:100dvh!important;
+ margin:0!important;border-radius:0!important;box-sizing:border-box!important;
+ overflow:hidden!important;
+}
+#cb-win:fullscreen .cb-msgs,#cb-win:-webkit-full-screen .cb-msgs{
+ min-height:0!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;
+}
+#cb-win:fullscreen .cb-bottom,#cb-win:-webkit-full-screen .cb-bottom{
+ flex-shrink:0!important;padding-bottom:max(8px,env(safe-area-inset-bottom))!important;
+}
+html.cb-fullscreen-lock,body.cb-fullscreen-lock{overflow:hidden!important;width:100%!important;height:100%!important}
+@media(max-width:700px){
+ #cb-win:fullscreen,#cb-win:-webkit-full-screen{
+   height:var(--cb-vh,100dvh)!important;max-height:var(--cb-vh,100dvh)!important;
+ }
+ #cb-win:fullscreen .cb-textarea,#cb-win:-webkit-full-screen .cb-textarea{
+   max-height:110px;font-size:16px!important;
+ }
+}
+</style>
 </head>
 <body>
 
@@ -537,15 +560,74 @@
     setTimeout(dismiss, maxWait);
   }
 })();
-function cbToggleFull(){
-const chatbot = document.getElementById("cb-win");
+/* Mobile fullscreen + keyboard handling */
+(function(){
+  const root=document.documentElement;
+  const chatbot=document.getElementById('cb-win');
+  const input=document.getElementById('cb-input');
 
-    if (!document.fullscreenElement) {
-        chatbot.requestFullscreen();
-    } else {
-        document.exitFullscreen();
+  function isFull(){
+    return document.fullscreenElement===chatbot ||
+           document.webkitFullscreenElement===chatbot;
+  }
+
+  function updateViewport(){
+    if(!chatbot || !isFull()) return;
+    const h=window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    chatbot.style.setProperty('--cb-vh',h+'px');
+    chatbot.style.height=h+'px';
+    chatbot.style.maxHeight=h+'px';
+
+    if(document.activeElement===input){
+      requestAnimationFrame(()=>{
+        const msgs=document.getElementById('cb-msgs');
+        if(msgs) msgs.scrollTop=msgs.scrollHeight;
+      });
     }
-}
+  }
+
+  function onFullscreenChange(){
+    const full=isFull();
+    root.classList.toggle('cb-fullscreen-lock',full);
+    document.body.classList.toggle('cb-fullscreen-lock',full);
+
+    if(full){
+      setTimeout(updateViewport,50);
+      setTimeout(updateViewport,250);
+      setTimeout(()=>{ if(input) input.focus({preventScroll:true}); },300);
+    }else{
+      chatbot.style.removeProperty('--cb-vh');
+      chatbot.style.removeProperty('height');
+      chatbot.style.removeProperty('max-height');
+    }
+  }
+
+  window.cbToggleFull=async function(){
+    try{
+      if(!isFull()){
+        if(chatbot.requestFullscreen) await chatbot.requestFullscreen();
+        else if(chatbot.webkitRequestFullscreen) chatbot.webkitRequestFullscreen();
+      }else{
+        if(document.exitFullscreen) await document.exitFullscreen();
+        else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+    }catch(e){ console.warn('Fullscreen unavailable:',e); }
+  };
+
+  document.addEventListener('fullscreenchange',onFullscreenChange);
+  document.addEventListener('webkitfullscreenchange',onFullscreenChange);
+  window.addEventListener('resize',updateViewport);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',updateViewport);
+    window.visualViewport.addEventListener('scroll',updateViewport);
+  }
+  if(input){
+    input.addEventListener('focus',()=>{
+      setTimeout(updateViewport,300);
+      setTimeout(updateViewport,600);
+    });
+  }
+})();
 </script>
 </body>
 </html>
