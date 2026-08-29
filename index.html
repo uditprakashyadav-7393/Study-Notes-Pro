@@ -215,13 +215,13 @@
 </div>
 
 <!--^ SUBJECTS -->
-<div class="sec" id="subjects" style="padding-top:68px">
+<div class="sec" id="subjects">
   <div class="sec-hd"><div><div class="sec-kicker">// all subjects</div><div class="sec-ttl">Pick Your Subject</div></div><a href="#" class="all-link">View All →</a></div>
   <div class="subj-grid">
-    <a href="/PHYSICS/physics_landing.html" class="sc s-cy"><div class="sc-icon">⚛️</div><div class="sc-name">Physics</div><div class="sc-desc">Electrostatics, Optics, Modern Physics. Full derivations, diagrams and numericals.</div><div class="sc-foot"><span class="sc-tag">14 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:82%"></div></div></a>
-    <a href="/CHEMISTRY/chemistry_landing.html" class="sc s-pu"><div class="sc-icon">🧪</div><div class="sc-name">Chemistry</div><div class="sc-desc">Organic, Inorganic & Physical Chemistry. Named reactions, mechanisms, mnemonics.</div><div class="sc-foot"><span class="sc-tag">10 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:68%"></div></div></a>
-    <a href="/MATHS/mathsnotes.html" class="sc s-em"><div class="sc-icon">📐</div><div class="sc-name">Mathematics</div><div class="sc-desc">Calculus, Algebra, Vectors & 3D Geometry. Proofs, examples and shortcut tricks.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:75%"></div></div></a>
-    <a href="/BIO/bio.html" class="sc s-or"><div class="sc-icon">🧬</div><div class="sc-name">Biology</div><div class="sc-desc">Genetics, Ecology, Physiology. NCERT + NEET focused with detailed diagrams.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:58%"></div></div></a>
+    <a href="/PHYSICS/physics_landing.html" class="sc s-cy"><div class="sc-icon">⚛️</div><div class="sc-name">Physics</div><div class="sc-desc">Electrostatics, Optics, Modern Physics. Full derivations, diagrams and numericals.</div><div class="sc-foot"><span class="sc-tag">14 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:82%;"></div></div></a>
+    <a href="/CHEMISTRY/chemistry_landing.html" class="sc s-pu"><div class="sc-icon">🧪</div><div class="sc-name">Chemistry</div><div class="sc-desc">Organic, Inorganic & Physical Chemistry. Named reactions, mechanisms, mnemonics.</div><div class="sc-foot"><span class="sc-tag">10 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:68%;"></div></div></a>
+    <a href="/MATHS/mathsnotes.html" class="sc s-em"><div class="sc-icon">📐</div><div class="sc-name">Mathematics</div><div class="sc-desc">Calculus, Algebra, Vectors & 3D Geometry. Proofs, examples and shortcut tricks.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:75%;"></div></div></a>
+    <a href="/BIO/bio.html" class="sc s-or"><div class="sc-icon">🧬</div><div class="sc-name">Biology</div><div class="sc-desc">Genetics, Ecology, Physiology. NCERT + NEET focused with detailed diagrams.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:58%;"></div></div></a>
     <a href="/ENGLISH/english.html" class="sc s-go"><div class="sc-icon">📖</div><div class="sc-name">English Core</div><div class="sc-desc">Flamingo, Vistas & Writing Skills. Summaries, character sketches, letter formats.</div><div class="sc-foot"><span class="sc-tag">19 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:91%"></div></div></a>
     <a href="/CS/cs.html" class="sc s-pk"><div class="sc-icon">💻</div><div class="sc-name">Computer Science</div><div class="sc-desc">Python, DBMS, Networking. Programs, SQL queries and complete theory notes.</div><div class="sc-foot"><span class="sc-tag">13 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:63%"></div></div></a>
     <a href="#" class="sc s-cy"><div class="sc-icon">📊</div><div class="sc-name">Accountancy</div><div class="sc-desc">Partnership, Company Accounts & Cash Flow. All formats, journal entries, adjustments.</div><div class="sc-foot"><span class="sc-tag">10 Chapters</span><span class="sc-arr">↗</span></div><div class="sc-bar"><div class="sc-fill" style="width:44%"></div></div></a>
@@ -358,26 +358,27 @@
 ~═══════════════════════════════════ -->
 
 <!--^ FAB -->
-<!-- <button id="cb-fab" onclick="cbToggle()" title="Ask StudyBot your doubt!">
+<button id="cb-fab" onclick="cbToggle()" title="Ask StudyBot your doubt!">
   🤖
   <span class="fab-label">AI Tutor</span>
-</button> -->
+</button>
 
 <!--& Chat Window -->
-<!-- <div id="cb-win"> -->
+<div id="cb-win">
 
   <!-- todo Header -->
-  <!-- <div class="cb-head">
+  <div class="cb-head">
     <div class="cb-av">🤖</div>
     <div class="cb-head-info">
       <div class="cb-head-name">StudyBot · Class 12 AI Tutor</div>
       <div class="cb-head-status"><span class="cb-live"></span>Online · Powered by AI · Free Forever</div>
     </div>
     <button class="cb-close" onclick="cbToggle()">✕</button>
-  </div> -->
+    <button class="cb-close" onclick="cbToggleFull()">⛶</button>
+  </div>
 
   <!-- *Subject Chips -->
-  <!-- <div class="cb-chips" id="cb-chips">
+  <div class="cb-chips" id="cb-chips">
     <span class="cb-chip on" onclick="cbSubject(this,'All Subjects')">📚 All</span>
     <span class="cb-chip" onclick="cbSubject(this,'Physics')">⚛️ Physics</span>
     <span class="cb-chip" onclick="cbSubject(this,'Chemistry')">🧪 Chemistry</span>
@@ -387,10 +388,10 @@
     <span class="cb-chip" onclick="cbSubject(this,'Computer Science')">💻 CS</span>
     <span class="cb-chip" onclick="cbSubject(this,'Economics')">📈 Eco</span>
     <span class="cb-chip" onclick="cbSubject(this,'Accountancy')">📊 Accounts</span>
-  </div> -->
+  </div>
 
   <!--~ Messages -->
-  <!-- <div class="cb-msgs" id="cb-msgs">
+  <div class="cb-msgs" id="cb-msgs">
     <div class="msg bot">
       <div class="msg-av-sm">🤖</div>
       <div class="msg-wrap">
@@ -398,18 +399,18 @@
         <div class="msg-ts">Just now</div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- &Suggestions -->
-  <!-- <div class="cb-suggest" id="cb-suggest">
+  <div class="cb-suggest" id="cb-suggest">
     <span class="sug-btn" onclick="cbUseSug(this)">Explain lens formula derivation</span>
     <span class="sug-btn" onclick="cbUseSug(this)">SN1 vs SN2 difference</span>
     <span class="sug-btn" onclick="cbUseSug(this)">Integration by parts formula</span>
     <span class="sug-btn" onclick="cbUseSug(this)">Mitosis vs Meiosis</span>
-  </div> -->
+  </div>
 
   <!-- ?Input -->
-     <!--  <div class="cb-bottom">
+      <div class="cb-bottom">
     <div class="cb-input-row">
      <textarea class="cb-textarea" id="cb-input"
         placeholder="Type your doubt… (Enter to send)"
@@ -423,7 +424,7 @@
     </div>
   </div>
 </div>
-<script src="Chatbot.js"></script>   -->
+<script src="./chatbot.js"></script>   
 
 <!-- SKELETON LOADER - NETWORK-AWARE JS -->
 <script>
@@ -536,7 +537,15 @@
     setTimeout(dismiss, maxWait);
   }
 })();
-</script>
+function cbToggleFull(){
+const chatbot = document.getElementById("cb-win");
 
+    if (!document.fullscreenElement) {
+        chatbot.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+</script>
 </body>
 </html>
