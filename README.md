@@ -1,6 +1,6 @@
-# 📚 Study Notes Pro
+6y# 📚 Study Notes Pro
 
-> **A Modern, Free Learning Platform for Class 12th Students**
+> **A Modern, Free Learning Platform for Class 12th Stuydents**
 
 ![Study Notes Pro](https://img.shields.io/badge/Platform-Educational-blue?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-Open%20Source-green?style=for-the-badge)
@@ -51,7 +51,6 @@ Our mission is to democratize quality education and make learning accessible, en
 ✅ **100% Free** - No hidden charges or premium subscriptions  
 ✅ **Created by Students** - Understands student needs  
 ✅ **Up-to-date Curriculum** - Aligned with latest CBSE/State Board guidelines  
-✅ **Expert Content** - Verified by subject matter experts  
 ✅ **Ad-Free Experience** - Focus on learning without distractions  
 
 ---
@@ -90,14 +89,7 @@ This project is open-source and available under the MIT License. See the [LICENS
 - Special thanks to teachers and subject matter experts who reviewed the content
 - Community contributors who've helped improve the platform
 
----
-
-## 📊 Project Stats
-
-- **👥 Active Students:** 10,000+
-- **📖 Study Materials:** 500+
-- **⭐ GitHub Stars:** Help us grow by starring this repo!
-- **🌍 Countries Reached:** 50+
+-
 
 ---
 
