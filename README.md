@@ -52,7 +52,6 @@ Our mission is to democratize quality education and make learning accessible, en
 ✅ **Created by Students** - Understands student needs  
 ✅ **Up-to-date Curriculum** - Aligned with latest CBSE/State Board guidelines  
 ✅ **Expert Content** - Verified by subject matter experts  
-✅ **Community-Driven** - Built with feedback from thousands of students  
 ✅ **Ad-Free Experience** - Focus on learning without distractions  
 
 ---
