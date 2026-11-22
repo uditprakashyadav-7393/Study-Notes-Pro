@@ -1,4 +1,4 @@
-6y# 📚 Study Notes Pro
+# 📚 Study Notes Pro
 
 > **A Modern, Free Learning Platform for Class 12th Stuydents**
 
